@@ -3,10 +3,10 @@ const router = express.Router()
 const db = require('../db/index')
 const User = db.users
 
-router.post('/cretae', async (req, res)=>{
+router.post('/create', async (req, res)=>{
     try {
         const user = await User.create(req.body)
-        res.status(200).send(newTodo)
+        res.status(200).send(user)
     }
     catch(err){
         console.error(err.message);
