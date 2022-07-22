@@ -1,4 +1,4 @@
-const db = require('./db/index')
+const db = require('./db')
 const User = db.users
 const Timetable = db.timetables
 const Preferences = db.prefs

@@ -5,17 +5,18 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 app.use(express.urlencoded({ extended: true}));
+app.use(cors)
 app.use(express.json());
 
-require('./db/index')
+require('./db')
 require('./associations')
-const userRouter = require('./routers/userRouter')
+const userRouter = require('./src/routers/userRouter')
 app.use('/user', userRouter)
 
-const ttRouter = require('./routers/timetableRouter')
+const ttRouter = require('./src/routers/timetableRouter')
 app.use('/tt', ttRouter)
 
-const meetRouter = require('./routers/meetRouter')
+const meetRouter = require('./src/routers/meetRouter')
 app.use('/meet', meetRouter)
 
 app.get('/', (req, res)=>{
@@ -24,3 +25,4 @@ app.get('/', (req, res)=>{
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`)
 })
+

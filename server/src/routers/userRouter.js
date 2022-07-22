@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db/index')
+const db = require('../../db')
 const User = db.users
 
 router.post('/create', async (req, res)=>{
@@ -23,3 +23,4 @@ router.delete('/delete/:regno', async (req, res)=>{
         console.error(err.message);
     }
 })
+module.exports = router
