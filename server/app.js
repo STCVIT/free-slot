@@ -19,6 +19,9 @@ app.use('/tt', ttRouter)
 const meetRouter = require('./src/routers/meetRouter')
 app.use('/meet', meetRouter)
 
+const api = require('./api')
+app.use('/api', api)
+
 app.get('/', (req, res)=>{
     res.send("This is working")
 })
