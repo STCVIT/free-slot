@@ -8,7 +8,8 @@ function Form(){
         name: "",
         regno: "",
         email: "",
-        password: ""
+        password: "",
+        timetable: ""
     })
 
     const PageDispaly = ()=>{
@@ -21,7 +22,31 @@ function Form(){
 
     return (
         <div className="form">
-            <div className="body">{PageDispaly()}</div>
+            <div className="body">{PageDispaly()}
+            <div className="foot">
+          <button
+            disabled={page === 0}
+            onClick={() => {
+              setPage((currPage) => currPage - 1);
+            }}
+          >
+            Prev
+          </button>
+          <button
+            onClick={() => {
+              if (page === 1) {
+                alert("FORM SUBMITTED");
+                console.log(formData);
+              } else {
+                setPage((currPage) => currPage + 1);
+              }
+            }}
+          >
+            {page === 1 ? "Submit" : "Next"}
+          </button>
+        </div>
+            </div>
+            
         </div>
     )
 }
