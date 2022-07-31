@@ -5,6 +5,7 @@ import TimeTableInfo from "./TimetableInfo";
 import timetableInfoImg from '../assets/TimetableInfoImage.svg'
 
 function Form(){
+  
     const [page, setPage] = useState(0)
     const [formData, setFormData] = useState({
         name: "",
