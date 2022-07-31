@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Navigate, Link } from "react-router-dom";
 import SignupInfo from './SignupInfo'
 import TimeTableInfo from "./TimetableInfo";
+import timetableInfoImg from '../assets/TimetableInfoImage.svg'
 
 function Form(){
     const [page, setPage] = useState(0)
@@ -21,7 +23,8 @@ function Form(){
     }
 
     return (
-        <div className="form">
+        <div className="form flex items-center">
+            <img src={timetableInfoImg} alt="signup" className="signup-image"/> 
             <div className="body">{PageDispaly()}
             <div className="foot">
           <button
@@ -37,6 +40,7 @@ function Form(){
               if (page === 1) {
                 alert("FORM SUBMITTED");
                 console.log(formData);
+                Navigate('/')
               } else {
                 setPage((currPage) => currPage + 1);
               }

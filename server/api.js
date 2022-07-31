@@ -4,7 +4,7 @@ const router = express.Router()
 const cors = require('cors')
 const whitelist = ['http://127.0.0.1:8080']
 
-const varOptions = {
+const corsOptions = {
     origin: (origin, callback)=>{
         if(whitelist.indexOf(origin)!== -1) {
             callback(null, true)
