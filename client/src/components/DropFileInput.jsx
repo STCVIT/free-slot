@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import fileUpload from '../assets/file-upload.svg'
 import { ImageConfig  } from '../config/ImageConfig'
-const DropFileInput = props =>{
+const DropFileInput = ({ formData, setFormData, props}) =>{
     const wrapperRef = useRef(null);
     const [files, setFiles] = useState([])
 
@@ -16,14 +16,14 @@ const DropFileInput = props =>{
         wrapperRef.current.classList.remove('dragover')
     }
 
-    const onFileDrop = (e)=>{
-        const newFile = e.target.files[0]
-        if(newFile) {
-            const updatedList = [newFile]
-            setFiles(updatedList)
-            props.onFileChange(updatedList)
-        }
-    }
+    // const onFileDrop = (e)=>{
+    //     const newFile = e.target.files[0]
+    //     if(newFile) {
+    //         const updatedList = [newFile]
+    //         setFiles(updatedList)
+    //         props.onFileChange(updatedList)
+    //     }
+    // }
     const fileRemove = (file) => {
         const updatedList = [...files];
         updatedList.splice(files.indexOf(file), 1);
@@ -43,7 +43,7 @@ const DropFileInput = props =>{
                     <img src={fileUpload} alt=""/>
                     <p> Drag & Drop your timetable here</p>
                 </div> 
-                <input type='file' value='' onChange={onFileDrop}/>
+                <input type='file' accept ='image/*' value={formData.timetable} onChange={ (e)=>{ setFormData({...formData, timetable: e.target.value})}}/>
             </div>
             {
                 files.length>0 ? (
