@@ -7,7 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { UserAuthContextProvider } from './context/UserAuthContext'
 // import {Container,Row, Col } from "react-bootstrap"
-import Form from './components/SignUpForm';
+import SignUp from './components/Signup/SignUpForm';
 import AddEvent from "./components/AddEvent";
 import FreeSlot from "./components/freeslot";
 
@@ -27,7 +27,7 @@ export default function App() {
             />
             <Route path='/' element={<Landing />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Form />} />
+            <Route path='/signup' element={<SignUp />} />
 
           </Routes>
         </BrowserRouter>

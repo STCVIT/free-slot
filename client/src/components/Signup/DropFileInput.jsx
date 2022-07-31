@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import propTypes from 'prop-types'
-import fileUpload from '../assets/file-upload.svg'
-import { ImageConfig  } from '../config/ImageConfig'
+import fileUpload from '../../assets/file-upload.svg'
+import { ImageConfig  } from '../../config/ImageConfig'
 const DropFileInput = ({ formData, setFormData, props}) =>{
     const wrapperRef = useRef(null);
     const [files, setFiles] = useState([])
@@ -41,7 +41,7 @@ const DropFileInput = ({ formData, setFormData, props}) =>{
             onDrop={onDrop}>
                 <div className='drop-file-input_label'>
                     <img src={fileUpload} alt=""/>
-                    <p> Drag & Drop your timetable here</p>
+                    <p> Drag {"&"} Drop your timetable here</p>
                 </div> 
                 <input type='file' accept ='image/*' value={formData.timetable} onChange={ (e)=>{ setFormData({...formData, timetable: e.target.value})}}/>
             </div>
