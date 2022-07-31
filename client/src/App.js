@@ -1,31 +1,37 @@
-//import Login from './components/Login'
+import Login from './components/Login'
 //import SignupInfo from './components/SignupInfo'
 //import TimeTableInfo from './components/TimetableInfo';
-import Home from "./components/home"
+import Home from "./components/Home"
 import Landing from './components/Landing'
 import ProtectedRoute from './components/ProtectedRoute'
-import { BrowserRouter as Switch, Router, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { UserAuthContextProvider } from './context/UserAuthContext'
+// import {Container,Row, Col } from "react-bootstrap"
 import Form from './components/SignUpForm';
 import AddEvent from "./components/AddEvent";
 import FreeSlot from "./components/freeslot";
+
 export default function App() {
   return (
     <>
-    <Router>
-      <Landing path='/' element={<Landing/>}/>
-      <Form path='/signup' element={<Form/>}/>
-    </Router>
-    
-    <UserAuthContextProvider>
-      <Router>
-      <Switch>
-        <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>} />
-        <Route path='/freeslot' element={<FreeSlot/>} />
-        <Route path='/addevent' element={<AddEvent/>} />
-      </Switch>
-      </Router>
-    </UserAuthContextProvider>
+
+      <UserAuthContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/home'
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route path='/' element={<Landing />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Form />} />
+
+          </Routes>
+        </BrowserRouter>
+      </UserAuthContextProvider>
     </>
   );
 }
