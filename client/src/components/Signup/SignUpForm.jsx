@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import SignupInfo from './SignupInfo'
 import TimeTableInfo from "./TimetableInfo";
-import timetableInfoImg from '../assets/TimetableInfoImage.svg'
+import timetableInfoImg from '../../assets/TimetableInfoImage.svg'
 
 function Form(){
   

@@ -1,5 +1,5 @@
 import React from 'react'
-import timetableInfoImg from '../assets/TimetableInfoImage.svg'
+//import timetableInfoImg from '../assets/TimetableInfoImage.svg'
 //import fileUpload from '../assets/file-upload.svg'
 import DropFileInput from './DropFileInput'
 
