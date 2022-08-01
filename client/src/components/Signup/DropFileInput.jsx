@@ -24,12 +24,22 @@ const DropFileInput = ({ formData, setFormData, props}) =>{
     //         props.onFileChange(updatedList)
     //     }
     // }
-    const fileRemove = (file) => {
-        const updatedList = [...files];
-        updatedList.splice(files.indexOf(file), 1);
-        setFiles(updatedList);
-        props.onFileChange(updatedList);
+    const convert2base64 = (e)=>{
+        //console.log(e.target.files[0])
+        setFormData({...formData, timetable: e.target.value})
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = ()=>{
+            console.log(reader.result.toString())
+        }
+        reader.readAsDataURL(file);
     }
+    // const fileRemove = (file) => {
+    //     const updatedList = [...files];
+    //     updatedList.splice(files.indexOf(file), 1);
+    //     setFiles(updatedList);
+    //     props.onFileChange(updatedList);
+    // }
 
     return (
         <>
@@ -43,7 +53,8 @@ const DropFileInput = ({ formData, setFormData, props}) =>{
                     <img src={fileUpload} alt=""/>
                     <p> Drag {"&"} Drop your timetable here</p>
                 </div> 
-                <input type='file' accept ='image/*' value={formData.timetable} onChange={ (e)=>{ setFormData({...formData, timetable: e.target.value})}}/>
+                {/* <input type='file' accept ='image/*' value={formData.timetable} onChange={ (e)=>{ setFormData({...formData, timetable: convert2base64(e.target.value)})}}/> */}
+                <input type='file' value={formData.timetable} accept ='image/*' onChange={ (e)=>{convert2base64(e)}}/>
             </div>
             {
                 files.length>0 ? (
@@ -51,7 +62,7 @@ const DropFileInput = ({ formData, setFormData, props}) =>{
                         <p className='file-preview-title'>
                             Ready to upload
                         </p>
-                        {
+                        {/* {
                             files.map((item, index)=>(
                                 <div key={index} className='drop-file-preview-item'>
                                     <img src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt=''/>
@@ -62,7 +73,7 @@ const DropFileInput = ({ formData, setFormData, props}) =>{
                                     <span className="drop-file-preview__item__del" onClick={() => fileRemove(item)}>x</span>
                                 </div>
                             ))
-                        }
+                        } */}
                     </div>
                 ) : null
             }
