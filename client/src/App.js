@@ -9,7 +9,7 @@ import { UserAuthContextProvider } from './context/UserAuthContext'
 // import {Container,Row, Col } from "react-bootstrap"
 import SignUp from './components/Signup/SignUpForm';
 import AddEvent from "./components/AddEvent";
-import FreeSlot from "./components/freeslot";
+import FreeSlot from "./components/Freeslot";
 
 export default function App() {
   return (

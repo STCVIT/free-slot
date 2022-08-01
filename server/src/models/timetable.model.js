@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes)=>{
         tt: {
             type: DataTypes.JSON,
             allowNull: true
+        },
+        image: {
+            type: DataTypes.BLOB('long'),
+            allowNull: true
         }
     }, {
         createdAt: false,
