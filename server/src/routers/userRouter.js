@@ -1,10 +1,20 @@
-const express = require('express')
-const router = express.Router()
+const router = require('express').Router()
 const db = require('../../db')
 const User = db.users
-const userController = require('../controllers/userController')
+const {
+    addUser,
+    getUser,
+    getUsers,
+    updateUser,
+    deleteUser } = require('../controllers/userController')
 
-router.post('/create',  userController.upload, userController.addUser)
+const { checkUser } = require('../middleware/auth')
+     
+router.post('/create', checkUser, addUser)
+router.get('/getUser/:regno', checkUser, getUser)
+router.get('/getUsers/:meet_id', checkUser, getUsers)
+router.patch('./updateUser/:regno', checkUser, updateUser)
+router.delete('./deleteUser', checkUser, deleteUser)
 // router.post('/create', async (req, res)=>{
 //     try {
 //         const user = await User.create(req.body)
