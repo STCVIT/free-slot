@@ -12,6 +12,7 @@ app.use(express.json());
 require('./db')
 require('./associations')
 const userRouter = require('./src/routers/userRouter')
+
 app.use('/user', userRouter)
 
 const ttRouter = require('./src/routers/timetableRouter')
