@@ -2,16 +2,18 @@ const express = require('express')
 const router = express.Router()
 const db = require('../../db')
 const User = db.users
+const userController = require('../controllers/userController')
 
-router.post('/create', async (req, res)=>{
-    try {
-        const user = await User.create(req.body)
-        res.status(200).send(user)
-    }
-    catch(err){
-        console.error(err.message);
-    }
-})
+router.post('/create',  userController.upload, userController.addUser)
+// router.post('/create', async (req, res)=>{
+//     try {
+//         const user = await User.create(req.body)
+//         res.status(200).send(user)
+//     }
+//     catch(err){
+//         console.error(err.message);
+//     }
+// })
 router.delete('/delete/:regno', async (req, res)=>{
     try {
         const regno = req.params.regno;

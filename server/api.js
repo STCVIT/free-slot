@@ -2,7 +2,7 @@ const express = require('express');
 const app = express()
 const router = express.Router()
 const cors = require('cors')
-const whitelist = ['http://127.0.0.1:8080']
+const whitelist = ['http://127.0.0.1:3000']
 
 const corsOptions = {
     origin: (origin, callback)=>{

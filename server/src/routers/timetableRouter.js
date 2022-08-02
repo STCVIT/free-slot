@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const db = require('../../db')
 const TT = db.timetables
-const ttController = require('../controllers/ttController')
-router.post('/create', ttController.addTimetable, ttController.addImage)
+const ttController = require('../controllers/userController')
+// router.post('/create',  ttController.addImage, ttController.addTimetable)
 
 router.put('/update/:id', async (req, res)=>{
     try {

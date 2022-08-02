@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes)=>{
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        image: {
+            type: DataTypes.BLOB('long'),
+            allowNull: true
         }
     }, {
         createdAt: false,
