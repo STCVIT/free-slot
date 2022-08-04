@@ -1,4 +1,3 @@
-const express = require('express');
 const admin = require('firebase-admin');
 const path = require('path');
 require("dotenv").config({path: path.resolve(__dirname, "../../../.env")});
@@ -6,7 +5,7 @@ require("dotenv").config({path: path.resolve(__dirname, "../../../.env")});
 const errorHandler = require('../middleware/errorHandler');
 const successHandler = require('../middleware/successHandler');
 const { AuthError, EmailNotVerifiedError } = require('../utilities/error');
-const { UserCreatedSuccess, UserDeletedSuccess } = require('../utilities/success');
+const { UserDeletedSuccess } = require('../utilities/success');
 
 var service = {
     api_key: process.env.APIKEY,
@@ -46,7 +45,7 @@ const checkUser = (req, res, next)=>{
 }
 const deleteUser = async (req, res)=>{
     const id = req.userId;
-    await admin.auht().deleteUser(uid);
+    await admin.auht().deleteUser(id);
     return successHandler(new UserDeletedSuccess(), res)
 }
-module.exports = { checkUser, deleteUser}
+module.exports = { checkUser, deleteUser }

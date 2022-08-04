@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes)=>{
             allowNull: false,
             primaryKey: true,
             validate: {
-                is: /([0-9]{2})([A-Z]{3})([0-9]{4})/,
+                is: /([0-9]{2})([A-Z]{3})([0-9]{4})/, //get this checked
               }
         },
         name: {
@@ -16,15 +16,23 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                is: /^([a-z|\.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/,
+                is: /^([a-z|\.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/, //get these validators checked
               }
         },
         password: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING, //check this datatype
+            allowNull: true,
         },
-        image: {
-            type: DataTypes.BLOB('long'),
+        timetable: {
+            type: DataTypes.JSON, // or DataTypes.ARRAY(DataTypes.JSON)
+            allowNull: true
+        },
+        date_format: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        time_format: {
+            type: DataTypes.STRING,
             allowNull: true
         }
     }, {
@@ -33,3 +41,5 @@ module.exports = (sequelize, DataTypes)=>{
     });
     return User
 }
+
+//use hooks for encrypting password before storing
