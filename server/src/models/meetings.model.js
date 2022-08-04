@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes)=>{
             primaryKey: true,
             autoIncrement: true
         },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        //check about this link or location thing
         location: {
             type: DataTypes.STRING,
             allowNull: true
@@ -14,11 +19,23 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: true
         },
-        timings: {
-            type: DataTypes.JSON,
+        date: {
+            type: DataTypes.DATEONLY,
             allowNull: false
+        },
+        start_time: {
+            type: DataTypes.TIME,
+            allowNull: false
+        },
+        end_time: {
+            type: DataTypes.TIME,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
         }
-
     }, {
         createdAt: false,
         updatedAt: false

@@ -1,8 +1,9 @@
-const db = require('../../db')
+const db = require('../db/db')
 const User = db.users;
-const { NotFounError } = require('../utilities/error')
+const { NotFounError, BadRequestError } = require('../utilities/error')
 const errorhandler = require('../middleware/errorHandler')
 
+// Adding User
 const addUser = async (req, res)=>{
     try {
         let info = {
@@ -16,11 +17,13 @@ const addUser = async (req, res)=>{
     res.status(200).send(user)
     console.log(user);
     }
-    catch (err){
-        console.error(err.message);
+    catch (error){
+        errorhandler(new BadRequestError)
+        console.error(error.message);
     }
 }
 
+// Get one User
 const getUser = async (req, res)=>{
     try{
         let regno = req.params.regno;
@@ -28,34 +31,37 @@ const getUser = async (req, res)=>{
             return res.status(418).send("Invalid registration number")
         }
         const user = await User.findOne({
-            reg_no: regno
-        })
+            where: {reg_no: regno}
+         })
         if(!user) {
             return errorhandler(new NotFounError, req, res)
         }
         res.status(200).send(user)
     }
-    catch(err){
+    catch(error){
         errorhandler(new BadRequestError)
-        console.error(err.message);
+        console.error(error.message);
     }
 }
+
+// Get all users
 const getUsers = async (req, res)=>{
     try{
-        const users = await User.find({
-            meet_id: req.params.meet_id
+        const users = await User.findAll({
+            where: {meet_id: req.params.meet_id}
         }).sort()
         if(!users) {
             return errorhandler(new NotFounError, req, res)
         }
         res.status(200).send(users)
     }
-    catch(err){
+    catch(error){
         errorhandler(new BadRequestError)
-        console.error(err.message);
+        console.error(error.message);
     }
 }
 
+// update user
 const updateUser = async (req, res)=>{
     const updates = Object.keys(req.body)
     try{
@@ -64,8 +70,8 @@ const updateUser = async (req, res)=>{
             return res.status(418).send("Invalid registration number")
         }
         const user = await User.findOne({
-            reg_no: regno
-        })
+            where: {reg_no: regno}
+         })
         if(!user) {
             return errorhandler(new NotFounError, req, res)
         }
@@ -73,20 +79,32 @@ const updateUser = async (req, res)=>{
         await user.save()
         res.status(200).send(user)
     }
-    catch(err){
+    catch(error){
         errorhandler(new BadRequestError)
-        console.error(err.message);
+        console.error(error.message);
     }
 }
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage,
-                        fileFilter: (req, file, cb) =>{
-                            const fileTypes = /jpeg|jpg|png|gif/
-                            const mimeType = fileTypes.test(file.mimetype)
-                            const extname = fileTypes.test(path.extname(file.originalname))
-                            if(mimeType && extname){ return cb(null, true)}
-                            cb('Give proper files formate to upload')
-                        } }).single('image')
+
+//delete user
+const deleteUser = async (req, res)=>{
+    try {
+        let regno =req.params.regno
+        if(!regno || regno == undefined){
+            return res.status(418).send("Invalid registration number")
+        }
+        const user = await User.findOne({
+            where: {reg_no: regno}
+         })
+         if(!user) {
+            return errorhandler(new NotFounError, req, res)
+        }
+        await user.destroy()
+        res.status(200).send(user)
+    } catch (error) {
+        errorhandler(new BadRequestError)
+        console.error(error.message);
+    }
+}
 
 module.exports = { 
     addUser,
