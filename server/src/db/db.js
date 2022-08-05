@@ -13,10 +13,9 @@ sequelize.authenticate()
 const db = {}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
-db.users=require('./src/models/user.model')(sequelize, DataTypes)
-db.timetables=require('./src/models/timetable.model')(sequelize, DataTypes)
-db.meets=require('./src/models/meetings.model')(sequelize, DataTypes)
-db.prefs=require('./src/models/preferences.model')(sequelize, DataTypes)
+db.users=require('../models/user.model')(sequelize, DataTypes)
+db.teams=require('../models/team.model')(sequelize, DataTypes)
+db.meets=require('../models/meetings.model')(sequelize, DataTypes)
 sequelize.sync({ force: false })
     .then(()=>{
         console.log("Databases & tables created")
