@@ -19,10 +19,6 @@ module.exports = (sequelize, DataTypes)=>{
                 is: /^([a-z|\.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/, //get these validators checked
               }
         },
-        password: {
-            type: DataTypes.STRING, //check this datatype
-            allowNull: true,
-        },
         timetable: {
             type: DataTypes.JSON, // or DataTypes.ARRAY(DataTypes.JSON)
             allowNull: true
@@ -41,5 +37,3 @@ module.exports = (sequelize, DataTypes)=>{
     });
     return User
 }
-
-//use hooks for encrypting password before storing

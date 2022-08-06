@@ -1,3 +1,4 @@
+//get this checked
 const db = require('../db/db')
 const Meet = db.meets
 const { BadRequestError, DuplicateMeetError } = require('../utilities/error')

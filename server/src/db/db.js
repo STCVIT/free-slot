@@ -17,8 +17,9 @@ db.users=require('../models/user.model')(sequelize, DataTypes)
 db.teams=require('../models/team.model')(sequelize, DataTypes)
 db.meets=require('../models/meetings.model')(sequelize, DataTypes)
 sequelize.sync({ force: false })
+    .then(()=>{require('../associations')})
     .then(()=>{
-        console.log("Databases & tables created")
+        console.log("Databases, tables & associations created")
     })
     .catch((err)=>{
         console.error(err.message)

@@ -48,7 +48,6 @@ const getTeamByName = async (req, res)=>{
 
 // get all teams
 const getAllTeams = async (req, res)=>{
-    let teams = []
     try {
         const adminId  = req.params.regno
         if(adminId != null){
