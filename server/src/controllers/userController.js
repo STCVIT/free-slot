@@ -1,29 +1,27 @@
 const db = require('../db/db')
 const User = db.users;
 const { NotFounError, BadRequestError } = require('../utilities/error')
-const errorhandler = require('../middleware/errorHandler')
+const errorHandler = require('../middleware/errorHandler')
 
 // Adding User
 const addUser = async (req, res)=>{
     try {
         let info = {
-        image: req.file.path,
+        reg_no: req.body.reg_no,
         name: req.body.name,
-        regno: req.body.regno,
         email: req.body.email,
-        password: req.body.password,
     }
     const user = await User.create(info)
-    res.status(200).send(user)
+    res.statusCode(200).send(user)
     console.log(user);
     }
     catch (error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError, req, res)
         console.error(error.message);
     }
 }
 
-// Get one User
+// Get one user
 const getUser = async (req, res)=>{
     try{
         let regno = req.params.regno;
@@ -34,12 +32,12 @@ const getUser = async (req, res)=>{
             where: {reg_no: regno}
          })
         if(!user) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFounError, req, res)
         }
         res.status(200).send(user)
     }
     catch(error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError)
         console.error(error.message);
     }
 }
@@ -51,19 +49,19 @@ const getUsers = async (req, res)=>{
             where: {meet_id: req.params.meet_id}
         }).sort()
         if(!users) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFounError, req, res)
         }
         res.status(200).send(users)
     }
     catch(error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError)
         console.error(error.message);
     }
 }
 
 // update user
 const updateUser = async (req, res)=>{
-    const updates = Object.keys(req.body)
+    const updates = new Object.keys(req.body) //new keyword or not?
     try{
         let regno = req.params.regno
         if(!regno || regno == undefined){
@@ -73,14 +71,14 @@ const updateUser = async (req, res)=>{
             where: {reg_no: regno}
          })
         if(!user) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFounError, req, res)
         }
         updates.forEach((update)=> (user[update] = req.body[update]));
         await user.save()
         res.status(200).send(user)
     }
     catch(error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError)
         console.error(error.message);
     }
 }
@@ -96,12 +94,12 @@ const deleteUser = async (req, res)=>{
             where: {reg_no: regno}
          })
          if(!user) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFounError, req, res)
         }
         await user.destroy()
         res.status(200).send(user)
     } catch (error) {
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError)
         console.error(error.message);
     }
 }
