@@ -10,14 +10,13 @@ module.exports = (sequelize, DataTypes)=>{
             unique: true,
             allowNull: false
         },
-        admin_id: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         members: {
             type: DataTypes.ARRAY(DataTypes.STRING), //check once
             allowNull: false
         }
+    }, {
+        createdAt: false,
+        updatedAt: false
     })
     return Team
 }
