@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 const path = require('path')
 require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
 const cors = require('cors');
@@ -20,9 +21,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+app.use(cookieParser())
 
 app.use('/user', userRouter)
 //app.use('/team', teamRouter)
 //app.use('/meet', meetRouter)
+
+
 
 module.exports = app

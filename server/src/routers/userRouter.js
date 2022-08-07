@@ -8,7 +8,7 @@ const {
 
 const { checkUser } = require('../middleware/auth')
      
-router.post('/create', addUser)
+router.post('/create', checkUser, addUser)
 router.get('/getUser/:regno', checkUser, getUser)
 router.get('/getUsers/:meet_id', checkUser, getUsers)
 router.patch('/updateUser/:regno', checkUser, updateUser)
