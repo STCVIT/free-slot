@@ -1,7 +1,6 @@
 const admin = require('firebase-admin');
 const app = require('express')
 const path = require('path');
-const session = require('express-session')
 require("dotenv").config({path: path.resolve(__dirname, "../../../.env")});
 
 const errorHandler = require('../middleware/errorHandler');
@@ -16,24 +15,25 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-const signupUser = (req, res, next)=>{
+const signup = (req, res, next)=>{
     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
         return errorHandler(new AuthError(), req, res)
     }
+    const idToken = req.body.idToken.toString()
+    const expiresin = 60*60*24*5*1000
     const token = req.header("Authorization");
     admin
     .auth()
     .verifyIdToken(token)
+    .createSessionCookie(idToken, {expiresin})
     .then((user)=>{
-        const uid = user.uid
         if(!user.email_verified) {
             return errorHandler(new EmailNotVerifiedError(), req, res)
         } else {
-            req.body.userId = uid
-            req.body.name = user.name
+            req.body.name = user.name.slice(0, user.name.length-12)
             req.body.regno = user.name.match(/\(([^)]+)\)/)[1] //use regex here check once
             req.body.email = user.mail;
-            req.body.idToken = token;
+            req.body.idToken = user.idToken;
             next();
         }
     })
@@ -41,6 +41,33 @@ const signupUser = (req, res, next)=>{
         console.log(err.message);
         errorHandler(new AuthError(), req, res)
     })
+}
+
+const sessionLogin = async (req, res)=>{
+    if(req.header("Authorization")==undefined || !req.header("Authorization")) {
+                 return errorHandler(new AuthError(), req, res)
+             }
+    const idToken = req.body.idToken.toString()
+    const expiresin = 60*60*24*5*1000
+    admin
+        .auth()
+        .createSessionCookie(idToken, {expiresin})
+        .then(
+            (sessionCookie)=>{
+                const options = {maxAge: expiresin, httpOnly: true}
+                res.cookie("session", sessionCookie, options)
+                res.end(JSON.stringify({status: success}))
+            }, 
+            (error)=>{
+                res.status(401).send("Unauthorized request")
+                console.error(error)
+            }
+        )
+}
+
+const sessionLogout = async (req, res)=>{
+    res.clearCookie("session")
+    res.redirect('/login')
 }
 
 const checkUser = (req, res, next)=>{
@@ -69,4 +96,4 @@ const deleteUser = async (req, res)=>{
     await admin.auht().deleteUser(id);
     return successHandler(new UserDeletedSuccess(), res)
 }
-module.exports = { checkUser, deleteUser }
+module.exports = { checkUser, deleteUser, signup, sessionLogin, sessionLogout }

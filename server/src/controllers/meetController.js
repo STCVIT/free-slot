@@ -33,7 +33,7 @@ const getMeet = async (req, res)=>{
 //Get meets...needs to be fixed
 const getMeets = async (req, res)=>{
     try {
-        const meets = await Meet.findOne({
+        const meets = await Meet.findAll({
             where: {id: req.params.meet_id}
         }).sort()
         if(!meets){
