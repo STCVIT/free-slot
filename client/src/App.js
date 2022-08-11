@@ -10,12 +10,10 @@ import Schedule from "./components/Schedule";
 // import {Container,Row, Col } from "react-bootstrap"
 import SignUp from './components/Signup/SignUpForm';
 import AddEvent from "./components/AddEvent";
-<<<<<<< HEAD
 import freeslot from "./components/freeslot";
+import './App.css'
 
-=======
 import FreeSlot from "./components/Freeslot";
->>>>>>> a8b821a93e1978dec92043c18dc3c5f66f1f6a4a
 
 export default function App() {
   return (
