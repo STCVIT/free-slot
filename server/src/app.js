@@ -7,11 +7,12 @@ const cors = require('cors');
 const app = express();
 
 require('./db/db')
-// require('./associations')
+//require('./associations')
 
+const testRouter = require('./routers/testRouter')
 const userRouter = require('./routers/userRouter')
-//const teamRouter = require('./routers/teamRouter')
-//const meetRouter = require('./routers/meetRouter');
+const teamRouter = require('./routers/teamRouter')
+const meetRouter = require('./routers/meetRouter');
 
 app.use(express.urlencoded({ extended: true}));
 //app.use(cors)
@@ -24,9 +25,8 @@ app.use(session({
 app.use(cookieParser())
 
 app.use('/user', userRouter)
-//app.use('/team', teamRouter)
-//app.use('/meet', meetRouter)
-
-
+app.use(testRouter)
+app.use('/team', teamRouter)
+app.use('/meet', meetRouter)
 
 module.exports = app
