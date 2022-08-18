@@ -10,8 +10,8 @@ import Schedule from "./components/Schedule";
 // import {Container,Row, Col } from "react-bootstrap"
 import SignUp from './components/Signup/SignUpForm';
 import AddEvent from "./components/AddEvent";
-import Freeslot from "./components/Freeslot";
-
+import './App.css'
+import FreeSlot from "./components/Freeslot";
 export default function App() {
   return (
       <UserAuthContextProvider>
