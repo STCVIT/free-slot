@@ -12,7 +12,7 @@ const addUser = async (req, res)=>{
         email: req.body.email,
     }
     const user = await User.create(info)
-    res.statusCode(200).send(user)
+    res.status(200).send(user)
     console.log(user);
     }
     catch (error){

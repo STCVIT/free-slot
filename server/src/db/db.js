@@ -9,17 +9,19 @@ sequelize.authenticate()
     .catch(()=>{
         console.log('Couldn\'t connect to database')
     })
-
 const db = {}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 db.users=require('../models/user.model')(sequelize, DataTypes)
 db.teams=require('../models/team.model')(sequelize, DataTypes)
 db.meets=require('../models/meetings.model')(sequelize, DataTypes)
-sequelize.sync({ force: false })
-    .then(()=>{require('../associations')})
+sequelize.sync({ force: true })
     .then(()=>{
-        console.log("Databases, tables & associations created")
+        console.log("Database & tables created")
+    })
+    .then(()=>{
+        require('../associations')
+        console.log("association says hi")
     })
     .catch((err)=>{
         console.error(err.message)
