@@ -1,31 +1,22 @@
 const admin = require('firebase-admin');
-const app = require('express')
-const path = require('path');
-require("dotenv").config({path: path.resolve(__dirname, "../../../.env")});
-
 const errorHandler = require('../middleware/errorHandler');
 const successHandler = require('../middleware/successHandler');
 const { AuthError, EmailNotVerifiedError } = require('../utilities/error');
 const { UserDeletedSuccess } = require('../utilities/success');
 
-//testing
 var serviceAccount = require("../../../serviceAccountKey.json");
-
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
 const signup = (req, res, next)=>{
-    if(req.header("Authorization")==undefined || !req.header("Authorization")) {
+    if(req.header["Authorization"]==undefined || !req.header["Authorization"]) {
         return errorHandler(new AuthError(), req, res)
     }
-    const idToken = req.body.idToken.toString()
-    const expiresin = 60*60*24*5*1000
-    const token = req.header("Authorization");
+    const tokenString = req.header['Authorization'] ? req.header['Authorization'].split(" "): null
     admin
     .auth()
-    .verifyIdToken(token)
-    .createSessionCookie(idToken, {expiresin})
+    .verifyIdToken(tokenString[1])
     .then((user)=>{
         if(!user.email_verified) {
             return errorHandler(new EmailNotVerifiedError(), req, res)
@@ -37,6 +28,12 @@ const signup = (req, res, next)=>{
             next();
         }
     })
+    // .then(
+    //     (sessionCookie)=>{
+    //         const options = {maxAge: expiresin, httpOnly: true}
+    //         res.cookie("session", sessionCookie, options)
+    //         res.end(JSON.stringify({status: success}))
+    //     })
     .catch((err)=>{
         console.log(err.message);
         errorHandler(new AuthError(), req, res)
@@ -57,8 +54,8 @@ const sessionLogin = async (req, res)=>{
                 const options = {maxAge: expiresin, httpOnly: true}
                 res.cookie("session", sessionCookie, options)
                 res.end(JSON.stringify({status: success}))
-            }, 
-            (error)=>{
+            })
+        .catch((error)=>{
                 res.status(401).send("Unauthorized request")
                 console.error(error)
             }

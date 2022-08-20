@@ -1,14 +1,29 @@
-import React from 'react'
+import React, {useState} from 'react'
 import signupInfoImg from '../../assets/SignupInfoImage.svg'
+import { UserAuth } from '../../context/UserAuthContext'
+import {useNavigate} from 'react-router-dom'
 import googleLogo from '../../assets/Gooogle-logo.svg'
 
 export default function SignupInfo({ formData, setFormData }) {
+    const [error, setError] = useState('')
+    const {googleSignIn} = UserAuth()
+    const navigate = useNavigate()
+    const oAuth= async (e)=>{
+        setError('')
+        try {
+            await googleSignIn()
+            navigate('/home')
+        } catch (error) {
+            setError(e.message)
+            console.log(e.message)
+        }
+      }
     return(
         <div className='signup-container flex items-center'>
             {/* <img src={signupInfoImg} alt="signup" class="signup-image"/> */}
 
             <div className='info-container flex-row items-center justify-center'>
-                    <button className=" flex justify-around border text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                    <button className=" flex justify-around border text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={oAuth}>
                         <img src={googleLogo} alt="" /> 
                         <p>Continue with Google</p>
                     </button>

@@ -1,4 +1,4 @@
-import Login from './components/Login'
+import Login from './components/Login/Login'
 // import SignupInfo from './components/SignupInfo'
 // import TimeTableInfo from './components/TimetableInfo';
 import Home from "./components/Home"

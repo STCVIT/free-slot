@@ -6,12 +6,12 @@ const {
     updateUser,
     deleteUser } = require('../controllers/userController')
 
-const { checkUser } = require('../middleware/auth')
+const { signup } = require('../middleware/auth')
      
-router.post('/create', addUser) 
+router.post('/create', signup, addUser) 
 router.get('/getUser', getUser)
-router.get('/getUsers/:meet_id', checkUser, getUsers)
-router.patch('/updateUser',  updateUser)
-router.delete('/deleteUser/:regno', checkUser, deleteUser)
+router.get('/getUsers/:meet_id', getUsers)
+router.patch('/updateUser', updateUser)
+router.delete('/deleteUser/:regno', deleteUser)
 
 module.exports = router
