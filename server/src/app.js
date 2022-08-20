@@ -12,21 +12,27 @@ require('./associations')
 const userRouter = require('./routers/userRouter')
 const teamRouter = require('./routers/teamRouter')
 const meetRouter = require('./routers/meetRouter')
-const userTeamRouter = require('./routers/userTeamRouter')
 
 app.use(express.urlencoded({ extended: true}));
-//app.use(cors)
 app.use(express.json());
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        methods: ["GET, POST, PUT PATCH, DELETE"]
+    })
+)
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
 }))
-app.use(cookieParser())
+//app.use(cookieParser())
 
 app.use('/user', userRouter)
 app.use('/team', teamRouter)
 app.use('/meet', meetRouter)
-app.use('/userTeam', userTeamRouter)
 
+app.get('/', (req, res)=>{
+    res.send("lol")
+})
 module.exports = app

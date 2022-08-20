@@ -8,7 +8,7 @@ const {busy_time} = require('./freeSlot')
 const addUser = async (req, res)=>{
     try {
         let info = {
-        reg_no: req.body.reg_no,
+        reg_no: req.body.regno,
         name: req.body.name,
         email: req.body.email,
         timetable: busy_time(req.body.timetable)
