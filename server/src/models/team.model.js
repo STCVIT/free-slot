@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes)=>{
     const Team = sequelize.define('team', {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             primaryKey: true,
+            defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
         name: {
             type: DataTypes.STRING,
-            unique: true,
-            allowNull: false
+            unique: true
         }
     }, {
         createdAt: false,

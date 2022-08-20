@@ -6,6 +6,7 @@ const errorHandler = require('../middleware/errorHandler')
 //Adding Meet
 const addMeet = async (req, res)=>{
     try {
+        
         const meet = await Meet.create(req.body);
         res.status(201).send(meet)
     } catch (error) {

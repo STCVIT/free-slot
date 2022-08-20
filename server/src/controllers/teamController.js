@@ -7,7 +7,9 @@ const errorHandler = require('../middleware/errorHandler');
 const addTeam = async (req, res)=>{
     try {
         const team = await Team.create(req.body);
+        const members = await team.addUsers(req.body.members)
         res.status(201).send(team)
+        console.log("hi")
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
         console.error(error.message)
@@ -21,7 +23,7 @@ const getTeamById = async (req, res)=>{
             where: {id: req.params.team_id}
         })
         if(!team){
-            return errorHandler(new NotFounError, req, res)
+            return errorHandler(new NotFoundError, req, res)
         }
         res.status(201).send(team)
     } catch (error) {
@@ -37,7 +39,7 @@ const getTeamByName = async (req, res)=>{
             where: {name: req.params.name}
         })
         if(!team){
-            return errorHandler(new NotFounError, req, res)
+            return errorHandler(new NotFoundError, req, res)
         }
         res.status(201).send(team)
     } catch (error) {
