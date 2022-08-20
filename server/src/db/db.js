@@ -15,14 +15,14 @@ db.sequelize = sequelize
 db.users=require('../models/user.model')(sequelize, DataTypes)
 db.teams=require('../models/team.model')(sequelize, DataTypes)
 db.meets=require('../models/meetings.model')(sequelize, DataTypes)
-sequelize.sync({ force: true })
+//db.user_teams=require('../models/userTeam.model')(sequelize, DataTypes)
+sequelize.sync({ force: false })
     .then(()=>{
         console.log("Database & tables created")
     })
-    .then(()=>{
-        require('../associations')
-        console.log("association says hi")
-    })
+    // .then(()=>{
+    //     require('../associations')
+    // })
     .catch((err)=>{
         console.error(err.message)
     }) 

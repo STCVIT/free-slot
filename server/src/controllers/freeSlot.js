@@ -175,4 +175,4 @@ function freeTime(commonSlots){
 function freeSlot(response){
     return freeTime(findCommonSlots(busy_time_users(response)))
 }
-module.exports = freeSlot
+module.exports = {freeSlot, busy_time}

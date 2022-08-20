@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes)=>{
               }
         },
         timetable: {
-            type: DataTypes.JSON, // or DataTypes.ARRAY(DataTypes.JSON)
+            type: DataTypes.ARRAY(DataTypes.JSON), // or DataTypes.ARRAY(DataTypes.JSON)
             allowNull: true
         },
         date_format: {
