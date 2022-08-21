@@ -6,18 +6,34 @@ import List from '../List.svg'
 import Link from '../Link.svg'
 import ModalNewTeam from "./ModalNewTeam";
 import { useState } from "react";
+import ModalChooseTeam from './ModalChooseTeam'
+import ModalLink from './ModalLink'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function Example() {
-    const [modalOn, setModalOn] = useState(false);
-    const [choice, setChoice] = useState(false)
+    const [modalOnNew, setModalOnNew] = useState(false);
+    const [choiceNew, setChoiceNew] = useState(false)
   
-    const clicked = () => {
-      setModalOn(true)
+    const [modalOnChoose, setModalOnChoose] = useState(false);
+    const [choiceChoose, setChoiceChoose] = useState(false)
+    
+    const [modalOnLink, setModalOnLink] = useState(false);
+    const [choiceLink, setChoiceLink] = useState(false)
+    
+    const clickedLink = () => {
+      setModalOnLink(true)
     }
+
+    const clickedNew = () => {
+      setModalOnNew(true)
+    }
+
+    const clickedChoose = () => {
+        setModalOnChoose(true)
+      }
     return (
         <>
         <Menu as="div" className="relative inline-block text-left">
@@ -43,7 +59,7 @@ export default function Example() {
                             {({ active }) => (
                                 
                                 <>
-                                    <button className="flex px-6 items-center p-2" onClick={clicked} >
+                                    <button className="flex px-6 items-center p-2" onClick={clickedNew} >
                                         <img src={Plus} alt='' className='h-4 w-4' />
                                         <p
                                             
@@ -63,7 +79,7 @@ export default function Example() {
                             {({ active }) => (
                                 <>
 
-                                    <div className="flex px-6 items-center p-2">
+                                    <button className="flex px-6 items-center p-2" onClick={clickedChoose}>
                                         <img src={List} alt='' className='h-4 w-4 ' />
                                         <p
                                             className={classNames(
@@ -72,7 +88,7 @@ export default function Example() {
                                             )}>
                                             Choose from existing
                                         </p>
-                                    </div>
+                                    </button>
 
                                 </>
                             )}
@@ -80,7 +96,7 @@ export default function Example() {
                         <Menu.Item>
                             {({ active }) => (
                                 <>
-                                    <div class="flex px-6 items-center p-2">
+                                    <button class="flex px-6 items-center p-2" onClick={clickedLink}>
                                         <img src={Link} alt='' className='h-4 w-4' />
                                         <p
                                             className={classNames(
@@ -90,7 +106,7 @@ export default function Example() {
                                         >
                                             Create link
                                         </p>
-                                    </div>
+                                    </button>
                                 </>
                             )}
                         </Menu.Item>
@@ -98,7 +114,9 @@ export default function Example() {
                 </Menu.Items>
             </Transition>
         </Menu>
-        {modalOn && < ModalNewTeam setModalOn={setModalOn} setChoice={setChoice} />}
+        {modalOnNew && < ModalNewTeam setModalOnNew={setModalOnNew} setChoiceNew={setChoiceNew} />}
+        {modalOnChoose && < ModalChooseTeam setModalOnChoose={setModalOnChoose} setChoiceChoose={setChoiceChoose} />}
+        {modalOnLink && < ModalLink setModalOnLink={setModalOnLink} setChoiceLink={setChoiceLink} />}
         </>
     )
 }

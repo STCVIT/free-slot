@@ -15,7 +15,7 @@ const Landing = () => {
   }
 
   return (
-  <div>
+    <div className="flex flex-col justify-center items-center min-h-screen ">
     <div className="p-4">
       <button className="hover:bg-indigo-600 hover:text-white rounded-xl bg-transparent border-indigo-600 border text-indigo-600 px-10 py-3 mb-4" onClick={handleLogin}>Login</button>
     </div>

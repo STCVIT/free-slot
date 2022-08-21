@@ -19,10 +19,10 @@ export default function SignupInfo({ formData, setFormData }) {
         }
       }
     return(
-        <div className='signup-container flex items-center'>
+        <div className='signup-container mt-3 flex-col justify-center items-center'>
             {/* <img src={signupInfoImg} alt="signup" class="signup-image"/> */}
 
-            <div className='info-container flex-row items-center justify-center'>
+            <div className='info-container flex flex-col justify-center items-center'>
                     <button className=" flex justify-around border text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={oAuth}>
                         <img src={googleLogo} alt="" /> 
                         <p>Continue with Google</p>
