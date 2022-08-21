@@ -46,13 +46,16 @@ function Form() {
             Prev
           </button>
           <button className="py-0.5 px-2"
-            onClick={() => {
+            onClick={async() => {
               if (page === 1) {
-                handleSubmit();
+                await handleSubmit();
+                navigate('/homepage')
+                
               } else {
                 setPage((currPage) => currPage + 1);
               }
             }}
+
           >
             {page === 1 ? "Submit" : "Next"}
           </button>

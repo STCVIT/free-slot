@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import profile from '../Profile.svg'
+import profile from '../assets/Profile.svg'
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
