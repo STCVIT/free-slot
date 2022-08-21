@@ -70,7 +70,7 @@ const ModalNewTeam = ({ setModalOnNew, setChoiceNew }) => {
     });
     return (
 
-        <div className="   bg-zinc-200 opacity-80 fixed inset-0 z-50   ">
+        <div className="   bg-zinc-200 opacity-80 fixed inset-0  z-50  ">
 
             <div className="flex h-screen justify-center items-center ">
 
@@ -85,7 +85,6 @@ const ModalNewTeam = ({ setModalOnNew, setChoiceNew }) => {
                     <p id="log"></p> */}
 
                     <div class="form-group">
-                        <h1>Tag list using Sean Coker’s <a href="https://sean.is/poppin/tags" target="_blank">taggle.js</a> and Twitter’s <a href="https://twitter.github.io/typeahead.js/" target="_blank">typeahead.js</a></h1>
 
                         <div id="tags" class="tag-container"></div>
                     </div>

@@ -1,9 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import Plus from '../Plus.svg'
-import List from '../List.svg'
-import Link from '../Link.svg'
+import Plus from '../assets/Plus.svg'
+import List from '../assets/List.svg'
+import Link from '../assets/Link.svg'
 import ModalNewTeam from "./ModalNewTeam";
 import { useState } from "react";
 import ModalChooseTeam from './ModalChooseTeam'

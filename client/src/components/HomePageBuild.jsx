@@ -1,7 +1,7 @@
 import React from 'react'
-import Sidebar from "./components/Sidebar";
-import Tabs from "./components/Tabs"
-import Navbar from "./components/Navbar";
+import Sidebar from "./Sidebar";
+import Tabs from "./Tabs"
+import Navbar from "./Navbar";
 
 
 function HomePageBuild() {
