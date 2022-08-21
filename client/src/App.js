@@ -12,6 +12,7 @@ import SignUp from './components/Signup/SignUpForm';
 import AddEvent from "./components/AddEvent";
 import './App.css'
 import FreeSlot from "./components/Freeslot";
+import HomePageBuild from './components/HomePageBuild'
 export default function App() {
   return (
       <UserAuthContextProvider>
@@ -25,12 +26,13 @@ export default function App() {
               }
             />
             <Route path='/' element={<Landing />} /> 
-            <Route path='/' element={<AddEvent />} />
-            <Route path='/' element={<Schedule />} />
+            <Route path='/addevent' element={<AddEvent />} />
+            <Route path='/schedule' element={<Schedule />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<SignUp />} />
-            <Route path='/' element={<freeslot />} />
-            
+            {/* <Route path='/freeslots' element={<Freeslot />} /> */}
+            <Route path='/homepage' element={<HomePageBuild />} />
+
             
           </Routes>
         </BrowserRouter>
