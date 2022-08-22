@@ -10,23 +10,23 @@ admin.initializeApp({
 });
 
 const signup = (req, res, next)=>{
-    if(req.header["Authorization"]==undefined || !req.header["Authorization"]) {
+    if(req.headers['authorization']==undefined || !req.headers['authorization']) {
+        console.log("undefined route hitting.... "+req.headers['authorization'])
         return errorHandler(new AuthError(), req, res)
     }
-    const tokenString = req.header['Authorization'] ? req.header['Authorization'].split(" "): null
+    const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "): null
+    console.log(tokenString)
     admin
     .auth()
     .verifyIdToken(tokenString[1])
     .then((user)=>{
-        if(!user.email_verified) {
-            return errorHandler(new EmailNotVerifiedError(), req, res)
-        } else {
-            req.body.name = user.name.slice(0, user.name.length-12)
-            req.body.regno = user.name.match(/\(([^)]+)\)/)[1] //use regex here check once
-            req.body.email = user.mail;
-            req.body.idToken = user.idToken;
-            next();
-        }
+            console.log(user)
+            // req.body.name = user.name.slice(0, user.name.length-12)
+            // req.body.regno = user.name.match(/\(([^)]+)\)/)[1] //use regex here check once
+            // req.body.email = user.mail;
+            // req.body.idToken = user.idToken;
+            // next();
+        
     })
     // .then(
     //     (sessionCookie)=>{
@@ -36,7 +36,8 @@ const signup = (req, res, next)=>{
     //     })
     .catch((err)=>{
         console.log(err.message);
-        errorHandler(new AuthError(), req, res)
+        console.log('Error fetching user data:', error);
+        //errorHandler(new AuthError(), req, res)
     })
 }
 
@@ -93,4 +94,8 @@ const deleteUser = async (req, res)=>{
     await admin.auht().deleteUser(id);
     return successHandler(new UserDeletedSuccess(), res)
 }
-module.exports = { checkUser, deleteUser, signup, sessionLogin, sessionLogout }
+
+const authLog = (req, res)=>{
+    console.log(req.body.header['Authorization'])
+}
+module.exports = { checkUser, deleteUser, signup, sessionLogin, sessionLogout, authLog }
