@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import fileUpload from '../../assets/file-upload.svg'
 import { ImageConfig  } from '../../config/ImageConfig'
+import axios from 'axios'
 const DropFileInput = ({ formData, setFormData, props}) =>{
     const wrapperRef = useRef(null);
     const [files, setFiles] = useState([])
@@ -25,12 +26,17 @@ const DropFileInput = ({ formData, setFormData, props}) =>{
     //     }
     // }
     const convert2base64 = (e)=>{
-        //console.log(e.target.files[0])
         setFormData({...formData, timetable: e.target.value})
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = ()=>{
             console.log(reader.result.toString())
+            const string = reader.result.toString()
+            axios({
+                method: 'post',
+                url: 'https://freeslotsstc.azurewebsites.net',
+                data: {image: string}
+            })
         }
         reader.readAsDataURL(file);
     }

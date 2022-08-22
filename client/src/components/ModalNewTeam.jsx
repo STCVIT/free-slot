@@ -60,13 +60,7 @@ const ModalNewTeam = ({ setModalOnNew, setChoiceNew }) => {
                     $('.tt-suggestion').remove();
                 }
             });
-
-            
         }
-
-        
-
-        
     });
     return (
 

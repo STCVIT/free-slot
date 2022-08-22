@@ -6,7 +6,7 @@ const {
     updateUser,
     deleteUser } = require('../controllers/userController')
 
-const { signup } = require('../middleware/auth')
+const { signup, authLog } = require('../middleware/auth')
      
 router.post('/create', signup, addUser) 
 router.get('/getUser', getUser)
