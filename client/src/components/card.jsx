@@ -1,6 +1,6 @@
 import React from 'react'
 
-const freeslot = () => {
+const card = () => {
   return (
   <div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
     <p class="mb-5 font-bold text-black">Tue, 12th July</p>
@@ -11,4 +11,4 @@ const freeslot = () => {
   )
 }
 
-export default freeslot
+export default card
