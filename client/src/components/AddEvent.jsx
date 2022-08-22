@@ -2,7 +2,6 @@ import React from 'react'
 
 const AddEvent = () => {
   return (
-
     <div class="ml-28">
       <div class="grid gap-1 mb-6">
           <div>

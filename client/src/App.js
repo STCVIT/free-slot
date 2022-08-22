@@ -1,21 +1,20 @@
-import Login from './components/Login'
+//import Login from './components/Login'
 // import SignupInfo from './components/SignupInfo'
 // import TimeTableInfo from './components/TimetableInfo';
 import Home from "./components/Home"
-import Landing from './components/Landing'
+//import Landing from './components/Landing'
 import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { UserAuthContextProvider } from './context/UserAuthContext'
-import Schedule from "./components/Schedule";
+// import card from "./components/card"
+// import Schedule from "./components/Schedule";
 // import {Container,Row, Col } from "react-bootstrap"
-import SignUp from './components/Signup/SignUpForm';
-import AddEvent from "./components/AddEvent";
-<<<<<<< HEAD
-import freeslot from "./components/freeslot";
+//import SignUp from './components/Signup/SignUpForm';
+// import AddEvent from "./components/AddEvent";
+import Modify from "./components/Modify";
 
-=======
-import FreeSlot from "./components/Freeslot";
->>>>>>> a8b821a93e1978dec92043c18dc3c5f66f1f6a4a
+
+
 
 export default function App() {
   return (
@@ -29,12 +28,15 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path='/' element={<Landing />} /> 
-            <Route path='/' element={<AddEvent />} />
-            <Route path='/' element={<Schedule />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<SignUp />} />
-            <Route path='/' element={<freeslot />} />
+            {/* <Route path='/' element={<Landing />} />  */}
+            {/* <Route path="/" element={<card />} /> */}
+            {/* <Route path='/' element={<AddEvent />} /> */}
+            {/* <Route path='/' element={<Schedule />} /> */}
+            {/* <Route path='/' element={<TimeTableInfo />} /> */}
+            {/* <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<SignUp />} /> */}
+            <Route path='/' element={<Modify />} /> 
+            
             
             
           </Routes>
