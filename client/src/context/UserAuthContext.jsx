@@ -1,4 +1,4 @@
-import { createContext, useEffect, useContext, useState } from "react"
+import { createContext, useEffect, useContext, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,34 +6,48 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
-} from "firebase/auth"
-import { auth } from "../firebase"
+} from "firebase/auth";
+import { auth } from "../firebase";
+import axios from "axios";
 
-const userAuthContext = createContext()
+const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState("");
-  function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
+  const signUp = async (email, password) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    auth.currentUser.getIdToken().then((token) => {
+      axios({
+        method: 'post',
+        url: 'http://localhost:4000/user/create',
+        headers: { Authorization: `Bearer ${token}` }
+      })
+  })
   }
+  const signIn = async (email, password) => {
+    const response = await signInWithEmailAndPassword(auth, email, password);
 
-  function signIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
-  }
-  function logOut() {
-    return signOut(auth)
-  }
-  function googleSignIn() {
-    const googleAuthProvider = new GoogleAuthProvider()
-    return signInWithPopup(auth, googleAuthProvider)
-  }
+    console.log(response.user.accessToken);
+  };
+  const logOut = async () => {
+    await signOut(auth);
+  };
+  const googleSignIn = async () => {
+    const googleAuthProvider = new GoogleAuthProvider();
+    await signInWithPopup(auth, googleAuthProvider);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
+      setUser(currentUser);
     });
     return () => {
-      unsubscribe()
+      unsubscribe();
     };
   }, []);
 
@@ -46,6 +60,6 @@ export function UserAuthContextProvider({ children }) {
   );
 }
 
-export function useUserAuth() {
-  return useContext(userAuthContext)
+export const UserAuth = () => {
+  return useContext(userAuthContext);
 }

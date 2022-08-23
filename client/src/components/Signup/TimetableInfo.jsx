@@ -5,7 +5,8 @@ import DropFileInput from './DropFileInput'
 
 export default function TimeTableInfo({ formData, setFormData }) {
     const onFileChange = (files)=>{
-        console.log(files);
+        //console.log(files);
+        return files
     }
     return(
         <div className='signup-container flex items-center'>

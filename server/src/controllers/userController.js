@@ -1,32 +1,32 @@
 const db = require('../db/db')
 const User = db.users;
-const { NotFounError, BadRequestError } = require('../utilities/error')
-const errorhandler = require('../middleware/errorHandler')
+const { NotFoundError, BadRequestError } = require('../utilities/error')
+const errorHandler = require('../middleware/errorHandler');
+const {busy_time} = require('./freeSlot')
 
 // Adding User
 const addUser = async (req, res)=>{
     try {
         let info = {
-        image: req.file.path,
+        reg_no: req.body.regno,
         name: req.body.name,
-        regno: req.body.regno,
         email: req.body.email,
-        password: req.body.password,
+        timetable: busy_time(req.body.timetable)
     }
     const user = await User.create(info)
     res.status(200).send(user)
     console.log(user);
     }
     catch (error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError, req, res)
         console.error(error.message);
     }
 }
 
-// Get one User
+// Get one user
 const getUser = async (req, res)=>{
     try{
-        let regno = req.params.regno;
+        let regno = req.body.reg_no;
         if(!regno || regno==undefined){
             return res.status(418).send("Invalid registration number")
         }
@@ -34,12 +34,12 @@ const getUser = async (req, res)=>{
             where: {reg_no: regno}
          })
         if(!user) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFoundError, req, res)
         }
         res.status(200).send(user)
     }
     catch(error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError)
         console.error(error.message);
     }
 }
@@ -48,15 +48,15 @@ const getUser = async (req, res)=>{
 const getUsers = async (req, res)=>{
     try{
         const users = await User.findAll({
-            where: {meet_id: req.params.meet_id}
+            where: {meet_id: req.body.meet_id}
         }).sort()
         if(!users) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFoundError, req, res)
         }
         res.status(200).send(users)
     }
     catch(error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError)
         console.error(error.message);
     }
 }
@@ -65,7 +65,7 @@ const getUsers = async (req, res)=>{
 const updateUser = async (req, res)=>{
     const updates = Object.keys(req.body)
     try{
-        let regno = req.params.regno
+        let regno = req.body.reg_no
         if(!regno || regno == undefined){
             return res.status(418).send("Invalid registration number")
         }
@@ -73,14 +73,14 @@ const updateUser = async (req, res)=>{
             where: {reg_no: regno}
          })
         if(!user) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFoundError, req, res)
         }
         updates.forEach((update)=> (user[update] = req.body[update]));
         await user.save()
         res.status(200).send(user)
     }
     catch(error){
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError, req, res)
         console.error(error.message);
     }
 }
@@ -96,12 +96,12 @@ const deleteUser = async (req, res)=>{
             where: {reg_no: regno}
          })
          if(!user) {
-            return errorhandler(new NotFounError, req, res)
+            return errorHandler(new NotFoundError, req, res)
         }
         await user.destroy()
         res.status(200).send(user)
     } catch (error) {
-        errorhandler(new BadRequestError)
+        errorHandler(new BadRequestError)
         console.error(error.message);
     }
 }
