@@ -6,6 +6,7 @@ const errorHandler = require('../middleware/errorHandler')
 //Adding Meet
 const addMeet = async (req, res)=>{
     try {
+        
         const meet = await Meet.create(req.body);
         res.status(201).send(meet)
     } catch (error) {
@@ -33,7 +34,7 @@ const getMeet = async (req, res)=>{
 //Get meets...needs to be fixed
 const getMeets = async (req, res)=>{
     try {
-        const meets = await Meet.findOne({
+        const meets = await Meet.findAll({
             where: {id: req.params.meet_id}
         }).sort()
         if(!meets){

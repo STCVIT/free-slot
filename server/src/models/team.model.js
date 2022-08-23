@@ -3,21 +3,16 @@ module.exports = (sequelize, DataTypes)=>{
         id: {
             type: DataTypes.UUID,
             primaryKey: true,
+            defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
         name: {
             type: DataTypes.STRING,
-            unique: true,
-            allowNull: false
-        },
-        admin_id: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        members: {
-            type: DataTypes.ARRAY(DataTypes.STRING), //check once
-            allowNull: false
+            unique: true
         }
+    }, {
+        createdAt: false,
+        updatedAt: false
     })
     return Team
 }

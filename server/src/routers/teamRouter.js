@@ -7,13 +7,13 @@ const {
     updateTeam,
     deleteTeam
 } = require('../controllers/teamController')
-const checkTeam = require('../middleware/checkTeam')
+//const checkTeam = require('../middleware/checkTeam')
 
-router.post('/create', checkTeam, addTeam)
-router.get('/getTeam/:team_id', checkTeam, getTeamById)
-router.get('/getTeam/:name', checkTeam, getTeamByName)
-router.get('/getAll/:regno', checkTeam, getAllTeams)
-router.patch('/updateTeam/:team_id', checkTeam, updateTeam)
-router.delete('/deleteTeam/:team_id', checkTeam, deleteTeam)
+router.post('/create', addTeam)
+router.get('/getTeam', getTeamById)
+router.get('/getTeam/:name', getTeamByName)
+router.get('/getAll/:regno', getAllTeams)
+router.patch('/updateTeam', updateTeam)
+router.delete('/deleteTeam', deleteTeam)
 
 module.exports = router
