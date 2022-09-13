@@ -1,4 +1,5 @@
 const admin = require('firebase-admin');
+const {createUserWithEmailAndPassword} = require('firebase/auth')
 const errorHandler = require('../middleware/errorHandler');
 const successHandler = require('../middleware/successHandler');
 const { AuthError, EmailNotVerifiedError } = require('../utilities/error');
@@ -37,7 +38,7 @@ const signup = (req, res, next)=>{
     .catch((err)=>{
         console.log(err.message);
         console.log('Error fetching user data:', error);
-        //errorHandler(new AuthError(), req, res)
+        errorHandler(new AuthError(), req, res)
     })
 }
 
