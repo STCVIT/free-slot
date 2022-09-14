@@ -34,7 +34,8 @@ const DropFileInput = ({ formData, setFormData, props}) =>{
             const string = reader.result.toString()
             axios({
                 method: 'post',
-                url: 'https://freeslotsstc.azurewebsites.net',
+                url: 'http://localhost:5000/imageupload',
+                headers: {"content-type": "application/json"},
                 data: {image: string}
             })
         }
