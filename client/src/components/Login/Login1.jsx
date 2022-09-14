@@ -110,7 +110,9 @@ const Login = () => {
               </button>
             </div>
             <h6 className="text-sm text-grey">
-              <a href="">Forgot Password?</a>
+              <a href="" className="text-blueTheme">
+                Forgot Password?
+              </a>
             </h6>
             <div className="px-12 py-8">
               <hr />
@@ -126,7 +128,7 @@ const Login = () => {
               </button>
               <h6 className="text-sm text-grey py-2">
                 Don't have an account?
-                <a href="" className="pl-2">
+                <a href="" className="pl-2 text-blueTheme">
                   Sign-Up
                 </a>
               </h6>
