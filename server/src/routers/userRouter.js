@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {
-    addUser,
+    addUserInDb,
+    addUserInFirebase,
     getUser,
     getUsers,
     updateUser,
@@ -8,7 +9,7 @@ const {
 
 const { signup, authLog } = require('../middleware/auth')
      
-router.post('/create', signup, addUser) 
+router.post('/create', addUserInDb, addUserInFirebase)
 router.get('/getUser', getUser)
 router.get('/getUsers/:meet_id', getUsers)
 router.patch('/updateUser', updateUser)

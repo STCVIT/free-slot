@@ -1,5 +1,4 @@
 const admin = require('firebase-admin');
-const {createUserWithEmailAndPassword} = require('firebase/auth')
 const errorHandler = require('../middleware/errorHandler');
 const successHandler = require('../middleware/successHandler');
 const { AuthError, EmailNotVerifiedError } = require('../utilities/error');
