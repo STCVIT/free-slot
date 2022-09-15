@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import signupInfoImg from "../../assets/SignupInfoImage.svg";
 import { UserAuth } from "../../context/UserAuthContext";
+import { useNavigate, Link } from "react-router-dom";
 import googleLogo from "../../assets/Gooogle-logo.svg";
-import LoginImage from "../../assets/LoginInfoImage.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,23 +15,15 @@ const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      await signIn(email, password);
-      navigate("/home");
-    } catch (error) {
-      setError(e.message);
-      console.log(e.message);
-    }
-  };
   const oAuth = async (e) => {
     setError("");
     try {
       await googleSignIn();
       navigate("/home");
-    } catch (error) {}
+    } catch (error) {
+      setError(e.message);
+      console.log(e.message);
+    }
   };
   const togglePassword = (e) => {
     e.preventDefault();
@@ -41,48 +33,40 @@ const Login = () => {
     }
     setPasswordType("password");
   };
-
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-4">
         <div className="hidden sm:block sm:col-span-2 bg-blueTheme ">
           <img
-            src={LoginImage}
+            src={signupInfoImg}
             alt=""
             className="grid col-span-2 min-h-screen"
           />
         </div>
         <div className="visible col-span-1 sm:col-span-2 mt-7">
-          <div className="px-3 sm:py-5 sm:px-24 md:py-7.5 md:px-36 lg:py-10 lg:px-48">
-            <h1 className="font-bold sm:text-center text-3xl pb-10">Login</h1>
-            <form onSubmit={handleSubmit}>
+          <div className="px-3 sm:py-2 sm:px-16 md:py-3.5 md:px-24 lg:py-5 lg:px-48">
+            <h1 className="font-bold text-center text-3xl pb-5">Sign-Up</h1>
+            <form>
               <div className="flex flex-col py-2 w-full">
-                <label className="font-semibold py-2">Email</label>
+                <label className="font-semibold py-1">Name</label>
+                <input className="focus:outline-none border-2 rounded py-3 px-4" />
+              </div>
+              <div className="flex flex-col py-2 w-full">
+                <label className="font-semibold py-1">
+                  VIT Registration No.
+                </label>
+                <input className="focus:outline-none border-2 rounded py-3 px-4" />
+              </div>
+              <div className="flex flex-col py-2 w-full">
+                <label className="font-semibold py-1">Email</label>
                 <input
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   className="focus:outline-none border-2 rounded py-3 px-4"
                 />
               </div>
-              {/* <div className="flex flex-col py-2">
-                <label className=" font-semibold py-2">Password</label>
-                <div className="flex flex-row border-2 rounded">
-                  <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    type={passwordType}
-                    value={password}
-                    className=" focus:outline-none p-2 px-4 w-full"
-                  />
-                  <img
-                    src={eye}
-                    className="p-1"
-                    alt=""
-                    onClick={togglePassword}
-                  />
-                </div>
-              </div> */}
               <div className="flex flex-col py-2">
-                <label className=" font-semibold py-2">Password</label>
+                <label className=" font-semibold py-1">Password</label>
                 <div className="flex flex-row border-2 rounded">
                   <input
                     className=" focus:outline-none px-4 py-3 w-full"
@@ -105,21 +89,21 @@ const Login = () => {
               </div>
             </form>
             <div className="pt-8 pb-1 text-center ">
-              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded ">
-                Login
+              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-2 rounded ">
+                <Link to="/timetable">Next</Link>
               </button>
             </div>
-            <h6 className="text-sm text-grey">
-              <a href="" className="text-blueTheme">
-                Forgot Password?
-              </a>
-            </h6>
-            <div className="px-12 py-8">
-              <hr />
+            <div class="relative py-2">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-b border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center">
+                <span class="bg-white px-4 text- text-gray-500">OR</span>
+              </div>
             </div>
-            <div className="py-5">
+            <div className="py-3">
               <button
-                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-3 rounded "
+                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-2 rounded "
                 type="button"
                 onClick={oAuth}
               >
@@ -127,10 +111,10 @@ const Login = () => {
                 <p>Continue with Google</p>
               </button>
               <h6 className="text-sm text-grey py-2">
-                Don't have an account?
-                <a href="" className="pl-2 text-blueTheme">
-                  Sign-Up
-                </a>
+                Already have an account?
+                <Link to="/login" className="pl-2 text-blueTheme">
+                  Login
+                </Link>
               </h6>
             </div>
           </div>
@@ -140,4 +124,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
