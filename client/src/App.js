@@ -1,4 +1,4 @@
-import Login from './components/Login/Login1'
+import Login from './components/Login/Login'
 // import SignupInfo from './components/SignupInfo'
 // import TimeTableInfo from './components/TimetableInfo';
 import Home from "./components/Home"
@@ -12,6 +12,8 @@ import SignUp from './components/Signup/SignUpForm';
 import AddEvent from "./components/AddEvent";
 import './App.css'
 import HomePageBuild from './components/HomePageBuild'
+import SU from './components/Signup/SignUp'
+import TT from './components/Signup/Timetable'
 export default function App() {
   return (
     <UserAuthContextProvider>
@@ -28,7 +30,8 @@ export default function App() {
           <Route path='/addevent' element={<AddEvent />} />
           <Route path='/schedule' element={<Schedule />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} />
+          <Route path='/signup' element={<SU />} />
+          <Route path='/timetable' element={<TT />} />
           <Route path='/homepage' element={<HomePageBuild />} />
 
 
