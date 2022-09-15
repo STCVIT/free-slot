@@ -1,6 +1,5 @@
 import { createContext, useEffect, useContext, useState } from "react";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
@@ -14,24 +13,8 @@ const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState("");
-  const signUp = async (email, password) => {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const user = userCredential.user;
-    auth.currentUser.getIdToken().then((token) => {
-      axios({
-        method: 'post',
-        url: 'http://localhost:4000/user/create',
-        headers: { Authorization: `Bearer ${token}` }
-      })
-  })
-  }
   const signIn = async (email, password) => {
     const response = await signInWithEmailAndPassword(auth, email, password);
-
     console.log(response.user.accessToken);
   };
   const logOut = async () => {
@@ -53,7 +36,7 @@ export function UserAuthContextProvider({ children }) {
 
   return (
     <userAuthContext.Provider
-      value={{ user, signUp, signIn, logOut, googleSignIn }}
+      value={{ user, signIn, logOut, googleSignIn }}
     >
       {children}
     </userAuthContext.Provider>

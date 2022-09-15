@@ -1,6 +1,5 @@
 const testMid = (req, res, next)=>{
-    req.body.hi = "Warsi"
+     req.body.hi = "Sarim"
     next()
-    console.log('middleware hit!')
 }
 module.exports = {testMid}
