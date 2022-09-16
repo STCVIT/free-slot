@@ -1,5 +1,5 @@
 const moment = require('moment')
-const time_slots = require('./timeSlots')
+const {time_slots_screenshot} = require('./timeSlots')
 
 // output from ML
 const tt1 = [
@@ -172,7 +172,7 @@ function freeTime(commonSlots){
       return freeSlotArray
 }
 
-function freeSlot(response){
+function freeSlotScreenshot(response){
     return freeTime(findCommonSlots(busy_time_users(response)))
 }
-module.exports = {freeSlot, busy_time}
+module.exports = {freeSlotScreenshot, busy_time}
