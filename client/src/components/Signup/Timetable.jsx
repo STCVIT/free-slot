@@ -9,24 +9,6 @@ const TimetableNew = () => {
   const onFileChange = (files) => {
     return files;
   };
-  const inputRef = useRef(null);
-
-  const handleClick = () => {
-    inputRef.current.click();
-  };
-
-  const handleFileChange = (event) => {
-    const fileObj = event.target.files && event.target.files[0];
-    if (!fileObj) {
-      return;
-    }
-    console.log("fileObj is", fileObj);
-    event.target.value = null;
-    console.log(event.target.files);
-    console.log(fileObj);
-    console.log(fileObj.name);
-  };
-
   return (
     <>
       <div className="md:grid grid-cols-12">
