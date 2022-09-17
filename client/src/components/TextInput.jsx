@@ -11,7 +11,7 @@ const [textValue, setTextValue] = useState();
             id={props.id}
             label={props.label}
             size="small"
-            fullWidth
+            fullWidth 
             onChange={(e) => setTextValue(e.target.value)}
           />
         </Box>
