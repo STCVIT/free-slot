@@ -12,7 +12,8 @@ require('./associations')
 const userRouter = require('./routers/userRouter')
 const teamRouter = require('./routers/teamRouter')
 const meetRouter = require('./routers/meetRouter')
-//const testRouter = require('./routers/testRouter')
+const freeSlotRouter = require('./routers/freeSlotRouter')
+const testRouter = require('./routers/testRouter')
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
@@ -33,7 +34,8 @@ app.use(session({
 app.use('/user', userRouter)
 app.use('/team', teamRouter)
 app.use('/meet', meetRouter)
-//app.use('/test', testRouter)
+app.use('/timetable', freeSlotRouter)
+app.use('/test', testRouter)
 
 app.get('/', (req, res)=>{
     res.send("lol")
