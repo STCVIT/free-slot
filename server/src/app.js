@@ -34,7 +34,7 @@ app.use(session({
 app.use('/user', userRouter)
 app.use('/team', teamRouter)
 app.use('/meet', meetRouter)
-app.use('timetable', freeSlotRouter)
+app.use('/timetable', freeSlotRouter)
 app.use('/test', testRouter)
 
 app.get('/', (req, res)=>{

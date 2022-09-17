@@ -6,7 +6,7 @@ import googleLogo from "../../assets/Gooogle-logo.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import axios from "axios";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 
 const SignUp = () => {
   const [name, setName] = useState("")
@@ -16,9 +16,9 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signIn, googleSignIn } = UserAuth();
+  const { googleSignIn } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
-
+  const provider = new GoogleAuthProvider();
   async function handleSubmit(e){
     e.preventDefault()
     try {
