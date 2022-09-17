@@ -1,7 +1,12 @@
 import React, { useState, useRef } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
 import fileUpload from "../../assets/file-upload.svg";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+import { useNavigate, Link } from "react-router-dom";
+import { useRef } from "react";
+>>>>>>> 54a17901253f97ea3f5e8166fffe0bbd7dbbf579
 
 const Timetable = () => {
   const onFileChange = (files) => {
