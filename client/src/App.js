@@ -15,11 +15,7 @@ import './App.css'
 import HomePageBuild from './components/HomePageBuild'
 import SU from './components/Signup/SignUp'
 import TT from './components/Signup/Timetable'
-<<<<<<< HEAD
-
-=======
 import Dat from './components/data'
->>>>>>> 4ca07569608f09d9a6a912d89d443a91992d5c67
 export default function App() {
   return (
     <UserAuthContextProvider>
