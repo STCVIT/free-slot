@@ -3,33 +3,11 @@ import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
 import { Link } from "react-router-dom";
 import DragFile from "./DragFile";
 import TextInput from "../TextInput";
-import axios from "axios";
 
-export default function TimetableNew(){
-  const [files, setFiles] = useState([]);
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
-    try {
-      var file = files[0]
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload=()=>{
-        const string = reader.result
-        //console.log(string)
-        file=reader.result
-        console.log(file)
-        axios.post('http://localhost:5000/imageupload',{
-        file
-      }, {'Content-Type': 'application/json'})
-      .then((res)=>{
-        console.log(res)
-      })
-      }
-      
-    } catch (error) {
-      console.error(error)
-    }
-  }
+const TimetableNew = () => {
+  const onFileChange = (files) => {
+    return files;
+  };
   return (
     <>
       <div className="md:grid grid-cols-12">
