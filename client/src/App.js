@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { UserAuthContextProvider } from './context/UserAuthContext'
 import Schedule from "./components/Schedule";
+import CARD from "./components/card"
 // import {Container,Row, Col } from "react-bootstrap"
 import SignUp from './components/Signup/SignUpForm';
 import AddEvent from "./components/AddEvent";
@@ -14,7 +15,11 @@ import './App.css'
 import HomePageBuild from './components/HomePageBuild'
 import SU from './components/Signup/SignUp'
 import TT from './components/Signup/Timetable'
+<<<<<<< HEAD
 
+=======
+import Dat from './components/data'
+>>>>>>> 4ca07569608f09d9a6a912d89d443a91992d5c67
 export default function App() {
   return (
     <UserAuthContextProvider>
@@ -34,6 +39,8 @@ export default function App() {
           <Route path='/signup' element={<SU />} />
           <Route path='/timetable' element={<TT />} />
           <Route path='/homepage' element={<HomePageBuild />} />
+          <Route path='/card' element={<CARD />} />
+          <Route path='/da' element={<Dat />} />
         </Routes>
       </BrowserRouter>
     </UserAuthContextProvider>
