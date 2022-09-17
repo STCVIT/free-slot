@@ -1,12 +1,31 @@
 import React, { useState } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
 import fileUpload from "../../assets/file-upload.svg";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useRef } from "react";
 
 const Timetable = () => {
   const onFileChange = (files) => {
     return files;
   };
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    inputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const fileObj = event.target.files && event.target.files[0];
+    if (!fileObj) {
+      return;
+    }
+    console.log("fileObj is", fileObj);
+    event.target.value = null;
+    console.log(event.target.files);
+    console.log(fileObj);
+    console.log(fileObj.name);
+  };
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-4">
@@ -48,9 +67,16 @@ const Timetable = () => {
                 </div>
               </div>
               <div className="lg:px-10 md:px-6 sm:px-4 sm:py-2">
+                <input
+                  style={{ display: "none" }}
+                  accept="image/png, image/gif, image/jpeg"
+                  ref={inputRef}
+                  type="file"
+                  onChange={handleFileChange}
+                />
                 <button
+                  onClick={handleClick}
                   className="flex justify-center relative w-full border-2 border-greytheme text-greytheme font-semibold mx-auto py-3 rounded "
-                  type="button"
                 >
                   Select from your Device
                 </button>
@@ -81,7 +107,10 @@ const Timetable = () => {
                     </button>
                   </div>
                   <div className="pt-8 pb-1 text-center w-full pl-4">
-                    <button className="flex justify-center w-full  bg-blueTheme text-white font-semibold mx-auto py-3.5 rounded ">
+                    <button
+                      className="flex justify-center w-full  bg-blueTheme text-white font-semibold mx-auto py-3.5 rounded "
+                      type="file"
+                    >
                       Sign-Up
                     </button>
                   </div>
