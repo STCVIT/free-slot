@@ -2,26 +2,37 @@ const db = require('../db/db')
 const User = db.users;
 const { NotFoundError, BadRequestError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler');
-const {busy_time} = require('./freeSlot')
+const {busy_time} = require('./freeSlotScreenshot');
+const { createUserWithEmailAndPassword } = require('firebase/auth');
 
-// Adding User
-const addUser = async (req, res)=>{
+// Adding User in database
+const addUserInDb = async (req, res, next)=>{
     try {
         let info = {
         reg_no: req.body.regno,
         name: req.body.name,
-        email: req.body.email,
-        timetable: busy_time(req.body.timetable)
+        email: req.body.email
     }
     const user = await User.create(info)
     res.status(200).send(user)
-    console.log(user);
     }
     catch (error){
         errorHandler(new BadRequestError, req, res)
         console.error(error.message);
     }
 }
+
+//Addign User in Firebase
+// const addUserInFirebase = async(req, res)=>{
+//     try {
+//         const email = req.body.email;
+//         const password = req.body.password;
+//         createUserWithEmailAndPassword(email, password)
+//     } catch (error) {
+//         errorHandler(new BadRequestError, req, res)
+//         console.error(error.message);
+//     }
+// }
 
 // Get one user
 const getUser = async (req, res)=>{
@@ -107,7 +118,7 @@ const deleteUser = async (req, res)=>{
 }
 
 module.exports = { 
-    addUser,
+    addUserInDb,
     getUser,
     getUsers,
     updateUser,
