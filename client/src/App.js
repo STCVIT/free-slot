@@ -37,7 +37,6 @@ export default function App() {
           <Route path='/homepage' element={<HomePageBuild />} />
           <Route path='/card' element={<CARD />} />
           <Route path='/da' element={<Dat />} />
-
         </Routes>
       </BrowserRouter>
     </UserAuthContextProvider>

@@ -4,6 +4,7 @@ import SignupInfo from './SignupInfo'
 import TimeTableInfo from "./TimetableInfo";
 import timetableInfoImg from '../../assets/TimetableInfoImage.svg'
 import { UserAuth } from '../../context/UserAuthContext'
+import axios from "axios";
 
 function Form() {
   const navigate = useNavigate()
@@ -26,7 +27,10 @@ function Form() {
   }
   const handleSubmit = async () => {
     try {
-      await signUp(formData.email, formData.password);
+      axios({
+        method: 'post',
+        url: 'http://localhost:4000/user/create'
+      })
       navigate('/home')
     } catch (error) {
       console.error(error)
