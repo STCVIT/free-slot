@@ -8,7 +8,7 @@ const {
     deleteUser } = require('../controllers/userController')
 
 const { signup, authLog } = require('../middleware/auth')
-     
+
 router.post('/create', addUserInDb)
 router.get('/getUser', getUser)
 router.get('/getUsers/:meet_id', getUsers)

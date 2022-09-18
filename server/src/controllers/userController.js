@@ -119,7 +119,6 @@ const deleteUser = async (req, res)=>{
 
 module.exports = { 
     addUserInDb,
-    addUserInFirebase,
     getUser,
     getUsers,
     updateUser,

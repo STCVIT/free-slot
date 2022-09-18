@@ -1,10 +1,11 @@
 import { createContext, useEffect, useContext, useState } from "react";
 import {
+  getAuth,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
+  onAuthStateChanged
 } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios";
@@ -23,6 +24,21 @@ export function UserAuthContextProvider({ children }) {
   const googleSignIn = async () => {
     const googleAuthProvider = new GoogleAuthProvider();
     await signInWithPopup(auth, googleAuthProvider);
+    onAuthStateChanged(auth, (user)=>{
+      if(user){
+        const name = user.displayName.slice(0, user.displayName.length-10)
+        const regno = user.displayName.slice(-9)
+        const email = user.email
+        console.log(name, regno, email)
+        axios.post('http://localhost:4000/user/create', {
+          name,
+          regno,
+          email
+        })
+      } else {
+        console.log("user is signed out")
+      }
+    })
   };
 
   useEffect(() => {
