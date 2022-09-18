@@ -9,30 +9,32 @@ const TabsData = [
       "devmehta",
     members:
       "dev, ramya, sakshi, mehul  "
-  },  
+  },
+
+  
 
   {
     label: "Cancelled",
     time:
-      "da",
+      "6:00 p.m. -  7:30 p.m.",
     place:
-      "dd",
+      "foodies",
     by:
-      "daa",
+      "ramya",
     members:
-      "aaa" 
+      "dev, ramya, sakshi, mehul  "
 
   },
   {
     label: "Past",
     time:
-      "da",
+      "9:00 a.m. -  9:30 a.m.",
     place:
-      "dd",
+      "foodies",
     by:
-      "daa",
+      "saarim",
     members:
-      "aaa"
+      "dev, ramya, sakshi, mehul  "
   },
 ];
 
