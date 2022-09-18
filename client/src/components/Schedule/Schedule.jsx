@@ -1,4 +1,6 @@
 import React from 'react'
+import Monday from './Days/Monday'
+import NavButton from './NavButton/NavButton'
 
 const Schedule = () => {
   return (
@@ -15,7 +17,7 @@ const Schedule = () => {
           </div>          
 
         <div class="mb-4 border-b border-gray-200">
-        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+        {/* <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
             <li class="mr-2" role="presentation">
                 <button class="inline-block p-4 text-xs border-none rounded-t-lg text-black hover:text-bold " id="mon-tab" data-tabs-target="#tab-mon" type="button" role="tab" aria-controls="mon" aria-selected="true">Mon</button>
             </li>
@@ -31,25 +33,14 @@ const Schedule = () => {
             <li class="mr-2" role="presentation">
                 <button class="inline-block p-4 text-xs border-none rounded-t-lg text-black hover:text-bold " id="fri-tab" data-tabs-target="#tab-fri" type="button" role="tab" aria-controls="fri" aria-selected="true">Fri</button>
             </li>
-        </ul>
+        </ul> */}
+        <NavButton />
       </div>
       <div id="myTabContent">
-          <div class="p-2 rounded-lg" id="mon" role="tabpanel" aria-labelledby="mon-tab">
-            <div class="p-2 m-2 max-w-sm bg-white shadow-lg rounded-lg border border-black shadow-md">
-              <p class="mt-1 text-xs font-bold text-zinc-600">8:00 - 8:50 a.m.</p>
-              <p class="font-bold text-zinc-600">Basic Electrical Engineering</p>
-              <p class="mb-1 text-xs text-zinc-600">TT 413</p>
-            </div> 
-
-            <div class="p-2 m-2 max-w-sm bg-white shadow-lg rounded-lg border border-black shadow-md">
-              <p class="mt-1 text-xs font-bold text-zinc-600">8:00 - 8:50 a.m.</p>
-              <p class="font-bold text-zinc-600">Basic Electrical Engineering</p>
-              <p class="mb-1 text-xs text-zinc-600">TT 413</p>
-            </div>
-            
-          </div> 
+           <Monday />
       </div>  
-
+        
+        
 
 
 
