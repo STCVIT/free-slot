@@ -58,7 +58,6 @@ export function UserAuthContextProvider({ children }) {
     </userAuthContext.Provider>
   );
 }
-
 export const UserAuth = () => {
   return useContext(userAuthContext);
 }
