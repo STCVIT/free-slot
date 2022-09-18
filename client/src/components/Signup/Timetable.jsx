@@ -23,6 +23,9 @@ export default function TimetableNew(){
       }
       axios.post('http://localhost:4000/test/test', {
         files
+      }, {'Access-Control-Allow-Origin': '*'})
+      .then((res)=>{
+        console.log(res)
       })
     } catch (error) {
       
