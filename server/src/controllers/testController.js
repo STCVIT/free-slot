@@ -1,5 +1,5 @@
 const hello = (req, res, next)=>{
-    req.body.hi="Warsi"
-    res.send(req.body)
+    res.send("response bhej rha")
+    console.log("response bhej rha")
 }
 module.exports = { hello }
