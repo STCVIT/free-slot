@@ -6,7 +6,6 @@ import axios from 'axios'
 const DropFileInput = ({ formData, setFormData, props}) =>{
     const wrapperRef = useRef(null);
     const [files, setFiles] = useState([])
-
     const onDragEnter = ()=>{
         wrapperRef.current.classList.add('dragover')
     }
