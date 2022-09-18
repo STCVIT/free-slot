@@ -34,7 +34,7 @@ const SignUp = () => {
       if(response.status==200){
         await createUserWithEmailAndPassword(auth, email, password)
         console.log("hi")
-        navigate("/homepage")
+        navigate("/timetable")
       }
       console.log(name);
     } catch (error) {
