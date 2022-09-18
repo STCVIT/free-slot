@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import signupInfoImg from "../../assets/SignupInfoImage.svg";
 import { UserAuth } from "../../context/UserAuthContext";
 import { useNavigate, Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import googleLogo from "../../assets/Gooogle-logo.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import axios from "axios";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const [name, setName] = useState("")
@@ -18,7 +18,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { googleSignIn } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
-  const provider = new GoogleAuthProvider();
   async function handleSubmit(e){
     e.preventDefault()
     try {
@@ -31,7 +30,7 @@ const SignUp = () => {
         regno,
         email
       })
-      if(response.status==200){
+      if(response.status===200){
         await createUserWithEmailAndPassword(auth, email, password)
         console.log("hi")
         navigate("/timetable")
@@ -46,7 +45,7 @@ const SignUp = () => {
     setError("");
     try {
       await googleSignIn();
-      navigate("/home");
+      navigate("/timetable");
     } catch (error) {
       setError(e.message);
       console.log(e.message);

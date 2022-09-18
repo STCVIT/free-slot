@@ -1,6 +1,4 @@
 import Login from './components/Login/Login'
-// import SignupInfo from './components/SignupInfo'
-// import TimeTableInfo from './components/TimetableInfo';
 import Home from "./components/Home"
 import Landing from './components/Landing'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -35,7 +33,7 @@ export default function App() {
           <Route path='/timetable' element={<TT />} />
           <Route path='/homepage' element={<HomePageBuild />} />
           <Route path='/card' element={<CARD />} />
-          <Route path='/da' element={<Dat />} />
+          {/* <Route path='/da' element={<Dat />} /> */}
         </Routes>
       </BrowserRouter>
     </UserAuthContextProvider>

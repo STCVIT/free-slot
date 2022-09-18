@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import fileUpload from "../../assets/file-upload.svg";
 import TextInput from "../TextInput";
-const DragFile = () => {
-  const [files, setFiles] = useState([]);
+const DragFile = ({files, setFiles}) => {
   const [dropText, setDropText] = useState("Select file from your device");
   const [isUploaded, setIsUploaded] = useState(false)
   const [imageClass, setImageClass] = useState()
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
+      //getBase64(acceptedFiles)
       setDropText((prevText) => "Change Image");
       setIsUploaded(true)
       setImageClass("outline rounded-md outline-offset-2 p-1")
@@ -22,15 +22,21 @@ const DragFile = () => {
       );
     },
   });
-
+const getBase64 = (e)=>{
+  const file = e[0]
+  let reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onload=()=>{
+    setFiles(reader.result.toString())
+  }
+}
   const images = files.map((file) => (
     <div key={file.name}>
       <div>
-        <img src={file.preview} style={{ width: "200px" }} alt="preview" />
+        <img src={file.preview} style={{ width: "400px" }} alt="preview" />
       </div>
     </div>
   ));
-
   return (
     <div className="h-full w-full border-dashed border-4 rounded-md">
       <div

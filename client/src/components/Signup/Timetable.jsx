@@ -4,11 +4,30 @@ import fileUpload from "../../assets/file-upload.svg";
 import { Link } from "react-router-dom";
 import DragFile from "./DragFile";
 import TextInput from "../TextInput";
+import axios from "axios";
 
-const TimetableNew = () => {
+export default function TimetableNew(){
+  const [files, setFiles] = useState([]);
   const onFileChange = (files) => {
+    console.log(files)
     return files;
   };
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    try {
+      const file = files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload=()=>{
+        console.log(reader.result.toString())
+      }
+      axios.post('http://localhost:4000/test/test', {
+        files
+      })
+    } catch (error) {
+      
+    }
+  }
   return (
     <>
       <div className="md:grid grid-cols-12">
@@ -28,7 +47,7 @@ const TimetableNew = () => {
               <div className="flex flex-col gap-y-3 row-span-3">
                 <h1 className="self-start">Timetable</h1>
                 <div className="w-full items-center justify-center h-full flex">
-                  <DragFile />
+                  <DragFile files={files} setFiles={setFiles}/>
                 </div>
               </div>
               <div className="row-span-2">
@@ -45,7 +64,7 @@ const TimetableNew = () => {
                     <button className="border col-span-1 w-full border-black px-4 py-2 rounded-md">
                       Back
                     </button>
-                    <button className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md">
+                    <button className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>
                       Sign Up
                     </button>
                   </div>
@@ -53,7 +72,7 @@ const TimetableNew = () => {
                 <p className="text-center">
                   Alredy have an account?{" "}
                   <span className="text-blue-600 underline decoration-dotted">
-                    <a href="#">Log in</a>
+                    <Link to="/login">Log in</Link>
                   </span>
                 </p>
               </div>
@@ -64,5 +83,3 @@ const TimetableNew = () => {
     </>
   );
 };
-
-export default TimetableNew;
