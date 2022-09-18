@@ -1,8 +1,9 @@
 import React from "react"
 export default function Link(props) {
     const styles = {
-        color: props.on ? "#222222" : "blue",
+        color: "black",
         textDecorationLine: props.on ? "underline" : "none",
+        fontWeight: props.on ? "bold" : "normal"
     }
     
     return (

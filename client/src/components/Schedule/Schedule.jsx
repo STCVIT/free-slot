@@ -10,7 +10,7 @@ const Schedule = () => {
       <div class="flex justify-center pt-2">
         <div class="rounded-lg shadow-lg bg-grey-700 max-w-sm">
           <div class="inline">
-            <span class="px-4 py-2 m-2 rounded-full bg-blue-500 text-xs text-black font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+            <span class="px-4 py-2 m-2 rounded-full bg-blue-500 text-white text-black font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
               Modify
             </span>
           </div>          
