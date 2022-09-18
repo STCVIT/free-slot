@@ -6,49 +6,42 @@ import googleLogo from "../../assets/Gooogle-logo.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import axios from "axios";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 
 const SignUp = () => {
-  const regnoRef = useRef()
-  const nameRef = useRef()
-  const emailRef = useRef()
-  const passwordRef = useRef()
+  const [name, setName] = useState("")
+  const [regno, setRegno] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signIn, googleSignIn } = UserAuth();
+  const { googleSignIn } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
-
+  const provider = new GoogleAuthProvider();
   async function handleSubmit(e){
     e.preventDefault()
     try {
+      const auth = getAuth()
       setError("")
       setLoading(true)
-      console.log(regnoRef.current.value)
-      await axios({
-        method: 'post',
-        url: 'http://localhost:4000/user/create',
-        body: {
-          regno: regnoRef.current.value,
-          name: nameRef.current.value,
-          email: emailRef.current.value
-        }
+      const response = await axios.post('http://localhost:4000/user/create', 
+      {
+        name,
+        regno,
+        email
       })
-      .then(()=>{
-        createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
-      })
+      if(response.status==200){
+        await createUserWithEmailAndPassword(auth, email, password)
+        console.log("hi")
+        navigate("/homepage")
+      }
+      console.log(name);
     } catch (error) {
       setError("Failed to create an account")
     }
     setLoading(false)
   } 
-  const [formData, setFormData] = useState({
-    name: "",
-    regno: "",
-    email: "",
-    password: "",
-    timetable: ""
-  })
   const oAuth = async (e) => {
     setError("");
     try {
@@ -83,19 +76,29 @@ const SignUp = () => {
             <form>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">Name</label>
-                <input className="focus:outline-none border-2 rounded py-3 px-4" id="name" type="text" ref={nameRef} required />
+                <input className="focus:outline-none border-2 rounded py-3 px-4"
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e)=> setName(e.target.value)}
+                required />
               </div>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">
                   VIT Registration No.
                 </label>
-                <input className="focus:outline-none border-2 rounded py-3 px-4" id="regno" type="text" ref={regnoRef} required/>
+                <input className="focus:outline-none border-2 rounded py-3 px-4"
+                id="regno"
+                type="text"
+                value={regno}
+                onChange={(e)=> setRegno(e.target.value)}
+                required/>
               </div>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">Email</label>
                 <input
                   className="focus:outline-none border-2 rounded py-3 px-4"
-                  id="email" type="email" ref={emailRef} required/>
+                  id="email" type="email" value={email} onChange={(e)=> setEmail(e.target.value)} required/>
               </div>
               <div className="flex flex-col py-2">
                 <label className=" font-semibold py-1">Password</label>
@@ -103,7 +106,7 @@ const SignUp = () => {
                   <input
                     className=" focus:outline-none px-4 py-3 w-full"
                     type={passwordType}
-                    id="password" ref={passwordRef} required/>
+                    id="password" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
                   <div onClick={togglePassword}>
                     {passwordType === "password" ? (
                       <img className="py-4 px-2" src={Visible} alt="Eye Icon" />
@@ -123,12 +126,12 @@ const SignUp = () => {
                 Next
               </button>
             </div>
-            <div class="relative py-2">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-b border-gray-300"></div>
+            <div className="relative py-2">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-b border-gray-300"></div>
               </div>
-              <div class="relative flex justify-center">
-                <span class="bg-white px-4 text- text-gray-500">OR</span>
+              <div className="relative flex justify-center">
+                <span className="bg-white px-4 text- text-gray-500">OR</span>
               </div>
             </div>
             <div className="py-3">

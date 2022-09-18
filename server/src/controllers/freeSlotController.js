@@ -37,7 +37,7 @@ const freeSlotScreenshot = async(req, res, next)=>{
     }
 }
 //adding timetbale of user by copy-paste method
-const freeSlotCopyPaste = async(req, res, next)=>{
+const freeSlotCp = async(req, res, next)=>{
     try {
         const timetable = await User.update(
             {timetable: freeSlotCopyPaste(req.body.timetable)}, {where: {reg_no: req.body.regno}}
@@ -48,4 +48,4 @@ const freeSlotCopyPaste = async(req, res, next)=>{
         console.error(error.message);
     }
 }
-module.exports = { checkFreeSlot, freeSlotScreenshot, freeSlotCopyPaste}
+module.exports = { checkFreeSlot, freeSlotScreenshot, freeSlotCp}
