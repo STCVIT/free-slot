@@ -9,7 +9,6 @@ const DragFile = ({files, setFiles}) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
-      //getBase64(acceptedFiles)
       setDropText((prevText) => "Change Image");
       setIsUploaded(true)
       setImageClass("outline rounded-md outline-offset-2 p-1")
@@ -22,14 +21,6 @@ const DragFile = ({files, setFiles}) => {
       );
     },
   });
-const getBase64 = (e)=>{
-  const file = e[0]
-  let reader = new FileReader()
-  reader.readAsDataURL(file)
-  reader.onload=()=>{
-    setFiles(reader.result.toString())
-  }
-}
   const images = files.map((file) => (
     <div key={file.name}>
       <div>
