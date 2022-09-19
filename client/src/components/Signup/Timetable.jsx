@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
-import fileUpload from "../../assets/file-upload.svg";
 import { Link } from "react-router-dom";
 import DragFile from "./DragFile";
 import TextInput from "../TextInput";
@@ -8,27 +7,27 @@ import axios from "axios";
 
 export default function TimetableNew(){
   const [files, setFiles] = useState([]);
-  const onFileChange = (files) => {
-    console.log(files)
-    return files;
-  };
   const handleSubmit = async (e)=>{
     e.preventDefault()
     try {
-      const file = files[0]
+      var file = files[0]
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload=()=>{
-        console.log(reader.result.toString())
-      }
-      axios.post('http://localhost:4000/test/test', {
-        files
-      }, {'Access-Control-Allow-Origin': '*'})
+        const string = reader.result
+        //console.log(string)
+        file=reader.result
+        console.log(file)
+        axios.post('http://localhost:5000/imageupload',{
+        file
+      }, {'Content-Type': 'application/json'})
       .then((res)=>{
         console.log(res)
       })
-    } catch (error) {
+      }
       
+    } catch (error) {
+      console.error(error)
     }
   }
   return (
