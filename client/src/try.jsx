@@ -30,6 +30,9 @@ const Try = () => {
         <br />
         <input type="submit" value="Submit" />
       </form>
+      <div className="flex flex-col gap-y-5" id="output">
+        Output:
+      </div>
     </div>
   );
 };
