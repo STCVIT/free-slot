@@ -114,3 +114,27 @@
     z-index: -1;
     visibility: hidden;
   }
+
+  .modal-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: black;
+    display: flex;
+    opacity: 0;
+  }
+
+  .modal {
+    margin: auto;
+    width: 90%;
+    max-width: 40rem;
+      /* background-color: white; */
+    border-radius: 1.5rem;
+  }
+  
+  .modal-container:target {
+    opacity: 1;
+  }

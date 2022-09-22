@@ -1,6 +1,7 @@
 import React from 'react'
 import Circle from '../assets/circle.svg'
 import Cross from '../assets/Cross.svg'
+// import '../index.css    '
 const ModalChooseTeam = ({ setModalOnChoose, setChoiceChoose }) => {
 
     const handleOKClickChoose = () => {
@@ -15,9 +16,9 @@ const ModalChooseTeam = ({ setModalOnChoose, setChoiceChoose }) => {
 
     return (
 
-        <div className="   bg-zinc-200 opacity-80 fixed inset-0 z-50   ">
+        <div className="modal-container bg-zinc-200/60  opacity-100 fixed inset-0 z-10000 ">
 
-            <div className="flex h-screen justify-center items-center ">
+            <div className="modal flex h-screen justify-center items-center opacity-100">
 
                 <div className="flex-col items-center bg-white shadow-lg border rounded-xl ">
 
