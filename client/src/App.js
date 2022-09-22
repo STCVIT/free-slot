@@ -13,7 +13,11 @@ import './App.css'
 import HomePageBuild from './components/HomePageBuild'
 import SU from './components/Signup/SignUp'
 import TT from './components/Signup/Timetable'
+<<<<<<< HEAD
 // import Dat from './components/data'
+=======
+import Dat from './components/data'
+>>>>>>> origin/main
 export default function App() {
   return (
     <UserAuthContextProvider>
@@ -34,7 +38,11 @@ export default function App() {
           <Route path='/timetable' element={<TT />} />
           <Route path='/homepage' element={<HomePageBuild />} />
           <Route path='/card' element={<CARD />} />
+<<<<<<< HEAD
           {/* <Route path='/da' element={<Dat />} /> */}
+=======
+          <Route path='/da' element={<Dat />} />
+>>>>>>> origin/main
         </Routes>
       </BrowserRouter>
     </UserAuthContextProvider>

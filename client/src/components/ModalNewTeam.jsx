@@ -64,7 +64,7 @@ const ModalNewTeam = ({ setModalOnNew, setChoiceNew }) => {
     });
     return (
 
-        <div className="   bg-zinc-200 opacity-80 fixed inset-0  z-50  ">
+        <div className="   bg-zinc-200/60 opacity-100 fixed inset-0  z-50  ">
 
             <div className="flex h-screen justify-center items-center ">
 
