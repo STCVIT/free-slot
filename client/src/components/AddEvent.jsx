@@ -1,6 +1,7 @@
 import React from "react";
 
 const AddEvent = () => {
+  document.title = "Add Event"
   return (
     <div className="grid grid-rows-6 h-screen">
       <h1 className="flex w-full h-full justify-center items-center text-center row-span-1 font-semibold text-2xl">AddEvent</h1>
@@ -38,11 +39,12 @@ const AddEvent = () => {
               <label class="text-sm font-medium text-slate-500">
                 Description
               </label>
-              <input
+              <textarea rows='4'
+              type="text"
                 id="description"
-                class="resize border-2 border-gray-300 text-black-900 text-sm rounded-lg w-full h-20"
+                class="border-2 resize-none border-gray-300 text-black-900 text-sm rounded-lg w-full p-2"
                 required
-              ></input>
+              ></textarea>
             </div>
 
             <div>
@@ -54,7 +56,7 @@ const AddEvent = () => {
                 class="resize border-2 border-gray-300 text-black-900 text-sm rounded-lg w-full p-3"
               ></input>
             </div>
-            <div className="flex w-full justify-between">
+            <div className="flex w-full justify-between gap-x-3">
               <button
                 type="cancel"
                 class="text-black bg-white border-none font-medium rounded-lg text-sm px-1 w-60  px-5 py-2.5 text-center"

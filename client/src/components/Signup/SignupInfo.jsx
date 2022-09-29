@@ -12,7 +12,7 @@ export default function SignupInfo({ formData, setFormData }) {
         setError('')
         try {
             await googleSignIn()
-            navigate('/home')
+            navigate('/timetable')
         } catch (error) {
             setError(e.message)
             console.log(e.message)
