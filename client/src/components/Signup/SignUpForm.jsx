@@ -31,7 +31,7 @@ function Form() {
         method: 'post',
         url: 'http://localhost:4000/user/create'
       })
-      navigate('/home')
+      navigate('/timetable')
     } catch (error) {
       console.error(error)
     }
@@ -53,7 +53,7 @@ function Form() {
             onClick={async() => {
               if (page === 1) {
                 await handleSubmit();
-                navigate('/homepage')
+                navigate('/timetable')
                 
               } else {
                 setPage((currPage) => currPage + 1);

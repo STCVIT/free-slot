@@ -1,7 +1,7 @@
 import React from "react";
-import profile from "../assets/Profile.svg"
-import DropDownProfile from "./DropDownProfile"
-
+import profile from "../../assets/Profile.svg"
+import DropDownProfile from "../DropDownProfile"
+import {NavButton} from "./NavButton/NavButton";
 
 function Navbar() {
     const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -9,26 +9,32 @@ function Navbar() {
     return (
         <>
             <header className="shadow z-20">
-                <div className="container flex justify-between mx-auto">
-                    <p className="font-logo  flex items-center p-7 md:p1 text-5xl ">
+                <div className="flex items-center md:flex-row flex-col justify-between w-full">
+                    <div>
+                    <p className="font-logo flex items-center w-full p-7 md:p1 text-5xl ">
                         Free Slots
                     </p>
-                    <ul className="item-stretch hidden space-x-3 md:flex">
-                        <li className="flex" >
+                    </div>
+                    <div>
+
+                    <ul className="flex">
+                        {/* <li className="flex" >
                             <p className="flex items-center px-4 -mb-1">Home</p>
                             
-                        </li>
-                        <li className="flex">
+                            </li>
+                            <li className="flex">
                             <p className="flex items-center px-4 -mb-1">My Schedule</p>
-                        </li>
-                        <li className="flex">
+                            </li>
+                            <li className="flex">
                             <p className="flex items-center px-4 -mb-1">About</p>
-                        </li>
-                        <li className="flex">
+                        </li> */}
+                        <NavButton />
+                        <li className="flex ">
                             <DropDownProfile />
                         </li>
                         
                     </ul>
+                        </div>
                 </div>
 
                 <div className="md:hidden">

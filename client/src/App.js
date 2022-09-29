@@ -17,7 +17,9 @@ import SU from './components/Signup/SignUp'
 import TimetableNew from './components/Signup/Timetable'
 import Dat from './components/data'
 import Profile from './components/Profile'
-import Try from './try'
+import Try from './components/try'
+import Responses from './components/Responses/Responses'
+import ContactUs from './components/ContactUs'
 export default function App() {
   return (
     <UserAuthContextProvider>
@@ -42,6 +44,8 @@ export default function App() {
           <Route path='/addEvent' element={<AddEvent />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/try' element={<Try />} />
+          <Route path='/contactus' element={<ContactUs />} />
+          <Route path='/responses' element={<Responses />} />
         </Routes>
       </BrowserRouter>
     </UserAuthContextProvider>
