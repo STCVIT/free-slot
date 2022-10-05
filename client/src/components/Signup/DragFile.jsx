@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import fileUpload from "../../assets/file-upload.svg";
 import TextInput from "../TextInput";
-const DragFile = ({files, setFiles}) => {
+const DragFile = () => {
+  const [files, setFiles] = useState([]);
   const [dropText, setDropText] = useState("Select file from your device");
   const [isUploaded, setIsUploaded] = useState(false)
   const [imageClass, setImageClass] = useState()
@@ -21,10 +22,11 @@ const DragFile = ({files, setFiles}) => {
       );
     },
   });
+
   const images = files.map((file) => (
     <div key={file.name}>
       <div>
-        <img src={file.preview} style={{ width: "400px" }} alt="preview" />
+        <img src={file.preview} style={{ width: "200px" }} alt="preview" />
       </div>
     </div>
   ));
