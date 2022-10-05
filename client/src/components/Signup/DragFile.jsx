@@ -30,7 +30,6 @@ const DragFile = () => {
       </div>
     </div>
   ));
-
   return (
     <div className="h-full w-full border-dashed border-4 rounded-md">
       <div

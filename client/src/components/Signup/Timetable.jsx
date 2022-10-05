@@ -62,4 +62,5 @@ const TimetableNew = () => {
       </div>
     </>
   );
+
 };
