@@ -4,7 +4,7 @@ const FreeSlot = () => {
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
-  const [saveTeam, setSaveTeam] = useState(false);
+  const [saveTeam, setSaveTeam] = useState(true);
   function handleKeyDown(e) {
     if (e.key !== "Enter") return;
     else {
@@ -63,7 +63,12 @@ const FreeSlot = () => {
     setTagNote("Add a tag");
   };
 
-  const submitTags = () => [console.log(tags)]; //This is what gives you array of tags.
+  //this is what you need in backend @Saarim
+  const submitFreeSlot = () => {
+    console.log(tags);
+    console.log(saveTeam);
+  };
+
   return (
     <div>
       <div>asdasd</div>
@@ -112,7 +117,7 @@ const FreeSlot = () => {
               setSaveTeam(!saveTeam);
             }}
           >
-            {saveTeam ? <CheckBoxOutlineBlank /> : <CheckBox />}
+            {saveTeam ? <CheckBox /> : <CheckBoxOutlineBlank />}
             Save this team
           </div>
           <div className="self-center flex w-3/4 md:w-2/4 justify-between gap-x-3">
@@ -124,7 +129,7 @@ const FreeSlot = () => {
             </button>
             <button
               type="submit"
-              onClick={submitTags}
+              onClick={submitFreeSlot}
               class="text-white bg-blue-700 font-medium rounded-lg text-sm w-60 py-2.5 text-center dark:bg-blue-600 "
             >
               Find Free Slot!
