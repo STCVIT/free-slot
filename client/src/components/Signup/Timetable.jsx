@@ -26,7 +26,7 @@ export default function Timetable () {
   }
   return (
     <>
-      <div className="md:grid grid-cols-12">
+      <div className="px-4 md:px-0 md:grid grid-cols-12">
         <div className="hidden md:block col-span-6 bg-blueTheme ">
           <img src={timetableInfoImg} alt="" />
         </div>
@@ -56,14 +56,11 @@ export default function Timetable () {
                   />
                 </div>
                 <div className="flex w-full justify-evenly my-3">
-                  <div className="grid grid-cols-2 w-full gap-x-3">
-                    <button className="border col-span-1 w-full border-black px-4 py-2 rounded-md">
-                      Back
-                    </button>
-                    <button className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>
+                    <button className="border col-span-1 w-2/4 border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md">
+                  <Link to="/homepage">
                       Sign Up
+                    </Link>
                     </button>
-                  </div>
                 </div>
                 <p className="text-center">
                   Alredy have an account?{" "}

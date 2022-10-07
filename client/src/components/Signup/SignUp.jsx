@@ -9,6 +9,7 @@ import axios from "axios";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
+  document.title = "Sign Up"
   const [name, setName] = useState("")
   const [regno, setRegno] = useState("")
   const [email, setEmail] = useState("")
@@ -73,6 +74,22 @@ const SignUp = () => {
         <div className="visible col-span-1 sm:col-span-2 mt-7">
           <div className="px-3 sm:py-2 sm:px-16 md:py-3.5 md:px-24 lg:py-5 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-5">Sign-Up</h1>
+            <button
+                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-2 rounded "
+                type="button"
+                onClick={oAuth}
+              >
+                <img className="px-2" src={googleLogo} alt="" />
+                <p>Continue with Google</p>
+              </button>
+              <div className="relative py-2">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-b border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-white px-4 text- text-gray-500">OR</span>
+              </div>
+            </div>
             <form>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">Name</label>
@@ -122,27 +139,15 @@ const SignUp = () => {
               </div>
             </form>
             <div className="pt-8 pb-1 text-center ">
+              <Link to="/timetable">
               <button className="bg-blueTheme text-white w-full font-bold mx-auto py-2 rounded" disabled={loading} onClick={handleSubmit}>
                 Next
               </button>
+              </Link>
             </div>
-            <div className="relative py-2">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-b border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center">
-                <span className="bg-white px-4 text- text-gray-500">OR</span>
-              </div>
-            </div>
+            
             <div className="py-3">
-              <button
-                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-2 rounded "
-                type="button"
-                onClick={oAuth}
-              >
-                <img className="px-2" src={googleLogo} alt="" />
-                <p>Continue with Google</p>
-              </button>
+              
               <h6 className="text-sm text-grey py-2">
                 Already have an account?
                 <Link to="/login" className="pl-2 text-blueTheme">
