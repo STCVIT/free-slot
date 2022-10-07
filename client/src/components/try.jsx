@@ -1,105 +1,5 @@
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { useState } from "react";
-
-const TagsInput = () => {
-  var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
-  const [tags, setTags] = useState([]);
-  const [tagNote, setTagNote] = useState("Add a tag");
-  function handleKeyDown(e) {
-    if (e.key !== "Enter") return;
-    else {
-      setTagNote("Click a tag to remove.");
-      const value = e.target.value;
-      if (value.includes(",")) {
-        const duplicates = [];
-        const invalid = [];
-        e.target.value = "";
-        var tag = value.split(",");
-        tag.forEach((element) => {
-          if (regex.test(element)) {
-            if (
-              tags.find((tag) => tag.toLowerCase() === element.toLowerCase())
-            ) {
-              duplicates.push(element);
-              return;
-            }
-            tags.push(element);
-          } else {
-            invalid.push(element);
-          }
-        });
-        if (duplicates.length > 0) {
-          alert("Duplicate tags: " + duplicates.join(", "));
-        }
-        if (invalid.length > 0) {
-          alert("Invalid tags: " + invalid.join(", "));
-        }
-      } else {
-        if (!value.trim()) return;
-        else if (!regex.test(value) || value.length > 9) {
-          setTagNote("Please enter a valid tag.");
-          e.target.value = "";
-          return;
-        } else if (tags.includes(value.toUpperCase())) {
-          alert(value + " already exists!");
-          e.target.value = "";
-          return;
-        }
-        setTags([...tags, value.toUpperCase()]);
-        e.target.value = "";
-      }
-    }
-  }
-
-  function removeTag(index) {
-    setTags(tags.filter((el, i) => i !== index));
-    if (tags.length === 0) setTagNote("Add a tag!");
-  }
-  const removeAll = () => {
-    setTags([]);
-    setTagNote("Add a tag");
-  };
-
-  const submitTags = () => [console.log(tags)];
-  return (
-    <div>
-      <div className="flex flex-col gap-y-3 justify-center items-start px-2 py-6">
-        <div>
-          Enter the reg no. or name of the members:
-          <br />
-          <i>Press Enter to seperate tags.</i>
-        </div>
-        <div className="self-center">{tagNote}</div>
-        <div className="flex flex-col items-center w-3/4 p-2 rounded-md justify-center gap-2 border self-center">
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {tags.map((tag, index) => (
-              <button
-                onClick={() => removeTag(index)}
-                className="p-2 bg-[#CFDBE6] rounded-md hover:text-red-400 hover:line-through h hover:scale-110"
-                key={index}
-              >
-                <span className="text">{tag}</span>
-              </button>
-            ))}
-            <input
-              onKeyDown={handleKeyDown}
-              type="text"
-              className="w-fit text-center border rounded-md py-2"
-              placeholder="21XXX0000"
-            />
-          </div>
-        </div>
-      </div>
-      <button
-        className="underline decoration-dotted underline-offset-2 font-semibold"
-        onClick={removeAll}
-      >
-        Clear all
-      </button>
-    </div>
-  );
-};
-
 const FreeSlot = () => {
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
@@ -163,7 +63,7 @@ const FreeSlot = () => {
     setTagNote("Add a tag");
   };
 
-  const submitTags = () => [console.log(tags)];
+  const submitTags = () => [console.log(tags)]; //This is what gives you array of tags.
   return (
     <div>
       <div>asdasd</div>
@@ -210,7 +110,6 @@ const FreeSlot = () => {
             className="flex gap-x-3 items-center font-bold cursor-pointer"
             onClick={() => {
               setSaveTeam(!saveTeam);
-              console.log(saveTeam);
             }}
           >
             {saveTeam ? <CheckBoxOutlineBlank /> : <CheckBox />}
