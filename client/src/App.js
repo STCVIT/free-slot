@@ -1,7 +1,7 @@
 import Login from './components/Login/Login'
 // import SignupInfo from './components/SignupInfo'
 // import TimeTableInfo from './components/TimetableInfo';
-import Home from "./components/Home"
+import Home from "./components/home"
 import Landing from './components/Landing'
 import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
