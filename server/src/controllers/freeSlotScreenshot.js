@@ -50,9 +50,9 @@ function busy_time(tt_response){
         for (var j=1; j<14; j++){
             if (Object.values(tt_response[i])[j]==="YES"){
                 if (Object.values(tt_response[i])[0].match(/Thry/g)){
-                    arr.push(time_slots[0][j])
+                    arr.push(time_slots_screenshot[0][j])
                 } else {
-                    arr.push(time_slots[1][j])
+                    arr.push(time_slots_screenshot[1][j])
                 }
             }
         }

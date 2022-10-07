@@ -9,38 +9,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-// const signup = (req, res, next)=>{
-//     if(req.headers['authorization']==undefined || !req.headers['authorization']) {
-//         console.log("undefined route hitting.... "+req.headers['authorization'])
-//         return errorHandler(new AuthError(), req, res)
-//     }
-//     const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" "): null
-//     console.log(tokenString)
-//     admin
-//     .auth()
-//     .verifyIdToken(tokenString[1])
-//     .then((user)=>{
-//             console.log(user)
-//             req.body.name = user.name.slice(0, user.name.length-12)
-//             req.body.regno = user.name.match(/\(([^)]+)\)/)[1] //use regex here check once
-//             req.body.email = user.mail;
-//             req.body.idToken = user.idToken;
-//             next();
-        
-//     })
-//     .then(
-//         (sessionCookie)=>{
-//             const options = {maxAge: expiresin, httpOnly: true}
-//             res.cookie("session", sessionCookie, options)
-//             res.end(JSON.stringify({status: success}))
-//         })
-//     .catch((err)=>{
-//         console.log(err.message);
-//         console.log('Error fetching user data:', error);
-//         errorHandler(new AuthError(), req, res)
-//     })
-// }
-
 const sessionLogin = async (req, res)=>{
     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
                  return errorHandler(new AuthError(), req, res)
