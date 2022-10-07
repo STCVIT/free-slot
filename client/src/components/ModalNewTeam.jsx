@@ -4,11 +4,11 @@ import '../index.css'
 import $ from 'jquery'
 const ModalNewTeam = ({ setModalOnNew, setChoiceNew }) => {
 
-    const handleOKClickNew = () => {
+    const handleSubmit = () => {
         setChoiceNew(true)
         setModalOnNew(false)
     }
-    const handleCancelClickNew = () => {
+    const handleCancel = () => {
         setChoiceNew(false)
         setModalOnNew(false)
     }
@@ -70,22 +70,21 @@ const ModalNewTeam = ({ setModalOnNew, setChoiceNew }) => {
 
                 <div className="flex-col items-center bg-white py-12 px-24 shadow-lg rounded-xl ">
 
-                    <div className="flex  text-2xl font-bold	 mb-10" >Check Free Slots</div>
-                    <div className="flex  text-xs mb-10" >Enter the reg. no. or name of the members</div>
+                    <div className="flex  text-2xl font-bold text-center mb-10" >Check Free Slots</div>
+                    <div className="flex  text-xs mb-10" >Enter the reg. no. of the members</div>
                     {/* <textarea class=" rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium focus:outline-none focus:bg-white" >
                         <div id="example1"></div>
                     </textarea> */}
                     {/* <div id="example1" className="input textarea" ></div>
                     <p id="log"></p> */}
 
-                    <div class="form-group">
-
-                        <div id="tags" class="tag-container"></div>
+                    <div className="form-group border-black">
+                        <div id="tags" className="tag-container">hi</div>
                     </div>
 
-                    <div className="flex">
-                        <button onClick={handleOKClickNew} className=" rounded px-4 py-2 text-black hover:underline bg-white ">Cancel</button>
-                        <button onClick={handleCancelClickNew} className="rounded px-4 py-2 ml-4 text-white bg-blueTheme text-xs">Find Slots!</button>
+                    <div className="flex border-black">
+                        <button onClick={handleCancel} className=" rounded px-4 py-2 text-black hover:underline bg-white ">Cancel</button>
+                        <button onClick={handleSubmit} className="rounded px-4 py-2 ml-4 text-white bg-blueTheme text-xs">Find Slots!</button>
                     </div>
 
                 </div>

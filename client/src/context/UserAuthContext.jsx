@@ -16,7 +16,8 @@ export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState("");
   const signIn = async (email, password) => {
     const response = await signInWithEmailAndPassword(auth, email, password);
-    console.log(response.user.accessToken);
+    return response
+    //console.log(response.user.accessToken);
   };
   const logOut = async () => {
     await signOut(auth);
