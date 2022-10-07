@@ -163,7 +163,7 @@ const FreeSlot = () => {
     setTagNote("Add a tag");
   };
 
-  const submitTags = () => [console.log(tags)];
+  const submitTags = () => [console.log(tags)]; //This is what gives you array of tags.
   return (
     <div>
       <div>asdasd</div>
@@ -210,7 +210,6 @@ const FreeSlot = () => {
             className="flex gap-x-3 items-center font-bold cursor-pointer"
             onClick={() => {
               setSaveTeam(!saveTeam);
-              console.log(saveTeam);
             }}
           >
             {saveTeam ? <CheckBoxOutlineBlank /> : <CheckBox />}
