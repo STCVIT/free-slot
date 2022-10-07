@@ -1,10 +1,10 @@
 import React from 'react'
-import Sidebar from "./Sidebar";
-import Tabs from "./Tabs"
-import Navbar from "./Navbar";
+import Sidebar from "../components/Sidebar";
+import Tabs from "../components/Tabs"
+import Navbar from "../components/Navbar";
 
 
-function HomePageBuild() {
+export default function Home() {
     return (
         <div className="h-screen">
             <Navbar />
@@ -17,4 +17,3 @@ function HomePageBuild() {
     )
 }
 
-export default HomePageBuild

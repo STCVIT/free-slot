@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DragFile from "./DragFile";
 import TextInput from "../TextInput";
+import { UserAuth } from "../../context/UserAuthContext";
 
-const TimetableNew = () => {
-  const onFileChange = (files) => {
-    return files;
-  };
+export default function Timetable () {
+  const [files, setFiles] = useState([])
+  const {sendTimetable} = UserAuth()
+  const navigate=useNavigate()
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    try {
+      var file = files[0]
+      const reader  = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload=()=>{
+        file=reader.result
+        sendTimetable(file)
+      }
+      navigate('/home')
+    } catch (error) {
+      console.error(error)
+    }
+  }
   return (
     <>
       <div className="md:grid grid-cols-12">

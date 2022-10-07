@@ -4,6 +4,7 @@ const {freeSlotSs, busy_time} = require('./freeSlotScreenshot')
 const {freeSlotCopyPaste} = require('./freeSlotCopyPaste')
 const { BadRequestError, NotFoundError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler')
+const axios = require('axios')
 
 //get the first user timetable
 const checkFreeSlot = async (req, res, next)=>{
@@ -27,8 +28,9 @@ const checkFreeSlot = async (req, res, next)=>{
 //adding timetbale of user by screenshot method
 const freeSlotScreenshot = async(req, res, next)=>{
     try {
+        console.log(req.body)
         const timetable = await User.update(
-            {timetable: busy_time(req.body.timetable)}, {where: {reg_no: req.body.regno}}
+            {timetable: busy_time(req.body.timetable)}, {where: {email: req.body.email}}
         )
         res.status(200).send(timetable)
     } catch (error) {
@@ -48,4 +50,15 @@ const freeSlotCp = async(req, res, next)=>{
         console.error(error.message);
     }
 }
-module.exports = { checkFreeSlot, freeSlotScreenshot, freeSlotCp}
+const freeslotML = (req, res, next)=>{
+    //var MLoutput = ""
+    const string = req.body.file
+    axios.post('http://localhost:5000/', {string})
+    .then((res)=>{
+        const MLoutput = res.data;
+        req.body.timetable=MLoutput
+        next()
+    })
+    
+}
+module.exports = { checkFreeSlot, freeSlotScreenshot, freeSlotCp, freeslotML}
