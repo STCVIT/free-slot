@@ -82,6 +82,8 @@ const FreeSlot = () => {
                 Enter the reg no. or name of the members:
                 <br />
                 <i>Press Enter to seperate tags.</i>
+                <br/>
+                <b>*Note: Paste a string having registration numbers seperated by commas to add all at once.</b>
               </div>
               <div className="self-center">{tagNote}</div>
               <div className="flex flex-col items-center w-3/4 p-2 rounded-md justify-center gap-2 border self-center">
