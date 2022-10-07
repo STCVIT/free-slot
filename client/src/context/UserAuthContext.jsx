@@ -40,7 +40,17 @@ export function UserAuthContextProvider({ children }) {
       }
     })
   };
-
+  const sendTimetable = (file)=>{
+    const email = user.email
+    axios.post('http://localhost:4000/timetable/string', {
+    email,  
+    file
+    })
+    .then((res)=>{
+      if(res.status===200){
+            console.log(res)
+  }})
+  }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -52,13 +62,12 @@ export function UserAuthContextProvider({ children }) {
 
   return (
     <userAuthContext.Provider
-      value={{ user, signIn, logOut, googleSignIn }}
+      value={{ user, signIn, logOut, googleSignIn, sendTimetable }}
     >
       {children}
     </userAuthContext.Provider>
   );
 }
-
 export const UserAuth = () => {
   return useContext(userAuthContext);
 }

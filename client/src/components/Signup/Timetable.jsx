@@ -1,14 +1,29 @@
 import React, { useState } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
-import fileUpload from "../../assets/file-upload.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DragFile from "./DragFile";
 import TextInput from "../TextInput";
+import { UserAuth } from "../../context/UserAuthContext";
 
-const TimetableNew = () => {
-  const onFileChange = (files) => {
-    return files;
-  };
+export default function Timetable () {
+  const [files, setFiles] = useState([])
+  const {sendTimetable} = UserAuth()
+  const navigate=useNavigate()
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    try {
+      var file = files[0]
+      const reader  = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload=()=>{
+        file=reader.result
+        sendTimetable(file)
+      }
+      navigate('/home')
+    } catch (error) {
+      console.error(error)
+    }
+  }
   return (
     <>
       <div className="px-4 md:px-0 md:grid grid-cols-12">
@@ -28,7 +43,7 @@ const TimetableNew = () => {
               <div className="flex flex-col gap-y-3 row-span-3">
                 <h1 className="self-start">Timetable</h1>
                 <div className="w-full items-center justify-center h-full flex">
-                  <DragFile />
+                  <DragFile files={files} setFiles={setFiles}/>
                 </div>
               </div>
               <div className="row-span-2">
@@ -43,6 +58,11 @@ const TimetableNew = () => {
                 <div className="flex w-full justify-evenly my-3">
                     <button className="border col-span-1 w-2/4 border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md">
                   <Link to="/homepage">
+                  <div className="grid grid-cols-2 w-full gap-x-3">
+                    <button className="border col-span-1 w-full border-black px-4 py-2 rounded-md">
+                      Back
+                    </button>
+                    <button className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>
                       Sign Up
                     </Link>
                     </button>
@@ -50,7 +70,7 @@ const TimetableNew = () => {
                 <p className="text-center">
                   Alredy have an account?{" "}
                   <span className="text-blue-600 underline decoration-dotted">
-                    <a href="#">Log in</a>
+                    <Link to="/login">Log in</Link>
                   </span>
                 </p>
               </div>
@@ -60,6 +80,5 @@ const TimetableNew = () => {
       </div>
     </>
   );
-};
 
-export default TimetableNew;
+};
