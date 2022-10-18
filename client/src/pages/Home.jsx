@@ -1,8 +1,7 @@
 import React from "react";
-import Sidebar from "./Sidebar";
-import Tabs from "./Tabs";
-import Navbar from "./Navbar/Navbar";
-
+// import Sidebar from "./Sidebar";
+// import Tabs from "./Tabs";
+// import Navbar from "./Navbar/Navbar";
 export default function Home() {
   return (
     <div className="grid grid-rows-6">
