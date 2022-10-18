@@ -1,25 +1,33 @@
 import ResponseData from "./ResponsesData";
-import { RiCheckboxCircleFill, RiErrorWarningFill, RiTimeFill } from "react-icons/ri";
+import {
+  RiCheckboxCircleFill,
+  RiErrorWarningFill,
+  RiTimeFill,
+} from "react-icons/ri";
 import { SwitchRight } from "@mui/icons-material";
 const statusArray = ResponseData.map((x) => {
   let statusIcon;
   switch (x.uploadStatus) {
     case "Uploaded":
-        statusIcon = <RiCheckboxCircleFill size={25} color="green"/>
-        break;
+      statusIcon = <RiCheckboxCircleFill size={25} color="green" />;
+      break;
     case "Waiting":
-        statusIcon = <RiTimeFill size={25} color="orange"/>
-        break;
+      statusIcon = <RiTimeFill size={25} color="orange" />;
+      break;
     case "Error":
-        statusIcon = <RiErrorWarningFill size={25} color="red"/>
+      statusIcon = <RiErrorWarningFill size={25} color="red" />;
+      break;
     default:
-        break;
+      break;
   }
-    return (
+  return (
     <div className="flex flex-col gap-y-2 md:grid grid-cols-3 w-full text-left even:bg-gray-150 border-black odd:bg-white py-3 px-6 rounded-md bg-[#F2F2F9]">
       <h1 className="col-span-1">{x.regNo}</h1>
       <h1 className="col-span-1">{x.userName}</h1>
-      <h1 className="col-span-1 flex items-center gap-x-3">{statusIcon}{x.uploadStatus}</h1>
+      <h1 className="col-span-1 flex items-center gap-x-3">
+        {statusIcon}
+        {x.uploadStatus}
+      </h1>
     </div>
   );
 });
@@ -36,17 +44,16 @@ const Responses = () => {
           <h1 className="col-span-1">Timetable</h1>
         </div>
         <div className="flex text-left flex-col gap-y-2 w-full px-2 md:px-0 md:w-3/4 mt-5">
-            {statusArray}
+          {statusArray}
         </div>
         <div className="flex gap-x-5 items-center">
-        <button className="col-span-1 underline decoration-dotted px-4 py-2 my-5">
-                    Cancel
-                  </button>
-                  <button className="col-span-1 bg-blue-600 rounded-md px-4 py-2 text-white">
-                    Find Slot!
-                  </button>
+          <button className="col-span-1 underline decoration-dotted px-4 py-2 my-5">
+            Cancel
+          </button>
+          <button className="col-span-1 bg-blue-600 rounded-md px-4 py-2 text-white">
+            Find Slot!
+          </button>
         </div>
-
       </div>
     </>
   );
