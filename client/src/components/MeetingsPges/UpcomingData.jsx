@@ -1,40 +1,28 @@
 import MeetingCardTemplate from "../MeetingCardTemplate";
-
-const UpcomingData = [
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "Upcoming",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-];
+import { faker } from "@faker-js/faker";
+import { useEffect, useState } from "react";
+import { url } from "../../config/backend.config";
+import axios from "axios";
 
 const UpcomingPage = () => {
-  return <MeetingCardTemplate list={UpcomingData} />;
+  const [UpcomingData, setUpcomingData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get(url + "?tab=upcoming");
+      setUpcomingData(response.data);
+      // console.log(UpcomingData);
+      console.log(response.data);
+    }
+    getData();
+  }, [refresh]);
+  return (
+    <MeetingCardTemplate
+      list={UpcomingData}
+      tab="upcoming"
+      refresh={{ refresh, set: setRefresh }}
+    />
+  );
 };
 
 export default UpcomingPage;

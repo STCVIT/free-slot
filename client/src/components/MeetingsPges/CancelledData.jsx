@@ -1,40 +1,28 @@
 import MeetingCardTemplate from "../MeetingCardTemplate";
-
-const CancelledData = [
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "Cancelled",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-];
+import { faker } from "@faker-js/faker";
+import { useEffect, useState } from "react";
+import { url } from "../../config/backend.config";
+import axios from "axios";
 
 const CancelledPage = () => {
-  return <MeetingCardTemplate list={CancelledData} />;
+  const [CancelledData, setCancelledData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get(url + "?tab=cancelled");
+      setCancelledData(response.data);
+      // console.log(CancelledData);
+      console.log(response.data);
+    }
+    getData();
+  }, [refresh]);
+  return (
+    <MeetingCardTemplate
+      list={CancelledData}
+      tab="cancelled"
+      refresh={{ refresh, set: setRefresh }}
+    />
+  );
 };
 
 export default CancelledPage;
