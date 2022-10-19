@@ -1,5 +1,5 @@
 import React from "react";
-import profile from "../../assets/Profile.svg";
+// import profile from "../../assets/Profile.svg";
 import DropDownProfile from "../DropDownProfile";
 import { NavButton } from "./NavButton/NavButton";
 
