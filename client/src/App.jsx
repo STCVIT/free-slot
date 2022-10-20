@@ -12,6 +12,8 @@ import Landing from "./components/Landing";
 import Schedule from "./components/Schedule/Schedule";
 import AddEvent from "./components/AddEvent";
 import Profile from "./components/Profile";
+import LandingPage2 from "./components/LandingPage2";
+import LandingPage3 from "./components/LandingPage3";
 import "./App.css";
 export default function App() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
           <Route path="/timetable" element={<Timetable />} />{" "}
           <Route path="/profile" element={<Profile />} />{" "}
           <Route path="/login" element={<Login />} />{" "}
+          <Route path="/landingPage2" element={<LandingPage2 />} />{" "}
+          <Route path="/landingPage3" element={<LandingPage3 />} />{" "}
           <Route
             path="/schedule"
             element={
