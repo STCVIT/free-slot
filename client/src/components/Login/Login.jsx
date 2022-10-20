@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signIn, googleSignIn } = UserAuth();
+  const { logIn, googleSignIn } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
 
@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
-      await signIn(email, password);
+      await logIn(email, password);
       navigate("/home");
     } catch (error) {
       setError(e.message);
@@ -88,7 +88,7 @@ const Login = () => {
               </div>
             </form>
             <div className="pt-8 pb-1 text-center ">
-              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded ">
+              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded " onClick={handleSubmit}>
                 Login
               </button>
             </div>
