@@ -1,4 +1,8 @@
 import ResponseData from "./ResponsesData";
+import { FileCopy } from "@mui/icons-material";
+import { RiFileCopyLine } from "react-icons/ri";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   RiCheckboxCircleFill,
   RiErrorWarningFill,
@@ -32,10 +36,35 @@ const statusArray = ResponseData.map((x) => {
   );
 });
 const Responses = () => {
+  const showCopiedToast = () => {
+    toast.success("Link copied successfully!", {
+      position: toast.POSITION.TOP_RIGHT,
+      icon: <RiFileCopyLine size={25} color="green" />,
+    });
+  };
   return (
     <>
       <div>
         <h1 className="font-bold text-center my-2 text-2xl">Responses</h1>
+      </div>
+      <div className="ml-[15vw]">
+        <h1>Share this link with your peers</h1>
+        <div className="flex items-center w-1/2 justify-between rounded-md border-2 border-gray-200 p-2">
+          <h1 className="overflow-hidden col-span-10 whitespace-nowrap text-ellipsis">
+            Link comes hereLink comes hereLink comes hereLink comes hereLink
+            comes here Link comes hereLink comes hereLink comes here
+          </h1>
+          <button
+            className="col-span-2 rounded-md p-2"
+            onClick={() => {
+              showCopiedToast();
+              navigator.clipboard.writeText("Link comes here");
+            }}
+          >
+            <RiFileCopyLine size={24} />
+          </button>
+          <ToastContainer />
+        </div>
       </div>
       <div className="flex w-full flex-col justify-center mt-5 items-center drop-shadow">
         <div className="hidden items-center md:grid grid-cols-3 md:w-3/4 py-3 px-6 rounded-md text-gray-400">
