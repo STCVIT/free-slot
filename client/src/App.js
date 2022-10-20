@@ -21,7 +21,7 @@ export default function App() {
           <Route path='/' element={<Landing />} />
           <Route path='/home' element={<ProtectedRoute> <Home /></ProtectedRoute>}/>
           <Route path='/signup' element={<Signup />} />
-          <Route path='/timetable' element={<Timetable />}/>
+          <Route path='/timetable' element={<ProtectedRoute><Timetable /></ProtectedRoute>}/>
           <Route path='/login' element={<Login />} />
           <Route path='/addevent' element={<ProtectedRoute><AddEvent /></ProtectedRoute>} />
           <Route path='/schedule' element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
