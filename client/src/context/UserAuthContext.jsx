@@ -1,11 +1,11 @@
 import { createContext, useEffect, useContext, useState } from "react";
 import {
-  getAuth,
   signInWithEmailAndPassword,
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
-  onAuthStateChanged
+  onAuthStateChanged,
+  sendPasswordResetEmail
 } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios";
@@ -13,14 +13,16 @@ import axios from "axios";
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState("");
-  const signIn = async (email, password) => {
-    const response = await signInWithEmailAndPassword(auth, email, password);
-    console.log(response.user.accessToken);
-  };
-  const logOut = async () => {
-    await signOut(auth);
-  };
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState('');
+
+  function logIn(email,password){
+    return signInWithEmailAndPassword(auth,email,password)
+  }
+
+  function logOut(){
+    return signOut(auth)
+  }
   const googleSignIn = async () => {
     const googleAuthProvider = new GoogleAuthProvider();
     await signInWithPopup(auth, googleAuthProvider);
@@ -40,6 +42,11 @@ export function UserAuthContextProvider({ children }) {
       }
     })
   };
+
+  function reset(email){
+    return sendPasswordResetEmail(auth,email)
+  }
+
   const sendTimetable = (file)=>{
     const email = user.email
     axios.post('http://localhost:4000/timetable/string', {
@@ -51,18 +58,22 @@ export function UserAuthContextProvider({ children }) {
             console.log(res)
   }})
   }
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
+  useEffect(()=>{
+    const unsubscribe = onAuthStateChanged(auth, (user)=>{
+      if(user){
+        setUser(user);
+        user.getIdToken().then((token)=>{setToken(token)})
+      }
+      
+      console.log(token)
+    })
+    return ()=>{
+      unsubscribe()
+    }
+  }, [])
   return (
     <userAuthContext.Provider
-      value={{ user, signIn, logOut, googleSignIn, sendTimetable }}
+      value={{ user, logIn, logOut, googleSignIn, sendTimetable, reset }}
     >
       {children}
     </userAuthContext.Provider>
