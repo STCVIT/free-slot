@@ -12,6 +12,7 @@ import Landing from "./components/Landing";
 import Schedule from "./components/Schedule/Schedule";
 import AddEvent from "./components/AddEvent";
 import Profile from "./components/Profile";
+import Responses from "./components/Responses/Responses";
 import "./App.css";
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/timetable" element={<Timetable />} />{" "}
           <Route path="/profile" element={<Profile />} />{" "}
           <Route path="/login" element={<Login />} />{" "}
+          <Route path="/responses" element={<Responses />} />{" "}
           <Route
             path="/schedule"
             element={
