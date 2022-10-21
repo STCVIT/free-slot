@@ -8,7 +8,7 @@ export default function Link(props) {
     
     return (
         <button 
-            className="px-4 py-2 rounded-md"
+            className="px-8 py-2 rounded-md"
             style={styles} 
             onClick={()=>{
                 return props.toggle(props.id, props.component)

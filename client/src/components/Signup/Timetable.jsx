@@ -58,7 +58,7 @@ export default function Timetable() {
               <div className="flex w-full justify-evenly my-3">
                 <button className="border col-span-1 w-2/4 border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md" />
                 <div className="grid grid-cols-2 w-full gap-x-3">
-                  <a href="/homepage">
+                  <a href="/home">
                     <button className="border col-span-1 w-full border-black px-4 py-2 rounded-md">
                       Back
                     </button>

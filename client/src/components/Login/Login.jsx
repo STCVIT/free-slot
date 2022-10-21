@@ -7,7 +7,7 @@ import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 
 const Login = () => {
-  document.title = "Login"
+  document.title = "Login";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,7 +21,7 @@ const Login = () => {
     setError("");
     try {
       await signIn(email, password);
-      navigate("/homepage");
+      navigate("/home");
     } catch (error) {
       setError(e.message);
       console.log(e.message);
@@ -31,7 +31,7 @@ const Login = () => {
     setError("");
     try {
       await googleSignIn();
-      navigate("/homepage");
+      navigate("/home");
     } catch (error) {}
   };
   const togglePassword = (e) => {
@@ -57,13 +57,13 @@ const Login = () => {
           <div className="px-3 sm:py-5 sm:px-16 md:py-7.5 md:px-24 lg:py-10 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-10">Login</h1>
             <button
-                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-3 rounded "
-                type="button"
-                onClick={oAuth}
-              >
-                <img className="px-2" src={googleLogo} alt="" />
-                <p>Continue with Google</p>
-              </button>
+              className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-3 rounded "
+              type="button"
+              onClick={oAuth}
+            >
+              <img className="px-2" src={googleLogo} alt="" />
+              <p>Continue with Google</p>
+            </button>
             <div class="relative py-4">
               <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-b border-gray-300"></div>
@@ -105,10 +105,10 @@ const Login = () => {
               </div>
             </form>
             <div className="pt-8 pb-1 text-center ">
-              <Link to="/homepage">
-              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded ">
-                Login
-              </button>
+              <Link to="/home">
+                <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded ">
+                  Login
+                </button>
               </Link>
             </div>
             <h6 className="text-sm text-grey">
@@ -116,9 +116,8 @@ const Login = () => {
                 Forgot Password?
               </a>
             </h6>
-            
+
             <div className="py-5">
-              
               <h6 className="text-sm text-grey py-2">
                 Don't have an account?
                 <Link to="/signup" className="pl-2 text-blueTheme">

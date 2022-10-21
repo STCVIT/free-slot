@@ -19,6 +19,7 @@ const MeetingCardTemplate = (props) => {
           <p className="mb-3 p-2 font-normal text-black ">
             Created by {dataItem.by}
           </p>
+          <p>Day: {dataItem.day}</p>
           <p className="mb-3 p-2 font-normal text-gray-400 ">
             {dataItem.members}
           </p>
@@ -57,7 +58,7 @@ const MeetingCardTemplate = (props) => {
     );
   });
   return (
-    <div className="grid grid-cols-3 gap-x-4 mx-2">{MeetingCardsArray}</div>
+    <div className="md:grid grid-cols-3 gap-x-4 mx-2">{MeetingCardsArray}</div>
   );
   // return <div>{trial}</div>;
 };

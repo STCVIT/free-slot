@@ -1,20 +1,20 @@
-import React from 'react'
+import React from "react";
 import Sidebar from "./Sidebar";
-import Tabs from "./Tabs"
-import Navbar from "./Navbar";
-
+import Tabs from "./Tabs";
+import Navbar from "./Navbar/Navbar";
+import Home from "../pages/Home";
 
 function HomePageBuild() {
-    return (
-        <div className="h-screen">
-            <Navbar />
-            <div className="invisible sm:visible grid grid-cols-6 gap-4 h-full">
-                <Sidebar />
-                <Tabs />
-
-            </div>
-        </div>
-    )
+  return (
+    <div className="h-screen">
+      <Navbar />
+      <div className="gap-4 h-full" id="mainDiv">
+        {/* <Sidebar />
+        <Tabs /> */}
+        <Home />
+      </div>
+    </div>
+  );
 }
 
-export default HomePageBuild
+export default HomePageBuild;
