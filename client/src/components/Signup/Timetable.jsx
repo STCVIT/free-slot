@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
 import { Link, useNavigate } from "react-router-dom";
 import DragFile from "./DragFile";
