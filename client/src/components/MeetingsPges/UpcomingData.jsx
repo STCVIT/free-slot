@@ -1,5 +1,5 @@
 import MeetingCardTemplate from "../MeetingCardTemplate";
-import { faker } from "@faker-js/faker";
+//import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { url } from "../../config/backend.config";
 import axios from "axios";
