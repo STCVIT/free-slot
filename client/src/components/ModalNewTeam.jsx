@@ -3,51 +3,83 @@ import Circle from "../assets/circle.svg";
 import Cross from "../assets/Cross.svg";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const FreeSlotAdd = () => {
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
   const [saveTeam, setSaveTeam] = useState(true);
+  const ToastMessageContainer = (props) => {
+    return (
+      <div>
+        <h1 className="mb-2">{props.error}</h1>
+        {props.type && <h3>{props.type}:</h3>}
+        {props.description && <p>{props.description}</p>}
+      </div>
+    );
+  };
   function handleKeyDown(e) {
     if (e.key !== "Enter") return;
     else {
       setTagNote("Click a tag to remove.");
       const value = e.target.value;
       if (value.includes(",")) {
-        const duplicates = [];
         const invalid = [];
         e.target.value = "";
         let newTag = [];
-        var tag = value.split(",");
+        let tag = value.split(",");
+        if (new Set(tag).size < tag.length) {
+          toast.error(
+            <ToastMessageContainer
+              error="Duplicate tags found!"
+              description="Duplicate tags inserted only once."
+            />
+          );
+        }
+        tag = new Set(tag);
         tag.forEach((element) => {
           if (regex.test(element)) {
-            if (
-              tags.find((tag) => tag.toLowerCase() === element.toLowerCase())
-            ) {
-              duplicates.push(element);
-              return;
-            }
             newTag.push(element);
           } else {
             invalid.push(element);
             return;
           }
         });
-        if (duplicates.length > 0) {
-          alert("Duplicate tags: " + duplicates.join(", "));
-        }
         if (invalid.length > 0) {
-          alert("Invalid tags: " + invalid.join(", "));
+          const invalidTags = invalid.join(", ");
+          toast.error(
+            <ToastMessageContainer
+              error="Invalid tags found!"
+              type="Invalid tags"
+              description={invalidTags}
+            />
+          );
         }
         setTags([...tags, ...newTag]);
       } else {
         if (!value.trim()) return;
         else if (!regex.test(value) || value.length > 9) {
           setTagNote("Please enter a valid tag.");
+          toast.error(
+            <ToastMessageContainer
+              error="Invalid tag found!"
+              type="Invalid tag"
+              description={value}
+            />
+          );
           e.target.value = "";
           return;
         } else if (tags.includes(value.toUpperCase())) {
-          alert(value + " already exists!");
+          toast.error(
+            <ToastMessageContainer
+              error={`${value.toUpperCase()} exists already!`}
+            />,
+            {
+              position: toast.POSITION.TOP_RIGHT,
+              // icon: <RiFileCopyLine size={25} color="green" />,
+            }
+          );
           e.target.value = "";
           return;
         }
@@ -122,6 +154,7 @@ const FreeSlotAdd = () => {
                   className="text-center border rounded-md py-2"
                   placeholder="21XXX0000"
                 />
+                <ToastContainer position="top-right" />
               </div>
             </div>
           </div>
