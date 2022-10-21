@@ -1,10 +1,11 @@
+import Home from "../../../pages/Home";
 import Schedule from "../../Schedule/Schedule";
 const Navbar = [
   {
     linkName: "Home",
     id: "home",
     on: true,
-    component: "a",
+    component: <Home />,
   },
   {
     linkName: "My Schedule",

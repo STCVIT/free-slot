@@ -1,10 +1,11 @@
 import MeetingCardTemplate from "../MeetingCardTemplate";
-import { faker } from "@faker-js/faker";
+//import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { url } from "../../config/backend.config";
 import axios from "axios";
 
 const PastPage = () => {
+  const day = localStorage.getItem("day");
   const [PastData, setPastData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
@@ -18,7 +19,9 @@ const PastPage = () => {
   }, [refresh]);
   return (
     <MeetingCardTemplate
-      list={PastData}
+      list={
+        day === "all" ? PastData : PastData.filter((item) => item.day === day)
+      }
       tab="past"
       refresh={{ refresh, set: setRefresh }}
     />

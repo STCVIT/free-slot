@@ -12,8 +12,12 @@ import Landing from "./components/Landing";
 import Schedule from "./components/Schedule/Schedule";
 import AddEvent from "./components/AddEvent";
 import Profile from "./components/Profile";
+import LandingPage2 from "./components/LandingPage2";
+import LandingPage3 from "./components/LandingPage3";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
+import HomePageBuild from "./components/HomePageBuild";
+import ContactUs from "./components/ContactUs";
 export default function App() {
   return (
     <UserAuthContextProvider>
@@ -24,14 +28,17 @@ export default function App() {
             path="/home"
             element={
               // <ProtectedRoute > < Home / > < /ProtectedRoute>}/ >
-              <Home />
+              <HomePageBuild />
             }
           />{" "}
           <Route path="/signup" element={<Signup />} />{" "}
           <Route path="/timetable" element={<Timetable />} />{" "}
           <Route path="/profile" element={<Profile />} />{" "}
           <Route path="/login" element={<Login />} />{" "}
+          <Route path="/landingPage2" element={<LandingPage2 />} />{" "}
+          <Route path="/landingPage3" element={<LandingPage3 />} />{" "}
           <Route path="/responses" element={<Responses />} />{" "}
+          <Route path="/contactUs" element={<ContactUs />} />{" "}
           <Route
             path="/schedule"
             element={
