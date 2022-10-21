@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const config = require('./config')[process.env.NODE_ENV || 'development']
-const sequelize = new Sequelize(config.postgres.options)
+const sequelize = new Sequelize(config.postgres)
 
 sequelize.authenticate()
     .then(()=>{

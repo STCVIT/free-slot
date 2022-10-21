@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const path = require('path')
-require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
+require('dotenv').config({path: path.resolve(__dirname, './.env')})
 const cors = require('cors');
 const app = express();
 
@@ -40,4 +40,7 @@ app.use('/test', testRouter)
 app.get('/', (req, res)=>{
     res.send("lol")
 })
+app.get('*', (req,res)=>{
+    res.sendFile(path.join(__dirname, "index.html"))
+  })
 module.exports = app
