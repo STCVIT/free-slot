@@ -1,16 +1,16 @@
 module.exports = (sequelize, DataTypes)=>{
     const Meet = sequelize.define('meet', {
-        id: {
-            type: DataTypes.INTEGER,
+        meet_id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             allowNull: false,
-            primaryKey: true,
-            autoIncrement: true
+            primaryKey: true
         },
         title: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
-        //check about this link or location thing
         location: {
             type: DataTypes.STRING,
             allowNull: true
@@ -37,8 +37,8 @@ module.exports = (sequelize, DataTypes)=>{
             defaultValue: null
         }
     }, {
-        createdAt: false,
-        updatedAt: false
+        createdAt: true,
+        updatedAt: true
     });
     return Meet
 }

@@ -12,7 +12,8 @@ module.exports = {
     },
     production: {
         postgres: {
-            connectionString: process.env.DATABASE_URL
+            connectionString: process.env.DATABASE_URL,
+            dialect: 'postgres'
         }
     }
 }

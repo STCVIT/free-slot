@@ -22,18 +22,6 @@ const addUserInDb = async (req, res, next)=>{
     }
 }
 
-//Addign User in Firebase
-// const addUserInFirebase = async(req, res)=>{
-//     try {
-//         const email = req.body.email;
-//         const password = req.body.password;
-//         createUserWithEmailAndPassword(email, password)
-//     } catch (error) {
-//         errorHandler(new BadRequestError, req, res)
-//         console.error(error.message);
-//     }
-// }
-
 // Get one user
 const getUser = async (req, res)=>{
     try{
