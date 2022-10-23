@@ -3,14 +3,13 @@ const db = require('./db/db')
 const Team = db.teams
 const User = db.users
 const Meet = db.meets
-//const User_Team = db.user_teams
 
-Team.hasMany(Meet, { foreignKey: "id" })
-Meet.belongsTo(Team)
+Team.hasMany(Meet, { foreignKey: "team_id" })
+Meet.belongsTo(Team, {foreignKey: "meet_id"})
 Team.belongsToMany(User, {through: 'userteams'})
 User.belongsToMany(Team, {through: 'userteams'})
 
-sequelize.sync({alter: true})
+sequelize.sync({force: false})
     .then(()=>{
         console.log("Associations created")
     })
