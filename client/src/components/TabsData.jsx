@@ -1,45 +1,51 @@
 const TabsData = [
   {
     label: "Upcoming",
-    time:
-      "4:00 p.m. -  5:30 p.m.",
-    place:
-      "foodies",
-    by:
-      "devmehta",
-    members:
-      "dev, ramya, sakshi, mehul  "
+    time: "4:00 p.m. -  5:30 p.m.",
+    place: "foodies",
+    by: "devmehta",
+    members: "dev, ramya, sakshi, mehul  ",
   },
-
-  
 
   {
     label: "Cancelled",
-    time:
-      "6:00 p.m. -  7:30 p.m.",
-    place:
-      "foodies",
-    by:
-      "ramya",
-    members:
-      "dev, ramya, sakshi, mehul  "
-
+    time: "6:00 p.m. -  7:30 p.m.",
+    place: "foodies",
+    by: "ramya",
+    members: "dev, ramya, sakshi, mehul  ",
   },
   {
     label: "Past",
-    time:
-      "9:00 a.m. -  9:30 a.m.",
-    place:
-      "foodies",
-    by:
-      "saarim",
-    members:
-      "dev, ramya, sakshi, mehul  "
+    time: "9:00 a.m. -  9:30 a.m.",
+    place: "foodies",
+    by: "saarim",
+    members: "dev, ramya, sakshi, mehul  ",
+  },
+  {
+    label: "Upcoming",
+    time: "4:00 p.m. -  5:30 p.m.",
+    place: "foodies",
+    by: "devmehta",
+    members: "dev, ramya, sakshi, mehul  ",
+  },
+
+  {
+    label: "Cancelled",
+    time: "6:00 p.m. -  7:30 p.m.",
+    place: "foodies",
+    by: "ramya",
+    members: "dev, ramya, sakshi, mehul  ",
+  },
+  {
+    label: "Past",
+    time: "9:00 a.m. -  9:30 a.m.",
+    place: "foodies",
+    by: "saarim",
+    members: "dev, ramya, sakshi, mehul  ",
   },
 ];
 
-export default TabsData
-
+export default TabsData;
 
 // import React from 'react'
 

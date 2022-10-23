@@ -7,6 +7,7 @@ import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 
 const Login = () => {
+  document.title = "Login"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,8 +20,13 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
+<<<<<<< HEAD
       await logIn(email, password);
       navigate("/home");
+=======
+      await signIn(email, password);
+      navigate("/homepage");
+>>>>>>> origin/merge-trial-2
     } catch (error) {
       setError(e.message);
       console.log(e.message);
@@ -30,7 +36,7 @@ const Login = () => {
     setError("");
     try {
       await googleSignIn();
-      navigate("/home");
+      navigate("/homepage");
     } catch (error) {}
   };
   const togglePassword = (e) => {
@@ -55,6 +61,22 @@ const Login = () => {
         <div className="visible col-span-1 sm:col-span-2 mt-7">
           <div className="px-3 sm:py-5 sm:px-16 md:py-7.5 md:px-24 lg:py-10 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-10">Login</h1>
+            <button
+                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-3 rounded "
+                type="button"
+                onClick={oAuth}
+              >
+                <img className="px-2" src={googleLogo} alt="" />
+                <p>Continue with Google</p>
+              </button>
+            <div class="relative py-4">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-b border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center">
+                <span class="bg-white px-4 text- text-gray-500">OR</span>
+              </div>
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-2">Email</label>
@@ -88,32 +110,24 @@ const Login = () => {
               </div>
             </form>
             <div className="pt-8 pb-1 text-center ">
+<<<<<<< HEAD
               <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded " onClick={handleSubmit}>
+=======
+              <Link to="/homepage">
+              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded ">
+>>>>>>> origin/merge-trial-2
                 Login
               </button>
+              </Link>
             </div>
             <h6 className="text-sm text-grey">
               <a href="" className="text-blueTheme">
                 Forgot Password?
               </a>
             </h6>
-            <div class="relative py-4">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-b border-gray-300"></div>
-              </div>
-              <div class="relative flex justify-center">
-                <span class="bg-white px-4 text- text-gray-500">OR</span>
-              </div>
-            </div>
+            
             <div className="py-5">
-              <button
-                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-3 rounded "
-                type="button"
-                onClick={oAuth}
-              >
-                <img className="px-2" src={googleLogo} alt="" />
-                <p>Continue with Google</p>
-              </button>
+              
               <h6 className="text-sm text-grey py-2">
                 Don't have an account?
                 <Link to="/signup" className="pl-2 text-blueTheme">
