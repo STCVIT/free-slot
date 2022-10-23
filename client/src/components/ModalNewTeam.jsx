@@ -132,13 +132,13 @@ const FreeSlotAdd = () => {
               <i>Press Enter to seperate tags.</i>
               <br />
               <b>
-                *Note: Paste a string having registration numbers seperated by
+                *Note: Paste a string having registration numbers separated by
                 commas to add all at once.
               </b>
             </div>
             <div className="self-center">{tagNote}</div>
             <div className="flex flex-col items-center w-full rounded-md justify-center gap-2 border self-center">
-              <div className="flex flex-wrap md:flex-row overflow-x-scroll lg:overflow-hidden max-h-[200px] md:h-full items-center justify-center gap-3 py-4">
+              <div className="flex flex-wrap w-full md:flex-row overflow-x-scroll lg:overflow-hidden max-h-[200px] md:h-full items-center justify-center gap-3 py-4">
                 {tags.map((tag, index) => (
                   <button
                     onClick={() => removeTag(index)}
@@ -154,7 +154,6 @@ const FreeSlotAdd = () => {
                   className="text-center border rounded-md py-2"
                   placeholder="21XXX0000"
                 />
-                <ToastContainer position="top-right" />
               </div>
             </div>
           </div>
@@ -193,6 +192,7 @@ const FreeSlotAdd = () => {
           </button>
         </div>
       </div>
+      <ToastContainer position="top-right" />
     </div>
   );
 };
