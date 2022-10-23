@@ -35,7 +35,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
-app.use(cookieParser())
+//app.use(cookieParser())
 
 app.use('/user', userRouter)
 app.use('/team', teamRouter)
