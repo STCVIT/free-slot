@@ -1,7 +1,17 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const config = require('./config')[process.env.NODE_ENV || 'development']
+//for locally running
 const sequelize = new Sequelize(config.postgres)
 
+//for hosting
+// const sequelize= new Sequelize(process.env.DATABASE_URL, {
+//     dialect: 'postgres',
+//     dialectOptions: {
+//         ssl: {
+//         require: true,
+//         rejectUnauthorized: false
+//     }
+// } })
 sequelize.authenticate()
     .then(()=>{
         console.log('Connected successfully')
@@ -15,14 +25,10 @@ db.sequelize = sequelize
 db.users=require('../models/user.model')(sequelize, DataTypes)
 db.teams=require('../models/team.model')(sequelize, DataTypes)
 db.meets=require('../models/meetings.model')(sequelize, DataTypes)
-//db.user_teams=require('../models/userTeam.model')(sequelize, DataTypes)
 sequelize.sync({ force: false })
     .then(()=>{
         console.log("Database & tables created")
     })
-    // .then(()=>{
-    //     require('../associations')
-    // })
     .catch((err)=>{
         console.error(err.message)
     }) 

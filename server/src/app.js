@@ -5,6 +5,18 @@ const path = require('path')
 require('dotenv').config({path: path.resolve(__dirname, './.env')})
 const cors = require('cors');
 const app = express();
+const whitelist = ['http://127.0.0.1:3000']
+const corsOptions = {
+    origin: function(origin, callback){
+        if(whitelist.indexOf(origin!==-1)){
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS!'))
+        }
+    },
+    methods: ["GET, POST, PUT, PATCH, DELETE"],
+    allowHeaders: '*'
+}
 
 require('./db/db')
 require('./associations')
@@ -17,13 +29,7 @@ const testRouter = require('./routers/testRouter')
 
 app.use(express.urlencoded({ limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
-app.use(
-    cors({
-        origin: "*",
-        methods: ["GET, POST, PUT, PATCH, DELETE"],
-        allowHeaders: '*'
-    })
-)
+app.use(cors(corsOptions))
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
@@ -38,9 +44,9 @@ app.use('/timetable', freeSlotRouter)
 app.use('/test', testRouter)
 
 app.get('/', (req, res)=>{
-    res.send("lol")
+    res.sendFile(path.join(__dirname, "../index.html"))
 })
 app.get('*', (req,res)=>{
-    res.sendFile(path.join(__dirname, "index.html"))
+    res.sendFile(path.join(__dirname, "../index.html"))
   })
 module.exports = app
