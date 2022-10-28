@@ -7,6 +7,7 @@ import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import axios from "axios";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import Cookies from 'js-cookie'
 
 const SignUp = () => {
   document.title = "Sign Up"
@@ -17,7 +18,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { googleSignIn } = UserAuth();
+  const { googleSignUp } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
   async function handleSubmit(e){
     e.preventDefault()
@@ -33,10 +34,18 @@ const SignUp = () => {
       })
       if(response.status===200){
         await createUserWithEmailAndPassword(auth, email, password)
-        console.log("hi")
+        .then((user)=>{
+          user.getIdToken().then((token)=>{
+            axios.post('http://localhost:4000/sessionLogin', {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                //'CSRF-Token': Cookies.get("XSRF-TOKEN")
+              }
+            })
+          })
+        })
         navigate("/timetable")
       }
-      console.log(name);
     } catch (error) {
       setError("Failed to create an account")
       console.error(error)
@@ -46,7 +55,7 @@ const SignUp = () => {
   const oAuth = async (e) => {
     setError("");
     try {
-      await googleSignIn();
+      await googleSignUp();
       navigate("/timetable");
     } catch (error) {
       setError(e.message);

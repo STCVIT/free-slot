@@ -26,7 +26,7 @@ const MeetingCardTemplate = (props) => {
           <div className="flex">
             <button
               onClick={async () => {
-                await axios.delete("http://localhost:6969/", {
+                await axios.delete("http://localhost:4000/", {
                   data: {
                     id: idx,
                     tab: props.tab,
@@ -40,7 +40,7 @@ const MeetingCardTemplate = (props) => {
             </button>
             <button
               onClick={async () => {
-                await axios.delete("http://localhost:6969/", {
+                await axios.delete("http://localhost:4000/", {
                   data: {
                     id: idx,
                     tab: props.tab,
