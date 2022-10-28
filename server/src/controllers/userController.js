@@ -15,6 +15,7 @@ const addUserInDb = async (req, res, next)=>{
     }
     const user = await User.create(info)
     res.status(200).send(user)
+
     }
     catch (error){
         errorHandler(new BadRequestError, req, res)
