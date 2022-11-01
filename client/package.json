@@ -17,14 +17,18 @@
     "dotenv": "^16.0.1",
     "dropzone": "^6.0.0-beta.2",
     "firebase": "^9.9.1",
+    "framer-motion": "^7.3.5",
     "jquery": "^3.6.0",
+    "js-cookie": "^3.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.2",
+    "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "react-toastify": "^9.0.8",
     "taggle": "^1.15.0",
     "typing-ahead": "^1.0.4",
     "web-vitals": "^2.1.4"
@@ -54,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "autoprefixer": "^10.4.8",
