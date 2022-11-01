@@ -88,7 +88,10 @@ const Login = () => {
               </div>
             </form>
             <div className="pt-8 pb-1 text-center ">
-              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded " onClick={handleSubmit}>
+              <button
+                className="bg-blueTheme text-white w-full font-bold mx-auto py-3 rounded "
+                onClick={handleSubmit}
+              >
                 Login
               </button>
             </div>

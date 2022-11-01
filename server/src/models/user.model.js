@@ -5,22 +5,25 @@ module.exports = (sequelize, DataTypes)=>{
             allowNull: false,
             primaryKey: true,
             validate: {
-                is: /([0-9]{2})([A-Z]{3})([0-9]{4})/, //get this checked
-              }
+                is: /([0-9]{2})([A-Z]{3})([0-9]{4})/,
+              },
+            unique: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
             validate: {
-                is: /^([a-z|\.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/, //get these validators checked
+                is: /^([a-z|\.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/,
               }
         },
         timetable: {
-            type: DataTypes.ARRAY(DataTypes.JSON), // or DataTypes.ARRAY(DataTypes.JSON)
+            type: DataTypes.ARRAY(DataTypes.JSON),
             allowNull: true
         },
         date_format: {
@@ -32,8 +35,8 @@ module.exports = (sequelize, DataTypes)=>{
             allowNull: true
         }
     }, {
-        createdAt: false,
-        updatedAt: false
+        createdAt: true,
+        updatedAt: true
     });
     return User
 }
