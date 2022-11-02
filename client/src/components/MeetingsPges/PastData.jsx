@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { url } from "../../config/backend.config";
 import axios from "axios";
 
-const PastPage = () => {
-  const day = localStorage.getItem("day");
+export const PastPage = ({ filter }) => {
   const [PastData, setPastData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const { day, date, time, groups } = filter;
+  console.log("day", day);
   useEffect(() => {
     async function getData() {
       const response = await axios.get(url + "?tab=past");
@@ -18,13 +19,15 @@ const PastPage = () => {
     getData();
   }, [refresh]);
   return (
-    <MeetingCardTemplate
-      list={
-        day === "all" ? PastData : PastData.filter((item) => item.day === day)
-      }
-      tab="past"
-      refresh={{ refresh, set: setRefresh }}
-    />
+    <>
+      <MeetingCardTemplate
+        list={
+          day === "all" ? PastData : PastData.filter((item) => item.day === day)
+        }
+        tab="past"
+        refresh={{ refresh, set: setRefresh }}
+      />
+    </>
   );
 };
 

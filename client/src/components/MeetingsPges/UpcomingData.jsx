@@ -4,21 +4,28 @@ import { useEffect, useState } from "react";
 import { url } from "../../config/backend.config";
 import axios from "axios";
 
-const UpcomingPage = (day) => {
+export const UpcomingPage = ({ filter }) => {
   const [UpcomingData, setUpcomingData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const { day, date, time, groups } = filter;
   useEffect(() => {
-    console.log(day);
+    console.log("filters in upcoming: ", filter);
     async function getData() {
       const response = await axios.get(url + "?tab=upcoming");
-
       setUpcomingData(response.data);
+      console.log(response.data);
     }
     getData();
-  }, [day]);
+  }, [refresh, filter]);
   return (
     <MeetingCardTemplate
-      list={UpcomingData.filter((item) => item.day === day)}
+      list={
+        day === "all"
+          ? UpcomingData
+          : UpcomingData.filter((item) => item.day === day)
+      }
       tab="upcoming"
+      refresh={{ refresh, set: setRefresh }}
     />
   );
 };
