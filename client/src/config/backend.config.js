@@ -1,3 +1,3 @@
-// module.exports = {
-//     url: 'http://localhost:6969'
-// }
+module.exports = {
+  url: "http://localhost:6969",
+};
