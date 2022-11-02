@@ -10,6 +10,7 @@ const FreeSlotAdd = () => {
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
   const [saveTeam, setSaveTeam] = useState(true);
+  const [teamName, setTeamName] = useState("");
   const ToastMessageContainer = (props) => {
     return (
       <div>
@@ -102,6 +103,9 @@ const FreeSlotAdd = () => {
   const submitFreeSlot = () => {
     console.log(tags);
     console.log(saveTeam);
+    console.log(teamName);
+    setTags([]);
+    setTeamName("");
   };
   const [confirmationOpen, setConfirmationOpen] = useState(false);
 
@@ -155,6 +159,13 @@ const FreeSlotAdd = () => {
                   placeholder="21XXX0000"
                 />
               </div>
+              <h1>Team Name:</h1>
+              <input
+                type="text"
+                placeholder="Team Name"
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+              />
             </div>
           </div>
           <button
