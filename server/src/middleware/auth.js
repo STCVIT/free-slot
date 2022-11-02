@@ -4,23 +4,28 @@ const successHandler = require('../middleware/successHandler');
 const { AuthError, EmailNotVerifiedError } = require('../utilities/error');
 const { UserDeletedSuccess } = require('../utilities/success');
 
-var serviceAccount = require("../../../serviceAccountKey.json");
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
+const firebaseConfig = {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID
+  };
+admin.initializeApp(firebaseConfig)
 const sessionLogin = async (req, res)=>{
     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
                  return errorHandler(new AuthError(), req, res)
              }
-    const idToken = req.body.idToken.toString()
+    const idToken = req.header("Authorization").split(" ")[1]
     const expiresin = 60*60*24*5*1000
     admin
         .auth()
-        .createSessionCookie(idToken, {expiresin})
+        .createSessionCookie(idToken, expiresin)
         .then(
             (sessionCookie)=>{
-                const options = {maxAge: expiresin, httpOnly: true}
+                const options = {maxAge: expiresin, secure: true, httpOnly: false } //make this true in production
                 res.cookie("session", sessionCookie, options)
                 res.end(JSON.stringify({status: success}))
             })
@@ -40,17 +45,17 @@ const checkUser = (req, res, next)=>{
     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
         return errorHandler(new AuthError(), req, res)
     }
-    const token = req.header("Authorization");
+    const tokenString = req.header("Authorization").split(" ")[1];
+    const sessionCookie = req.cookies.session
+    //console.log(sessionCookie)
     admin
     .auth()
-    .verifyIdToken(token)
+    .verifyIdToken(tokenString)
+    .verifySessionCookie(sessionCookie, true)
     .then((user)=>{
         const uid = user.uid
-        if(!user.email_verified) {
-            return errorHandler(new EmailNotVerifiedError(), req, res)
-        } else {
-            next();
-        }
+        console.log(uid)
+        next()
     })
     .catch((err)=>{
         console.log(err.message);
@@ -59,11 +64,7 @@ const checkUser = (req, res, next)=>{
 }
 const deleteUser = async (req, res)=>{
     const id = req.userId;
-    await admin.auht().deleteUser(id);
+    await admin.auth().deleteUser(id);
     return successHandler(new UserDeletedSuccess(), res)
 }
-
-const authLog = (req, res)=>{
-    console.log(req.body.header['Authorization'])
-}
-module.exports = { checkUser, deleteUser, sessionLogin, sessionLogout, authLog }
+module.exports = { checkUser, deleteUser, sessionLogin, sessionLogout }

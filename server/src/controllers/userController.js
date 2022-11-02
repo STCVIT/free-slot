@@ -15,24 +15,13 @@ const addUserInDb = async (req, res, next)=>{
     }
     const user = await User.create(info)
     res.status(200).send(user)
+
     }
     catch (error){
         errorHandler(new BadRequestError, req, res)
         console.error(error.message);
     }
 }
-
-//Addign User in Firebase
-// const addUserInFirebase = async(req, res)=>{
-//     try {
-//         const email = req.body.email;
-//         const password = req.body.password;
-//         createUserWithEmailAndPassword(email, password)
-//     } catch (error) {
-//         errorHandler(new BadRequestError, req, res)
-//         console.error(error.message);
-//     }
-// }
 
 // Get one user
 const getUser = async (req, res)=>{

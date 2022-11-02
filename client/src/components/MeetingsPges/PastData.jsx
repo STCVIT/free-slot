@@ -1,40 +1,31 @@
 import MeetingCardTemplate from "../MeetingCardTemplate";
-
-const PastData = [
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "Past",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-  {
-    time: "4:00 p.m. -  5:30 p.m.",
-    place: "foodies",
-    by: "devmehta",
-    members: "dev, ramya, sakshi, mehul  ",
-  },
-];
+//import { faker } from "@faker-js/faker";
+import { useEffect, useState } from "react";
+import { url } from "../../config/backend.config";
+import axios from "axios";
 
 const PastPage = () => {
-  return <MeetingCardTemplate list={PastData} />;
+  const day = localStorage.getItem("day");
+  const [PastData, setPastData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get(url + "?tab=past");
+      setPastData(response.data);
+      // console.log(PastData);
+      console.log(response.data);
+    }
+    getData();
+  }, [refresh]);
+  return (
+    <MeetingCardTemplate
+      list={
+        day === "all" ? PastData : PastData.filter((item) => item.day === day)
+      }
+      tab="past"
+      refresh={{ refresh, set: setRefresh }}
+    />
+  );
 };
 
 export default PastPage;

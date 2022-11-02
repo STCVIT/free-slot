@@ -7,8 +7,10 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail
 } from "firebase/auth";
+import firebase from 'firebase/app'
 import { auth } from "../firebase";
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 const userAuthContext = createContext();
 
@@ -17,13 +19,32 @@ export function UserAuthContextProvider({ children }) {
   const [token, setToken] = useState('');
 
   function logIn(email,password){
-    return signInWithEmailAndPassword(auth,email,password)
+    signInWithEmailAndPassword(auth,email,password)
+    .then(()=>{
+      auth.currentUser.getIdToken().then((token)=>{
+        axios.get('http://localhost:4000/user/sessionlogin', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            //"CSRF-Token": Cookies.get("XSRF-TOKEN")
+          }
+        })
+      })
+      .then((res)=>{
+        console.log(res)
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+    })
+    
   }
 
-  function logOut(){
-    return signOut(auth)
+  const logOut = async ()=>{
+    await signOut(auth).then(()=>{
+      axios.post('http://localhost:4000/user/sessionlogout')
+    })
   }
-  const googleSignIn = async () => {
+  const googleSignUp = async () => {
     const googleAuthProvider = new GoogleAuthProvider();
     await signInWithPopup(auth, googleAuthProvider);
     onAuthStateChanged(auth, (user)=>{
@@ -31,18 +52,51 @@ export function UserAuthContextProvider({ children }) {
         const name = user.displayName.slice(0, user.displayName.length-10)
         const regno = user.displayName.slice(-9)
         const email = user.email
-        console.log(name, regno, email)
-        axios.post('http://localhost:4000/user/create', {
-          name,
-          regno,
-          email
+        return user.getIdToken().then((idToken)=>{
+          const csrfToken = Cookies.get("XSRF-TOKEN")
+          console.log(csrfToken)
+          axios.post('http://localhost:4000/user/create',
+          {
+            name,
+            regno,
+            email
+          },
+          {
+            headers: {
+            'Authorization': `Bearer ${idToken}`,
+            //'CSRF-Token': Cookies.get("_csrf")
+          }}
+          )
+          axios.post('http://localhost:4000/user/sessionlogin',
+          {
+            headers: {
+            'Authorization': `Bearer ${idToken}`,
+            //'CSRF-Token': Cookies.get("_csrf")
+          }}
+          )
         })
-      } else {
-        console.log("user is signed out")
       }
     })
   };
 
+  const googleSignIn = async () =>{
+    const googleAuthProvider = new GoogleAuthProvider();
+    await signInWithPopup(auth, googleAuthProvider);
+    onAuthStateChanged(auth, (user)=>{
+      if(user){
+        user.getIdToken().then((token)=>{
+          axios.get('http://localhost:4000/user/getuser', {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .then((res)=>{
+            console.log(res)
+          })
+        })
+      }
+    })
+  }
   function reset(email){
     return sendPasswordResetEmail(auth,email)
   }
@@ -62,10 +116,7 @@ export function UserAuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user)=>{
       if(user){
         setUser(user);
-        user.getIdToken().then((token)=>{setToken(token)})
       }
-      
-      console.log(token)
     })
     return ()=>{
       unsubscribe()
@@ -73,7 +124,7 @@ export function UserAuthContextProvider({ children }) {
   }, [])
   return (
     <userAuthContext.Provider
-      value={{ user, logIn, logOut, googleSignIn, sendTimetable, reset }}
+      value={{ user, logIn, logOut, googleSignUp, googleSignIn, sendTimetable, reset }}
     >
       {children}
     </userAuthContext.Provider>
