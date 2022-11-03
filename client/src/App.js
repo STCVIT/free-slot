@@ -6,7 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./components/Signup/SignUp";
 import Timetable from "./components/Signup/Timetable";
 import Login from "./components/Login/Login";
-import Home from "./pages/Home";
+//import Home from "./pages/Home";
 import Landing from "./components/Landing";
 // import Schedule from "./components/Schedule";
 import Schedule from "./components/Schedule/Schedule";
@@ -14,6 +14,7 @@ import AddEvent from "./components/AddEvent";
 import Profile from "./components/Profile";
 import LandingPage2 from "./components/LandingPages/LandingPage2";
 import LandingPage3 from "./components/LandingPages/LandingPage3";
+import LandingPage4 from "./components/LandingPages/LandingPage4";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
 import HomePageBuild from "./components/HomePageBuild";
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />{" "}
           <Route path="/landingPage2" element={<LandingPage2 />} />{" "}
           <Route path="/landingPage3" element={<LandingPage3 />} />{" "}
+          <Route path="/landingPage4" element={<LandingPage4 />} />{" "}
           <Route path="/responses" element={<Responses />} />{" "}
           <Route path="/contactUs" element={<ContactUs />} />{" "}
           <Route path="/addEvent" element={<AddEvent />} />{" "}
