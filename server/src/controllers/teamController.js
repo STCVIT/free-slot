@@ -53,9 +53,10 @@ const getAllTeams = async (req, res)=>{
     try {
         const adminId  = req.params.regno
         if(adminId != null){
-            teams = await Team.find({
+            const teams = await Team.find({
                 where: {admin_id: adminId}
             })
+            res.status(200).send(teams)
         } else {
             return errorHandler(new NotFoundError, req, res)
         }

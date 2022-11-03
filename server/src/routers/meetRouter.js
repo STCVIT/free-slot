@@ -9,7 +9,7 @@ const {
 //const checkMeet = require('../middleware/checkMeet')
 
 router.post('/create', addMeet)
-router.get('/getMeet/:meet_id', getMeet)
+//router.get('/getMeet/:user', getUser, getTeam, getMeet)
 router.get('/getMeets/:meet_id', getMeets)
 router.patch('/updateMeet/:meet_id', updateMeet)
 router.delete('/deleteMeet/:meet_id', deleteMeet)
