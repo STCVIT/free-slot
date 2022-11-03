@@ -63,7 +63,15 @@ function busy_time(tt_response){
         a = [...a]
         final.push(a)
     }
-    //console.log(final)
+    for (var x=0; x<5; x++){
+        final[x].forEach((item)=>{
+            item['type']='class'
+        })
+        final[x].forEach((item)=>{
+            
+        })
+    }
+    console.log(final)
     return final
 }
 
@@ -168,11 +176,12 @@ function freeTime(commonSlots){
           })
           freeSlotArray.push(temp)
     }
-      console.log(freeSlotArray)
+      //console.log(freeSlotArray)
       return freeSlotArray
 }
 
 function freeSlotScreenshot(response){
     return freeTime(findCommonSlots(busy_time_users(response)))
 }
+
 module.exports = {freeSlotScreenshot, busy_time}

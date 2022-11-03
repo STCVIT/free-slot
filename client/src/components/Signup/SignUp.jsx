@@ -35,8 +35,8 @@ const SignUp = () => {
       if(response.status===200){
         await createUserWithEmailAndPassword(auth, email, password)
         .then((user)=>{
-          user.getIdToken().then((token)=>{
-            axios.post('http://localhost:4000/sessionLogin', {
+          user.user.getIdToken().then((token)=>{
+            axios.get('http://localhost:4000/user/sessionlogin', {
               headers: {
                 'Authorization': `Bearer ${token}`,
                 //'CSRF-Token': Cookies.get("XSRF-TOKEN")

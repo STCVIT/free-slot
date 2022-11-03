@@ -6,7 +6,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./components/Signup/SignUp";
 import Timetable from "./components/Signup/Timetable";
 import Login from "./components/Login/Login";
-import Home from "./pages/Home";
 import Landing from "./components/Landing";
 // import Schedule from "./components/Schedule";
 import Schedule from "./components/Schedule/Schedule";
@@ -16,7 +15,7 @@ import LandingPage2 from "./components/LandingPages/LandingPage2";
 import LandingPage3 from "./components/LandingPages/LandingPage3";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
-import HomePageBuild from "./components/HomePageBuild";
+import Home from "./components/HomePageBuild";
 import ContactUs from "./components/ContactUs";
 export default function App() {
   return (
@@ -27,8 +26,8 @@ export default function App() {
           <Route
             path="/home"
             element={
-              // <ProtectedRoute > < Home / > < /ProtectedRoute>}/ >
-              <HomePageBuild />
+            
+              <ProtectedRoute><Home /></ProtectedRoute>
             }
           />{" "}
           <Route path="/signup" element={<Signup />} />{" "}
