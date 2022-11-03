@@ -9,8 +9,6 @@ function HomePageBuild() {
     <div className="h-screen">
       <Navbar />
       <div className="gap-4 h-full" id="mainDiv">
-        {/* <Sidebar />
-        <Tabs /> */}
         <Home />
       </div>
     </div>

@@ -6,7 +6,7 @@ const { BadRequestError, NotFoundError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler')
 const axios = require('axios')
 
-//get the first user timetable
+//get the first user timetable...incomplete
 const checkFreeSlot = async (req, res, next)=>{
     try {
         const timetables = await User.findAll({
@@ -28,7 +28,6 @@ const checkFreeSlot = async (req, res, next)=>{
 //adding timetbale of user by screenshot method
 const freeSlotScreenshot = async(req, res, next)=>{
     try {
-        console.log(req.body)
         const timetable = await User.update(
             {timetable: busy_time(req.body.timetable)}, {where: {email: req.body.email}}
         )
@@ -42,7 +41,8 @@ const freeSlotScreenshot = async(req, res, next)=>{
 const freeSlotCp = async(req, res, next)=>{
     try {
         const timetable = await User.update(
-            {timetable: freeSlotCopyPaste(req.body.timetable)}, {where: {reg_no: req.body.regno}}
+            {timetable: freeSlotCopyPaste(req.body.timetable)},
+            {where: {reg_no: req.body.regno}}
         )
         res.status(200).send(timetable)
     } catch (error) {

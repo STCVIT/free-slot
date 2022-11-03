@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: true
         },
+        admin: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         date: {
             type: DataTypes.DATEONLY,
             allowNull: false
