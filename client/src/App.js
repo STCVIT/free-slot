@@ -17,7 +17,7 @@ import LandingPage3 from "./components/LandingPages/LandingPage3";
 import LandingPage4 from "./components/LandingPages/LandingPage4";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
-import HomePageBuild from "./components/HomePageBuild";
+import Home from "./components/HomePageBuild";
 import ContactUs from "./components/ContactUs";
 export default function App() {
   return (
@@ -28,8 +28,8 @@ export default function App() {
           <Route
             path="/home"
             element={
-              // <ProtectedRoute > < Home / > < /ProtectedRoute>}/ >
-              <HomePageBuild />
+            
+              <ProtectedRoute><Home /></ProtectedRoute>
             }
           />{" "}
           <Route path="/signup" element={<Signup />} />{" "}

@@ -1,12 +1,12 @@
 const db = require('../db/db')
 const Meet = db.meets;
 const { NotFoundError, BadRequestError } = require('../utilities/error')
-const errorHandler = require('../middleware/errorHandler')
+const errorHandler = require('../middleware/errorHandler');
+const teamModel = require('../models/team.model');
 
 //Adding Meet
 const addMeet = async (req, res)=>{
     try {
-        
         const meet = await Meet.create(req.body);
         res.status(201).send(meet)
     } catch (error) {
@@ -32,19 +32,36 @@ const getMeet = async (req, res)=>{
 }
 
 //Get meets...needs to be fixed
+// const getMeets = async (req, res)=>{
+//     try {
+//         const meets = await Meet.findAll({
+//             where: {id: req.params.meet_id}
+//         }).sort()
+//         if(!meets){
+//             return errorHandler(new NotFoundError, req, res)
+//         }
+//         res.status(201).send(meets)
+//     } catch (error) {
+//         errorHandler(new BadRequestError, req, res)
+//         console.error(error.message)
+//     }
+// }
 const getMeets = async (req, res)=>{
     try {
-        const meets = await Meet.findAll({
-            where: {id: req.params.meet_id}
-        }).sort()
-        if(!meets){
-            return errorHandler(new NotFoundError, req, res)
-        }
-        res.status(201).send(meets)
+        const regno = User.findOne({
+            where: {email: req.body.email},
+            attributes: ['reg_no']
+        })
+        const teams = regno.getTeams()//doubt
+        teams.forEach((team)=>{
+            team.getMeets()
+        })
+        res.status(200).send(teams)
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
         console.error(error.message)
     }
+    
 }
 
 //upadte meet
