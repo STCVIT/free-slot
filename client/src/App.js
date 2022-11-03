@@ -39,6 +39,7 @@ export default function App() {
           <Route path="/landingPage3" element={<LandingPage3 />} />{" "}
           <Route path="/responses" element={<Responses />} />{" "}
           <Route path="/contactUs" element={<ContactUs />} />{" "}
+          <Route path="/addEvent" element={<AddEvent />} />{" "}
           <Route
             path="/schedule"
             element={
