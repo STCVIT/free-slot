@@ -14,12 +14,9 @@ const LandingPage3 = () => {
                             touch
                         </h1>
                     </div>
-                    <img class="m-4 object-cover" src={require('../assets/PersonalInformation.png')} alt="Flower and sky"/>
+                    <img class="m-4 object-cover" src={require('../../assets/PersonalInformation.png')} alt="Flower and sky"/>   
                 </div>
-                
-            
-                <div class="flex flex-col">
-                   
+                <div class="flex flex-col"> 
                 </div>
             </div> 
         </div>
