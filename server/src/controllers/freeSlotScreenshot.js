@@ -6,11 +6,11 @@ const tt1 = [
     {"0":"Mon:Thry","1":"NO","2":"NO","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"YES","9":"NO","10":"NO","11":"YES","12":"NO","13":"NO","14":"NO"},
     {"0":"Mon:Lab","1":"NO","2":"NO","3":"NO","4":"NO","5":"YES","6":"YES","7":"NO","8":"NO","9":"NO","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
     {"0":"Tue:Thry","1":"NO","2":"NO","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"YES","9":"NO","10":"YES","11":"YES","12":"NO","13":"NO","14":"NO"},
-    {"0":"Tue:Lab","1":"NO","2":"NO","3":"NO","4":"YES","5":"YES","6":"YES","7":"NO","8":"NO","9":"YES","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
+    {"0":"Tue:Lab","1":"NO","2":"NO","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"NO","9":"NO","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
     {"0":"Wed:Thry","1":"NO","2":"NO","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"NO","9":"YES","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
     {"0":"Wed:Lab","1":"YES","2":"NO","3":"YES","4":"YES","5":"NO","6":"NO","7":"NO","8":"NO","9":"NO","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
     {"0":"Thu:Thry","1":"NO","2":"NO","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"NO","9":"YES","10":"NO","11":"YES","12":"NO","13":"NO","14":"NO"},
-    {"0":"Thu:Lab","1":"YES","2":"YES","3":"NO","4":"NO","5":"YES","6":"NO","7":"NO","8":"NO","9":"NO","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
+    {"0":"Thu:Lab","1":"YES","2":"YES","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"NO","9":"NO","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
     {"0":"Fri:Thry","1":"NO","2":"NO","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"YES","9":"NO","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"},
     {"0":"Fri:Lab","1":"YES","2":"YES","3":"NO","4":"NO","5":"NO","6":"NO","7":"NO","8":"NO","9":"NO","10":"NO","11":"NO","12":"NO","13":"NO","14":"NO"}
 ]
@@ -74,11 +74,11 @@ function busy_time(tt_response){
     console.log(final)
     return final
 }
-
+//no use of this function
 function busy_time_users(response){
     let final = []
     for (var i=0; i<response.length; i++){
-        final.push(busy_time(response[i]))
+        final.push(busy_time(response[i].timetable))
     }
     //console.log(final[0])
     return final
@@ -114,7 +114,7 @@ const findCommonSlots = (res)=>{
     for (var i=0; i<5; i++){
         let arr = []
         res.forEach(element => {
-            arr.push(...element[i])
+            arr.push(...element.timetable[i])
         });
         final.push(sortSlot(combinedItems(arr)))
     }
@@ -180,8 +180,10 @@ function freeTime(commonSlots){
       return freeSlotArray
 }
 
-function freeSlotScreenshot(response){
-    return freeTime(findCommonSlots(busy_time_users(response)))
+// function getFreeSlotsUsers(response){
+//     return freeTime(findCommonSlots(busy_time_users(response)))
+// }
+function getFreeSlotsUsers(response){
+    return freeTime(findCommonSlots(response))
 }
-
-module.exports = {freeSlotScreenshot, busy_time}
+module.exports = {getFreeSlotsUsers, busy_time}

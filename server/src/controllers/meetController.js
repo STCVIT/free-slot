@@ -2,12 +2,16 @@ const db = require('../db/db')
 const Meet = db.meets;
 const { NotFoundError, BadRequestError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler');
-const teamModel = require('../models/team.model');
-
+const Team = db.teams
+const User = db.users
 //Adding Meet
 const addMeet = async (req, res)=>{
     try {
         const meet = await Meet.create(req.body);
+        const team = Team.findOne({
+            where: {team_id: req.body.team_id}
+        })
+        await team.addMeet(meet)
         res.status(201).send(meet)
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
@@ -19,7 +23,7 @@ const addMeet = async (req, res)=>{
 const getMeet = async (req, res)=>{
     try {
         const meet = await Meet.findOne({
-            where: {id: req.params.meet_id}
+            where: {meet_id: req.params.meet_id}
         })
         if(!meet){
             return errorHandler(new NotFoundError, req, res)
@@ -35,7 +39,7 @@ const getMeet = async (req, res)=>{
 // const getMeets = async (req, res)=>{
 //     try {
 //         const meets = await Meet.findAll({
-//             where: {id: req.params.meet_id}
+//             where: {meet_id: req.params.meet_id}
 //         }).sort()
 //         if(!meets){
 //             return errorHandler(new NotFoundError, req, res)
@@ -68,12 +72,12 @@ const getMeets = async (req, res)=>{
 const updateMeet = async (req, res)=>{
     const updates = Object.keys(req.body)
     try{
-        let id = req.params.id
+        let id = req.body.meet_id
         if(!id || id == undefined){
             return res.status(418).send("Meet does not exist")
         }
-        const meet = await User.findOne({
-            where: {id: meet_id}
+        const meet = await Meet.findOne({
+            where: {meet_id: id}
          })
         if(!meet) {
             return errorHandler(new NotFoundError, req, res)
@@ -96,7 +100,7 @@ const deleteMeet = async (req, res)=>{
             return res.status(418).send("Meet does not exist")
         }
         const meet = await Meet.findOne({
-            where: {id: id}
+            where: {meet_id: id}
          })
          if(!meet) {
             return errorHandler(new NotFoundError, req, res)
@@ -108,10 +112,24 @@ const deleteMeet = async (req, res)=>{
         console.error(error.message);
     }
 }
+const getAllMeets = async (req, res)=>{
+    try {
+        const teams = req.body.teams
+        await teams.forEach(async (team)=>{
+            team = await team.getMeets()
+            res.send(team)
+        })
+        //res.send(teams)
+    } catch (error) {
+        errorHandler(new BadRequestError, req, res)
+        console.error(error.message);
+    }
+}
 module.exports = {
     addMeet,
     getMeet,
     getMeets,
+    getAllMeets,
     updateMeet,
     deleteMeet
 }

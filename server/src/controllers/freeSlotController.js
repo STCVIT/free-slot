@@ -1,23 +1,23 @@
 const db = require('../db/db')
 const User = db.users
-const {freeSlotSs, busy_time} = require('./freeSlotScreenshot')
+const {getFreeSlotsUsers, busy_time} = require('./freeSlotScreenshot')
 const {freeSlotCopyPaste} = require('./freeSlotCopyPaste')
 const { BadRequestError, NotFoundError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler')
 const axios = require('axios')
+const moment = require('moment')
 
 //get the first user timetable...incomplete
 const checkFreeSlot = async (req, res, next)=>{
     try {
-        const timetables = await User.findAll({
-            where: {reg_no: req.body}
-            }, 
-            { attributes: timetables
-        })
+        const timetables = await User.findAll(
+            { where: {reg_no: req.body.members},
+            attributes: ['timetable']}
+            )
         if(!timetables || timetables==undefined){
                 return errorHandler(new NotFoundError, req, res)
             }
-        const final = freeSlotSs(timetables)
+        const final = getFreeSlotsUsers(timetables)
         res.status(200).send(final)
     }
     catch (error) {
@@ -61,4 +61,27 @@ const freeslotML = (req, res, next)=>{
     })
     
 }
-module.exports = { checkFreeSlot, freeSlotScreenshot, freeSlotCp, freeslotML}
+const addSlot = async (req, res)=>{
+    try {
+        const days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]
+        const day = moment(req.body.date, "YYYY-MM-DD").format('dddd') 
+        const obj = {start_time:req.body.start_time, end_time: req.body.end_time, type: "meet"}
+        const timetables = await User.findAll({
+            where: {reg_no: req.body.members},
+            attributes: ["timetable"]
+        })
+        for(var i=0; i<days.length; i++){
+            if(day===days[i]){
+                for (var j=0; j<timetables.length; j++){
+                    timetables[j].timetable[i].push(obj)
+                }
+            }
+        }
+        res.status(200).send(timetables)
+
+    } catch (error) {
+        errorHandler(new BadRequestError, req, res)
+        console.error(error.message);
+    }
+}
+module.exports = { checkFreeSlot, freeSlotScreenshot, freeSlotCp, freeslotML, addSlot }

@@ -1,7 +1,9 @@
 const db = require('../db/db')
 const Team = db.teams;
+const User = db.users
 const { NotFoundError, BadRequestError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler');
+const userModel = require('../models/user.model');
 
 //add team
 const addTeam = async (req, res)=>{
@@ -49,20 +51,17 @@ const getTeamByName = async (req, res)=>{
 }
 
 // get all teams
-const getAllTeams = async (req, res)=>{
+const getAllTeams = async (req, res, next)=>{
     try {
-        const adminId  = req.params.regno
-        if(adminId != null){
-            const teams = await Team.find({
-                where: {admin_id: adminId}
-            })
-            res.status(200).send(teams)
-        } else {
-            return errorHandler(new NotFoundError, req, res)
-        }
+        const user = await User.findOne({
+            where: {email: req.body.email},
+        })
+        const teams  = await user.getTeams()
+        req.body.teams = teams
+        next()
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
-        console.error(error.message)
+        console.error(error.message);
     }
 }
 
