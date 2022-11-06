@@ -25,9 +25,13 @@ db.sequelize = sequelize
 db.users=require('../models/user.model')(sequelize, DataTypes)
 db.teams=require('../models/team.model')(sequelize, DataTypes)
 db.meets=require('../models/meetings.model')(sequelize, DataTypes)
-sequelize.sync({ force: false })
+db.teams.hasMany(db.meets, { foreignKey: "team_id" })
+db.meets.belongsTo(db.teams, {foreignKey: "meet_id"})
+db.teams.belongsToMany(db.users, {through: 'userteams'})
+db.users.belongsToMany(db.teams, {through: 'userteams'})
+sequelize.sync({ alter: true })
     .then(()=>{
-        console.log("Database & tables created")
+        console.log("Database, tables & associations created")
     })
     .catch((err)=>{
         console.error(err.message)

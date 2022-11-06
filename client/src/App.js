@@ -7,7 +7,7 @@ import Signup from "./components/Signup/SignUp";
 import Timetable from "./components/Signup/Timetable";
 import Login from "./components/Login/Login";
 //import Home from "./pages/Home";
-import Landing from "./components/Landing";
+import Landing from "./pages/Landing";
 // import Schedule from "./components/Schedule";
 import Schedule from "./components/Schedule/Schedule";
 import AddEvent from "./components/AddEvent";

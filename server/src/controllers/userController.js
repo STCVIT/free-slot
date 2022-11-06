@@ -105,11 +105,38 @@ const deleteUser = async (req, res)=>{
         console.error(error.message);
     }
 }
-
+const getUserReg = async (req, res, next)=>{
+    try {
+        const regno = await User.findOne({
+            where: {email:req.body.email},
+            attributes: ["reg_no"]
+        })
+        req.body.regno = regno
+        next()
+    } catch (error) {
+        errorHandler(new BadRequestError)
+        console.error(error.message);
+    }
+}
+const getUserName = async (req, res, next)=>{
+    try {
+        const name = await User.findOne({
+            where: { email: req.body.email },
+            attributes: ['name']
+        })
+        req.body.admin = name.name
+        next()
+    } catch (error) {
+        errorHandler(new BadRequestError)
+        console.error(error.message);
+    }
+}
 module.exports = { 
     addUserInDb,
     getUser,
     getUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserReg,
+    getUserName
 }

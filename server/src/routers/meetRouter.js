@@ -2,16 +2,17 @@ const router = require('express').Router();
 const {
         addMeet,
         getMeet,
-        getMeets,
+        getAllMeets,
         updateMeet,
         deleteMeet
 } = require('../controllers/meetController')
-//const checkMeet = require('../middleware/checkMeet')
+const { addSlot } = require('../controllers/freeSlotController')
+const { getUserReg, getUserName } = require('../controllers/userController')
+const { getAllTeams } = require('../controllers/teamController')
 
-router.post('/create', addMeet)
-//router.get('/getMeet/:user', getUser, getTeam, getMeet)
-router.get('/getMeets/:meet_id', getMeets)
-router.patch('/updateMeet/:meet_id', updateMeet)
+router.post('/create', getUserName, addMeet, addSlot)
+router.get('/getmeets', getAllTeams, getAllMeets)
+router.patch('/updateMeet', updateMeet)
 router.delete('/deleteMeet/:meet_id', deleteMeet)
 
 module.exports = router

@@ -1,14 +1,17 @@
 import React from 'react'
 import LandingPage2 from '../components/LandingPages/LandingPage2';
 import LandingPage3 from '../components/LandingPages/LandingPage3';
-
+import LandingPage4 from '../components/LandingPages/LandingPage4';
 
 const Landing = () => {
   
   
   return (
-    <Route path="/landingPage2" element={<LandingPage2 />} />{" "}
-    <Route path="/landingPage3" element={<LandingPage3 />} />{" "}
+    <>
+    <LandingPage2 />
+    <LandingPage3 />
+    <LandingPage4 />
+    </>
   )
 }
 
