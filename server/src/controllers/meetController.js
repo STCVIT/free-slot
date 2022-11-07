@@ -114,12 +114,20 @@ const deleteMeet = async (req, res)=>{
 }
 const getAllMeets = async (req, res)=>{
     try {
+        // var teams = req.body.teams
+        // await teams.forEach(async (team, index, teams)=>{
+        //     teams[index] = await teams[index].getMeets()
+        //     res.send(teams)
+        // })
+        let results = []
         const teams = req.body.teams
-        await teams.forEach(async (team)=>{
-            team = await team.getMeets()
-            res.send(team)
-        })
-        //res.send(teams)
+        for(const team of teams){
+            const meets = await team.getMeets()
+            for( const meet of meets){
+                results.push(meet)
+            }
+        }
+        return res.send(results)
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
         console.error(error.message);
