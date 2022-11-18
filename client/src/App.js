@@ -12,47 +12,42 @@ import Landing from "./pages/Landing";
 import Schedule from "./components/Schedule/Schedule";
 import AddEvent from "./components/AddEvent";
 import Profile from "./components/Profile";
-import LandingPage2 from "./components/LandingPages/LandingPage2";
-import LandingPage3 from "./components/LandingPages/LandingPage3";
-import LandingPage4 from "./components/LandingPages/LandingPage4";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
 import Home from "./components/HomePageBuild";
 import ContactUs from "./components/ContactUs";
+import Freeslot from "./pages/Freeslot";
 export default function App() {
   return (
     <UserAuthContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Landing />} />{" "}
+          <Route path="/" element={<Landing />} />
           <Route
             path="/home"
             element={
             
               <ProtectedRoute><Home /></ProtectedRoute>
             }
-          />{" "}
-          <Route path="/signup" element={<Signup />} />{" "}
-          <Route path="/timetable" element={<Timetable />} />{" "}
-          <Route path="/profile" element={<Profile />} />{" "}
-          <Route path="/login" element={<Login />} />{" "}
-          <Route path="/landingPage2" element={<LandingPage2 />} />{" "}
-          <Route path="/landingPage3" element={<LandingPage3 />} />{" "}
-          <Route path="/landingPage4" element={<LandingPage4 />} />{" "}
-          <Route path="/responses" element={<Responses />} />{" "}
-          <Route path="/contactUs" element={<ContactUs />} />{" "}
-          <Route path="/addEvent" element={<AddEvent />} />{" "}
+          />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/timetable" element={<Timetable />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/responses" element={<Responses />} />
+          <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/addEvent" element={<AddEvent />} />
+          <Route path="/freeslot" element={<Freeslot/>}/>
           <Route
             path="/schedule"
             element={
               <ProtectedRoute>
-                {" "}
-                <Schedule />{" "}
+                <Schedule />
               </ProtectedRoute>
             }
-          />{" "}
-        </Routes>{" "}
-      </BrowserRouter>{" "}
+          />
+        </Routes>
+      </BrowserRouter>
     </UserAuthContextProvider>
   );
 }

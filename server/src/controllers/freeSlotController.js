@@ -28,6 +28,7 @@ const checkFreeSlot = async (req, res, next)=>{
 //adding timetbale of user by screenshot method
 const freeSlotScreenshot = async(req, res, next)=>{
     try {
+        console.log(req)
         const timetable = await User.update(
             {timetable: busy_time(req.body.timetable)}, {where: {email: req.body.email}}
         )
@@ -53,7 +54,7 @@ const freeSlotCp = async(req, res, next)=>{
 const freeslotML = (req, res, next)=>{
     //var MLoutput = ""
     const string = req.body.file
-    axios.post('http://localhost:5000/', {string})
+    axios.post('https://freeslot.azurewebsites.net/', {string})
     .then((res)=>{
         const MLoutput = res.data;
         req.body.timetable=MLoutput

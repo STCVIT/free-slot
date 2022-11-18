@@ -7,12 +7,14 @@ module.exports = {
 
     extend: {
       colors: {
-        blueTheme: '#3389FF',
-        greytheme: '#898989',
+        myBlue: '#3389FF',
+        myGrey: '#898989',
+        myBg: '#FBFBFB'
       },
 
       fontFamily: {
-        'logo': 'Roboto'
+        'logo': ['Roboto'],
+        'body': ['Nunito']
       }
     },
   },
