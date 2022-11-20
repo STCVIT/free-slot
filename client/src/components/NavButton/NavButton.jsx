@@ -8,7 +8,7 @@ const NavButton = ({ filter }) => {
   const [activeTab, setActiveTab] = useState("upcoming");
   const mainClass =
     "px-4 py-2 border-b-4 col-span-1 transition-colors duration-300";
-  const activeClass = "border-blueTheme";
+  const activeClass = "border-myBlue";
   const inactiveClass = "border-transparent hover:border-gray-200";
   useEffect(() => {
     const root = createRoot(document.getElementById("MeetingCards"));

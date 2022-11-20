@@ -27,7 +27,7 @@ export default function Timetable() {
   return (
     <>
       <div className="px-4 md:px-0 md:grid grid-cols-12">
-        <div className="hidden md:block col-span-6 bg-blueTheme ">
+        <div className="hidden md:block col-span-6 bg-myBlue ">
           <img src={timetableInfoImg} alt="" />
         </div>
         <div className="md:grid grid-cols-6 col-span-6">

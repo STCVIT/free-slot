@@ -39,7 +39,7 @@ export default function Example() {
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="">
-            <p className=" justify-center items-center rounded-full bg-blueTheme p-5 px-8 tracking-wider text-slate-100">
+            <p className=" justify-center items-center rounded-full bg-myBlue p-5 px-8 tracking-wider text-slate-100">
               + Create
             </p>
           </Menu.Button>

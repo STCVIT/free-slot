@@ -41,7 +41,7 @@ const ContactUs = () => {
         </div>
       </div>
       <div>
-        <button className="flex-1 items-center h-fit w-fit py-3 px-5 text-sm font-medium text-center text-white bg-blueTheme rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300">
+        <button className="flex-1 items-center h-fit w-fit py-3 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300">
           Send Message
         </button>
       </div>

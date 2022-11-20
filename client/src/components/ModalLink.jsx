@@ -16,14 +16,14 @@ const ModalLink = ({ setModalOnLink, setChoiceLink }) => {
     <div className="   bg-zinc-200/60 opacity-100 fixed inset-0 z-50   ">
       <div className="flex h-screen justify-center items-center ">
         <div className="flex-col items-center bg-white shadow-lg rounded-xl ">
-          <header className="p-4 bg-blueTheme text-white grid grid-cols-6 rounded-t-xl">
+          <header className="p-4 bg-myBlue text-white grid grid-cols-6 rounded-t-xl">
             <img
               src={Cross}
               onClick={handleCancelClickLink}
               alt=""
               className="cursor-pointer grid col-span-2 ml-5 mt-3"
             ></img>
-            <h1 className="bg-blueTheme text-white col-span-4 text-xl justify text-left">
+            <h1 className="bg-myBlue text-white col-span-4 text-xl justify text-left">
               Your link is ready
             </h1>
           </header>

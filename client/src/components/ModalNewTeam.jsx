@@ -3,9 +3,14 @@ import Circle from "../assets/circle.svg";
 import Cross from "../assets/Cross.svg";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
+import { FindFreeSlot } from "../context/FreeSlotContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 const FreeSlotAdd = () => {
+  const { saveTeamAndFindFreeSlot, justFindFreeSlot } = FindFreeSlot()
+  const navigate = useNavigate()
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
@@ -100,7 +105,14 @@ const FreeSlotAdd = () => {
   };
 
   //this is what you need in backend @Saarim
-  const submitFreeSlot = () => {
+  const submitFreeSlot = async () => {
+    if(saveTeam){
+     await saveTeamAndFindFreeSlot(teamName, tags);
+    }
+    else {
+      await justFindFreeSlot(tags);
+    }
+    navigate('/freeslot')
     console.log(tags);
     console.log(saveTeam);
     console.log(teamName);
@@ -117,7 +129,7 @@ const FreeSlotAdd = () => {
         } items-center bg-gray-800/50 backdrop-blur  h-full w-full justify-center z-50`}
       >
         <div className="bg-white rounded-md flex flex-col w-3/4">
-          <div className="bg-blueTheme rounded-t-md border-b-2 py-2 text-white text-center">
+          <div className="bg-myBlue rounded-t-md border-b-2 py-2 text-white text-center">
             Are you Sure?
           </div>
           <div className="flex justify-evenly py-5">
@@ -224,14 +236,14 @@ const FreeSlot = ({ setModalOnNew, setChoiceNew }) => {
     <div className="modal-container bg-zinc-200/60  opacity-100 fixed inset-0 z-10000 ">
       <div className="modal flex h-screen justify-center items-center opacity-100">
         <div className="flex-col items-center bg-white shadow-lg border rounded-xl ">
-          <header className="p-4 bg-blueTheme text-white relative flex items-center rounded-t-xl">
+          <header className="p-4 bg-myBlue text-white relative flex items-center rounded-t-xl">
             <img
               src={Cross}
               onClick={handleCancelClickChoose}
               alt=""
               className="cursor-pointer grid col-span-2 ml-5 mt-3 absolute top-[20%]"
             ></img>
-            <h1 className="bg-blueTheme text-white col-span-4 text-xl w-full text-center">
+            <h1 className="bg-myBlue text-white col-span-4 text-xl w-full text-center">
               Create Team
             </h1>
           </header>
