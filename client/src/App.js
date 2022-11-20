@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
+import { FreeSlotContextProvider } from "./context/FreeSlotContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 //components
@@ -20,34 +21,27 @@ import Freeslot from "./pages/Freeslot";
 export default function App() {
   return (
     <UserAuthContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route
-            path="/home"
-            element={
-            
-              <ProtectedRoute><Home /></ProtectedRoute>
-            }
-          />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/timetable" element={<Timetable />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/responses" element={<Responses />} />
-          <Route path="/contactUs" element={<ContactUs />} />
-          <Route path="/addEvent" element={<AddEvent />} />
-          <Route path="/freeslot" element={<Freeslot/>}/>
-          <Route
-            path="/schedule"
-            element={
-              <ProtectedRoute>
-                <Schedule />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <FreeSlotContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/timetable" element={<Timetable />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/responses" element={<Responses />} />
+            <Route path="/contactUs" element={<ContactUs />} />
+            <Route path="/addEvent" element={<AddEvent />} />
+            <Route path="/freeslot" element={<Freeslot/>}/>
+            <Route path="/schedule" element={
+                <ProtectedRoute>
+                  <Schedule />
+                </ProtectedRoute>
+              }/>
+          </Routes>
+        </BrowserRouter>
+      </FreeSlotContextProvider>
     </UserAuthContextProvider>
   );
 }

@@ -16,7 +16,7 @@ const Landing = () => {
   return (
     <>
     <nav className='flex px-12 py-6'>
-    <header className="text-4xl font-bold font-['logo']">Freeslot</header>
+    <header className="text-4xl font-bold font-logo">Freeslot</header>
       <div className='flex ml-auto'>
         <button className='mx-2' onClick={navigateLogin}> Login</button>
         <button className='mx-2' onClick={navigateSignup}> Signup</button>

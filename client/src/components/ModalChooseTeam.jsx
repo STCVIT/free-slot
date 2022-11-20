@@ -16,14 +16,14 @@ const ModalChooseTeam = ({ setModalOnChoose, setChoiceChoose }) => {
     <div className="modal-container bg-zinc-200/60  opacity-100 fixed inset-0 z-10000 ">
       <div className="modal flex h-screen justify-center items-center opacity-100">
         <div className="flex-col items-center bg-white shadow-lg border rounded-xl ">
-          <header className="p-4 bg-blueTheme text-white grid grid-cols-6 rounded-t-xl">
+          <header className="p-4 bg-myBlue text-white grid grid-cols-6 rounded-t-xl">
             <img
               src={Cross}
               onClick={handleCancelClickChoose}
               alt=""
               className="cursor-pointer grid col-span-2 ml-5 mt-3"
             ></img>
-            <h1 className="bg-blueTheme text-white col-span-4 text-xl ">
+            <h1 className="bg-myBlue text-white col-span-4 text-xl ">
               Select your team
             </h1>
           </header>

@@ -73,7 +73,7 @@ const SignUp = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-4">
-        <div className="hidden sm:block sm:col-span-2 bg-blueTheme ">
+        <div className="hidden sm:block sm:col-span-2 bg-myBlue ">
           <img
             src={signupInfoImg}
             alt=""
@@ -84,7 +84,7 @@ const SignUp = () => {
           <div className="px-3 sm:py-2 sm:px-16 md:py-3.5 md:px-24 lg:py-5 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-5">Sign-Up</h1>
             <button
-                className="flex justify-center w-full border-2 border-blueTheme text-black font-semibold mx-auto py-2 rounded "
+                className="flex justify-center w-full border-2 border-myBlue text-black font-semibold mx-auto py-2 rounded "
                 type="button"
                 onClick={oAuth}
               >
@@ -149,7 +149,7 @@ const SignUp = () => {
             </form>
             <div className="pt-8 pb-1 text-center ">
               <Link to="/timetable">
-              <button className="bg-blueTheme text-white w-full font-bold mx-auto py-2 rounded" disabled={loading} onClick={handleSubmit}>
+              <button className="bg-myBlue text-white w-full font-bold mx-auto py-2 rounded" disabled={loading} onClick={handleSubmit}>
                 Next
               </button>
               </Link>
@@ -159,7 +159,7 @@ const SignUp = () => {
               
               <h6 className="text-sm text-grey py-2">
                 Already have an account?
-                <Link to="/login" className="pl-2 text-blueTheme">
+                <Link to="/login" className="pl-2 text-myBlue">
                   Login
                 </Link>
               </h6>
