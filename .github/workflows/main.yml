@@ -26,10 +26,10 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          cd ./client
           npm install
           npm run build --if-present
-
+        working-directory: 'client'
+        
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -37,3 +37,4 @@ jobs:
           app-name: 'freeslotfrontend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4046A05F278C419ABAA415F2217C58F1 }}
+          package: 'client/build'
