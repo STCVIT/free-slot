@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - develop
+    paths:
+      - client/**
   workflow_dispatch:
 
 jobs:
@@ -18,6 +20,9 @@ jobs:
       
     steps:
       - uses: actions/checkout@v2
+        with:
+          app_location: "client"
+          output_location: "client/build"
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
@@ -37,4 +42,3 @@ jobs:
           app-name: 'freeslotfrontend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4046A05F278C419ABAA415F2217C58F1 }}
-          package: 'server/ .'
