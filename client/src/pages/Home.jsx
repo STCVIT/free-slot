@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Tabs from "../components/Tabs";
 const Home = () => {
+  document.title = "Home";
   const [filter, setFilter] = useState({
     date: "all",
     time: "all",

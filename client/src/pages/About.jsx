@@ -1,4 +1,5 @@
 const About = () => {
+  document.title = "About";
   return <div></div>;
 };
 
