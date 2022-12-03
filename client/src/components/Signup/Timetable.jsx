@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import DragFile from "./DragFile";
 import TextInput from "../TextInput";
 import { UserAuth } from "../../context/UserAuthContext";
-
 export default function Timetable() {
   const [files, setFiles] = useState([]);
   const { sendTimetable } = UserAuth();
@@ -17,6 +16,7 @@ export default function Timetable() {
       reader.readAsDataURL(file);
       reader.onload = () => {
         file = reader.result;
+        console.log(file);
         sendTimetable(file);
       };
       navigate("/home");
@@ -55,28 +55,22 @@ export default function Timetable() {
                   label="Paste your VIT Timetable"
                 />
               </div>
-              <div className="flex w-full justify-evenly my-3">
-                <button className="border col-span-1 w-2/4 border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md" />
-                <div className="grid grid-cols-2 w-full gap-x-3">
-                  <a href="/home">
-                    <button className="border col-span-1 w-full border-black px-4 py-2 rounded-md">
-                      Back
-                    </button>
-                    <button
-                      className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md"
-                      onClick={handleSubmit}
-                    >
-                      Sign Up
-                    </button>
-                  </a>
-                </div>
-                <p className="text-center">
-                  Alredy have an account?{" "}
-                  <span className="text-blue-600 underline decoration-dotted">
-                    <Link to="/login">Log in</Link>
-                  </span>
-                </p>
+              <div className="grid my-4 place-content-center w-full gap-x-3">
+                <a href="/home">
+                  <button
+                    className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
+                </a>
               </div>
+              <p className="text-center">
+                Alredy have an account?{" "}
+                <span className="text-blue-600 underline decoration-dotted">
+                  <Link to="/login">Log in</Link>
+                </span>
+              </p>
             </div>
             <div className="col-span-1"></div>
           </div>

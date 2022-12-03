@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import fileUpload from "../../assets/file-upload.svg";
 import TextInput from "../TextInput";
-const DragFile = ({files, setFiles}) => {
+const DragFile = ({ files, setFiles }) => {
   const [dropText, setDropText] = useState("Select file from your device");
   const [isUploaded, setIsUploaded] = useState(false);
   const [imageClass, setImageClass] = useState();
@@ -80,22 +80,22 @@ const DragFile = ({files, setFiles}) => {
         )}
       </label>
       <button className="flex h-full md:hidden flex-col items-center justify-center text-center w-full gap-y-5">
-      <label
-        {...getRootProps()}
-        for="imageUploadPhone"
-        onChange={imageUploaded()}
-        className="rounded-md border-2 border-black p-2"
-      >
+        <label
+          {...getRootProps()}
+          for="imageUploadPhone"
+          onChange={imageUploaded()}
+          className="rounded-md border-2 border-black p-2"
+        >
           Select file from your device
-      </label>
-      <img src={images}/>
-      <input
-        className="block  md:hidden"
-        id="imageUploadPhone"
-        style={{ visibility: "hidden" }}
-        type="file"
+        </label>
+        <img src={images} />
+        <input
+          className="block  md:hidden"
+          id="imageUploadPhone"
+          style={{ visibility: "hidden" }}
+          type="file"
         />
-        </button>
+      </button>
     </div>
   );
 };

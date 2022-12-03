@@ -1,13 +1,13 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import Tabs from "./Tabs";
-import Navbar from "./Navbar/Navbar";
+import MainNavbar from "./MainNavbar/MainNavbar";
 import Home from "../pages/Home";
 
 function HomePageBuild() {
   return (
     <div className="h-screen">
-      <Navbar />
+      <MainNavbar />
       <div className="gap-4 h-full" id="mainDiv">
         <Home />
       </div>

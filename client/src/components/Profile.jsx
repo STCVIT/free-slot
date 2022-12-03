@@ -1,11 +1,12 @@
-import { number } from "prop-types";
 import React from "react";
-
+import { UserAuth } from "../context/UserAuthContext";
+const { user } = UserAuth;
+console.log("User: ", user);
 const Profile = () => {
   document.title = "Profile";
   return (
     <div className="bg-gray-100">
-      <h1 className="flex w-full justify-center items-center text-center font-semibold text-2xl">
+      <h1 className="py-11 flex w-full justify-center items-center text-center font-semibold text-2xl">
         Profile
       </h1>
       <div className="w-full ">
@@ -33,22 +34,27 @@ const Profile = () => {
               </div>
               <div className="flex flex-col gap-y-3 rounded-md p-4 bg-white">
                 <h1 className="text-2xl text-gray-600">Timetable</h1>
-                <img className="h-full" src={require("../assets/ttSS.png")} />
-                <button className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-fit">
+                <img
+                  className="h-full"
+                  src={require("../assets/ttSS.png")}
+                  alt="timeTable"
+                />
+                <button className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-fit self-center md:self-start">
                   Upload new timetable
                 </button>
               </div>
             </div>
             <div className="flex flex-col gap-y-3 bg-white rounded-md p-4 my-6">
-              <form className="flex gap-x-5 w-full md:w-2/4 justify-between">
-                <div className="flex flex-col gap-y-2 items-start w-1/2">
+              <h1 className="text-gray-600 text-2xl mb-4">Format</h1>
+              <form className="flex flex-col md:flex-row gap-y-4 gap-x-5 w-full md:w-2/4 justify-between">
+                <div className="flex flex-col gap-y-2 items-start md:w-1/2">
                   Date Format
                   <select class="relative form-select border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3">
                     <option selected>DD/MM/YY</option>
                     <option value="1">MM/DD/YY</option>
                   </select>
                 </div>
-                <div className="flex flex-col gap-y-2 w-1/2 items-start">
+                <div className="flex flex-col gap-y-2 md:w-1/2 items-start">
                   Time Format
                   <select class="relative form-select  border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3">
                     <option selected>12H(AM/PM)</option>
@@ -82,17 +88,17 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="flex justify-between w-full md:flex-row flex-col gap-y-3">
-                <div className="grid grid-cols-2 w-full md:w-2/4 items-start justify-start gap-x-5">
-                  <button className="col-span-1 underline decoration-dotted px-4 py-2">
+              <div className="my-6 flex justify-between w-full md:flex-row flex-col gap-y-3">
+                <div className="flex w-full md:w-2/4 justify-between md:justify-start gap-x-5">
+                  <button className="md:w-fit w-full border border-black rounded-md col-span-1 underline decoration-dotted p-2">
                     Cancel
                   </button>
-                  <button className="col-span-1 bg-blue-600 rounded-md px-4 py-2 text-white">
-                    Save
+                  <button className="col-span-1 md:w-fit w-full bg-blue-600 rounded-md px-4 py-2 text-white">
+                    Save Changes
                   </button>
                 </div>
-                <div className="flex col-span-1 items-center justify-center w-full md:w-2/4">
-                  <button className=" bg-red-600 rounded-md px-4 py-2 text-white">
+                <div className="flex col-span-1 items-center justify-center md:justify-end w-full md:w-2/4">
+                  <button className=" bg-red-600 rounded-md py-2 px-4 text-white ">
                     Delete Timetable
                   </button>
                 </div>
@@ -106,5 +112,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-

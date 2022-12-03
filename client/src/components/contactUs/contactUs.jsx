@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Twitter, GitHub, Instagram, LinkedIn } from "@mui/icons-material";
-const ContactUs = () => {
+import Socials from "../Socials/Socials";
+const ContactUs = ({ isHomePage }) => {
   const [name, setName] = useState();
   const [message, setMessage] = useState();
   const [msgLength, setMsgLength] = useState(0);
@@ -45,13 +45,7 @@ const ContactUs = () => {
           Send Message
         </button>
       </div>
-      <div className="flex justify-between">
-        {[<Twitter />, <LinkedIn />, <GitHub />, <Instagram />].map(
-          (social) => (
-            <button className="bg-blue-600">{social}</button>
-          )
-        )}
-      </div>
+      <div className="flex justify-between">{!isHomePage && <Socials />}</div>
     </div>
   );
 };

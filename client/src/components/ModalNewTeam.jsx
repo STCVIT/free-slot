@@ -3,14 +3,14 @@ import Circle from "../assets/circle.svg";
 import Cross from "../assets/Cross.svg";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const FreeSlotAdd = () => {
-  const { saveTeamAndFindFreeSlot, justFindFreeSlot } = FindFreeSlot()
-  const navigate = useNavigate()
+  const { saveTeamAndFindFreeSlot, justFindFreeSlot } = FindFreeSlot();
+  const navigate = useNavigate();
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
@@ -32,6 +32,7 @@ const FreeSlotAdd = () => {
       const value = e.target.value;
       if (value.includes(",")) {
         const invalid = [];
+        const duplicates = [];
         e.target.value = "";
         let newTag = [];
         let tag = value.split(",");
@@ -45,7 +46,9 @@ const FreeSlotAdd = () => {
         }
         tag = new Set(tag);
         tag.forEach((element) => {
-          if (regex.test(element)) {
+          if (tags.includes(element)) {
+            duplicates.push(element);
+          } else if (regex.test(element)) {
             newTag.push(element);
           } else {
             invalid.push(element);
@@ -62,6 +65,17 @@ const FreeSlotAdd = () => {
             />
           );
         }
+        if (duplicates.length > 0) {
+          const duplicateTags = duplicates.join(", ");
+          toast.error(
+            <ToastMessageContainer
+              error="Invalid tags found!"
+              type="Invalid tags"
+              description={duplicateTags}
+            />
+          );
+        }
+
         setTags([...tags, ...newTag]);
       } else {
         if (!value.trim()) return;
@@ -106,13 +120,12 @@ const FreeSlotAdd = () => {
 
   //this is what you need in backend @Saarim
   const submitFreeSlot = async () => {
-    if(saveTeam){
-     await saveTeamAndFindFreeSlot(teamName, tags);
-    }
-    else {
+    if (saveTeam) {
+      await saveTeamAndFindFreeSlot(teamName, tags);
+    } else {
       await justFindFreeSlot(tags);
     }
-    navigate('/freeslot')
+    navigate("/freeslot");
     console.log(tags);
     console.log(saveTeam);
     console.log(teamName);

@@ -8,6 +8,8 @@ export const UpcomingPage = ({ filter }) => {
   const [UpcomingData, setUpcomingData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const { day, date, time, groups } = filter;
+
+  console.log(filter);
   useEffect(() => {
     console.log("filters in upcoming: ", filter);
     async function getData() {
@@ -24,6 +26,7 @@ export const UpcomingPage = ({ filter }) => {
           ? UpcomingData
           : UpcomingData.filter((item) => item.day === day)
       }
+      // list={UpcomingData}
       tab="upcoming"
       refresh={{ refresh, set: setRefresh }}
     />
