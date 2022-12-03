@@ -12,7 +12,11 @@ const ContactUs = ({ isHomePage }) => {
     setMsgLength(e.target.value.length);
   };
   return (
-    <div className="flex flex-col w-full items-center gap-y-4 bg-gray-200 h-screen">
+    <div
+      className={`flex flex-col w-full items-center gap-y-4 bg-gray-200 ${
+        !isHomePage ? "h-screen" : ""
+      }`}
+    >
       <div className="text-center text-4xl font-bold p-4 py-5 ">Contact Us</div>
       <div className="w-2/4 flex flex-col gap-y-3">
         <label for="contactUsName">Name</label>
