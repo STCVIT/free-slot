@@ -16,32 +16,50 @@ import Profile from "./components/Profile";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
 import Home from "./components/HomePageBuild";
-import ContactUs from "./components/ContactUs";
+import HomePageBuild from "./components/HomePageBuild";
+import Card from "./components/contactUs/contactUs";
+import ContactUs from "./components/contactUs/contactUs";
 import Freeslot from "./pages/Freeslot";
+import MainNavbar from "./components/MainNavbar/MainNavbar";
 export default function App() {
   return (
-    <UserAuthContextProvider>
-      <FreeSlotContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/timetable" element={<Timetable />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/responses" element={<Responses />} />
-            <Route path="/contactUs" element={<ContactUs />} />
-            <Route path="/addEvent" element={<AddEvent />} />
-            <Route path="/freeslot" element={<Freeslot/>}/>
-            <Route path="/schedule" element={
-                <ProtectedRoute>
-                  <Schedule />
-                </ProtectedRoute>
-              }/>
-          </Routes>
-        </BrowserRouter>
-      </FreeSlotContextProvider>
-    </UserAuthContextProvider>
+    <>
+      <UserAuthContextProvider>
+        <FreeSlotContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/timetable" element={<Timetable />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/responses" element={<Responses />} />
+              <Route
+                path="/contactUs"
+                element={<ContactUs isHomePage={false} />}
+              />
+              <Route path="/addEvent" element={<AddEvent />} />
+              <Route path="/freeslot" element={<Freeslot />} />
+              <Route
+                path="/schedule"
+                element={
+                  <ProtectedRoute>
+                    <Schedule />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </FreeSlotContextProvider>
+      </UserAuthContextProvider>
+    </>
   );
 }

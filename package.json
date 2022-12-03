@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "@coreui/react": "^4.4.0",
+    "@mui/material": "^5.10.16",
+    "@mui/x-date-pickers": "^5.0.9",
+    "bootstrap": "^5.2.3",
+    "date-fns": "^2.29.3",
+    "dayjs": "^1.11.6",
+    "flowbite-datepicker": "^1.2.2",
+    "react-day-picker": "^8.3.7",
+    "rsuite": "^5.23.1",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4"
+  }
+}

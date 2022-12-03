@@ -4,10 +4,10 @@ import UpcomingPage from "../MeetingsPges/UpcomingData";
 import CancelledPage from "../MeetingsPges/CancelledData";
 import PastPage from "../MeetingsPges/PastData";
 
-const NavButton = ({ filter }) => {
+const TabNavbar = ({ filter }) => {
   const [activeTab, setActiveTab] = useState("upcoming");
   const mainClass =
-    "px-4 py-2 border-b-4 col-span-1 transition-colors duration-300";
+    "px-4 py-2 border-b-4 col-span-1 cursor-pointer transition-colors duration-300";
   const activeClass = "border-myBlue";
   const inactiveClass = "border-transparent hover:border-gray-200";
   useEffect(() => {
@@ -22,7 +22,7 @@ const NavButton = ({ filter }) => {
     console.log("activeTab", activeTab);
   }, [filter, activeTab]);
   return (
-    <ul className="grid grid-cols-3 w-full text-center">
+    <ul className="md:grid flex   md:gap-x-0 grid-cols-3 w-full text-center">
       <li
         className={`${mainClass} ${
           activeTab === "upcoming" ? activeClass : inactiveClass
@@ -50,4 +50,4 @@ const NavButton = ({ filter }) => {
     </ul>
   );
 };
-export default NavButton;
+export default TabNavbar;

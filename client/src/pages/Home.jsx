@@ -17,7 +17,6 @@ const Home = () => {
         <div className="col-span-10">
           <Tabs filter={filter} />
         </div>
-        <Tabs />
       </div>
     </div>
   );

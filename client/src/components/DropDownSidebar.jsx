@@ -36,7 +36,10 @@ export default function Example() {
   };
   return (
     <>
-      <Menu as="div" className="relative inline-block text-left">
+      <Menu
+        as="div"
+        className="relative inline-block text-left z-50 backdrop-blur"
+      >
         <div>
           <Menu.Button className="">
             <p className=" justify-center items-center rounded-full bg-myBlue p-5 px-8 tracking-wider text-slate-100">
@@ -54,7 +57,7 @@ export default function Example() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="origin-top-right absolute left-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-0 focus:outline-none">
+          <Menu.Items className="origin-top-right absolute left-0 mt-2 w-64 rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none">
             <div className="py-1 p-2">
               <Menu.Item>
                 {({ active }) => (

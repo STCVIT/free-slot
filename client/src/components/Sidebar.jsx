@@ -1,122 +1,134 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DropDown from "./DropDownSidebar";
+import { Dropdown } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 
+import Datepicker from "flowbite-datepicker/Datepicker";
 function Sidebar({ filter, setFilter }) {
-  // useEffect(() => {
-  //   console.log(filter);
-  // }, [filter]);
+  const isLg = window.matchMedia("(min-width: 1024px)").matches;
+  const [seeFilters, setSeeFilters] = useState(isLg ? true : false);
+  // const dateObj = new Date();
+  // const [date, setDate] = useState(dateObj);
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const groups = [
+    "Group A",
+    "Group B",
+    "Group C",
+    "Group D",
+    "Group E",
+    "Group F",
+    "Group G",
+    "Group H",
+    "Group I",
+    "Group J",
+    "Group K",
+    "Group L",
+    "Group M",
+    "Group N",
+    "Group O",
+    "Group P",
+    "Group Q",
+    "Group R",
+    "Group S",
+    "Group T",
+    "Group U",
+    "Group V",
+    "Group W",
+    "Group X",
+    "Group Y",
+    "Group Z",
+  ];
   return (
     <>
       <div className="shadow p-3 ">
         <aside className="" aria-label="Sidebar">
           <div className="rounded bg-white ">
-            <div className="item-center p-5 z-10">
+            <div className="item-center p-5 relative">
               <DropDown />
             </div>
 
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="/"
-                  target="_blank"
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
-                >
-                  <span className="flex-1 ml-3 whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider">
-                    Filters
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/"
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
-                >
-                  <span className="flex-1 ml-3 whitespace-nowrap">DATE</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <label for="daySelect">Day</label>
-                <div onClick={() => setFilter({ ...filter, day: "Monday" })}>
-                  Mon
-                </div>
-                <div onClick={() => setFilter({ ...filter, day: "Tuesday" })}>
-                  Tue
-                </div>
-                <div onClick={() => setFilter({ ...filter, day: "Wednesday" })}>
-                  Wed
-                </div>
-                <div onClick={() => setFilter({ ...filter, day: "Thursday" })}>
-                  Thurs
-                </div>
-                <div onClick={() => setFilter({ ...filter, day: "Friday" })}>
-                  Fri
-                </div>
-                <div onClick={() => setFilter({ ...filter, day: "Saturday" })}>
-                  Sat
-                </div>
-                <div onClick={() => setFilter({ ...filter, day: "all" })}>
-                  Clear
-                </div>
-              </li>
-              <li>
-                <a
-                  href="/"
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
-                >
-                  <span className="flex-1 ml-3 whitespace-nowrap">TIME</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/"
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 "
-                >
-                  <span className="flex-1 ml-3 whitespace-nowrap">GROUPS</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </a>
-              </li>
-            </ul>
+            <h1 className="hidden md:block ml-3 whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider">
+              Filters
+            </h1>
+
+            <button
+              onClick={() => setSeeFilters(!seeFilters)}
+              className="md:hidden whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider"
+            >
+              Filters {seeFilters ? "▲" : "▼"}
+            </button>
+
+            {seeFilters && (
+              <div className="w-3/4 md:w-full flex flex-col gap-y-4">
+                <Dropdown
+                  clearable
+                  multiple={false}
+                  placeholder="Day"
+                  selection
+                  options={days.map((day) => ({
+                    key: day,
+                    text: day,
+                    value: day,
+                  }))}
+                  onChange={(e, { value }) => {
+                    setFilter({ ...filter, day: value === "" ? "all" : value });
+                  }}
+                  button={true}
+                  defaultSelectedLabel="all"
+                />
+
+                <Dropdown
+                  clearable
+                  placeholder="Group"
+                  selection
+                  options={groups.map((group) => ({
+                    key: group,
+                    text: group,
+                    value: group,
+                  }))}
+                  onChange={(e, { value }) => {
+                    setFilter({
+                      ...filter,
+                      groups: value === "" ? "all" : value,
+                    });
+                  }}
+                  button={true}
+                  defaultSelectedLabel="all"
+                />
+                <Dropdown
+                  clearable
+                  basic={false}
+                  multiple={false}
+                  placeholder="Time"
+                  selection
+                  options={[
+                    <input
+                      className="w-full p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
+                      type="time"
+                      onChange={(e) =>
+                        setFilter({ ...filter, time: e.target.value })
+                      }
+                    />,
+                  ]}
+                  onChange={(e, { value }) => {
+                    setFilter({
+                      ...filter,
+                      date: value === "" ? "all" : value,
+                    });
+                  }}
+                  button={true}
+                  defaultSelectedLabel="all"
+                />
+              </div>
+            )}
           </div>
         </aside>
       </div>
