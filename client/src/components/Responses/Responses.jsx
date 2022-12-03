@@ -1,5 +1,5 @@
 import ResponseData from "./ResponsesData";
-import { FileCopy } from "@mui/icons-material";
+
 import { RiFileCopyLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,7 +8,6 @@ import {
   RiErrorWarningFill,
   RiTimeFill,
 } from "react-icons/ri";
-import { SwitchRight } from "@mui/icons-material";
 const statusArray = ResponseData.map((x) => {
   let statusIcon;
   switch (x.uploadStatus) {

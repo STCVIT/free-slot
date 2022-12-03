@@ -7,6 +7,7 @@ import axios from "axios";
 export const CancelledPage = ({ filter }) => {
   const [CancelledData, setCancelledData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const { day, date, time, groups } = filter;
   useEffect(() => {
     async function getData() {

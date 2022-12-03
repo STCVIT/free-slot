@@ -1,9 +1,9 @@
 import React from "react";
-import profile from "../assets/Profile.svg";
 import DropDownProfile from "./DropDownProfile";
 import DropDownPhone from "./DropDownPhone";
 
 function Navbar() {
+  // eslint-disable-next-line no-unused-vars
   const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   return (

@@ -3,7 +3,6 @@ import DropDown from "./DropDownSidebar";
 import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
-import Datepicker from "flowbite-datepicker/Datepicker";
 function Sidebar({ filter, setFilter }) {
   const isLg = window.matchMedia("(min-width: 1024px)").matches;
   const [seeFilters, setSeeFilters] = useState(isLg ? true : false);

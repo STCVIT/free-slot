@@ -1,5 +1,4 @@
 import React from "react";
-import Circle from "../assets/circle.svg";
 import Cross from "../assets/Cross.svg";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { useState } from "react";
@@ -7,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// eslint-disable-next-line no-unused-vars
 import axios from "axios";
 const FreeSlotAdd = () => {
   const { saveTeamAndFindFreeSlot, justFindFreeSlot } = FindFreeSlot();
@@ -235,6 +235,7 @@ const FreeSlotAdd = () => {
 
 // import '../index.css    '
 const FreeSlot = ({ setModalOnNew, setChoiceNew }) => {
+  // eslint-disable-next-line no-unused-vars
   const handleOKClickChoose = () => {
     setChoiceNew(true);
     setModalOnNew(false);

@@ -3,6 +3,7 @@ import Cross from "../assets/Cross.svg";
 // import Circle from '../assets/circle.svg'
 import Copy from "../assets/copy.svg";
 const ModalLink = ({ setModalOnLink, setChoiceLink }) => {
+  // eslint-disable-next-line no-unused-vars
   const handleOKClickLink = () => {
     setChoiceLink(true);
     setModalOnLink(false);

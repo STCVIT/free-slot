@@ -1,7 +1,8 @@
-import {Box,TextField,} from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useState } from "react";
 const TextInput = (props) => {
-const [textValue, setTextValue] = useState();
+  // eslint-disable-next-line no-unused-vars
+  const [textValue, setTextValue] = useState("");
   return (
     <Box>
       <Box>
@@ -11,7 +12,7 @@ const [textValue, setTextValue] = useState();
             id={props.id}
             label={props.label}
             size="small"
-            fullWidth 
+            fullWidth
             onChange={(e) => setTextValue(e.target.value)}
           />
         </Box>

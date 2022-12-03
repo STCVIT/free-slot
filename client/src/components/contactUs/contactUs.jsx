@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Socials from "../Socials/Socials";
 const ContactUs = ({ isHomePage }) => {
+  // eslint-disable-next-line no-unused-vars
   const [name, setName] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState();
   const [msgLength, setMsgLength] = useState(0);
   const handleName = (e) => {

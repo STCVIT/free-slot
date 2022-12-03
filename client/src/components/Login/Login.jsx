@@ -10,10 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { logIn, googleSignIn } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
+  // eslint-disable-next-line no-unused-vars
   const [passwordInput, setPasswordInput] = useState("");
 
   const handleSubmit = async (e) => {
@@ -98,6 +100,7 @@ const Login = () => {
               </button>
             </div>
             <h6 className="text-sm text-grey">
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a href="" className="text-myBlue">
                 Forgot Password?
               </a>

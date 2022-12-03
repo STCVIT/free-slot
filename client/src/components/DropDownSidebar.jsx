@@ -15,12 +15,15 @@ function classNames(...classes) {
 
 export default function Example() {
   const [modalOnNew, setModalOnNew] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [choiceNew, setChoiceNew] = useState(false);
 
   const [modalOnChoose, setModalOnChoose] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [choiceChoose, setChoiceChoose] = useState(false);
 
   const [modalOnLink, setModalOnLink] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [choiceLink, setChoiceLink] = useState(false);
 
   const clickedLink = () => {
