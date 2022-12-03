@@ -33,7 +33,8 @@
     "taggle": "^1.15.0",
     "typing-ahead": "^1.0.4",
     "web-vitals": "^2.1.4",
-    "semantic-ui-react": "^2.1.4"
+    "semantic-ui-react": "^2.1.4",
+    "semantic-ui-css": "^2.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
