@@ -7,6 +7,7 @@ import axios from "axios";
 export const PastPage = ({ filter }) => {
   const [PastData, setPastData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const { day, date, time, groups } = filter;
   console.log("day", day);
   useEffect(() => {

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import fileUpload from "../../assets/file-upload.svg";
-import TextInput from "../TextInput";
 const DragFile = ({ files, setFiles }) => {
+  // eslint-disable-next-line no-unused-vars
   const [dropText, setDropText] = useState("Select file from your device");
   const [isUploaded, setIsUploaded] = useState(false);
   const [imageClass, setImageClass] = useState();
+  // eslint-disable-next-line no-unused-vars
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
@@ -88,7 +89,7 @@ const DragFile = ({ files, setFiles }) => {
         >
           Select file from your device
         </label>
-        <img src={images} />
+        <img src={images} alt="Select File" />
         <input
           className="block  md:hidden"
           id="imageUploadPhone"

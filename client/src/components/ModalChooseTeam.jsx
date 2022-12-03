@@ -3,6 +3,7 @@ import Circle from "../assets/circle.svg";
 import Cross from "../assets/Cross.svg";
 // import '../index.css    '
 const ModalChooseTeam = ({ setModalOnChoose, setChoiceChoose }) => {
+  // eslint-disable-next-line no-unused-vars
   const handleOKClickChoose = () => {
     setChoiceChoose(true);
     setModalOnChoose(false);

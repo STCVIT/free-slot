@@ -7,6 +7,7 @@ import axios from "axios";
 export const UpcomingPage = ({ filter }) => {
   const [UpcomingData, setUpcomingData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const { day, date, time, groups } = filter;
 
   console.log(filter);

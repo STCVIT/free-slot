@@ -16,11 +16,8 @@ import Profile from "./components/Profile";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
 import Home from "./components/HomePageBuild";
-import HomePageBuild from "./components/HomePageBuild";
-import Card from "./components/contactUs/contactUs";
 import ContactUs from "./components/contactUs/contactUs";
 import Freeslot from "./pages/Freeslot";
-import MainNavbar from "./components/MainNavbar/MainNavbar";
 export default function App() {
   return (
     <>
