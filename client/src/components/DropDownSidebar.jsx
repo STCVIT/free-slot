@@ -27,7 +27,7 @@ export default function Example() {
   const [choiceLink, setChoiceLink] = useState(false);
 
   const clickedLink = () => {
-    setModalOnLink(true);
+    window.location.href = "/responses";
   };
 
   const clickedNew = () => {
@@ -37,6 +37,11 @@ export default function Example() {
   const clickedChoose = () => {
     setModalOnChoose(true);
   };
+  const items = [
+    { name: "Make New Team", icon: Plus, onClick: clickedNew },
+    { name: "Choose from existing", icon: List, onClick: clickedChoose },
+    { name: "Create Link", icon: Link, onClick: clickedLink },
+  ];
   return (
     <>
       <Menu
@@ -62,72 +67,30 @@ export default function Example() {
         >
           <Menu.Items className="origin-top-right absolute left-0 mt-2 w-64 rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none">
             <div className="py-1 p-2">
-              <Menu.Item>
-                {({ active }) => (
-                  <>
-                    <button
-                      className="flex px-6 items-center p-2"
-                      onClick={clickedNew}
-                    >
-                      <img src={Plus} alt="" className="h-4 w-4" />
-                      <p
-                        className={classNames(
-                          active
-                            ? "text-sm bg-gray-100 text-gray-900 "
-                            : "text-gray-700",
-                          "block px-4 py-2 text-sm"
-                        )}
+              {items.map((item) => (
+                <Menu.Item>
+                  {({ active }) => (
+                    <>
+                      <button
+                        className="flex px-6 items-center p-2"
+                        onClick={item.onClick}
                       >
-                        Make new team
-                      </p>
-                    </button>
-                  </>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <>
-                    <button
-                      className="flex px-6 items-center p-2"
-                      onClick={clickedChoose}
-                    >
-                      <img src={List} alt="" className="h-4 w-4 " />
-                      <p
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900 "
-                            : "text-gray-700",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Choose from existing
-                      </p>
-                    </button>
-                  </>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <>
-                    <button
-                      class="flex px-6 items-center p-2"
-                      onClick={clickedLink}
-                    >
-                      <img src={Link} alt="" className="h-4 w-4" />
-                      <p
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Create link
-                      </p>
-                    </button>
-                  </>
-                )}
-              </Menu.Item>
+                        <img src={item.icon} alt="" className="h-4 w-4" />
+                        <p
+                          className={classNames(
+                            active
+                              ? "text-sm bg-gray-100 text-gray-900 "
+                              : "text-gray-700",
+                            "block px-4 py-2 text-sm"
+                          )}
+                        >
+                          {item.name}
+                        </p>
+                      </button>
+                    </>
+                  )}
+                </Menu.Item>
+              ))}
             </div>
           </Menu.Items>
         </Transition>
