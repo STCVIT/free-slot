@@ -2,6 +2,19 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useState } from "react";
+
+const items = [
+  {
+    Preferences: "/",
+  },
+  {
+    Profile: "/profile",
+  },
+  {
+    "Contact Us": "/",
+  },
+];
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -9,11 +22,9 @@ function classNames(...classes) {
 export default function Example() {
   const [open, setOpen] = useState(false);
   return (
-    <Menu as="div" className="flex items-center px-4 -mb-1">
+    <Menu as="div" className="flex items-center">
       <div>
-        <Menu.Button onClick={() => setOpen(!open)}>
-          <h1 className="w-max">My Account</h1>
-        </Menu.Button>
+        <Menu.Button onClick={() => setOpen(!open)}>My Account</Menu.Button>
       </div>
 
       <Transition
@@ -25,48 +36,24 @@ export default function Example() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        {/* <Menu.Items className=" absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"> */}
-        <Menu.Items className="origin-top-right absolute right-4 top-20 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-0 focus:outline-none">
+        <Menu.Items className="origin-top-right absolute right-1 top-20 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-0 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Preferences
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/profile"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Profile
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="/"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Contact Us
-                </a>
-              )}
-            </Menu.Item>
+            {items.map((item) => (
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href={item[Object.keys(item)[0]]}
+                    className={classNames(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block px-4 py-2 text-sm"
+                    )}
+                  >
+                    {Object.keys(item)[0]}
+                  </a>
+                )}
+              </Menu.Item>
+            ))}
+
             <Menu.Item>
               {({ active }) => (
                 <a

@@ -15,7 +15,7 @@ const ContactUs = ({ isHomePage }) => {
   };
   return (
     <div
-      className={`flex flex-col w-full items-center gap-y-4 bg-gray-200 ${
+      className={`flex flex-col w-full items-center gap-y-4 bg-[#BEBDBD] ${
         !isHomePage ? "h-screen" : ""
       }`}
     >

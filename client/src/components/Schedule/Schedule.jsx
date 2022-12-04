@@ -1,28 +1,65 @@
 import React from "react";
-import Monday from "./Days/Monday";
-import NavButton from "./NavButton/NavButton";
+
+import MondayData from "./Data/MondayData";
+import TuesdayData from "./Data/TuesdayData";
+import WednesdayData from "./Data/WednesdayData";
+import ThursdayData from "./Data/ThursdayData";
+import FridayData from "./Data/FridayData";
+import { useState } from "react";
+import PageHeading from "../Headings/PageHeading";
+// import PageHeading from "../Headings/PageHeading";
+const sched = {
+  mon: MondayData,
+  tues: TuesdayData,
+  wed: WednesdayData,
+  thurs: ThursdayData,
+  fri: FridayData,
+};
+
+const ScheduleButton = (props) => {
+  return (
+    <div class="p-4 rounded-lg bg-white my-4 grid grid-cols-12 text-xl font-semibold ">
+      <div className="col-span-4">{props.subject}</div>
+      <div className="col-span-8">{props.time}</div>
+    </div>
+  );
+};
 
 const Schedule = () => {
   document.title = "Schedule";
+  const [activeTab, setActiveTab] = useState("mon");
+  const mainClass =
+    "px-4 py-2 border-b-4 col-span-1 font-bold cursor-pointer transition-colors duration-300";
+  const activeClass = "border-black";
+  const inactiveClass = "border-transparent hover:border-gray-200";
   return (
-    <div className="md:grid grid-rows-5 py-5 md:py-0 h-screen ">
-      <div className="flex justify-center items-center text-center row-span-1 font-semibold text-2xl w-full">
-        <h1 className="m-4 text-black font-bold text-2xl">Schedule</h1>
-      </div>
-      <div className="w-full row-span-4 items-center justify-center text-center">
-        <div className="flex flex-col p-2 items-end justify-end">
-            <div>
-              <span className="px-8 py-2 m-4 rounded-full bg-blue-500 text-white font-semibold text-sm flex w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-                Modify
-              </span>
+    <div className="py-5 md:py-0 md:h-screen bg-[#BEBDBD]">
+      {<PageHeading title="Schedule" />}
+      <div className="grid place-content-center">
+        <div className="rounded-lg w-fit flex flex-col gap-y-5 ">
+          <button className="w-max self-end text-sm font-extralight px-8 py-2 m-4 rounded-full bg-blue-500 text-white ">
+            Modify
+          </button>
+          <div>
+            <div className="flex gap-x-3 w-full justify-between border-b-2 border-black">
+              {["Mon", "Tues", "Wed", "Thurs", "Fri"].map((day) => (
+                <button
+                  className={`${mainClass} ${
+                    activeTab === day.toLocaleLowerCase()
+                      ? activeClass
+                      : inactiveClass
+                  }`}
+                  onClick={() => setActiveTab(day.toLocaleLowerCase())}
+                >
+                  {day}
+                </button>
+              ))}
             </div>
-          <div className="rounded-lg shadow-lg bg-grey-700 w-fit flex flex-col gap-y-5">
-            <div className="mb-4 border-b border-gray-200">
-              <NavButton />
-            </div>
-            <div id="myTabContent">
-              <Monday />
-            </div>
+          </div>
+          <div className="bg-transparent" id="myTabContent">
+            {sched[activeTab].map((x) => (
+              <ScheduleButton time={x.time} subject={x.subject} />
+            ))}
           </div>
         </div>
       </div>
