@@ -1,6 +1,8 @@
+import PageHeading from "../components/Headings/PageHeading";
+
 const About = () => {
   document.title = "About";
-  return <div></div>;
+  return <PageHeading title="About" />;
 };
 
 export default About;

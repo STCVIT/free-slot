@@ -1,14 +1,13 @@
 import React from "react";
 import { UserAuth } from "../context/UserAuthContext";
+import PageHeading from "./Headings/PageHeading";
 const { user } = UserAuth;
 console.log("User: ", user);
 const Profile = () => {
   document.title = "Profile";
   return (
     <div className="bg-gray-100">
-      <h1 className="py-11 flex w-full justify-center items-center text-center font-semibold text-2xl">
-        Profile
-      </h1>
+      <PageHeading title="Profile" />
       <div className="w-full ">
         <div className="flex w-full h-full md:justify-center px-4">
           <div className="col-span-5 gap-y-3 items-center md:w-2/4 w-full">
