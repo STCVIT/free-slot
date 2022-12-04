@@ -34,7 +34,7 @@ const Schedule = () => {
   const inactiveClass = "border-transparent hover:border-gray-200";
   return (
     <div className="py-5 md:py-0 md:h-screen bg-[#BEBDBD]">
-      {<PageHeading title="Schedule" />}
+      <PageHeading title="Schedule" />
       <div className="grid place-content-center">
         <div className="rounded-lg w-fit flex flex-col gap-y-5 ">
           <button className="w-max self-end text-sm font-extralight px-8 py-2 m-4 rounded-full bg-blue-500 text-white ">

@@ -121,9 +121,11 @@ const FreeSlotAdd = () => {
   //this is what you need in backend @Saarim
   const submitFreeSlot = async () => {
     if (saveTeam) {
-      await saveTeamAndFindFreeSlot(teamName, tags);
+      // await saveTeamAndFindFreeSlot(teamName, tags);
+      await console.log("a");
     } else {
-      await justFindFreeSlot(tags);
+      await console.log("a");
+      // await justFindFreeSlot(tags);
     }
     navigate("/freeslot");
     console.log(tags);
