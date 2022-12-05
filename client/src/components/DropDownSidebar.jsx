@@ -10,11 +10,26 @@ import ModalChooseTeam from "./ModalChooseTeam";
 import ModalLink from "./ModalLink";
 import Responses from "./Responses/Responses";
 import { createRoot } from "react-dom/client";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+// import ComponentModal from "./ComponentModal";
 import axios from "axios";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "75%",
+  bgcolor: "white",
 
+  borderRadius: "0.5rem",
+  boxShadow: 12,
+  p: 4,
+};
 export default function Example() {
   // axios.get("http://localhost:6969/").then((res) => {
   //   console.log(res.data);
@@ -30,10 +45,9 @@ export default function Example() {
   const [modalOnLink, setModalOnLink] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [choiceLink, setChoiceLink] = useState(false);
-
+  const [responsesOpen, setResponsesOpen] = useState(false);
   const clickedLink = () => {
-    const root = createRoot(document.getElementById("mainDiv"));
-    root.render(<Responses />);
+    setResponsesOpen(true);
   };
 
   const clickedNew = () => {
@@ -48,8 +62,32 @@ export default function Example() {
     { name: "Choose from existing", icon: List, onClick: clickedChoose },
     { name: "Create Link", icon: Link, onClick: clickedLink },
   ];
+
+  const ComponentModal = () => {
+    return (
+      <div>
+        <Modal
+          BackdropProps={{
+            style: {
+              backgroundColor: "white",
+              opacity: 0.8,
+            },
+          }}
+          open={responsesOpen}
+          onClose={() => setResponsesOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Responses onClose={() => setResponsesOpen(false)} />
+          </Box>
+        </Modal>
+      </div>
+    );
+  };
   return (
     <>
+      <ComponentModal />
       <Menu
         as="div"
         className="relative inline-block text-left z-50 backdrop-blur"
