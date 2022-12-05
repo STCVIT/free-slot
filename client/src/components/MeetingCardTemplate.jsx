@@ -39,21 +39,9 @@ const MeetingCardTemplate = (props) => {
           <p className="mb-3 p-2 font-normal text-gray-400 ">
             {dataItem.members}
           </p>
-          <div className="flex">
+          <div className="flex w-full gap-x-4">
             <NestedModal desc="Mark as done" data={data} />
             <NestedModal desc="Cancel" data={data} />
-            {/* <button
-              onClick={() => deleteCard(idx, props)}
-              className="flex-1 items-center py-3 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300"
-            >
-              Mark as done
-            </button>
-            <button
-              onClick={() => deleteCard(idx, props)}
-              className="flex-1 rounded px-4 items-center py-2 text-black hover:underline bg-white "
-            >
-              Cancel
-            </button> */}
           </div>
         </div>
       </div>

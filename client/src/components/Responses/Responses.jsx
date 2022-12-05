@@ -3,7 +3,7 @@ import PageHeading from "../Headings/PageHeading";
 import { RiFileCopyLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MainNavbar from "../MainNavbar/MainNavbar";
+import { GrClose } from "react-icons/gr";
 import {
   RiCheckboxCircleFill,
   RiErrorWarningFill,
@@ -35,7 +35,7 @@ const statusArray = ResponseData.map((x) => {
     </tr>
   );
 });
-const Responses = () => {
+const Responses = ({ onClose }) => {
   const showCopiedToast = () => {
     toast.success("Link copied successfully!", {
       position: toast.POSITION.TOP_RIGHT,
@@ -43,16 +43,19 @@ const Responses = () => {
     });
   };
   return (
-    <>
+    <div className="relative rounded-md">
+      <button className="absolute top-5 right-5" onClick={onClose}>
+        <GrClose size={16} />
+      </button>
       <div>
         <PageHeading title="Responses" />
       </div>
       <div className="mx-4 md:mx-16">
-        <div className="w-3/4 md:w-1/4">
+        <div className="w-3/4 md:w-2/4">
           <h1 className="text-[#9C9C9C] text-2xl">
             Share this link with your peers
           </h1>
-          <div className="grid grid-cols-12  rounded-md border-2 border-gray-200 p-2">
+          <div className="grid grid-cols-12  rounded-md border-2 border-gray-200 p-2 my-2">
             <div className="col-span-11 flex items-center">
               <h1 className="self-center text-sm overflow-hidden whitespace-nowrap text-ellipsis">
                 Link comes hereLink comes hereLink comes hereLink comes hereLink
@@ -92,7 +95,7 @@ const Responses = () => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
