@@ -1,16 +1,11 @@
 import React from "react";
+import Circle from "../assets/circle.svg";
 import Cross from "../assets/Cross.svg";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FindFreeSlot } from "../context/FreeSlotContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// eslint-disable-next-line no-unused-vars
-import axios from "axios";
 const FreeSlotAdd = () => {
-  const { saveTeamAndFindFreeSlot, justFindFreeSlot } = FindFreeSlot();
-  const navigate = useNavigate();
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
@@ -119,15 +114,7 @@ const FreeSlotAdd = () => {
   };
 
   //this is what you need in backend @Saarim
-  const submitFreeSlot = async () => {
-    if (saveTeam) {
-      // await saveTeamAndFindFreeSlot(teamName, tags);
-      await console.log("a");
-    } else {
-      await console.log("a");
-      // await justFindFreeSlot(tags);
-    }
-    navigate("/freeslot");
+  const submitFreeSlot = () => {
     console.log(tags);
     console.log(saveTeam);
     console.log(teamName);
@@ -144,7 +131,7 @@ const FreeSlotAdd = () => {
         } items-center bg-gray-800/50 backdrop-blur  h-full w-full justify-center z-50`}
       >
         <div className="bg-white rounded-md flex flex-col w-3/4">
-          <div className="bg-myBlue rounded-t-md border-b-2 py-2 text-white text-center">
+          <div className="bg-blueTheme rounded-t-md border-b-2 py-2 text-white text-center">
             Are you Sure?
           </div>
           <div className="flex justify-evenly py-5">
@@ -173,7 +160,7 @@ const FreeSlotAdd = () => {
                 {tags.map((tag, index) => (
                   <button
                     onClick={() => removeTag(index)}
-                    className="p-2 bg-[#CFDBE6] rounded-md hover:text-red-400 hover:line-through h hover:scale-110"
+                    className="p-2 bg-myBlue text-white rounded-md hover:bg-red-400 hover:line-through h hover:scale-110"
                     key={index}
                   >
                     <span className="text">{tag}</span>
@@ -186,13 +173,6 @@ const FreeSlotAdd = () => {
                   placeholder="21XXX0000"
                 />
               </div>
-              <h1>Team Name:</h1>
-              <input
-                type="text"
-                placeholder="Team Name"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-              />
             </div>
           </div>
           <button
@@ -202,16 +182,36 @@ const FreeSlotAdd = () => {
             Clear all
           </button>
         </div>
-        <div
-          className="flex gap-x-3 items-center font-bold cursor-pointer"
-          onClick={() => {
-            setSaveTeam(!saveTeam);
-          }}
-        >
-          {saveTeam ? <CheckBox /> : <CheckBoxOutlineBlank />}
-          Save this team
+        <div className="flex gap-x-3 items-center mb-4">
+          <div
+            className="flex gap-x-3 items-center font-bold cursor-pointer"
+            onClick={() => {
+              setSaveTeam(!saveTeam);
+            }}
+          >
+            {saveTeam ? <CheckBox /> : <CheckBoxOutlineBlank />}
+            Save this team
+          </div>
+          <div className="self-center">
+            {saveTeam && (
+              <input
+                className="px-2 py-2 border-2 rounded-md "
+                type="text"
+                placeholder="Team Name"
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+              />
+            )}
+          </div>
         </div>
         <div className="self-center flex w-3/4 md:w-2/4 justify-between gap-x-3">
+          <button
+            type="submit"
+            onClick={submitFreeSlot}
+            class="text-white bg-myBlue font-medium rounded-lg text-sm w-60 py-2.5 text-center border-2 border-myBlue"
+          >
+            Find Free Slot!
+          </button>
           <button
             onClick={() => {
               setConfirmationOpen(!confirmationOpen);
@@ -220,13 +220,6 @@ const FreeSlotAdd = () => {
             class="text-black bg-white border-none font-medium rounded-lg underline-offset-2 text-sm w-60 outline text-center underline decoration-dotted"
           >
             Cancel
-          </button>
-          <button
-            type="submit"
-            onClick={submitFreeSlot}
-            class="text-white bg-blue-700 font-medium rounded-lg text-sm w-60 py-2.5 text-center dark:bg-blue-600 "
-          >
-            Find Free Slot!
           </button>
         </div>
       </div>
@@ -237,7 +230,6 @@ const FreeSlotAdd = () => {
 
 // import '../index.css    '
 const FreeSlot = ({ setModalOnNew, setChoiceNew }) => {
-  // eslint-disable-next-line no-unused-vars
   const handleOKClickChoose = () => {
     setChoiceNew(true);
     setModalOnNew(false);
@@ -252,14 +244,14 @@ const FreeSlot = ({ setModalOnNew, setChoiceNew }) => {
     <div className="modal-container bg-zinc-200/60  opacity-100 fixed inset-0 z-10000 ">
       <div className="modal flex h-screen justify-center items-center opacity-100">
         <div className="flex-col items-center bg-white shadow-lg border rounded-xl ">
-          <header className="p-4 bg-myBlue text-white relative flex items-center rounded-t-xl">
+          <header className="p-4 bg-blueTheme text-white relative flex items-center rounded-t-xl">
             <img
               src={Cross}
               onClick={handleCancelClickChoose}
               alt=""
               className="cursor-pointer grid col-span-2 ml-5 mt-3 absolute top-[20%]"
             ></img>
-            <h1 className="bg-myBlue text-white col-span-4 text-xl w-full text-center">
+            <h1 className="bg-blueTheme text-white col-span-4 text-xl w-full text-center">
               Create Team
             </h1>
           </header>
