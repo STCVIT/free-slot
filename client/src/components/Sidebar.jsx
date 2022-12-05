@@ -3,7 +3,7 @@ import DropDown from "./DropDownSidebar";
 import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
-function Sidebar({ filter, setFilter }) {
+function Sidebar({ filter, setFilter, group }) {
   const isLg = window.matchMedia("(min-width: 1024px)").matches;
   const [seeFilters, setSeeFilters] = useState(isLg ? true : false);
   // const dateObj = new Date();
@@ -17,34 +17,34 @@ function Sidebar({ filter, setFilter }) {
     "Saturday",
   ];
 
-  const groups = [
-    "Group A",
-    "Group B",
-    "Group C",
-    "Group D",
-    "Group E",
-    "Group F",
-    "Group G",
-    "Group H",
-    "Group I",
-    "Group J",
-    "Group K",
-    "Group L",
-    "Group M",
-    "Group N",
-    "Group O",
-    "Group P",
-    "Group Q",
-    "Group R",
-    "Group S",
-    "Group T",
-    "Group U",
-    "Group V",
-    "Group W",
-    "Group X",
-    "Group Y",
-    "Group Z",
-  ];
+  // const groups = [
+  //   "Group A",
+  //   "Group B",
+  //   "Group C",
+  //   "Group D",
+  //   "Group E",
+  //   "Group F",
+  //   "Group G",
+  //   "Group H",
+  //   "Group I",
+  //   "Group J",
+  //   "Group K",
+  //   "Group L",
+  //   "Group M",
+  //   "Group N",
+  //   "Group O",
+  //   "Group P",
+  //   "Group Q",
+  //   "Group R",
+  //   "Group S",
+  //   "Group T",
+  //   "Group U",
+  //   "Group V",
+  //   "Group W",
+  //   "Group X",
+  //   "Group Y",
+  //   "Group Z",
+  // ];
   return (
     <>
       <div className="shadow p-3 h-full fixed">
@@ -88,7 +88,7 @@ function Sidebar({ filter, setFilter }) {
                   clearable
                   placeholder="Group"
                   selection
-                  options={groups.map((group) => ({
+                  options={group.map((group) => ({
                     key: group,
                     text: group,
                     value: group,

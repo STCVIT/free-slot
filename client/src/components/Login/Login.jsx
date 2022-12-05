@@ -5,7 +5,7 @@ import googleLogo from "../../assets/Gooogle-logo.svg";
 import LoginImage from "../../assets/LoginInfoImage.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -132,7 +132,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer position="top-right" />
     </>
   );
 };
