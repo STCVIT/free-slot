@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PageHeading from "../Headings/PageHeading";
 import Socials from "../Socials/Socials";
 const ContactUs = ({ isHomePage }) => {
   // eslint-disable-next-line no-unused-vars
@@ -19,7 +20,7 @@ const ContactUs = ({ isHomePage }) => {
         !isHomePage ? "h-screen" : ""
       }`}
     >
-      <div className="text-center text-4xl font-bold p-4 py-5 ">Contact Us</div>
+      <PageHeading title="Contact Us" />
       <div className="w-2/4 flex flex-col gap-y-3">
         <label for="contactUsName">Name</label>
         <input

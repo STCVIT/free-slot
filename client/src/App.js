@@ -9,7 +9,6 @@ import Timetable from "./components/Signup/Timetable";
 import Login from "./components/Login/Login";
 //import Home from "./pages/Home";
 import Landing from "./pages/Landing";
-// import Schedule from "./components/Schedule";
 import Schedule from "./components/Schedule/Schedule";
 import AddEvent from "./components/AddEvent";
 import Profile from "./components/Profile";
@@ -38,21 +37,12 @@ export default function App() {
               <Route path="/timetable" element={<Timetable />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/responses" element={<Responses />} />
               <Route
                 path="/contactUs"
                 element={<ContactUs isHomePage={false} />}
               />
               <Route path="/addEvent" element={<AddEvent />} />
               <Route path="/freeslot" element={<Freeslot />} />
-              <Route
-                path="/schedule"
-                element={
-                  <ProtectedRoute>
-                    <Schedule />
-                  </ProtectedRoute>
-                }
-              />
             </Routes>
           </BrowserRouter>
         </FreeSlotContextProvider>

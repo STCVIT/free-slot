@@ -15,7 +15,7 @@ export const PastPage = ({ filter }) => {
       const response = await axios.get(url + "?tab=past");
       setPastData(response.data);
       // console.log(PastData);
-      console.log(response.data);
+      // console.log(response.data);
     }
     getData();
   }, [refresh]);

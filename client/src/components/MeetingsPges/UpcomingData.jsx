@@ -16,10 +16,10 @@ export const UpcomingPage = ({ filter }) => {
     async function getData() {
       const response = await axios.get(url + "?tab=upcoming");
       setUpcomingData(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     }
     getData();
-  }, [refresh, filter]);
+  }, [refresh]);
   return (
     <MeetingCardTemplate
       list={
