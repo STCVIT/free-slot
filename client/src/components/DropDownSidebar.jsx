@@ -8,12 +8,17 @@ import ModalNewTeam from "./ModalNewTeam";
 import { useState } from "react";
 import ModalChooseTeam from "./ModalChooseTeam";
 import ModalLink from "./ModalLink";
-
+import Responses from "./Responses/Responses";
+import { createRoot } from "react-dom/client";
+import axios from "axios";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
+  // axios.get("http://localhost:6969/").then((res) => {
+  //   console.log(res.data);
+  // });
   const [modalOnNew, setModalOnNew] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [choiceNew, setChoiceNew] = useState(false);
@@ -27,7 +32,8 @@ export default function Example() {
   const [choiceLink, setChoiceLink] = useState(false);
 
   const clickedLink = () => {
-    window.location.href = "/responses";
+    const root = createRoot(document.getElementById("mainDiv"));
+    root.render(<Responses />);
   };
 
   const clickedNew = () => {

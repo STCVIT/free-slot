@@ -47,7 +47,7 @@ function Sidebar({ filter, setFilter }) {
   ];
   return (
     <>
-      <div className="shadow p-3 ">
+      <div className="shadow p-3 h-full fixed">
         <aside className="" aria-label="Sidebar">
           <div className="rounded bg-white ">
             <div className="item-center p-5 relative">

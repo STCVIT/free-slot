@@ -2,16 +2,24 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useState } from "react";
-
+import { createRoot } from "react-dom/client";
+import Profile from "./Profile";
+import ContactUs from "./contactUs/contactUs";
+const clickedLink = (comp) => {
+  const root = createRoot(document.getElementById("mainDiv"));
+  if (comp === "Profile") {
+    root.render(<Profile />);
+  }
+  if (comp === "Contact Us") {
+    root.render(<ContactUs />);
+  }
+};
 const items = [
-  {
-    Preferences: "/",
-  },
   {
     Profile: "/profile",
   },
   {
-    "Contact Us": "/",
+    "Contact Us": "/contactUs",
   },
 ];
 
@@ -41,15 +49,15 @@ export default function Example() {
             {items.map((item) => (
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href={item[Object.keys(item)[0]]}
+                  <button
+                    onClick={() => clickedLink(Object.keys(item)[0])}
                     className={classNames(
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm"
+                      "block px-4 py-2 text-sm w-full !text-left"
                     )}
                   >
                     {Object.keys(item)[0]}
-                  </a>
+                  </button>
                 )}
               </Menu.Item>
             ))}

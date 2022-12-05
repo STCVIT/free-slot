@@ -10,9 +10,9 @@ const Home = () => {
     day: "all",
   });
   return (
-    <div className="h-screen">
-      <div className="md:grid grid-cols-12 gap-4 h-full" id="mainDiv">
-        <div className="hidden md:block col-span-2 h-screen">
+    <div className="">
+      <div className="md:grid grid-cols-12 gap-4 " id="mainDiv">
+        <div className="hidden md:block col-span-2">
           <Sidebar filter={filter} setFilter={setFilter} />
         </div>
         <div className="col-span-10">

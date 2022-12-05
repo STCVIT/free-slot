@@ -3,6 +3,7 @@ import PageHeading from "../Headings/PageHeading";
 import { RiFileCopyLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MainNavbar from "../MainNavbar/MainNavbar";
 import {
   RiCheckboxCircleFill,
   RiErrorWarningFill,

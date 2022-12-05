@@ -13,8 +13,6 @@ export const CancelledPage = ({ filter }) => {
     async function getData() {
       const response = await axios.get(url + "?tab=cancelled");
       setCancelledData(response.data);
-      // console.log(CancelledData);
-      console.log(response.data);
     }
     getData();
   }, [refresh]);
