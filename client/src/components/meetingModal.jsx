@@ -1,8 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const style = {
   position: "absolute",
   top: "50%",
@@ -28,13 +29,16 @@ export default function NestedModal({ desc, data }) {
   const cancel =
     "flex-1 rounded px-4 items-center py-2 text-black underline bg-white border-2 border-black rounded-lg";
   const { idx, tab, refresh } = data;
-  const Confirm = () => {
+  const Confirm = ({ action }) => {
+    const handleYes = () => {
+      deleteCard(idx, tab, refresh);
+      action === "done"
+        ? toast.success("Meeting marked as done")
+        : toast.error("Meeting cancelled");
+    };
     return (
       <div className="flex justify-evenly mt-4 gap-x-4">
-        <button
-          className={markAsDone}
-          onClick={() => deleteCard(idx, tab, refresh)}
-        >
+        <button className={markAsDone} onClick={handleYes}>
           Yes
         </button>
         <button className={cancel} onClick={handleClose}>
@@ -88,7 +92,7 @@ export default function NestedModal({ desc, data }) {
               ? "mark this event as done?"
               : "cancel this event?"}
           </h2>
-          <Confirm />
+          <Confirm action={desc === "Mark as done" ? "done" : "cancel"} />
         </Box>
       </Modal>
     </div>

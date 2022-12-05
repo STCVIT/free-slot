@@ -1,7 +1,7 @@
 import ResponseData from "./ResponsesData";
 import PageHeading from "../Headings/PageHeading";
 import { RiFileCopyLine } from "react-icons/ri";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GrClose } from "react-icons/gr";
 import {
@@ -74,7 +74,6 @@ const Responses = ({ onClose }) => {
               </button>
             </div>
           </div>
-          <ToastContainer />
         </div>
         <div className=" mt-5 items-center drop-shadow border-2 border-gray-200 bg-white px-2 md:px-16 py-4 rounded-md">
           <table className="table-auto w-full text-left">

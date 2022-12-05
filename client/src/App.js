@@ -17,6 +17,7 @@ import "./App.css";
 import Home from "./components/HomePageBuild";
 import ContactUs from "./components/contactUs/contactUs";
 import Freeslot from "./pages/Freeslot";
+import { ToastContainer } from "react-toastify";
 export default function App() {
   return (
     <>
@@ -44,6 +45,7 @@ export default function App() {
               <Route path="/addEvent" element={<AddEvent />} />
               <Route path="/freeslot" element={<Freeslot />} />
             </Routes>
+            <ToastContainer />
           </BrowserRouter>
         </FreeSlotContextProvider>
       </UserAuthContextProvider>

@@ -129,7 +129,7 @@ export default function Example() {
                   {({ active }) => (
                     <>
                       <div
-                        className="flex gap-x-2  p-2 cursor-pointer items-center"
+                        className="flex gap-x-2 p-2 cursor-pointer items-center"
                         onClick={item.onClick}
                       >
                         <div>{item.icon}</div>
