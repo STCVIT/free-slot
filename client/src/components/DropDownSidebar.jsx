@@ -1,18 +1,16 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import Plus from "../assets/Plus.svg";
-import List from "../assets/List.svg";
-import Link from "../assets/Link.svg";
+import { RiAddLine } from "react-icons/ri";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { BiLinkExternal } from "react-icons/bi";
 import ModalNewTeam from "./ModalNewTeam";
 import { useState } from "react";
 import ModalChooseTeam from "./ModalChooseTeam";
 import ModalLink from "./ModalLink";
 import Responses from "./Responses/Responses";
-import { createRoot } from "react-dom/client";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 // import ComponentModal from "./ComponentModal";
 import axios from "axios";
 function classNames(...classes) {
@@ -35,32 +33,42 @@ export default function Example() {
   //   console.log(res.data);
   // });
   const [modalOnNew, setModalOnNew] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [choiceNew, setChoiceNew] = useState(false);
 
   const [modalOnChoose, setModalOnChoose] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [choiceChoose, setChoiceChoose] = useState(false);
 
   const [modalOnLink, setModalOnLink] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [choiceLink, setChoiceLink] = useState(false);
+
+  const [newTeamOpen, setNewTeamOpen] = useState(false);
   const [responsesOpen, setResponsesOpen] = useState(false);
   const clickedLink = () => {
     setResponsesOpen(true);
   };
 
   const clickedNew = () => {
-    setModalOnNew(true);
+    setNewTeamOpen(true);
   };
 
   const clickedChoose = () => {
     setModalOnChoose(true);
   };
   const items = [
-    { name: "Make New Team", icon: Plus, onClick: clickedNew },
-    { name: "Choose from existing", icon: List, onClick: clickedChoose },
-    { name: "Create Link", icon: Link, onClick: clickedLink },
+    {
+      name: "Make New Team",
+      icon: <RiAddLine size={25} color="rgb(51 137 255" />,
+      onClick: clickedNew,
+    },
+    {
+      name: "Choose from existing",
+      icon: <AiOutlineUnorderedList size={25} color="rgb(51 137 255" />,
+      onClick: clickedChoose,
+    },
+    {
+      name: "Create Link",
+      icon: <BiLinkExternal size={25} color="rgb(51 137 255" />,
+      onClick: clickedLink,
+    },
   ];
 
   const ComponentModal = () => {
@@ -73,13 +81,18 @@ export default function Example() {
               opacity: 0.8,
             },
           }}
-          open={responsesOpen}
+          open={responsesOpen || newTeamOpen}
           onClose={() => setResponsesOpen(false)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Responses onClose={() => setResponsesOpen(false)} />
+            {newTeamOpen && (
+              <ModalNewTeam onClose={() => setNewTeamOpen(false)} />
+            )}
+            {responsesOpen && (
+              <Responses onClose={() => setResponsesOpen(false)} />
+            )}
           </Box>
         </Modal>
       </div>
@@ -115,22 +128,15 @@ export default function Example() {
                 <Menu.Item>
                   {({ active }) => (
                     <>
-                      <button
-                        className="flex px-6 items-center p-2"
+                      <div
+                        className="flex gap-x-2  p-2 cursor-pointer items-center"
                         onClick={item.onClick}
                       >
-                        <img src={item.icon} alt="" className="h-4 w-4" />
-                        <p
-                          className={classNames(
-                            active
-                              ? "text-sm bg-gray-100 text-gray-900 "
-                              : "text-gray-700",
-                            "block px-4 py-2 text-sm"
-                          )}
-                        >
+                        <div>{item.icon}</div>
+                        <div className={`text-gray-${active ? "900" : "700"}`}>
                           {item.name}
-                        </p>
-                      </button>
+                        </div>
+                      </div>
                     </>
                   )}
                 </Menu.Item>
@@ -139,24 +145,14 @@ export default function Example() {
           </Menu.Items>
         </Transition>
       </Menu>
-      {modalOnNew && (
-        <ModalNewTeam
-          setModalOnNew={setModalOnNew}
-          setChoiceNew={setChoiceNew}
-        />
-      )}
+      {modalOnNew && <ModalNewTeam />}
       {modalOnChoose && (
         <ModalChooseTeam
           setModalOnChoose={setModalOnChoose}
           setChoiceChoose={setChoiceChoose}
         />
       )}
-      {modalOnLink && (
-        <ModalLink
-          setModalOnLink={setModalOnLink}
-          setChoiceLink={setChoiceLink}
-        />
-      )}
+      {modalOnLink && <ModalLink />}
     </>
   );
 }

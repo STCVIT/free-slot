@@ -1,11 +1,12 @@
 import React from "react";
-import Circle from "../assets/circle.svg";
-import Cross from "../assets/Cross.svg";
+import { GrClose } from "react-icons/gr";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const FreeSlotAdd = () => {
+
+import PageHeading from "./Headings/PageHeading";
+const FreeSlot = ({ onClose }) => {
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
@@ -125,23 +126,11 @@ const FreeSlotAdd = () => {
 
   return (
     <div className="relative">
-      <div
-        className={`absolute ${
-          confirmationOpen ? "flex" : "hidden"
-        } items-center bg-gray-800/50 backdrop-blur  h-full w-full justify-center z-50`}
-      >
-        <div className="bg-white rounded-md flex flex-col w-3/4">
-          <div className="bg-blueTheme rounded-t-md border-b-2 py-2 text-white text-center">
-            Are you Sure?
-          </div>
-          <div className="flex justify-evenly py-5">
-            <button>Yes</button>
-            <button>No</button>
-          </div>
-        </div>
-      </div>
-      <div className="flex justify-center flex-col gap-y-3 drop-shadow-xl bg-white rounded-md p-3 md:col-span-6">
-        <h1 className="text-center font-bold text-2xl">Check Free Slot</h1>
+      <button className="absolute top-5 right-5" onClick={onClose}>
+        <GrClose size={16} />
+      </button>
+      <div className="flex justify-center flex-col gap-y-3  rounded-md p-3">
+        <PageHeading title="Check Free Slot" />
         <div>
           <div className="flex flex-col gap-y-3 justify-center items-start px-2 py-6">
             <div>
@@ -224,40 +213,6 @@ const FreeSlotAdd = () => {
         </div>
       </div>
       <ToastContainer position="top-right" />
-    </div>
-  );
-};
-
-// import '../index.css    '
-const FreeSlot = ({ setModalOnNew, setChoiceNew }) => {
-  const handleOKClickChoose = () => {
-    setChoiceNew(true);
-    setModalOnNew(false);
-  };
-  const handleCancelClickChoose = () => {
-    setChoiceNew(false);
-    setModalOnNew(false);
-    console.log("cancel");
-  };
-
-  return (
-    <div className="modal-container bg-zinc-200/60  opacity-100 fixed inset-0 z-10000 ">
-      <div className="modal flex h-screen justify-center items-center opacity-100">
-        <div className="flex-col items-center bg-white shadow-lg border rounded-xl ">
-          <header className="p-4 bg-blueTheme text-white relative flex items-center rounded-t-xl">
-            <img
-              src={Cross}
-              onClick={handleCancelClickChoose}
-              alt=""
-              className="cursor-pointer grid col-span-2 ml-5 mt-3 absolute top-[20%]"
-            ></img>
-            <h1 className="bg-blueTheme text-white col-span-4 text-xl w-full text-center">
-              Create Team
-            </h1>
-          </header>
-          <FreeSlotAdd />
-        </div>
-      </div>
     </div>
   );
 };
