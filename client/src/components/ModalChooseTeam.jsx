@@ -1,54 +1,137 @@
-import React from "react";
-import Circle from "../assets/circle.svg";
-import Cross from "../assets/Cross.svg";
+import PageHeading from "./Headings/PageHeading";
 // import '../index.css    '
-const ModalChooseTeam = ({ setModalOnChoose, setChoiceChoose }) => {
-  // eslint-disable-next-line no-unused-vars
-  const handleOKClickChoose = () => {
-    setChoiceChoose(true);
-    setModalOnChoose(false);
+import { useState } from "react";
+import { BsSearch } from "react-icons/bs";
+import { useEffect } from "react";
+import { GrClose } from "react-icons/gr";
+import Fuse from "fuse.js";
+const ModalChooseTeam = ({ onClose }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const selectTeam = (idx) => {
+    setSelectedTeam(idx);
   };
-  const handleCancelClickChoose = () => {
-    setChoiceChoose(false);
-    setModalOnChoose(false);
+  const [teams, setTeams] = useState([]);
+  const options = {
+    // isCaseSensitive: false,
+    // includeScore: false,
+    shouldSort: true,
+    // includeMatches: false,
+    // findAllMatches: false,
+    // minMatchCharLength: 1,
+    // location: 0,
+    // threshold: 0.6,
+    // distance: 100,
+    // useExtendedSearch: false,
+    // ignoreLocation: false,
+    // ignoreFieldNorm: false,
+    // fieldNormWeight: 1,
+    keys: ["name"],
   };
 
-  return (
-    <div className="modal-container bg-zinc-200/60  opacity-100 fixed inset-0 z-10000 ">
-      <div className="modal flex h-screen justify-center items-center opacity-100">
-        <div className="flex-col items-center bg-white shadow-lg border rounded-xl ">
-          <header className="p-4 bg-myBlue text-white grid grid-cols-6 rounded-t-xl">
-            <img
-              src={Cross}
-              onClick={handleCancelClickChoose}
-              alt=""
-              className="cursor-pointer grid col-span-2 ml-5 mt-3"
-            ></img>
-            <h1 className="bg-myBlue text-white col-span-4 text-xl ">
-              Select your team
-            </h1>
-          </header>
-          <form className="p-3">
-            <div className="relative">
-              <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"></div>
-              <input
-                type="search"
-                id="default-search"
-                className="block p-4 pl-10 w-full text-sm text-gray-700 bg-gray-50  border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-100 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search Mockups, Logos..."
-                required
-              />
-            </div>
-          </form>
-          <p className="ml-4 mb-2">RECENT TEAMS</p>
-          <div className="grid grid-row-3 grid-flow-col gap-1 ml-4 p-2">
-            <img src={Circle} alt="" className="h-14 w-14 row-span-3"></img>
-            <div className="col-span-2 mx-8 ">Junior Core</div>
-            <div className="row-span-2 col-span-2 mx-8 text-sm text-gray-500">
-              Akash, Ananay, Anirudh, Anitej...
-            </div>
+  const data = [
+    {
+      name: "Apple",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Cat",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "ZZZ",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Dasd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "AAasdas",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "BBasd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Casd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Dasd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+  ];
+  const fuse = new Fuse(data, options);
+  const results = fuse.search(searchValue);
+  useEffect(() => {
+    console.log(results);
+  }, [results]);
+  console.log(selectedTeam);
+  const TeamCard = ({ team, idx }) => {
+    const pastelColors = [
+      "#F2C4DE",
+      "#71B1D9",
+      "#AED8F2",
+      "#F2DEA2",
+      "#F2CDC4",
+    ];
+
+    // console.log(bgColor);
+    return (
+      <div
+        className="grid grid-cols-12 cursor-pointer hover:outline hover:bg-white p-4 rounded-md even:bg-blue-200 odd:bg-gray-200"
+        onClick={() => selectTeam(idx)}
+      >
+        <div className={`col-span-1 flex items-center`}>
+          <div
+            style={{ background: pastelColors[idx % 5] }}
+            className={`w-[75%] h-full rounded-full  flex items-center justify-center border-2 border-black`}
+          >
+            {team.name[0]}
+            {/* S */}
           </div>
         </div>
+        <div className="col-span-11">
+          <div>{team.name}</div>
+          <div>{team.members}</div>
+          {/* <div>STC</div>
+          <div>Akash, Ananay, Anirudh, Anitej, Arushi, Astha</div> */}
+        </div>
+      </div>
+    );
+  };
+  return (
+    <div className="relative">
+      <PageHeading title="Select your team" />
+      <button className="absolute top-5 right-5" onClick={onClose}>
+        <GrClose size={16} />
+      </button>
+      <div>
+        <div className="flex border-2 border-black rounded-md">
+          <input
+            autoComplete="off"
+            type="search"
+            id="default-search"
+            className="w-full px-2 py-4 border-r-2 border-black active:border-none focus:outline-none"
+            placeholder="Search team"
+            required
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <div className="p-4">
+            <BsSearch className=" text-2xl text-myBlue" />
+          </div>
+        </div>
+      </div>
+      <div className="h-[50vh] overflow-y-auto p-4 my-4 flex flex-col gap-y-4 ">
+        {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((team, idx) => (
+          <TeamCard team={team} idx={idx} />
+        ))} */}
+        {(searchValue === "" ? data : results).map((team, idx) => (
+          <TeamCard team={searchValue === "" ? team : team.item} idx={idx} />
+        ))}
       </div>
     </div>
   );

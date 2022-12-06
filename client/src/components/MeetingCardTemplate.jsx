@@ -8,25 +8,14 @@ const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
   return (
     <div
-      className="drop-shadow hidden p-4 mb-4 rounded-md bg-white h-[300px] w-[25rem]"
+      className="drop-shadow hidden p-4 mb-4 rounded-md bg-white  w-[25rem]"
       id={"meetingInfoCard" + props.id}
     >
       <div>
         <p className="text-[#7B8A99]">Description</p>
-        {/* <div className="rounded-md bg-[#F4F4F4]"> */}
-        <Form>
-          <Form.Group
-            className="mb-3 "
-            controlId="exampleForm.ControlTextarea1"
-          >
-            <Form.Control
-              className="rounded-md bg-[#F4F4F4] w-full resize-none p-4 text-black"
-              placeholder="Lorem Ipsum"
-              as="textarea"
-              rows={10}
-            />
-          </Form.Group>
-        </Form>
+        <p className="rounded-md bg-[#F4F4F4] w-full resize-none p-4 ">
+          {props.desc}
+        </p>
         <p className="text-[#7B8A99]">
           Members
           <br />
@@ -60,7 +49,11 @@ const MeetingCardTemplate = (props) => {
       >
         {/* {meetingInfoModalOpen( */}
         <div className="absolute z-[1000] top-16 right-12">
-          <MeetingInfoModal members={dataItem.members} id={dataItem.id} />
+          <MeetingInfoModal
+            members={dataItem.members}
+            id={dataItem.id}
+            desc={dataItem.desc}
+          />
         </div>
         {/* )} */}
         <div className="absolute top-5 right-10 cursor-pointer">
@@ -80,8 +73,6 @@ const MeetingCardTemplate = (props) => {
           {["Mark as done", "Cancel"].map((button) => (
             <NestedModal desc={button} data={data} />
           ))}
-          {/* <NestedModal desc="Mark as done" data={data} />
-             <NestedModal desc="Cancel" data={data} /> */}
         </div>
       </div>
     );

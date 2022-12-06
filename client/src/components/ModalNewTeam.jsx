@@ -15,9 +15,11 @@ const FreeSlot = ({ onClose }) => {
   const ToastMessageContainer = (props) => {
     return (
       <div>
-        <h1 className="mb-2">{props.error}</h1>
-        {props.type && <h3>{props.type}:</h3>}
-        {props.description && <p>{props.description}</p>}
+        <p>
+          {props.error}
+          <br />
+          {props.description && props.description}
+        </p>
       </div>
     );
   };
@@ -32,14 +34,14 @@ const FreeSlot = ({ onClose }) => {
         e.target.value = "";
         let newTag = [];
         let tag = value.split(",");
-        if (new Set(tag).size < tag.length) {
-          toast.error(
-            <ToastMessageContainer
-              error="Duplicate tags found!"
-              description="Duplicate tags inserted only once."
-            />
-          );
-        }
+        // if (new Set(tag).size < tag.length) {
+        //   toast.error(
+        //     <ToastMessageContainer
+        //       error="Duplicate tag(s) found!"
+        //       description="Duplicate tags inserted only once."
+        //     />
+        //   );
+        // }
         tag = new Set(tag);
         tag.forEach((element) => {
           if (tags.includes(element)) {
@@ -55,20 +57,28 @@ const FreeSlot = ({ onClose }) => {
           const invalidTags = invalid.join(", ");
           toast.error(
             <ToastMessageContainer
-              error="Invalid tags found!"
-              type="Invalid tags"
+              error="Invalid tag(s) found!"
+              // type="Invalid tag(s)"
               description={invalidTags}
-            />
+            />,
+            {
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+            }
           );
         }
         if (duplicates.length > 0) {
           const duplicateTags = duplicates.join(", ");
           toast.error(
             <ToastMessageContainer
-              error="Invalid tags found!"
-              type="Invalid tags"
+              error="Duplicate tag(s) found!"
               description={duplicateTags}
-            />
+              // description={duplicateTags}
+            />,
+            {
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+            }
           );
         }
 
@@ -80,7 +90,7 @@ const FreeSlot = ({ onClose }) => {
           toast.error(
             <ToastMessageContainer
               error="Invalid tag found!"
-              type="Invalid tag"
+              // type="Invalid tag"
               description={value}
             />
           );
@@ -116,16 +126,59 @@ const FreeSlot = ({ onClose }) => {
 
   //this is what you need in backend @Saarim
   const submitFreeSlot = () => {
+    if (tags.length === 0) {
+      toast.error("Please add a tag!");
+      return;
+    }
+    if (saveTeam && teamName === "") {
+      toast.error("Please enter a team name!");
+      return;
+    }
     console.log(tags);
     console.log(saveTeam);
     console.log(teamName);
     setTags([]);
     setTeamName("");
+    toast.success("Free slot added successfully!");
+    onClose();
   };
   const [confirmationOpen, setConfirmationOpen] = useState(false);
-
+  const Confirm = ({ setConfirmationOpen }) => {
+    const handleYes = () => {
+      toast.success("Submission cancelled!");
+      setConfirmationOpen(false);
+      onClose();
+    };
+    const markAsDone =
+      "flex-1 items-center w-fit h-fit py-2 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-2 border-myBlue";
+    const cancel =
+      "flex-1 rounded px-4 items-center w-fit h-fit py-2 text-black underline bg-white border-2 border-black rounded-lg";
+    return (
+      <div className="flex rounded-md justify-evenly items-center mt-4 gap-x-4 absolute z-[2000] w-full h-full bg-white/80">
+        <div className="flex flex-col rounded-md w-1/2 py-4 justify-evenly items-center bg-gray-200">
+          <p className="text-lg font-semibold text-center  border-b-2 border-black ">
+            Are you sure you want to cancel?
+          </p>
+          <div className="flex w-1/2 items-center justify-between gap-x-4">
+            <button className={markAsDone} onClick={handleYes}>
+              Yes
+            </button>
+            <button
+              className={cancel}
+              onClick={() => setConfirmationOpen(false)}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="relative">
+      {confirmationOpen && (
+        <Confirm setConfirmationOpen={setConfirmationOpen} />
+      )}
       <button className="absolute top-5 right-5" onClick={onClose}>
         <GrClose size={16} />
       </button>

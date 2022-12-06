@@ -49,7 +49,7 @@ function Sidebar({ filter, setFilter }) {
     <>
       <div className="shadow p-3 h-full ">
         <aside className="sticky top-0" aria-label="Sidebar">
-          <div className="rounded bg-white ">
+          <div className="rounded">
             <div className="item-center p-5 relative">
               <DropDown />
             </div>

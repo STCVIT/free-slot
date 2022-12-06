@@ -11,7 +11,7 @@ const Home = () => {
   const [group, setGroup] = useState([null]);
   document.title = "Home";
   return (
-    <div className="max-w-screen pr-4">
+    <div className="max-w-screen pr-4 ">
       <div className="md:grid grid-cols-12 gap-4 " id="mainDiv">
         <div className="hidden md:block col-span-2">
           <Sidebar filter={filter} setFilter={setFilter} group={group} />
