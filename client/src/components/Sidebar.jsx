@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import DropDown from "./DropDownSidebar";
+// import DropDown from "../Dropdowns/DropDownSidebar";
+import DropDown from "./Dropdowns/DropDownSidebar";
 import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 

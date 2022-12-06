@@ -2,24 +2,16 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useState } from "react";
-import { createRoot } from "react-dom/client";
-import Profile from "./Profile";
-import ContactUs from "./contactUs/contactUs";
-const clickedLink = (comp) => {
-  const root = createRoot(document.getElementById("mainDiv"));
-  if (comp === "Profile") {
-    root.render(<Profile />);
-  }
-  if (comp === "Contact Us") {
-    root.render(<ContactUs />);
-  }
-};
+
+import { Link } from "react-router-dom";
 const items = [
   {
-    Profile: "/profile",
+    name: "Profile",
+    to: "/profile",
   },
   {
-    "Contact Us": "/contactUs",
+    name: "Contact Us",
+    to: "/contactUs",
   },
 ];
 
@@ -49,30 +41,30 @@ export default function Example() {
             {items.map((item) => (
               <Menu.Item>
                 {({ active }) => (
-                  <button
-                    onClick={() => clickedLink(Object.keys(item)[0])}
+                  <Link
+                    to={item.to}
                     className={classNames(
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-sm w-full !text-left"
                     )}
                   >
-                    {Object.keys(item)[0]}
-                  </button>
+                    {item.name}
+                  </Link>
                 )}
               </Menu.Item>
             ))}
 
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className={classNames(
                     active ? "bg-gray-100 text-[#CC2F3F]" : "text-[#CC2F3F]",
                     "block px-4 py-2 text-sm"
                   )}
                 >
                   Logout
-                </a>
+                </Link>
               )}
             </Menu.Item>
             {/* <form method="POST" action="/">

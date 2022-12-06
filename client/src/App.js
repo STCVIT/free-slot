@@ -8,15 +8,17 @@ import Signup from "./components/Signup/SignUp";
 import Timetable from "./components/Signup/Timetable";
 import Login from "./components/Login/Login";
 //import Home from "./pages/Home";
+import About from "./pages/About";
 import Landing from "./pages/Landing";
-import Schedule from "./components/Schedule/Schedule";
+// import Schedule from "./components/Schedule/Schedule";
+import Schedule from "./pages/Schedule";
 import AddEvent from "./components/AddEvent";
 import Profile from "./components/Profile";
 import Responses from "./components/Responses/Responses";
 import "./App.css";
 import Home from "./components/HomePageBuild";
 import ContactUs from "./components/contactUs/contactUs";
-import Freeslot from "./pages/Freeslot";
+// import Freeslot from "./pages/Freeslot";
 import { ToastContainer } from "react-toastify";
 export default function App() {
   return (
@@ -42,8 +44,9 @@ export default function App() {
                 path="/contactUs"
                 element={<ContactUs isHomePage={false} />}
               />
+              <Route path="/about" element={<About />} />
+              <Route path="/schedule" element={<Schedule />} />
               <Route path="/addEvent" element={<AddEvent />} />
-              <Route path="/freeslot" element={<Freeslot />} />
             </Routes>
             <ToastContainer />
           </BrowserRouter>

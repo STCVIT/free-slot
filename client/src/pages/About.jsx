@@ -1,6 +1,6 @@
 import PageHeading from "../components/Headings/PageHeading";
 import Socials from "../components/Socials/Socials";
-
+import MainNavbar from "../components/Menus/MainNavbar";
 const AboutCard = ({ title, desc }) => {
   return (
     <div className="rounded-md drop-shadow bg-white px-6 py-4">
@@ -46,22 +46,25 @@ const data = [
 const About = () => {
   document.title = "About";
   return (
-    <div>
-      <PageHeading title="About" />
-      <div className="px-[30%] flex flex-col gap-y-16">
-        {data.map((item, idx) => (
-          <AboutCard
-            key={idx}
-            title={item.title}
-            image={item.image}
-            desc={item.desc}
-          />
-        ))}
+    <>
+      <MainNavbar active="about" />
+      <div>
+        <PageHeading title="About" />
+        <div className="px-[30%] flex flex-col gap-y-16">
+          {data.map((item, idx) => (
+            <AboutCard
+              key={idx}
+              title={item.title}
+              image={item.image}
+              desc={item.desc}
+            />
+          ))}
+        </div>
+        {/* <div className="flex w-full py-4 px-2 justify-center items-center"> */}
+        <Socials />
+        {/* </div> */}
       </div>
-      {/* <div className="flex w-full py-4 px-2 justify-center items-center"> */}
-      <Socials />
-      {/* </div> */}
-    </div>
+    </>
   );
 };
 

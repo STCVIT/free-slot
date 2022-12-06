@@ -1,29 +1,20 @@
 import React from "react";
 // import profile from "../../assets/Profile.svg";
-import DropDownProfile from "../DropDownProfile";
+// import DropDownProfile from "../Dropdowns/DropDownProfile";
+import DropDownProfile from "../Dropdowns/DropDownProfile";
 import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import Home from "../../pages/Home";
-import Schedule from "../Schedule/Schedule";
-import About from "../../pages/About";
-const MainNavbar = () => {
+import { Link } from "react-router-dom";
+// import Home from "../../pages/Home";
+// import Schedule from "../Schedule/Schedule";
+// import About from "../../pages/About";
+const MainNavbar = ({ active }) => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState(active);
   const mainClass =
     "px-4 py-2 border-b-4 col-span-1 font-light cursor-pointer transition-colors duration-300";
   const activeClass = "border-black !font-bold";
   const inactiveClass = "border-transparent hover:border-gray-200";
-  useEffect(() => {
-    const root = createRoot(document.getElementById("mainDiv"));
-    if (activeTab === "home") {
-      root.render(<Home />);
-    } else if (activeTab === "schedule") {
-      root.render(<Schedule />);
-    } else if (activeTab === "about") {
-      root.render(<About />);
-    }
-    console.log("activeTab", activeTab);
-  }, [activeTab]);
   return (
     <>
       <header className="shadow z-20 bg-[#f2f2f2]  drop-shadow">
@@ -36,24 +27,26 @@ const MainNavbar = () => {
           <div>
             <ul className="flex gap-x-2 border-b-2 border-black">
               {["Home", "Schedule", "About"].map((item) => (
-                <button
+                <Link
+                  to={`/${item.toLowerCase()}`}
+                  style={{ color: "black" }}
                   className={`${mainClass} ${
                     activeTab === item.toLocaleLowerCase()
                       ? activeClass
                       : inactiveClass
                   }`}
-                  onClick={() => setActiveTab(item.toLocaleLowerCase())}
                 >
                   {item}
-                </button>
+                </Link>
               ))}
               <li
-                onClick={() => setActiveTab("dropDown")}
+                onClick={() => setActiveTab("account")}
                 className={`${mainClass} ${
-                  activeTab === "dropDown" ? activeClass : inactiveClass
+                  activeTab === "account" ? activeClass : inactiveClass
                 }`}
               >
                 <DropDownProfile
+                  active={active}
                   mainClass={mainClass}
                   inactiveClass={inactiveClass}
                   activeClass={activeClass}
