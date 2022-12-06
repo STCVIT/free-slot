@@ -33,7 +33,7 @@ const Schedule = () => {
   const activeClass = "border-black";
   const inactiveClass = "border-transparent hover:border-gray-200";
   return (
-    <div className="py-5 md:py-0 md:h-screen bg-[#BEBDBD]">
+    <div className="py-5 md:py-0 md:h-screen bg-[#f2f2f2]">
       <PageHeading title="Schedule" />
       <div className="grid place-content-center">
         <div className="rounded-lg w-fit flex flex-col gap-y-5 ">

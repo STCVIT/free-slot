@@ -2,8 +2,52 @@ import axios from "axios";
 import { ReactComponent as LocationIcon } from "../assets/Location-Icon.svg";
 import NestedModal from "./meetingModal";
 import { GoKebabVertical } from "react-icons/go";
+import { useState } from "react";
+import Form from "react-bootstrap/Form";
+const MeetingInfoModal = (props) => {
+  // return <div>asd</div>;
+  return (
+    <div
+      className="drop-shadow hidden p-4 mb-4 rounded-md bg-white h-[300px] w-[25rem]"
+      id={"meetingInfoCard" + props.id}
+    >
+      <div>
+        <p className="text-[#7B8A99]">Description</p>
+        {/* <div className="rounded-md bg-[#F4F4F4]"> */}
+        <Form>
+          <Form.Group
+            className="mb-3 "
+            controlId="exampleForm.ControlTextarea1"
+          >
+            <Form.Control
+              className="rounded-md bg-[#F4F4F4] w-full resize-none p-4 text-black"
+              placeholder="Lorem Ipsum"
+              as="textarea"
+              rows={10}
+            />
+          </Form.Group>
+        </Form>
+        <p className="text-[#7B8A99]">
+          Members
+          <br />
+          <span className="text-black overflow-hidden">
+            {props.members.length < 45
+              ? props.members
+              : props.members.slice(0, 45) + "..."}
+          </span>
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const MeetingCardTemplate = (props) => {
   const MeetingCardsArray = props.list.map((dataItem) => {
+    const handleOpen = (id) => {
+      const modal = document.getElementById("meetingInfoCard" + id);
+      modal.classList.toggle("hidden");
+    };
+
     const data = {
       idx: dataItem.id,
       tab: props.tab,
@@ -14,22 +58,24 @@ const MeetingCardTemplate = (props) => {
         className=" p-6 col-span-1 max-w-sm border relative  bg-white rounded-lg my-4 shadow "
         id={dataItem.id}
       >
-        <div className="absolute top-5 right-10">
-          <GoKebabVertical size={25} />
+        {/* {meetingInfoModalOpen( */}
+        <div className="absolute z-[1000] top-16 right-12">
+          <MeetingInfoModal members={dataItem.members} id={dataItem.id} />
+        </div>
+        {/* )} */}
+        <div className="absolute top-5 right-10 cursor-pointer">
+          <GoKebabVertical size={25} onClick={() => handleOpen(dataItem.id)} />
         </div>
         <p className="px-2 text-2xl font-bold  text-black">{dataItem.time}</p>
-        <div className="flex">
-          <p className="mb-3 p-2 font-normal ">
-            <LocationIcon />
-          </p>
-          <p className="mb-3 p-2 font-normal text-myBlue ">{dataItem.place}</p>
+        <div className="flex items-center gap-x-4 my-4 font-semibold text-myBlue">
+          <LocationIcon />
+          {dataItem.place}
         </div>
-        <p className="mb-3 p-2 font-normal text-black ">
-          Created by {dataItem.by}
+        <p className="font-normal flex flex-col gap-y-1 text-black ">
+          <span className="font-semibold">Created by {dataItem.by}</span>
+          <span>{dataItem.day}</span>
+          <span>{dataItem.group}</span>
         </p>
-        <p>Day: {dataItem.day}</p>
-        <p>ID: {dataItem.id}</p>
-        <p className="mb-3 p-2 font-normal text-gray-400 ">{dataItem.group}</p>
         <div className="flex w-full gap-x-4">
           {["Mark as done", "Cancel"].map((button) => (
             <NestedModal desc={button} data={data} />
