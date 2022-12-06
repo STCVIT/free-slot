@@ -6,7 +6,11 @@ function HomePageBuild() {
   return (
     <div className="h-screen">
       <MainNavbar />
-      <div className="gap-4 h-full" id="mainDiv">
+      <div
+        style={{ backgroundColor: "#f2f2f2" }}
+        className="gap-4 h-full"
+        id="mainDiv"
+      >
         <Home />
       </div>
     </div>
