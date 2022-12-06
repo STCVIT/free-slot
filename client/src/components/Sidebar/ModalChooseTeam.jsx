@@ -1,4 +1,4 @@
-import PageHeading from "./Headings/PageHeading";
+import PageHeading from "../Headings/PageHeading";
 // import '../index.css    '
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";

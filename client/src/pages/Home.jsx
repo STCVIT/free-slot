@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Tabs from "../components/MeetingsPges/Tabs";
+import Sidebar from "../components/Sidebar/Sidebar";
+import Tabs from "../components/MeetingsPages/Tabs";
 const Home = () => {
   const [filter, setFilter] = useState({
     date: "all",
@@ -12,7 +12,7 @@ const Home = () => {
   document.title = "Home";
   return (
     <div className="max-w-screen pr-4 bg-[#f2f2f2]">
-      <div className="md:grid grid-cols-12 gap-4 " id="mainDiv">
+      <div className="md:grid grid-cols-12 gap-4 ">
         <div className="hidden md:block col-span-2">
           <Sidebar filter={filter} setFilter={setFilter} group={group} />
         </div>

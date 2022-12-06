@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import PageHeading from "./Headings/PageHeading";
+import PageHeading from "../Headings/PageHeading";
 const FreeSlot = ({ onClose }) => {
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);

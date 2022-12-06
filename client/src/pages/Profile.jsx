@@ -1,7 +1,7 @@
 import React from "react";
 import { UserAuth } from "../context/UserAuthContext";
-import PageHeading from "./Headings/PageHeading";
-import MainNavbar from "./Menus/MainNavbar";
+import PageHeading from "../components/Headings/PageHeading";
+import MainNavbar from "../components/Menus/MainNavbar";
 const { user } = UserAuth;
 console.log("User: ", user);
 const Profile = () => {
