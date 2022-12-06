@@ -1,4 +1,4 @@
-import MeetingCardTemplate from "../MeetingCardTemplate";
+import MeetingCardTemplate from "../Home/MeetingCardTemplate";
 import { useEffect, useState } from "react";
 import { url } from "../../config/backend.config";
 import axios from "axios";

@@ -1,9 +1,7 @@
 import axios from "axios";
-import { ReactComponent as LocationIcon } from "../assets/Location-Icon.svg";
+import { IoLocationSharp } from "react-icons/io5";
 import NestedModal from "./meetingModal";
 import { GoKebabVertical } from "react-icons/go";
-import { useState } from "react";
-import Form from "react-bootstrap/Form";
 const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
   return (
@@ -61,7 +59,7 @@ const MeetingCardTemplate = (props) => {
         </div>
         <p className="px-2 text-2xl font-bold  text-black">{dataItem.time}</p>
         <div className="flex items-center gap-x-4 my-4 font-semibold text-myBlue">
-          <LocationIcon />
+          <IoLocationSharp size={20} />
           {dataItem.place}
         </div>
         <p className="font-normal flex flex-col gap-y-1 text-black ">

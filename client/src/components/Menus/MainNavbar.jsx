@@ -1,13 +1,7 @@
 import React from "react";
-// import profile from "../../assets/Profile.svg";
-// import DropDownProfile from "../Dropdowns/DropDownProfile";
 import DropDownProfile from "../Dropdowns/DropDownProfile";
-import { useState, useEffect } from "react";
-import { createRoot } from "react-dom/client";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-// import Home from "../../pages/Home";
-// import Schedule from "../Schedule/Schedule";
-// import About from "../../pages/About";
 const MainNavbar = ({ active }) => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [activeTab, setActiveTab] = useState(active);
