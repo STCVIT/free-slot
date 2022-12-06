@@ -26,7 +26,7 @@ const MainNavbar = () => {
   }, [activeTab]);
   return (
     <>
-      <header className="shadow z-20 bg-[#BEBDBD]  drop-shadow">
+      <header className="shadow z-20 bg-[#f2f2f2]  drop-shadow">
         <div className="flex items-center md:flex-row flex-col justify-between w-full">
           <div>
             <p className="font-logo flex items-center w-full p-7 md:p1 text-5xl ">

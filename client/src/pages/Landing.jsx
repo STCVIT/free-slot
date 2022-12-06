@@ -12,7 +12,7 @@ const Landing = () => {
     navigate("/login");
   };
   return (
-    <div className="bg-[#BEBDBD] py-4">
+    <div className="bg-[#f2f2f2] py-4">
       <nav className="flex px-12 py-6">
         <header className="text-4xl font-bold font-logo">Freeslot</header>
         <div className="flex ml-auto">

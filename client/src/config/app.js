@@ -12,6 +12,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -20,6 +21,8 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members:
+      "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul, Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul,",
     day: "Monday",
   },
   {
@@ -28,6 +31,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta",
     day: "Monday",
   },
   {
@@ -36,6 +40,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -44,6 +49,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -52,6 +58,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -60,6 +67,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -68,6 +76,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -76,6 +85,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -84,6 +94,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -92,6 +103,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -100,6 +112,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -108,6 +121,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -116,6 +130,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -124,6 +139,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -132,6 +148,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -140,6 +157,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -148,6 +166,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -156,6 +175,7 @@ const UpcomingData = [
     place: "foodies",
     by: "upcoming",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Thursday",
   },
 ];
@@ -167,6 +187,7 @@ const CancelledData = [
     place: "foodies",
     by: "Cancelled",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -175,6 +196,7 @@ const CancelledData = [
     place: "foodies",
     by: "Cancelled",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -183,6 +205,7 @@ const CancelledData = [
     place: "foodies",
     by: "Cancelled",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -191,6 +214,7 @@ const CancelledData = [
     place: "foodies",
     by: "Cancelled",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -199,6 +223,7 @@ const CancelledData = [
     place: "foodies",
     by: "Cancelled",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -207,6 +232,7 @@ const CancelledData = [
     place: "foodies",
     by: "Cancelled",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Friday",
   },
 ];
@@ -218,6 +244,7 @@ const PastData = [
     place: "foodies",
     by: "Past",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -226,6 +253,7 @@ const PastData = [
     place: "foodies",
     by: "Past",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
   {
@@ -234,6 +262,7 @@ const PastData = [
     place: "foodies",
     by: "Past",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Tuesday",
   },
   {
@@ -242,6 +271,7 @@ const PastData = [
     place: "foodies",
     by: "Past",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Wednesday",
   },
   {
@@ -250,6 +280,7 @@ const PastData = [
     place: "foodies",
     by: "Past",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Thursday",
   },
   {
@@ -258,6 +289,7 @@ const PastData = [
     place: "foodies",
     by: "Past",
     group: "Free Slot Project Team",
+    members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
   },
 ];

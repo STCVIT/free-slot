@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import AllPages from "../MeetingsPges/Allpages";
 const TabNavbar = ({ filter }) => {
   const [activeTab, setActiveTab] = useState("upcoming");
-  const numberOfCards = localStorage.getItem("numberOfCards");
+
   const mainClass =
     "px-4 py-2 border-b-4 col-span-1 cursor-pointer transition-colors duration-300";
   const activeClass = "border-myBlue";
@@ -21,8 +21,7 @@ const TabNavbar = ({ filter }) => {
           }`}
           onClick={() => setActiveTab(tab)}
         >
-          {tab[0].toUpperCase() + tab.slice(1)} ({numberOfCards.split(",")[idx]}
-          )
+          {tab[0].toUpperCase() + tab.slice(1)}
         </li>
       ))}
     </ul>
