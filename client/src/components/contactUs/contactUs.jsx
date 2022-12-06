@@ -3,6 +3,7 @@ import PageHeading from "../Headings/PageHeading";
 import Socials from "../Socials/Socials";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MainNavbar from "../Menus/MainNavbar";
 const ContactUs = ({ isHomePage }) => {
   // eslint-disable-next-line no-unused-vars
   const [name, setName] = useState();
@@ -31,7 +32,8 @@ const ContactUs = ({ isHomePage }) => {
     setMsgLength(e.target.value.length);
   };
   return (
-    <div>
+    <div className="bg-[#f2f2f2]">
+      <MainNavbar active="account" />
       <PageHeading title="Contact Us" />
       <div className={`flex flex-col w-full items-center gap-y-4 `}>
         <div className="w-2/4 flex flex-col gap-y-3">

@@ -2,8 +2,30 @@ import React, { useState } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
 import { Link, useNavigate } from "react-router-dom";
 import DragFile from "./DragFile";
-import TextInput from "../TextInput";
 import { UserAuth } from "../../context/UserAuthContext";
+
+import { Box, TextField } from "@mui/material";
+const TextInput = (props) => {
+  // eslint-disable-next-line no-unused-vars
+  const [textValue, setTextValue] = useState("");
+  return (
+    <Box>
+      <Box>
+        <Box>
+          <TextField
+            type={props.type}
+            id={props.id}
+            label={props.label}
+            size="small"
+            fullWidth
+            onChange={(e) => setTextValue(e.target.value)}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
 export default function Timetable() {
   const [files, setFiles] = useState([]);
   const { sendTimetable } = UserAuth();
