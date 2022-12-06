@@ -37,7 +37,7 @@ export default function Example() {
   const [modalOnChoose, setModalOnChoose] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [choiceChoose, setChoiceChoose] = useState(false);
-
+  const [chooseTeamOpen, setChooseTeamOpen] = useState(false);
   const [modalOnLink, setModalOnLink] = useState(false);
 
   const [newTeamOpen, setNewTeamOpen] = useState(false);
@@ -51,7 +51,7 @@ export default function Example() {
   };
 
   const clickedChoose = () => {
-    setModalOnChoose(true);
+    setChooseTeamOpen(true);
   };
   const items = [
     {
@@ -81,12 +81,15 @@ export default function Example() {
               opacity: 0.8,
             },
           }}
-          open={responsesOpen || newTeamOpen}
+          open={responsesOpen || newTeamOpen || chooseTeamOpen}
           onClose={() => setResponsesOpen(false)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
+            {chooseTeamOpen && (
+              <ModalChooseTeam onClose={() => setChooseTeamOpen(false)} />
+            )}
             {newTeamOpen && (
               <ModalNewTeam onClose={() => setNewTeamOpen(false)} />
             )}
@@ -99,14 +102,11 @@ export default function Example() {
     );
   };
   return (
-    <>
+    <div>
       <ComponentModal />
-      <Menu
-        as="div"
-        className="relative inline-block text-left z-50 backdrop-blur"
-      >
+      <Menu as="div" className="relative inline-block text-left z-50 ">
         <div>
-          <Menu.Button className="">
+          <Menu.Button>
             <p className=" justify-center items-center rounded-full bg-myBlue p-5 px-8 tracking-wider text-slate-100">
               + Create
             </p>
@@ -153,6 +153,6 @@ export default function Example() {
         />
       )}
       {modalOnLink && <ModalLink />}
-    </>
+    </div>
   );
 }
