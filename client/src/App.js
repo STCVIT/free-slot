@@ -23,24 +23,12 @@ export default function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Landing />} />
-              <Route
-                path="/home"
-                element={
-                  <ProtectedRoute>
-                    <Home />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/home" element={ <ProtectedRoute><Home /></ProtectedRoute>}/>
               <Route path="/signup" element={<Signup />} />
               <Route path="/timetable" element={<Timetable />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
-              <Route
-                path="/contactUs"
-                element={<ContactUs isHomePage={false} />}
-              />
-              <Route path="/about" element={<About />} />
-              <Route path="/schedule" element={<Schedule />} />
+              <Route path="/contactUs" element={<ContactUs isHomePage={false} />}/>
               <Route path="/addEvent" element={<AddEvent />} />
             </Routes>
             <ToastContainer />

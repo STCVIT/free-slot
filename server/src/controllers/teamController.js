@@ -64,7 +64,19 @@ const getAllTeams = async (req, res, next)=>{
         console.error(error.message);
     }
 }
-
+//get team members
+const getTeamMembers = async (req,res)=>{
+    try {
+        const team = await Team.findOne({
+            where: {team_id: req.body.team_id}
+        })
+        const users = await team.getUsers()
+        res.status(200).send(users)
+    } catch (error) {
+        errorHandler(new BadRequestError, req, res)
+        console.error(error.message);
+    }
+}
 //update team
 const updateTeam = async (req, res)=>{
     const updates = Object.keys(req.body)
@@ -115,6 +127,7 @@ module.exports = {
     getTeamById,
     getTeamByName,
     getAllTeams,
+    getTeamMembers,
     updateTeam,
     deleteTeam
 }

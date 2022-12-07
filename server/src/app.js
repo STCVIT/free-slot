@@ -31,7 +31,9 @@ const userRouter = require('./routers/userRouter')
 const teamRouter = require('./routers/teamRouter')
 const meetRouter = require('./routers/meetRouter')
 const freeSlotRouter = require('./routers/freeSlotRouter')
-const testRouter = require('./routers/testRouter')
+const linkRouter = require('./routers/linkRouter')
+const testRouter = require('./routers/testRouter');
+const { link } = require('fs');
 
 app.use(express.urlencoded({ limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
@@ -48,6 +50,7 @@ app.use('/user', userRouter)
 app.use('/team', teamRouter)
 app.use('/meet', meetRouter)
 app.use('/timetable', freeSlotRouter)
+app.use('/link', linkRouter)
 app.use('/test', testRouter)
 
 app.get('/', (req, res)=>{
