@@ -14,6 +14,7 @@ import Schedule from "./pages/Schedule";
 import AddEvent from "./components/AddEvent";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
+import FreeSlot from "./pages/Freeslot";
 import ContactUs from "./components/contactUs/contactUs";
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/contactUs" element={<ContactUs isHomePage={false} />}/>
               <Route path="/addEvent" element={<AddEvent />} />
+              <Route path="/freeslot" element={<FreeSlot/>}/>
             </Routes>
             <ToastContainer />
           </BrowserRouter>

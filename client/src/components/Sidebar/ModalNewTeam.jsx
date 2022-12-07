@@ -1,17 +1,17 @@
 import React from "react";
-import Cross from "../assets/Cross.svg";
+import { GrClose } from "react-icons/gr";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FindFreeSlot } from "../context/FreeSlotContext";
-import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// eslint-disable-next-line no-unused-vars
-import axios from "axios";
-const FreeSlotAdd = () => {
-  const { saveTeamAndFindFreeSlot, justFindFreeSlot } = FindFreeSlot();
-  const navigate = useNavigate();
+
+import PageHeading from "../Headings/PageHeading";
+const FreeSlot = ({ onClose }) => {
+  const {justFindFreeSlot, saveTeamAndFindFreeSlot} = FindFreeSlot()
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
+  const navigate = useNavigate()
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
   const [saveTeam, setSaveTeam] = useState(true);
@@ -129,7 +129,7 @@ const FreeSlotAdd = () => {
   };
 
   //this is what you need in backend @Saarim
-  const submitFreeSlot = () => {
+  const submitFreeSlot = async () => {
     if (tags.length === 0) {
       toast.error("Please add a tag!");
       return;
@@ -138,6 +138,13 @@ const FreeSlotAdd = () => {
       toast.error("Please enter a team name!");
       return;
     }
+    if(saveTeam){
+      await saveTeamAndFindFreeSlot(teamName, tags);
+    }
+    else {
+      await justFindFreeSlot(tags);
+    }
+    navigate('/freeslot')
     console.log(tags);
     console.log(saveTeam);
     console.log(teamName);
@@ -267,4 +274,4 @@ const FreeSlotAdd = () => {
   );
 };
 
-export default FreeSlotAdd;
+export default FreeSlot;
