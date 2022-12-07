@@ -1,13 +1,17 @@
 import React from "react";
 import { GrClose } from "react-icons/gr";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import PageHeading from "../Headings/PageHeading";
 const FreeSlot = ({ onClose }) => {
+  const {justFindFreeSlot, saveTeamAndFindFreeSlot} = FindFreeSlot()
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
+  const navigate = useNavigate()
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
   const [saveTeam, setSaveTeam] = useState(true);
@@ -125,7 +129,7 @@ const FreeSlot = ({ onClose }) => {
   };
 
   //this is what you need in backend @Saarim
-  const submitFreeSlot = () => {
+  const submitFreeSlot = async () => {
     if (tags.length === 0) {
       toast.error("Please add a tag!");
       return;
@@ -134,6 +138,13 @@ const FreeSlot = ({ onClose }) => {
       toast.error("Please enter a team name!");
       return;
     }
+    if(saveTeam){
+      await saveTeamAndFindFreeSlot(teamName, tags);
+    }
+    else {
+      await justFindFreeSlot(tags);
+    }
+    navigate('/freeslot')
     console.log(tags);
     console.log(saveTeam);
     console.log(teamName);
@@ -202,7 +213,7 @@ const FreeSlot = ({ onClose }) => {
                 {tags.map((tag, index) => (
                   <button
                     onClick={() => removeTag(index)}
-                    className="p-2 bg-myBlue text-white rounded-md hover:bg-red-400 hover:line-through h hover:scale-110"
+                    className="p-2 bg-[#CFDBE6] rounded-md hover:text-red-400 hover:line-through h hover:scale-110"
                     key={index}
                   >
                     <span className="text">{tag}</span>
@@ -215,6 +226,13 @@ const FreeSlot = ({ onClose }) => {
                   placeholder="21XXX0000"
                 />
               </div>
+              <h1>Team Name:</h1>
+              <input
+                type="text"
+                placeholder="Team Name"
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+              />
             </div>
           </div>
           <button
@@ -224,36 +242,16 @@ const FreeSlot = ({ onClose }) => {
             Clear all
           </button>
         </div>
-        <div className="flex gap-x-3 items-center mb-4">
-          <div
-            className="flex gap-x-3 items-center font-bold cursor-pointer"
-            onClick={() => {
-              setSaveTeam(!saveTeam);
-            }}
-          >
-            {saveTeam ? <CheckBox /> : <CheckBoxOutlineBlank />}
-            Save this team
-          </div>
-          <div className="self-center">
-            {saveTeam && (
-              <input
-                className="px-2 py-2 border-2 rounded-md "
-                type="text"
-                placeholder="Team Name"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-              />
-            )}
-          </div>
+        <div
+          className="flex gap-x-3 items-center font-bold cursor-pointer"
+          onClick={() => {
+            setSaveTeam(!saveTeam);
+          }}
+        >
+          {saveTeam ? <CheckBox /> : <CheckBoxOutlineBlank />}
+          Save this team
         </div>
         <div className="self-center flex w-3/4 md:w-2/4 justify-between gap-x-3">
-          <button
-            type="submit"
-            onClick={submitFreeSlot}
-            class="text-white bg-myBlue font-medium rounded-lg text-sm w-60 py-2.5 text-center border-2 border-myBlue"
-          >
-            Find Free Slot!
-          </button>
           <button
             onClick={() => {
               setConfirmationOpen(!confirmationOpen);
@@ -262,6 +260,13 @@ const FreeSlot = ({ onClose }) => {
             class="text-black bg-white border-none font-medium rounded-lg underline-offset-2 text-sm w-60 outline text-center underline decoration-dotted"
           >
             Cancel
+          </button>
+          <button
+            type="submit"
+            onClick={submitFreeSlot}
+            class="text-white bg-blue-700 font-medium rounded-lg text-sm w-60 py-2.5 text-center dark:bg-blue-600 "
+          >
+            Find Free Slot!
           </button>
         </div>
       </div>

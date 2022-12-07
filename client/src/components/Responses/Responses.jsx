@@ -3,6 +3,7 @@ import PageHeading from "../Headings/PageHeading";
 import { RiFileCopyLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { GrClose } from "react-icons/gr";
 import {
   RiCheckboxCircleFill,
@@ -36,6 +37,7 @@ const statusArray = ResponseData.map((x) => {
   );
 });
 const Responses = ({ onClose }) => {
+  //const {link, serLink} = FindFreeSlot()
   const showCopiedToast = () => {
     toast.success("Link copied successfully!", {
       position: toast.POSITION.TOP_RIGHT,
