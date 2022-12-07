@@ -48,90 +48,88 @@ function Sidebar({ filter, setFilter }) {
   ];
   return (
     <>
-      <div className="shadow p-3 h-full ">
-        <aside className="sticky top-0" aria-label="Sidebar">
-          <div className="rounded">
-            <div className="item-center p-5 relative">
-              <DropDown />
-            </div>
-
-            <h1 className="hidden md:block ml-3 whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider">
-              Filters
-            </h1>
-
-            <button
-              onClick={() => setSeeFilters(!seeFilters)}
-              className="md:hidden whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider"
-            >
-              Filters {seeFilters ? "▲" : "▼"}
-            </button>
-
-            {seeFilters && (
-              <div className="w-3/4 md:w-full flex flex-col gap-y-4">
-                <Dropdown
-                  clearable
-                  multiple={false}
-                  placeholder="Day"
-                  selection
-                  options={days.map((day) => ({
-                    key: day,
-                    text: day,
-                    value: day,
-                  }))}
-                  onChange={(e, { value }) => {
-                    setFilter({ ...filter, day: value === "" ? "all" : value });
-                  }}
-                  button={true}
-                  defaultSelectedLabel="all"
-                />
-
-                <Dropdown
-                  clearable
-                  placeholder="Group"
-                  selection
-                  options={groups.map((group) => ({
-                    key: group,
-                    text: group,
-                    value: group,
-                  }))}
-                  onChange={(e, { value }) => {
-                    setFilter({
-                      ...filter,
-                      groups: value === "" ? "all" : value,
-                    });
-                  }}
-                  button={true}
-                  defaultSelectedLabel="all"
-                />
-                <Dropdown
-                  clearable
-                  basic={false}
-                  multiple={false}
-                  placeholder="Time"
-                  selection
-                  options={[
-                    <input
-                      className="w-full p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
-                      type="time"
-                      onChange={(e) =>
-                        setFilter({ ...filter, time: e.target.value })
-                      }
-                    />,
-                  ]}
-                  onChange={(e, { value }) => {
-                    setFilter({
-                      ...filter,
-                      date: value === "" ? "all" : value,
-                    });
-                  }}
-                  button={true}
-                  defaultSelectedLabel="all"
-                />
-              </div>
-            )}
+      <aside className="sticky top-0 shadow p-3 h-screen" aria-label="Sidebar">
+        <div className="rounded">
+          <div className="item-center p-5 relative">
+            <DropDown />
           </div>
-        </aside>
-      </div>
+
+          <h1 className="hidden md:block ml-3 whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider">
+            Filters
+          </h1>
+
+          <button
+            onClick={() => setSeeFilters(!seeFilters)}
+            className="md:hidden whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider"
+          >
+            Filters {seeFilters ? "▲" : "▼"}
+          </button>
+
+          {seeFilters && (
+            <div className="w-3/4 md:w-full flex flex-col gap-y-4">
+              <Dropdown
+                clearable
+                multiple={false}
+                placeholder="Day"
+                selection
+                options={days.map((day) => ({
+                  key: day,
+                  text: day,
+                  value: day,
+                }))}
+                onChange={(e, { value }) => {
+                  setFilter({ ...filter, day: value === "" ? "all" : value });
+                }}
+                button={true}
+                defaultSelectedLabel="all"
+              />
+
+              <Dropdown
+                clearable
+                placeholder="Group"
+                selection
+                options={groups.map((group) => ({
+                  key: group,
+                  text: group,
+                  value: group,
+                }))}
+                onChange={(e, { value }) => {
+                  setFilter({
+                    ...filter,
+                    groups: value === "" ? "all" : value,
+                  });
+                }}
+                button={true}
+                defaultSelectedLabel="all"
+              />
+              <Dropdown
+                clearable
+                basic={false}
+                multiple={false}
+                placeholder="Time"
+                selection
+                options={[
+                  <input
+                    className="w-full p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
+                    type="time"
+                    onChange={(e) =>
+                      setFilter({ ...filter, time: e.target.value })
+                    }
+                  />,
+                ]}
+                onChange={(e, { value }) => {
+                  setFilter({
+                    ...filter,
+                    date: value === "" ? "all" : value,
+                  });
+                }}
+                button={true}
+                defaultSelectedLabel="all"
+              />
+            </div>
+          )}
+        </div>
+      </aside>
     </>
   );
 }

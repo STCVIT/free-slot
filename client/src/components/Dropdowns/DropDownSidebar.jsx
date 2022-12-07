@@ -54,17 +54,17 @@ export default function Example() {
   const items = [
     {
       name: "Make New Team",
-      icon: <RiAddLine size={25} color="rgb(51 137 255" />,
+      icon: <RiAddLine size={16} color="rgb(51 137 255" />,
       onClick: clickedNew,
     },
     {
       name: "Choose from existing",
-      icon: <AiOutlineUnorderedList size={25} color="rgb(51 137 255" />,
+      icon: <AiOutlineUnorderedList size={16} color="rgb(51 137 255" />,
       onClick: clickedChoose,
     },
     {
       name: "Create Link",
-      icon: <BiLinkExternal size={25} color="rgb(51 137 255" />,
+      icon: <BiLinkExternal size={16} color="rgb(51 137 255" />,
       onClick: clickedLink,
     },
   ];
@@ -102,7 +102,7 @@ export default function Example() {
   return (
     <div>
       <ComponentModal />
-      <Menu as="div" className="relative inline-block text-left z-50 ">
+      <Menu as="div" className="relative inline-block text-left ">
         <div>
           <Menu.Button>
             <p className=" justify-center items-center rounded-full bg-myBlue p-5 px-8 tracking-wider text-slate-100">
@@ -120,8 +120,8 @@ export default function Example() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="origin-top-right absolute left-0 mt-2 w-64 rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none">
-            <div className="py-1 p-2">
+          <Menu.Items className="origin-top-right absolute z-50 -left-5 mt-2 w-max rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none">
+            <div className="py-1 p-3">
               {items.map((item) => (
                 <Menu.Item>
                   {({ active }) => (

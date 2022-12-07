@@ -33,7 +33,7 @@ const Tabs = ({ filter, setGroup }) => {
   return (
     <div>
       <PageHeading title="Meetings" />
-      <div className="sticky top-0 z-50 drop-shadow">
+      <div className="sticky top-0 z-20 drop-shadow">
         <div className="border-b w-full bg-white pt-4">
           <TabNavbar
             filter={filter}
@@ -43,7 +43,7 @@ const Tabs = ({ filter, setGroup }) => {
           />
         </div>
       </div>
-      <div>
+      <div className="relative">
         <AllPages
           filter={filter}
           tab={activeTab}
