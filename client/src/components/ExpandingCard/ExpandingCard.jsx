@@ -34,12 +34,12 @@ const ExpandingCard = () => {
     setcurrentIdx([idx]);
   };
   return (
-    <div onMouseLeave={() => handleMouseLeave()}>
-      <div className="flex w-full rounded-md outline">
+    <div className="my-10" onMouseLeave={() => handleMouseLeave()}>
+      <div className={`flex  w-full rounded-md outline`}>
         {data.map((item, idx) => {
           return (
             <div
-              className={`flex items-start border-l border-r border-black p-6 h-[500px] ${
+              className={`flex  items-start border-l border-r border-black p-6 h-[600px] ${
                 isHovered && currentIdx.includes(idx)
                   ? "w-full text-full"
                   : "w-0 text-[1px]"
@@ -54,18 +54,35 @@ const ExpandingCard = () => {
               <div>
                 {isHovered && currentIdx.includes(idx) && (
                   <div>
-                    <div className="rounded-md p-2 -mx-2">
-                      <img
-                        className="rounded-md "
-                        src={`/assets/image${idx + 1}.png`}
-                        alt={item.title}
-                      />
+                    <div className="flex flex-row-reverse">
+                      <div className="rounded-md p-2 -mx-2">
+                        <img
+                          className="rounded-md "
+                          src={`/assets/image${idx + 1}.png`}
+                          alt={item.title}
+                        />
+                      </div>
+                      {currentIdx.length !== 3 && (
+                        <div className="flex flex-col gap-y-2 py-2 leading-tight">
+                          <p className="text-5xl p-0 m-0 font-bold">
+                            {idx + 1}
+                          </p>
+                          <p className="text-4xl p-0 m-0 font-bold">
+                            {item.title}
+                          </p>
+                          <p className="text-base ">{item.desc}</p>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex flex-col gap-y-2 py-2 leading-tight">
-                      <p className="text-5xl p-0 m-0 font-bold">{idx + 1}</p>
-                      <p className="text-4xl p-0 m-0 font-bold">{item.title}</p>
-                      <p className="text-base ">{item.desc}</p>
-                    </div>
+                    {currentIdx.length === 3 && (
+                      <div className="flex flex-col gap-y-2 py-2 leading-tight">
+                        <p className="text-5xl p-0 m-0 font-bold">{idx + 1}</p>
+                        <p className="text-4xl p-0 m-0 font-bold">
+                          {item.title}
+                        </p>
+                        <p className="text-base ">{item.desc}</p>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

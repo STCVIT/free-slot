@@ -58,6 +58,8 @@ const About = () => {
               desc={item.desc}
             />
           ))}
+        </div>
+        <div className="px-16">
           <ExpandingCard />
         </div>
         {/* <div className="flex w-full py-4 px-2 justify-center items-center"> */}
