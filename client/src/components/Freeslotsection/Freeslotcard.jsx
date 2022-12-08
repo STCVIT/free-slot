@@ -2,6 +2,9 @@ import React from 'react'
 import moment from 'moment'
 
 const Freeslotcard = (props) => {
+    const clickHandler = ()=>{
+        console.log("hi")
+    }
   return (
     <>
       {props.data?.map((days, index)=>(
@@ -11,7 +14,7 @@ const Freeslotcard = (props) => {
             <div className='text-base'>{moment().add(1, 'weeks').isoWeekday(index+1).format("ddd")}, {moment().add(1, 'weeks').isoWeekday(index+1).format("D MMM, YYYY")}</div>
             <div className='text-xl font-bold'>{value.start_time} - {value.end_time}</div>
             <div className='text-sm'>Duration: {moment(value.end_time, 'hh:mm a').diff(moment(value.start_time, 'hh:mm a'), 'minutes')} minutes</div>
-            <div className='bg-myBlue rounded-lg text-center text-white px-6 py-2.5 max-w-fit'><button>Make Event</button></div>
+            <div className='bg-myBlue rounded-lg text-center text-white px-6 py-2.5 max-w-fit'><button onClick={clickHandler}>Make Event</button></div>
             </div>
           </div>
         ))
