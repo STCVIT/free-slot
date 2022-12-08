@@ -26,7 +26,7 @@ const style = {
   boxShadow: 12,
   p: 4,
 };
-export default function Example() {
+export default function Example({ data }) {
   // axios.get("http://localhost:6969/").then((res) => {
   //   console.log(res.data);
   // });
@@ -86,7 +86,10 @@ export default function Example() {
         >
           <Box sx={style}>
             {chooseTeamOpen && (
-              <ModalChooseTeam onClose={() => setChooseTeamOpen(false)} />
+              <ModalChooseTeam
+                data={data}
+                onClose={() => setChooseTeamOpen(false)}
+              />
             )}
             {newTeamOpen && (
               <ModalNewTeam onClose={() => setNewTeamOpen(false)} />

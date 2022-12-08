@@ -7,8 +7,7 @@ import "semantic-ui-css/semantic.min.css";
 function Sidebar({ filter, setFilter }) {
   const isLg = window.matchMedia("(min-width: 1024px)").matches;
   const [seeFilters, setSeeFilters] = useState(isLg ? true : false);
-  // const dateObj = new Date();
-  // const [date, setDate] = useState(dateObj);
+  // const [groups, setGroups] = useState([])
   const days = [
     "Monday",
     "Tuesday",
@@ -17,41 +16,46 @@ function Sidebar({ filter, setFilter }) {
     "Friday",
     "Saturday",
   ];
-
   const groups = [
-    "Group A",
-    "Group B",
-    "Group C",
-    "Group D",
-    "Group E",
-    "Group F",
-    "Group G",
-    "Group H",
-    "Group I",
-    "Group J",
-    "Group K",
-    "Group L",
-    "Group M",
-    "Group N",
-    "Group O",
-    "Group P",
-    "Group Q",
-    "Group R",
-    "Group S",
-    "Group T",
-    "Group U",
-    "Group V",
-    "Group W",
-    "Group X",
-    "Group Y",
-    "Group Z",
+    {
+      name: "Apple",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Cat",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "ZZZ",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Dasd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "AAasdas",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "BBasd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Casd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
+    {
+      name: "Dasd",
+      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
+    },
   ];
   return (
     <>
       <aside className="sticky top-0 shadow p-3 h-screen" aria-label="Sidebar">
         <div className="rounded">
           <div className="item-center p-5 relative">
-            <DropDown />
+            <DropDown data={groups} />
           </div>
 
           <h1 className="hidden md:block ml-3 whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider">
@@ -89,9 +93,9 @@ function Sidebar({ filter, setFilter }) {
                 placeholder="Group"
                 selection
                 options={groups.map((group) => ({
-                  key: group,
-                  text: group,
-                  value: group,
+                  key: group.name,
+                  text: group.name,
+                  value: group.name,
                 }))}
                 onChange={(e, { value }) => {
                   setFilter({

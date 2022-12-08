@@ -5,7 +5,7 @@ import { BsSearch } from "react-icons/bs";
 import { useEffect } from "react";
 import { GrClose } from "react-icons/gr";
 import Fuse from "fuse.js";
-const ModalChooseTeam = ({ onClose }) => {
+const ModalChooseTeam = ({ onClose, data }) => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedTeam, setSelectedTeam] = useState(null);
   const selectTeam = (idx) => {
@@ -29,40 +29,6 @@ const ModalChooseTeam = ({ onClose }) => {
     keys: ["name"],
   };
 
-  const data = [
-    {
-      name: "Apple",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Cat",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "ZZZ",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Dasd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "AAasdas",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "BBasd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Casd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Dasd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-  ];
   const fuse = new Fuse(data, options);
   const results = fuse.search(searchValue);
   useEffect(() => {
