@@ -11,7 +11,7 @@ const UpcomingData = [
     time: "4:00 p.m. -  5:30 p.m.",
     place: "foodies",
     by: "upcoming",
-    group: "Free Slot Project Team",
+    group: "Apple",
     members: "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul",
     day: "Monday",
     desc: `Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -29,10 +29,10 @@ const UpcomingData = [
     time: "4:00 p.m. -  5:30 p.m.",
     place: "foodies",
     by: "upcoming",
-    group: "Free Slot Project Team",
+    group: "Cat",
     members:
       "Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul, Ayush Mhetre, Dev Mehta, Ramya, Saarim, Mehul,",
-    day: "Monday",
+    day: "Tuesday",
     desc: `Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and

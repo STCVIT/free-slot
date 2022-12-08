@@ -31,19 +31,79 @@ export const AllPages = ({ filter, tab }) => {
   }, [refresh]);
 
   useEffect(() => {
-    if (day === "all") {
+    // if (day === "all") {
+    //   setDataSet({
+    //     upcoming: UpcomingData,
+    //     past: PastData,
+    //     cancelled: CancelledData,
+    //   });
+    // } else {
+    //   setDataSet({
+    //     upcoming: UpcomingData.filter((item) => item.day === day),
+    //     past: PastData.filter((item) => item.day === day),
+    //     cancelled: CancelledData.filter((item) => item.day === day),
+    //   });
+    // }
+    if (day === "all" && date === "all" && time === "all" && groups === "all") {
       setDataSet({
         upcoming: UpcomingData,
         past: PastData,
         cancelled: CancelledData,
       });
-    } else {
+    }
+    if (day !== "all" && date === "all" && time === "all" && groups === "all") {
       setDataSet({
         upcoming: UpcomingData.filter((item) => item.day === day),
         past: PastData.filter((item) => item.day === day),
         cancelled: CancelledData.filter((item) => item.day === day),
       });
     }
+    if (day === "all" && date !== "all" && time === "all" && groups === "all") {
+      setDataSet({
+        upcoming: UpcomingData.filter((item) => item.date === date),
+        past: PastData.filter((item) => item.date === date),
+        cancelled: CancelledData.filter((item) => item.date === date),
+      });
+    }
+    if (day === "all" && date === "all" && time !== "all" && groups === "all") {
+      setDataSet({
+        upcoming: UpcomingData.filter((item) => item.time === time),
+        past: PastData.filter((item) => item.time === time),
+        cancelled: CancelledData.filter((item) => item.time === time),
+      });
+    }
+    if (day === "all" && date === "all" && time === "all" && groups !== "all") {
+      setDataSet({
+        upcoming: UpcomingData.filter((item) => item.group === groups),
+        past: PastData.filter((item) => item.group === groups),
+        cancelled: CancelledData.filter((item) => item.group === groups),
+      });
+    }
+    // if (day != "all" || date != "all" || time != "all" || groups != "all") {
+    //   setDataSet({
+    //     upcoming: UpcomingData.filter(
+    //       (item) =>
+    //         item.day === day ||
+    //         item.date === date ||
+    //         item.time === time ||
+    //         item.group === groups
+    //     ),
+    //     past: PastData.filter(
+    //       (item) =>
+    //         item.day === day ||
+    //         item.date === date ||
+    //         item.time === time ||
+    //         item.group === groups
+    //     ),
+    //     cancelled: CancelledData.filter(
+    //       (item) =>
+    //         item.day === day ||
+    //         item.date === date ||
+    //         item.time === time ||
+    //         item.group === groups
+    //     ),
+    //   });
+    // }
   }, [CancelledData, PastData, UpcomingData, filter]);
   const list = dataSet[tab];
   for (let i = 0; i < UpcomingData.length; i++) {

@@ -9,6 +9,13 @@ const TabNavbar = ({ activeTab, setActiveTab }) => {
   const activeClass = "border-myBlue";
   const inactiveClass = "border-transparent hover:border-gray-200";
 
+  var desc = document.querySelectorAll('[id^="meetingInfoCard"]');
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    desc.forEach((item) => {
+      item.classList.add("hidden");
+    });
+  };
   return (
     <ul className="md:grid flex md:w-1/2   md:gap-x-0 grid-cols-3 w-full text-center">
       {["upcoming", "cancelled", "past"].map((tab, idx) => (
@@ -16,7 +23,7 @@ const TabNavbar = ({ activeTab, setActiveTab }) => {
           className={`${mainClass} ${
             activeTab === tab ? activeClass : inactiveClass
           }`}
-          onClick={() => setActiveTab(tab)}
+          onClick={() => handleTabChange(tab)}
         >
           {tab[0].toUpperCase() + tab.slice(1)}
         </li>
