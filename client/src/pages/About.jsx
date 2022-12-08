@@ -1,6 +1,7 @@
 import PageHeading from "../components/Headings/PageHeading";
 import Socials from "../components/Socials/Socials";
 import MainNavbar from "../components/Menus/MainNavbar";
+import ExpandingCard from "../components/ExpandingCard/ExpandingCard";
 const AboutCard = ({ title, desc }) => {
   return (
     <div className="rounded-md drop-shadow bg-white px-6 py-4">
@@ -8,9 +9,7 @@ const AboutCard = ({ title, desc }) => {
       <div className="grid grid-cols-10 gap-x-12">
         <div className="col-span-3">
           <img
-            src={`${process.env.PUBLIC_URL}/assets/${title
-              .toLowerCase()
-              .replace(" ", "-")}.png`}
+            src={`/assets/${title.toLowerCase().replace(" ", "-")}.png`}
             alt={title}
           />
         </div>
@@ -59,6 +58,7 @@ const About = () => {
               desc={item.desc}
             />
           ))}
+          <ExpandingCard />
         </div>
         {/* <div className="flex w-full py-4 px-2 justify-center items-center"> */}
         <Socials />
