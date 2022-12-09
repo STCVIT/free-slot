@@ -1,6 +1,6 @@
 import React from 'react'
 import { createContext, useContext, useState } from "react";
-import axios from "axios";
+import axios from "../axios/index";
 
 const freeSlotContext = createContext();
 
@@ -9,7 +9,7 @@ export function FreeSlotContextProvider({ children }){
     const [link, setLink] = useState()
     const justFindFreeSlot = async (tags)=>{
         try {
-            await axios.post("http://localhost:4000/timetable/freeslot", {
+            await axios.post("timetable/freeslot", {
             members: tags
         })
         .then((res)=>{
@@ -23,11 +23,11 @@ export function FreeSlotContextProvider({ children }){
     }
     const saveTeamAndFindFreeSlot = async (teamName, tags)=>{
         try {
-            await axios.post("http://localhost:4000/team/create", {
+            await axios.post("team/create", {
                 team_name: teamName,
                 members: tags
                 })
-            await axios.post("http://localhost:4000/timetable/freeslot", {
+            await axios.post("timetable/freeslot", {
             members: tags
             })
             .then((res)=>{
@@ -40,7 +40,7 @@ export function FreeSlotContextProvider({ children }){
     }
     const getLink = async ()=>{
         try {
-            await axios.get("http://localhost:4000/link")
+            await axios.get("link")
             .then((res)=>{
                 setLink(res)
             })

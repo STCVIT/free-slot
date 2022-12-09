@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axios/index";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect } from "react";
 import { UserAuth } from "../../context/UserAuthContext";
@@ -10,7 +10,7 @@ const CardSection = ({ token }) => {
     }
   }, [token]);
   const fetchData = async (token) => {
-    const res = await axios.get("http://localhost:4000/", {
+    const res = await axios.get("", {
       headers: {
         Authorization: "Bearer " + token,
       },

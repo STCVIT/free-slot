@@ -27,7 +27,7 @@ const sessionLogin = async (req, res)=>{
             (sessionCookie)=>{
                 const options = {maxAge: expiresin, secure: true, httpOnly: false } //make this true in production
                 res.cookie("session", sessionCookie, options)
-                res.end(JSON.stringify({status: success}))
+                res.send(JSON.stringify({status: success}))
             })
         .catch((error)=>{
                 res.status(401).send("Unauthorized request")
