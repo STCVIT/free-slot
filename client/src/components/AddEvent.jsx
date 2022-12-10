@@ -105,8 +105,8 @@ const AddEvent = () => {
     <div>
       <PageHeading title="Add Event" />
       <div>
-        <div className="px-4">
-          <div className="flex flex-col gap-y-10 md:w-2/4">
+        <div className="flex justify-center w-full px-4">
+          <div className="flex flex-col gap-y-10 w-full md:w-2/4">
             <div>
               <RangeInput
                 value={startTime}
@@ -158,14 +158,14 @@ const AddEvent = () => {
               <button
                 onClick={handleCancel}
                 type="cancel"
-                class="text-black bg-white border-none font-medium rounded-lg text-sm   px-5 py-2.5 text-center"
+                class="text-black bg-white border-none font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 onClick={handleSubmit}
-                class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 "
+                class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center dark:bg-blue-600 "
               >
                 Submit
               </button>
