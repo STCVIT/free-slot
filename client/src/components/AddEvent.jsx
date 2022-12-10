@@ -1,26 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import PageHeading from "./Headings/PageHeading";
 import { toast } from "react-toastify";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
-const RangeInput = ({ value, onChange, startTime, endTime }) => {
-  return (
-    <div>
-      <input
-        type="range"
-        min={startTime}
-        max={endTime}
-        step={1}
-        value={value}
-        class="slider"
-        id="myRange"
-        onChange={(e) => onChange(e.target.value)}
-      />
-      <p>{value}</p>
-    </div>
-  );
-};
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 
 const EntryField = ({ label, value, onChange, isDesc }) => {
   return (
@@ -40,47 +25,32 @@ const EntryField = ({ label, value, onChange, isDesc }) => {
 };
 
 const AddEvent = () => {
-  const { chosenSlotTime, setChosenSlotTime } = FindFreeSlot()
+  // eslint-disable-next-line no-unused-vars
+  const { chosenSlotTime, setChosenSlotTime } = FindFreeSlot();
   document.title = "Add Event";
   const [eventName, setEventName] = React.useState("");
   const [eventDescription, setEventDescription] = React.useState("");
   const [eventDate, setEventDate] = React.useState("");
-  const [eventLocation, setEventLocation] = React.useState("Google Meet");
+  const [eventLocation, setEventLocation] = React.useState("Google meet");
   const [eventLink, setEventLink] = React.useState("");
-  const [startTime, setStartTime] = React.useState("");
-  const [endTime, setEndTime] = React.useState("");
+  var { start_time, end_time } = chosenSlotTime;
+  const [notified, setNotified] = useState(false);
+  start_time = parseInt(chosenSlotTime.end_time.slice(0, 2));
+  end_time = parseInt(chosenSlotTime.start_time.slice(0, 2));
+  const [value, setValue] = React.useState([start_time, end_time]);
   const handleSubmit = () => {
-    let unFilled = [];
     if (!eventName) {
-      unFilled.push("Event Name");
-    }
-    if (!eventDescription) {
-      unFilled.push("Event Description");
-    }
-    if (!eventLocation) {
-      unFilled.push("Event Location");
-    }
-    if (!startTime) {
-      unFilled.push("Start Time");
-    }
-    if (!endTime) {
-      unFilled.push("End Time");
-    }
-    if (unFilled.length > 0) {
+      toast.error("Please fill Event Name");
+    } else if (!eventDescription) {
+      toast.error("Please fill Event Description");
+    } else if (!eventLocation) {
+      toast.error("Please fill Event Location");
+    } else if (value[0] === start_time && value[1] === end_time && !notified) {
       toast.error(
-        <div>
-          <p>Please fill</p>
-          <ul>
-            {unFilled.map((item, index) => (
-              <li key={index}>• {item}</li>
-            ))}
-          </ul>
-        </div>
+        "You have not modified the time, If you want to continue, please submit again"
       );
-      return;
-    }
-
-    if (startTime >= endTime) {
+      setNotified(true);
+    } else if (value[0] >= value[1]) {
       toast.error("Start time must be less than end time");
       return;
     } else {
@@ -92,36 +62,48 @@ const AddEvent = () => {
         link: eventLink,
       });
       toast.success("Event Added Successfully");
+      console.log(value, eventName, eventDescription, eventLocation);
     }
   };
   const handleCancel = () => {
     setEventDate("");
     setEventDescription("");
     setEventLink("");
-    setEventLocation("");
+    setEventLocation("Google meet");
     setEventName("");
-    setStartTime("");
-    setEndTime("");
+    setValue([start_time, end_time]);
   };
+  const handleChange = (e) => {
+    setValue(e);
+  };
+
   return (
     <div>
       <PageHeading title="Add Event" />
       <div>
         <div className="flex justify-center w-full px-4">
           <div className="flex flex-col gap-y-10 w-full md:w-2/4">
-            <div>
-              <RangeInput
-                value={chosenSlotTime.start_time}
-                onChange={setStartTime}
-                startTime={chosenSlotTime.start_time}
-                endTime={chosenSlotTime.end_time}
-              />
-              <RangeInput
-                value={chosenSlotTime.end_time}
-                onChange={setEndTime}
-                startTime={0}
-                endTime={10}
-              />
+            <div className="flex justify-evenly items-center">
+              <div className="p-2 rounded-md bg-myBlue text-white font-semibold">
+                {value[0]}
+              </div>
+              <div>
+                <Box sx={{ width: "15rem" }}>
+                  <Slider
+                    step={1}
+                    getAriaLabel={() => "Temperature range"}
+                    value={value}
+                    min={start_time}
+                    max={end_time}
+                    onChange={(e) => handleChange(e.target.value)}
+                    valueLabelDisplay="auto"
+                    disableSwap
+                  />
+                </Box>
+              </div>
+              <div className="p-2 rounded-md bg-myBlue text-white font-semibold">
+                {value[1]}
+              </div>
             </div>
             <EntryField
               label="Event Name"
@@ -139,10 +121,24 @@ const AddEvent = () => {
                 aria-label="Default select example"
                 onChange={(e) => setEventLocation(e.target.value)}
               >
-                <option selected>Google meet</option>
-                <option value="1">Discord</option>
-                <option value="2">Zoom</option>
-                <option value="3">Other Platform</option>
+                <option
+                  onClick={() => setEventLocation("Google meet")}
+                  selected
+                >
+                  Google meet
+                </option>
+                <option onClick={() => setEventLocation("Discord")} value="1">
+                  Discord
+                </option>
+                <option onClick={() => setEventLocation("Zoom")} value="2">
+                  Zoom
+                </option>
+                <option
+                  onClick={() => setEventLocation("Other Platform")}
+                  value="3"
+                >
+                  Other Platform
+                </option>
               </select>
             </div>
             <EntryField
