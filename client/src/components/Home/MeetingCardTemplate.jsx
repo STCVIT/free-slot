@@ -4,6 +4,7 @@ import NestedModal from "./meetingModal";
 import { GoKebabVertical } from "react-icons/go";
 const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
+  
   return (
     <div
       className="drop-shadow absolute z-[1000] top-10  md:right-6 hidden p-4 mb-4 rounded-md bg-white w-[80vw]  md:w-[25rem]"
@@ -18,9 +19,10 @@ const MeetingInfoModal = (props) => {
           Members
           <br />
           <span className="text-black overflow-hidden">
-            {props.members.length < 45
+            ASD
+            {/* {props.members.length < 45
               ? props.members
-              : props.members.slice(0, 45) + "..."}
+              : props.members.slice(0, 45) + "..."} */}
           </span>
         </p>
       </div>
@@ -30,42 +32,47 @@ const MeetingInfoModal = (props) => {
 
 const MeetingCardTemplate = (props) => {
   const MeetingCardsArray = props.list.map((dataItem) => {
+    console.log(dataItem)
     const handleOpen = (id) => {
       const modal = document.getElementById("meetingInfoCard" + id);
       modal.classList.toggle("hidden");
     };
 
     const data = {
-      idx: dataItem.id,
+      idx: dataItem.meet_id,
       tab: props.tab,
       refresh: props.refresh,
     };
     return (
       <div
         className="w-3/4 p-6 col-span-1  border relative  bg-white rounded-lg my-4 shadow "
-        id={dataItem.id}
+        id={dataItem.meet_id}
       >
         {/* {meetingInfoModalOpen( */}
         <div className="relative">
           <MeetingInfoModal
-            members={dataItem.members}
-            id={dataItem.id}
-            desc={dataItem.desc}
+            // members={dataItem.members}
+            members={"asd"}
+            id={dataItem.meet_id}
+            desc={dataItem.description}
           />
         </div>
         {/* )} */}
         <div className="absolute top-5 right-10 cursor-pointer">
-          <GoKebabVertical size={25} onClick={() => handleOpen(dataItem.id)} />
+          <GoKebabVertical size={25} onClick={() => handleOpen(dataItem.meet_id)} />
         </div>
-        <p className="px-2 text-2xl font-bold  text-black">{dataItem.time}</p>
+        <p className="px-2 text-2xl font-bold  text-black">{dataItem.start_time} - {dataItem.end_time}</p>
         <div className="flex items-center gap-x-4 my-4 font-semibold text-myBlue">
           <IoLocationSharp size={20} />
-          {dataItem.place}
+          {dataItem.location}
         </div>
         <p className="font-normal flex flex-col gap-y-1 text-black ">
-          <span className="font-semibold">Created by {dataItem.by}</span>
-          <span>{dataItem.day}</span>
-          <span>{dataItem.group}</span>
+          {/* <span className="font-semibold">Created by {dataItem.by}</span> */}
+          <span className="font-semibold">Created by X</span>
+          <span className="font-semibold">{dataItem.date}</span>
+          {/* <span>{dataItem.day}</span> */}
+          <span>Monday</span>
+          <span>{dataItem.tile}</span>
         </p>
         <div className="flex w-full gap-x-4">
           {["Mark as done", "Cancel"].map((button) => (
@@ -73,6 +80,7 @@ const MeetingCardTemplate = (props) => {
           ))}
         </div>
       </div>
+      // <div>{dataItem.description}</div>
     );
   });
   return (

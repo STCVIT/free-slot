@@ -6,9 +6,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  createUserWithEmailAndPassword,
-  setPersistence,
-  browserSessionPersistence
+  createUserWithEmailAndPassword
 } from "firebase/auth";
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase/app";
@@ -21,9 +19,6 @@ const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  // const [authed, setAuthed] = React.useState(
-  //   () =>  JSON.parse(localStorage.getItem('authed')) ?? false
-  // );
   // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState("");
 
@@ -66,6 +61,7 @@ export function UserAuthContextProvider({ children }) {
   const logOut = async () => {
     await signOut(auth).then(() => {
       axios.post("user/sessionlogout");
+      localStorage.clear("user")
     });
   };
   const googleSignUp = async () => {
@@ -146,7 +142,7 @@ export function UserAuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
        if (user) {
         setUser(user);
-        localStorage.setItem("user", user)
+        localStorage.setItem("user", JSON.stringify(user))
         console.log(user);
       }
     });

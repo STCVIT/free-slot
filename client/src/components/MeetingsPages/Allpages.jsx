@@ -1,8 +1,10 @@
 import MeetingCardTemplate from "../Home/MeetingCardTemplate";
 import { useEffect, useState } from "react";
-import { url } from "../../config/backend.config";
-import axios from "axios";
+//import { url } from "../../config/backend.config";
+import axios from "../../axios/index";
+import { UserAuth } from '../../context/UserAuthContext'
 export const AllPages = ({ filter, tab }) => {
+  const user = JSON.parse(localStorage.getItem("user"))
   const group = new Set();
   const [UpcomingData, setUpcomingData] = useState([]);
   const [PastData, setPastData] = useState([]);
@@ -18,10 +20,13 @@ export const AllPages = ({ filter, tab }) => {
   });
 
   useEffect(() => {
-    async function getData() {
-      const upcoming = await axios.get(url + "?tab=upcoming");
-      const past = await axios.get(url + "?tab=past");
-      const cancelled = await axios.get(url + "?tab=cancelled");
+    async function getData() { 
+      const upcoming = await axios.post("meet/getUpcoming", {
+        email: user.email,
+        abc: "def"
+      });
+      const past = await axios.get("meet/getPast");
+      const cancelled = await axios.get("meet/getCancelled");
       console.log(upcoming.data);
       setUpcomingData(upcoming.data);
       setPastData(past.data);
@@ -105,17 +110,17 @@ export const AllPages = ({ filter, tab }) => {
     //   });
     // }
   }, [CancelledData, PastData, UpcomingData, filter]);
-  const list = dataSet[tab];
-  for (let i = 0; i < UpcomingData.length; i++) {
-    group.add(UpcomingData[i].group);
-  }
-  for (let i = 0; i < PastData.length; i++) {
-    group.add(PastData[i].group);
-  }
-  for (let i = 0; i < CancelledData.length; i++) {
-    group.add(CancelledData[i].group);
-  }
-
+  const list = dataSet.upcoming;
+  // for (let i = 0; i < UpcomingData.length; i++) {
+  //   group.add(UpcomingData[i].group);
+  // }
+  // for (let i = 0; i < PastData.length; i++) {
+  //   group.add(PastData[i].group);
+  // }
+  // for (let i = 0; i < CancelledData.length; i++) {
+  //   group.add(CancelledData[i].group);
+  // }
+console.log(dataSet.upcoming)
   // setGroup([...group]);
 
   return (

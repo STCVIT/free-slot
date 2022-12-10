@@ -2,8 +2,9 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useState } from "react";
+import { UserAuth } from "../../context/UserAuthContext";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const items = [
   {
     name: "Profile",
@@ -20,6 +21,13 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const { logOut} = UserAuth()
+  const navigate = useNavigate()
+  const logOutHandler = async ()=>{
+    await logOut()
+    navigate("/")
+    console.log("logged out")
+  }
   const [open, setOpen] = useState(false);
   return (
     <Menu as="div" className="flex items-center">
@@ -57,6 +65,7 @@ export default function Example() {
             <Menu.Item>
               {({ active }) => (
                 <Link
+                onClick={logOutHandler}
                   to="/"
                   className={classNames(
                     active ? "bg-gray-100 text-[#CC2F3F]" : "text-[#CC2F3F]",

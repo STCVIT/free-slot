@@ -8,7 +8,7 @@ const User = db.users
 const addMeet = async (req, res)=>{
     try {
         const meet = await Meet.create(req.body);
-        const team = Team.findOne({
+        const team = await Team.findOne({
             where: {team_id: req.body.team_id}
         })
         await team.addMeet(meet)
@@ -52,13 +52,13 @@ const getMeet = async (req, res)=>{
 // }
 const getMeets = async (req, res)=>{
     try {
-        const regno = User.findOne({
+        const regno = await User.findOne({
             where: {email: req.body.email},
             attributes: ['reg_no']
         })
-        const teams = regno.getTeams()//doubt
-        teams.forEach((team)=>{
-            team.getMeets()
+        const teams = await regno.getTeams()//doubt
+        teams.forEach(async (team)=>{
+            await team.getMeets()
         })
         res.status(200).send(teams)
     } catch (error) {
@@ -67,7 +67,57 @@ const getMeets = async (req, res)=>{
     }
     
 }
-
+const getAllUpcomingMeets = async (req, res)=>{
+    try {
+        let results = []
+        const teams = req.body.teams
+        for(const team of teams){
+            const meets = await team.getMeets()
+            for( const meet of meets){
+                if(meet.status==="upcoming")
+                    results.push(meet)
+            }
+        }
+        return res.send(results)
+    } catch (error) {
+        errorHandler(new BadRequestError, req, res)
+        console.error(error.message)
+    }
+}
+const getAllPastMeets = async (req, res)=>{
+    try {
+        let results = []
+        const teams = req.body.teams
+        for(const team of teams){
+            const meets = await team.getMeets()
+            for( const meet of meets){
+                if(meet.status==="past")
+                    results.push(meet)
+            }
+        }
+        return res.send(results)
+    } catch (error) {
+        errorHandler(new BadRequestError, req, res)
+        console.error(error.message)
+    }
+}
+const getAllCancelledMeets = async (req, res)=>{
+    try {
+        let results = []
+        const teams = req.body.teams
+        for(const team of teams){
+            const meets = await team.getMeets()
+            for( const meet of meets){
+                if(meet.status==="cancelled")
+                    results.push(meet)
+            }
+        }
+        return res.send(results)
+    } catch (error) {
+        errorHandler(new BadRequestError, req, res)
+        console.error(error.message)
+    }
+}
 //upadte meet
 const updateMeet = async (req, res)=>{
     const updates = Object.keys(req.body)
@@ -138,6 +188,9 @@ module.exports = {
     getMeet,
     getMeets,
     getAllMeets,
+    getAllUpcomingMeets,
+    getAllPastMeets,
+    getAllCancelledMeets,
     updateMeet,
     deleteMeet
 }
