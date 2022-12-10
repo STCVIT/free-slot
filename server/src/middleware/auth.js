@@ -8,7 +8,7 @@ require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
 admin.initializeApp({
     credential: admin.credential.cert({
         apiKey: process.env.API_KEY,
-        privateKey: process.env.PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
         clientEmail: process.env.CLIENT_EMAIL,
         authDomain: process.env.AUTH_DOMAIN,
         projectId: process.env.PROJECT_ID,

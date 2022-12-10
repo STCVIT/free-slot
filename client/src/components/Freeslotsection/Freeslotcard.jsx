@@ -1,9 +1,15 @@
 import React from 'react'
 import moment from 'moment'
+import { FindFreeSlot } from '../../context/FreeSlotContext'
+import { useNavigate } from 'react-router-dom'
 
 const Freeslotcard = (props) => {
+  const { chosenSlotTime, setChosenSlotTime } = FindFreeSlot()
+  const navigate = useNavigate()
     const clickHandler = (data)=>{
         console.log(data)
+        setChosenSlotTime(data)
+        navigate('/addEvent')
     }
   return (
     <>

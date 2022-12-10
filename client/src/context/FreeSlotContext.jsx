@@ -7,6 +7,7 @@ const freeSlotContext = createContext();
 export function FreeSlotContextProvider({ children }){
     const [data, setData] = useState([])
     const [link, setLink] = useState()
+    const [chosenSlotTime, setChosenSlotTime] = useState()
     const justFindFreeSlot = async (tags)=>{
         try {
             await axios.post("timetable/freeslot", {
@@ -50,7 +51,7 @@ export function FreeSlotContextProvider({ children }){
     }
     return(
             <freeSlotContext.Provider 
-            value={{justFindFreeSlot, saveTeamAndFindFreeSlot, data, setData, getLink, link, setLink}}>
+            value={{justFindFreeSlot, saveTeamAndFindFreeSlot, data, setData, getLink, link, setLink, chosenSlotTime, setChosenSlotTime}}>
 
                 {children}
             </freeSlotContext.Provider>

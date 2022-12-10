@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import PageHeading from "./Headings/PageHeading";
 import { toast } from "react-toastify";
+import { FindFreeSlot } from "../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
 const RangeInput = ({ value, onChange, startTime, endTime }) => {
   return (
@@ -39,6 +40,7 @@ const EntryField = ({ label, value, onChange, isDesc }) => {
 };
 
 const AddEvent = () => {
+  const { chosenSlotTime, setChosenSlotTime } = FindFreeSlot()
   document.title = "Add Event";
   const [eventName, setEventName] = React.useState("");
   const [eventDescription, setEventDescription] = React.useState("");
@@ -109,13 +111,13 @@ const AddEvent = () => {
           <div className="flex flex-col gap-y-10 w-full md:w-2/4">
             <div>
               <RangeInput
-                value={startTime}
+                value={chosenSlotTime.start_time}
                 onChange={setStartTime}
-                startTime={0}
-                endTime={10}
+                startTime={chosenSlotTime.start_time}
+                endTime={chosenSlotTime.end_time}
               />
               <RangeInput
-                value={endTime}
+                value={chosenSlotTime.end_time}
                 onChange={setEndTime}
                 startTime={0}
                 endTime={10}
