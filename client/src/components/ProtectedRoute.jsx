@@ -2,12 +2,12 @@
 import { Navigate } from "react-router-dom";
 import { UserAuth } from "../context/UserAuthContext";
 const ProtectedRoute = ({ children }) => {
-  const { user } = UserAuth();
+  // const { user } = UserAuth();
+  const user = localStorage.getItem("user")
   if (!user) {
-    // return <Navigate to="/" />
     console.log("There's no user");
+    return <Navigate to="/login" />
   }
-  console.log(user);
   return children;
 };
 export default ProtectedRoute;

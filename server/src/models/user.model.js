@@ -35,8 +35,8 @@ module.exports = (sequelize, DataTypes)=>{
             allowNull: true
         }
     }, {
-        createdAt: true,
-        updatedAt: true
+        createdAt: false,
+        updatedAt: false
     });
     return User
 }

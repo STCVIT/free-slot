@@ -1,4 +1,4 @@
-import { createContext, useEffect, useContext, useState } from "react";
+import { React, createContext, useEffect, useContext, useState } from "react";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -6,6 +6,9 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+  setPersistence,
+  browserSessionPersistence
 } from "firebase/auth";
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase/app";
@@ -18,30 +21,46 @@ const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
+  // const [authed, setAuthed] = React.useState(
+  //   () =>  JSON.parse(localStorage.getItem('authed')) ?? false
+  // );
   // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState("");
 
-  function logIn(email, password) {
-    signInWithEmailAndPassword(auth, email, password).then(() => {
-      auth.currentUser
-        .getIdToken()
-        .then((token) => {
-          axios.get("user/sessionlogin", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              //"CSRF-Token": Cookies.get("XSRF-TOKEN")
-            },
+  const signUp = async (email, password)=>{
+    await createUserWithEmailAndPassword(auth, email, password)
+    .then((user)=>{
+      user.user.getIdToken().then((token)=>{
+        setToken(token)
+        axios.post('user/sessionlogin', {}, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            //'CSRF-Token': Cookies.get("XSRF-TOKEN")
+          }
+        })
+      })
+    })
+  }
+  const logIn = async (email, password)=> {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then( async () =>{
+        return auth.currentUser.getIdToken().then((token) => {
+            setToken(token)
+            return axios.post("user/sessionlogin", {},{
+              headers: {
+                Authorization: `Bearer ${token}`,
+                //"CSRF-Token": Cookies.get("XSRF-TOKEN")
+              },
+            });
+          })
+          .then((res) => {
+            return console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("Auth Context Error" + error.message)
           });
-        })
-        .then((res) => {
-          // console.log(res);
-          return 100/0
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error(error)
-        });
-    });
+      });
   }
 
   const logOut = async () => {
@@ -57,7 +76,8 @@ export function UserAuthContextProvider({ children }) {
         const name = user.displayName.slice(0, user.displayName.length - 10);
         const regno = user.displayName.slice(-9);
         const email = user.email;
-        return user.getIdToken().then((idToken) => {
+        return user.getIdToken().then((token) => {
+          setToken(token)
           const csrfToken = Cookies.get("XSRF-TOKEN");
           console.log(csrfToken);
           axios.post(
@@ -69,14 +89,14 @@ export function UserAuthContextProvider({ children }) {
             },
             {
               headers: {
-                Authorization: `Bearer ${idToken}`,
+                Authorization: `Bearer ${token}`,
                 //'CSRF-Token': Cookies.get("_csrf")
               },
             }
           );
           axios.post("user/sessionlogin", {
             headers: {
-              Authorization: `Bearer ${idToken}`,
+              Authorization: `Bearer ${token}`,
               //'CSRF-Token': Cookies.get("_csrf")
             },
           });
@@ -91,6 +111,7 @@ export function UserAuthContextProvider({ children }) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         user.getIdToken().then((token) => {
+          setToken(token)
           axios
             .get("user/getuser", {
               headers: {
@@ -123,8 +144,9 @@ export function UserAuthContextProvider({ children }) {
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+       if (user) {
         setUser(user);
+        localStorage.setItem("user", user)
         console.log(user);
       }
     });
@@ -136,6 +158,9 @@ export function UserAuthContextProvider({ children }) {
     <userAuthContext.Provider
       value={{
         user,
+        token,
+        setToken,
+        signUp,
         logIn,
         logOut,
         googleSignUp,

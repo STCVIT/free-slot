@@ -23,13 +23,15 @@ const Login = () => {
     setError("");
     try {
       await logIn(email, password);
-      alert("hi")
       navigate("/home");
-      //toast.error("error.message");
     } catch (error) {
       setError(error.message);
-      console.log(error.message);
-      //toast.error(error.message);
+      console.log(error.message)
+      if(error.message==="Firebase: Error (auth/wrong-password)."){
+        toast.error("Incorrect Password")
+      } else if(error.message==="Firebase: Error (auth/invalid-email)."){
+        toast.error("Invalid Email")
+      }
     }
   };
   const oAuth = async (e) => {

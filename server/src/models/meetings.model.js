@@ -39,10 +39,15 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: null
-        }
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "upcoming"
+        },
     }, {
-        createdAt: true,
-        updatedAt: true
+        createdAt: false,
+        updatedAt: false
     });
     return Meet
 }

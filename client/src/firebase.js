@@ -12,4 +12,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
+export const getUserToken = () => {
+  return auth.currentUser.accessToken;
+};
 export default app;
