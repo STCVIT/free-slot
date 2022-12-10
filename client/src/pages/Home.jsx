@@ -12,11 +12,11 @@ const Home = () => {
   const [group, setGroup] = useState([null]);
   document.title = "Home";
   return (
-    <div>
+    <>
       <MainNavbar active="home" />
       <div className="max-w-screen pr-4 bg-[#f2f2f2]">
-        <div className="md:grid grid-cols-12 gap-4 relative">
-          <div className="hidden md:block col-span-2">
+        <div className="md:grid grid-cols-12 gap-4">
+          <div className=" md:block col-span-2">
             <Sidebar filter={filter} setFilter={setFilter} group={group} />
           </div>
           <div className="col-span-10">
@@ -24,7 +24,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

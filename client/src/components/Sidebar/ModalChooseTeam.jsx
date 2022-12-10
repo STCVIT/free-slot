@@ -50,7 +50,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
         className="grid grid-cols-12 cursor-pointer hover:outline hover:bg-white p-4 rounded-md even:bg-blue-200 odd:bg-gray-200"
         onClick={() => selectTeam(idx)}
       >
-        <div className={`col-span-1 flex items-center`}>
+        <div className={`col-span-2 md:col-span-1 flex items-center`}>
           <div
             style={{ background: pastelColors[idx % 5] }}
             className={`w-[75%] h-full rounded-full  flex items-center justify-center border-2 border-black`}
@@ -59,7 +59,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
             {/* S */}
           </div>
         </div>
-        <div className="col-span-11">
+        <div className="col-span-10 md:col-span-11">
           <div>{team.name}</div>
           <div>{team.members}</div>
           {/* <div>STC</div>

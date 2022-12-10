@@ -33,10 +33,11 @@ const ContactUs = ({ isHomePage }) => {
   };
   return (
     <div className="bg-[#f2f2f2]">
-      <MainNavbar active="account" />
+      {!isHomePage && <MainNavbar active="account" />}
+
       <PageHeading title="Contact Us" />
       <div className={`flex flex-col w-full items-center gap-y-4 `}>
-        <div className="w-2/4 flex flex-col gap-y-3">
+        <div className="w-full md:w-2/4 flex flex-col gap-y-3 px-4 md:px-0">
           <label for="contactUsName">Name</label>
           <input
             id="contactUsName"
@@ -45,25 +46,29 @@ const ContactUs = ({ isHomePage }) => {
             value={name}
             onChange={handleName}
           />
-          <label for="contactUsMessasge">Type a message</label>
-          <div className="relative w-full">
-            <textarea
-              className="w-full pr-[20%] p-2 rounded-md resize-none"
-              rows={10}
-              cols={6}
-              id="contactUsMessage"
-              maxLength={120}
-              style={{ textDecoration: "hidden" }}
-              placeholder="Enter your message here"
-              value={message}
-              onChange={handleMessage}
-            />
-            <p className="absolute top-2 right-5 text-sm font-bold">
-              {msgLength}/120
-            </p>
-            {msgLength === 120 && (
-              <p className="text-red-600">Max Length Reached</p>
-            )}
+          <div className="my-2">
+            <div className="flex justify-between ">
+              <p>Type a message</p>
+              <p className="text-sm font-bold">{msgLength}/500</p>
+            </div>
+            <div className="relative w-full">
+              <textarea
+                className="w-full p-2 rounded-md resize-none"
+                rows={10}
+                cols={6}
+                maxLength={500}
+                style={{ textDecoration: "hidden" }}
+                placeholder="Enter your message here"
+                value={message}
+                onChange={handleMessage}
+              />
+              {/* <p className="absolute top-2 right-5 text-sm font-bold">
+              {msgLength}/500
+            </p> */}
+              {msgLength === 500 && (
+                <p className="text-red-600">Max Length Reached</p>
+              )}
+            </div>
           </div>
         </div>
         <div>

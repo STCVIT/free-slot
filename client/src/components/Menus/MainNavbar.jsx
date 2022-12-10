@@ -11,7 +11,7 @@ const MainNavbar = ({ active }) => {
   const inactiveClass = "border-transparent hover:border-gray-200";
   return (
     <>
-      <header className="shadow z-20 bg-[#f2f2f2]  drop-shadow">
+      <header className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
         <div className="flex items-center md:flex-row flex-col justify-between w-full">
           <div>
             <p className="font-logo flex items-center w-full p-7 md:p1 text-5xl ">
@@ -34,17 +34,11 @@ const MainNavbar = ({ active }) => {
                 </Link>
               ))}
               <li
-                onClick={() => setActiveTab("account")}
-                className={`${mainClass} ${
+                className={`relative ${mainClass} ${
                   activeTab === "account" ? activeClass : inactiveClass
                 }`}
               >
-                <DropDownProfile
-                  active={active}
-                  mainClass={mainClass}
-                  inactiveClass={inactiveClass}
-                  activeClass={activeClass}
-                />
+                <DropDownProfile setActiveTab={setActiveTab} />
               </li>
             </ul>
           </div>

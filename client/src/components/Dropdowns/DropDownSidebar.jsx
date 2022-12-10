@@ -7,49 +7,49 @@ import { BiLinkExternal } from "react-icons/bi";
 import ModalNewTeam from "../Sidebar/ModalNewTeam";
 import { useState } from "react";
 import ModalChooseTeam from "../Sidebar/ModalChooseTeam";
-import ModalLink from "../Sidebar/ModalLink";
-import Responses from "../Responses/Responses";
+import Responses from "../Sidebar/Responses";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 // import ComponentModal from "./ComponentModal";
 import axios from "axios";
-
+const isLg = window.matchMedia("(min-width: 1024px)").matches;
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "75%",
+  width: isLg ? "75%" : "95%",
   bgcolor: "white",
 
   borderRadius: "0.5rem",
   boxShadow: 12,
   p: 4,
 };
+
 export default function Example({ data }) {
   // axios.get("http://localhost:6969/").then((res) => {
   //   console.log(res.data);
   // });
-  const [modalOnNew, setModalOnNew] = useState(false);
 
-  const [modalOnChoose, setModalOnChoose] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [choiceChoose, setChoiceChoose] = useState(false);
   const [chooseTeamOpen, setChooseTeamOpen] = useState(false);
-  const [modalOnLink, setModalOnLink] = useState(false);
-
   const [newTeamOpen, setNewTeamOpen] = useState(false);
   const [responsesOpen, setResponsesOpen] = useState(false);
   const clickedLink = () => {
     setResponsesOpen(true);
+    setNewTeamOpen(false);
+    setChooseTeamOpen(false);
   };
 
   const clickedNew = () => {
     setNewTeamOpen(true);
+    setResponsesOpen(false);
+    setChooseTeamOpen(false);
   };
 
   const clickedChoose = () => {
     setChooseTeamOpen(true);
+    setResponsesOpen(false);
+    setNewTeamOpen(false);
   };
   const items = [
     {
@@ -68,6 +68,11 @@ export default function Example({ data }) {
       onClick: clickedLink,
     },
   ];
+
+  const isLg = window.matchMedia("(min-width: 1024px)").matches;
+  const createStyle = isLg
+    ? {}
+    : { position: "fixed", zIndex: 10000, bottom: 5, right: 5 };
 
   const ComponentModal = () => {
     return (
@@ -103,13 +108,13 @@ export default function Example({ data }) {
     );
   };
   return (
-    <div>
+    <div style={createStyle} className="relative right-0">
       <ComponentModal />
       <Menu as="div" className="relative inline-block text-left ">
         <div>
           <Menu.Button>
             <p className=" justify-center items-center rounded-full bg-myBlue p-5 px-8 tracking-wider text-slate-100">
-              + Create
+              {isLg ? "+ Create" : "+"}
             </p>
           </Menu.Button>
         </div>
@@ -123,7 +128,11 @@ export default function Example({ data }) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="origin-top-right absolute z-50 -left-5 mt-2 w-max rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none">
+          <Menu.Items
+            className={`${
+              !isLg ? "bottom-20 right-5" : ""
+            } absolute z-50 mt-2 w-max rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none`}
+          >
             <div className="py-1 p-3">
               {items.map((item) => (
                 <Menu.Item>
@@ -146,14 +155,6 @@ export default function Example({ data }) {
           </Menu.Items>
         </Transition>
       </Menu>
-      {modalOnNew && <ModalNewTeam />}
-      {modalOnChoose && (
-        <ModalChooseTeam
-          setModalOnChoose={setModalOnChoose}
-          setChoiceChoose={setChoiceChoose}
-        />
-      )}
-      {modalOnLink && <ModalLink />}
     </div>
   );
 }

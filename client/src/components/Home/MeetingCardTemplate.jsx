@@ -6,14 +6,14 @@ const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
   return (
     <div
-      className="drop-shadow hidden p-4 mb-4 rounded-md bg-white  w-[25rem]"
+      className="drop-shadow absolute z-[1000] top-10  md:right-6 hidden p-4 mb-4 rounded-md bg-white w-[80vw]  md:w-[25rem]"
       id={"meetingInfoCard" + props.id}
     >
       <div>
         <p className="text-[#7B8A99]">Description</p>
-        <p className="rounded-md bg-[#F4F4F4] w-full resize-none p-4 ">
-          {props.desc}
-        </p>
+        <div className="rounded-md bg-[#F4F4F4] w-full  p-4 max-h-[25vh] overflow-y-auto my-2">
+          <p>{props.desc}</p>
+        </div>
         <p className="text-[#7B8A99]">
           Members
           <br />
@@ -42,11 +42,11 @@ const MeetingCardTemplate = (props) => {
     };
     return (
       <div
-        className=" p-6 col-span-1 max-w-sm border relative  bg-white rounded-lg my-4 shadow "
+        className="w-3/4 p-6 col-span-1  border relative  bg-white rounded-lg my-4 shadow "
         id={dataItem.id}
       >
         {/* {meetingInfoModalOpen( */}
-        <div className="absolute z-[1000] top-16 right-12">
+        <div className="relative">
           <MeetingInfoModal
             members={dataItem.members}
             id={dataItem.id}
@@ -76,7 +76,9 @@ const MeetingCardTemplate = (props) => {
     );
   });
   return (
-    <div className="md:grid grid-cols-3 gap-x-4 mx-2">{MeetingCardsArray}</div>
+    <div className="flex flex-col w-full items-center justify-center md:grid grid-cols-3 gap-x-4 md:mx-2">
+      {MeetingCardsArray}
+    </div>
   );
   // return <div>{trial}</div>;
 };

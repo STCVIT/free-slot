@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import DropDown from "../Dropdowns/DropDownSidebar";
-import DropDown from "../Dropdowns/DropDownSidebar";
+// import DropDownSidebar from "../Dropdowns/DropDownSidebar";
+import DropDownSidebar from "../Dropdowns/DropDownSidebar";
 import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
@@ -52,10 +52,13 @@ function Sidebar({ filter, setFilter }) {
   ];
   return (
     <>
-      <aside className="sticky top-0 shadow p-3 h-screen" aria-label="Sidebar">
+      <aside
+        className="md:sticky top-0 shadow p-3 md:h-screen"
+        aria-label="Sidebar"
+      >
         <div className="rounded">
-          <div className="item-center p-5 relative">
-            <DropDown data={groups} />
+          <div className="item-center p-5">
+            <DropDownSidebar data={groups} />
           </div>
 
           <h1 className="hidden md:block ml-3 whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider">
@@ -70,7 +73,7 @@ function Sidebar({ filter, setFilter }) {
           </button>
 
           {seeFilters && (
-            <div className="w-3/4 md:w-full flex flex-col gap-y-4">
+            <div className={`w-3/4 md:w-full flex flex-col gap-y-4`}>
               <Dropdown
                 clearable
                 multiple={false}

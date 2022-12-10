@@ -10,6 +10,7 @@ import {
   RiErrorWarningFill,
   RiTimeFill,
 } from "react-icons/ri";
+const isLg = window.innerWidth > 768;
 const statusArray = ResponseData.map((x) => {
   let statusIcon;
   switch (x.uploadStatus) {
@@ -26,13 +27,10 @@ const statusArray = ResponseData.map((x) => {
       break;
   }
   return (
-    <tr className="md:text-2xl">
-      <td>{x.regNo}</td>
-      <td>{x.userName}</td>
-      <td className="flex items-center gap-x-3">
-        {statusIcon}
-        {x.uploadStatus}
-      </td>
+    <tr className="text-xl md:text-2xl odd:bg-gray-200">
+      <td className="p-2">{x.regNo}</td>
+      <td className="p-2">{x.userName}</td>
+      {isLg && <td className="p-2">{x.email}</td>}
     </tr>
   );
 });
@@ -52,8 +50,8 @@ const Responses = ({ onClose }) => {
       <div>
         <PageHeading title="Responses" />
       </div>
-      <div className="mx-4 md:mx-16">
-        <div className="w-3/4 md:w-2/4">
+      <div className=" md:mx-16">
+        <div className="w-full md:w-2/4">
           <h1 className="text-[#9C9C9C] text-2xl">
             Share this link with your peers
           </h1>
@@ -77,12 +75,17 @@ const Responses = ({ onClose }) => {
             </div>
           </div>
         </div>
-        <div className=" mt-5 items-center drop-shadow border-2 border-gray-200 bg-white px-2 md:px-16 py-4 rounded-md">
-          <table className="table-auto w-full text-left">
+        <div className=" mt-5 items-center drop-shadow overflow-y-auto h-[50vh] border-2 border-gray-200 bg-white px-2 md:px-16 py-4 rounded-md">
+          <table
+            style={{ borderCollapse: "separate", borderSpacing: "0px 8px" }}
+            className="table-auto w-full text-left "
+          >
             <thead>
-              {["Reg No.", "Name", "Status"].map((x) => (
-                <th className=" text-[#9C9C9C] text-base font-body">{x}</th>
-              ))}
+              {(isLg ? ["Reg No.", "Name", "Email"] : ["Reg No.", "Name"]).map(
+                (x) => (
+                  <th className=" text-[#9C9C9C]  font-body">{x}</th>
+                )
+              )}
             </thead>
             <tbody>{statusArray}</tbody>
           </table>
