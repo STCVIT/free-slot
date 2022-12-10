@@ -105,8 +105,8 @@ const AddEvent = () => {
     <div>
       <PageHeading title="Add Event" />
       <div>
-        <div className="px-4">
-          <div className="flex flex-col gap-y-10 md:w-2/4">
+        <div className="flex justify-center w-full px-4">
+          <div className="flex flex-col gap-y-10 w-full md:w-2/4">
             <div>
               <RangeInput
                 value={startTime}
