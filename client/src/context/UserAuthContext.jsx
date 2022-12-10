@@ -10,9 +10,10 @@ import {
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase/app";
 import { auth } from "../firebase";
-import axios from "axios";
+import axios from "../axios/index";
 import Cookies from "js-cookie";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
@@ -25,7 +26,7 @@ export function UserAuthContextProvider({ children }) {
       auth.currentUser
         .getIdToken()
         .then((token) => {
-          axios.get("http://localhost:4000/user/sessionlogin", {
+          axios.get("user/sessionlogin", {
             headers: {
               Authorization: `Bearer ${token}`,
               //"CSRF-Token": Cookies.get("XSRF-TOKEN")
@@ -33,17 +34,19 @@ export function UserAuthContextProvider({ children }) {
           });
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
+          return 100/0
         })
         .catch((error) => {
           console.log(error);
+          toast.error(error)
         });
     });
   }
 
   const logOut = async () => {
     await signOut(auth).then(() => {
-      axios.post("http://localhost:4000/user/sessionlogout");
+      axios.post("user/sessionlogout");
     });
   };
   const googleSignUp = async () => {
@@ -58,7 +61,7 @@ export function UserAuthContextProvider({ children }) {
           const csrfToken = Cookies.get("XSRF-TOKEN");
           console.log(csrfToken);
           axios.post(
-            "http://localhost:4000/user/create",
+            "user/create",
             {
               name,
               regno,
@@ -71,7 +74,7 @@ export function UserAuthContextProvider({ children }) {
               },
             }
           );
-          axios.post("http://localhost:4000/user/sessionlogin", {
+          axios.post("user/sessionlogin", {
             headers: {
               Authorization: `Bearer ${idToken}`,
               //'CSRF-Token': Cookies.get("_csrf")
@@ -89,7 +92,7 @@ export function UserAuthContextProvider({ children }) {
       if (user) {
         user.getIdToken().then((token) => {
           axios
-            .get("http://localhost:4000/user/getuser", {
+            .get("user/getuser", {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -108,7 +111,7 @@ export function UserAuthContextProvider({ children }) {
   const sendTimetable = (file) => {
     const email = user.email;
     axios
-      .post("http://localhost:4000/timetable/string", {
+      .post("timetable/string", {
         email,
         file,
       })

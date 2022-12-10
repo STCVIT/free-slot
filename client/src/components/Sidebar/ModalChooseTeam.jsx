@@ -4,6 +4,8 @@ import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useEffect } from "react";
 import { GrClose } from "react-icons/gr";
+import { UserAuth } from "../../context/UserAuthContext";
+import axios from "../../axios/index";
 import Fuse from "fuse.js";
 const ModalChooseTeam = ({ onClose, data }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -28,7 +30,6 @@ const ModalChooseTeam = ({ onClose, data }) => {
     // fieldNormWeight: 1,
     keys: ["name"],
   };
-
   const fuse = new Fuse(data, options);
   const results = fuse.search(searchValue);
   useEffect(() => {

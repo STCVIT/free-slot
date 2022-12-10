@@ -23,11 +23,13 @@ const Login = () => {
     setError("");
     try {
       await logIn(email, password);
+      alert("hi")
       navigate("/home");
+      //toast.error("error.message");
     } catch (error) {
       setError(error.message);
       console.log(error.message);
-      toast.error(error.message);
+      //toast.error(error.message);
     }
   };
   const oAuth = async (e) => {

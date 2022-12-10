@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import googleLogo from "../../assets/Gooogle-logo.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
-import axios from "axios";
+import axios from "../../axios/index";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Cookies from 'js-cookie'
 
@@ -26,7 +26,7 @@ const SignUp = () => {
       const auth = getAuth()
       setError("")
       setLoading(true)
-      const response = await axios.post('http://localhost:4000/user/create', 
+      const response = await axios.post('user/create', 
       {
         name,
         regno,
@@ -36,7 +36,7 @@ const SignUp = () => {
         await createUserWithEmailAndPassword(auth, email, password)
         .then((user)=>{
           user.user.getIdToken().then((token)=>{
-            axios.get('http://localhost:4000/user/sessionlogin', {
+            axios.get('user/sessionlogin', {
               headers: {
                 'Authorization': `Bearer ${token}`,
                 //'CSRF-Token': Cookies.get("XSRF-TOKEN")
