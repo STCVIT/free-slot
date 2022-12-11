@@ -6,7 +6,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase/app";
@@ -22,46 +22,54 @@ export function UserAuthContextProvider({ children }) {
   // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState("");
 
-  const signUp = async (email, password)=>{
-    await createUserWithEmailAndPassword(auth, email, password)
-    .then((user)=>{
-      user.user.getIdToken().then((token)=>{
-        setToken(token)
-        axios.post('user/sessionlogin', {}, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            //'CSRF-Token': Cookies.get("XSRF-TOKEN")
+  const signUp = async (email, password) => {
+    await createUserWithEmailAndPassword(auth, email, password).then((user) => {
+      user.user.getIdToken().then((token) => {
+        setToken(token);
+        axios.post(
+          "user/sessionlogin",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              //'CSRF-Token': Cookies.get("XSRF-TOKEN")
+            },
           }
-        })
-      })
-    })
-  }
-  const logIn = async (email, password)=> {
-    await signInWithEmailAndPassword(auth, email, password)
-      .then( async () =>{
-        return auth.currentUser.getIdToken().then((token) => {
-            setToken(token)
-            return axios.post("user/sessionlogin", {},{
+        );
+      });
+    });
+  };
+  const logIn = async (email, password) => {
+    await signInWithEmailAndPassword(auth, email, password).then(async () => {
+      return auth.currentUser
+        .getIdToken()
+        .then((token) => {
+          setToken(token);
+          return axios.post(
+            "user/sessionlogin",
+            {},
+            {
               headers: {
                 Authorization: `Bearer ${token}`,
                 //"CSRF-Token": Cookies.get("XSRF-TOKEN")
               },
-            });
-          })
-          .then((res) => {
-            return console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-            toast.error("Auth Context Error" + error.message)
-          });
-      });
-  }
+            }
+          );
+        })
+        .then((res) => {
+          return console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Auth Context Error" + error.message);
+        });
+    });
+  };
 
   const logOut = async () => {
     await signOut(auth).then(() => {
       axios.post("user/sessionlogout");
-      localStorage.clear("user")
+      localStorage.clear("user");
     });
   };
   const googleSignUp = async () => {
@@ -73,7 +81,7 @@ export function UserAuthContextProvider({ children }) {
         const regno = user.displayName.slice(-9);
         const email = user.email;
         return user.getIdToken().then((token) => {
-          setToken(token)
+          setToken(token);
           axios.post(
             "user/create",
             {
@@ -88,12 +96,16 @@ export function UserAuthContextProvider({ children }) {
               },
             }
           );
-          axios.post("user/sessionlogin", {},{
-            headers: {
-              Authorization: `Bearer ${token}`,
-              //'CSRF-Token': Cookies.get("_csrf")
-            },
-          });
+          axios.post(
+            "user/sessionlogin",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                //'CSRF-Token': Cookies.get("_csrf")
+              },
+            }
+          );
         });
       }
     });
@@ -105,13 +117,17 @@ export function UserAuthContextProvider({ children }) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         user.getIdToken().then((token) => {
-          setToken(token)
+          setToken(token);
           axios
-            .post("user/getuser", {},{
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            })
+            .post(
+              "user/getuser",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
             .then((res) => {
               console.log(res);
             });
@@ -138,10 +154,10 @@ export function UserAuthContextProvider({ children }) {
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-       if (user) {
+      if (user) {
         setUser(user);
-        localStorage.setItem("user", JSON.stringify(user))
-        console.log(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        // console.log(user);
       }
     });
     return () => {

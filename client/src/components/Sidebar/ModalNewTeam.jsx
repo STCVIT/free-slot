@@ -16,6 +16,7 @@ const FreeSlot = ({ onClose }) => {
   const [tagNote, setTagNote] = useState("Add a tag");
   const [saveTeam, setSaveTeam] = useState(true);
   const [teamName, setTeamName] = useState("");
+
   const ToastMessageContainer = (props) => {
     return (
       <div>
@@ -41,14 +42,6 @@ const FreeSlot = ({ onClose }) => {
         e.target.value = "";
         let newTag = [];
         let tag = value.split(",");
-        // if (new Set(tag).size < tag.length) {
-        //   toast.error(
-        //     <ToastMessageContainer
-        //       error="Duplicate tag(s) found!"
-        //       description="Duplicate tags inserted only once."
-        //     />
-        //   );
-        // }
         tag = new Set(tag);
         tag.forEach((element) => {
           if (tags.includes(element)) {

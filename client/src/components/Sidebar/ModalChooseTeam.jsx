@@ -1,19 +1,52 @@
 import PageHeading from "../Headings/PageHeading";
 // import '../index.css    '
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useEffect } from "react";
 import { GrClose } from "react-icons/gr";
 import { UserAuth } from "../../context/UserAuthContext";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import axios from "../../axios/index";
 import Fuse from "fuse.js";
 const ModalChooseTeam = ({ onClose, data }) => {
+  const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
-  const [selectedTeam, setSelectedTeam] = useState(null);
-  const selectTeam = (idx) => {
-    setSelectedTeam(idx);
+  const { selectedTeam, setSelectedTeam, justFindFreeSlot } = FindFreeSlot();
+  const regNoArr = data[0];
+  const teamObj = data[1];
+
+  const goToFreeSlot = async (team_name) => {
+    const regArr = new Set();
+    teamObj[team_name].forEach((team) => {
+      regArr.add(team);
+    });
+    // console.log([...regArr]);
+    let finalArr = [];
+    [...regArr].forEach((reg) => {
+      finalArr.push(reg.reg_no);
+    });
+    console.log(finalArr);
+    try {
+      await justFindFreeSlot(finalArr);
+      navigate("/freeslot");
+    } catch (error) {
+      console.error("goToFreeSlot " + error);
+    }
+    onClose(selectedTeam);
   };
-  const [teams, setTeams] = useState([]);
+
+  // useEffect(() => {
+  //   const selectTeam = (team_name) => {
+
+  //     setSelectedTeam([...regArr]);
+  //   };
+  //   console.log("Selected team: ", selectedTeam);
+  //   if (selectedTeam.length > 0) {
+  //   }
+  // }, [selectedTeam]);
+  // const [teams, setTeams] = useState([]);
+  // console.log(data);
   const options = {
     // isCaseSensitive: false,
     // includeScore: false,
@@ -28,14 +61,17 @@ const ModalChooseTeam = ({ onClose, data }) => {
     // ignoreLocation: false,
     // ignoreFieldNorm: false,
     // fieldNormWeight: 1,
-    keys: ["name"],
+    keys: ["team_name"],
   };
-  const fuse = new Fuse(data, options);
+  // const teamNames = data.map((team) => team.team_name);
+  // console.log(teamNames);
+  const fuse = new Fuse(regNoArr, options);
   const results = fuse.search(searchValue);
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
-  console.log(selectedTeam);
+  // useEffect(() => {
+  //   console.log(results);
+  // }, [results]);
+  // console.log(selectedTeam);
+  // console.log("teams obj:", teamObj);
   const TeamCard = ({ team, idx }) => {
     const pastelColors = [
       "#F2C4DE",
@@ -49,22 +85,19 @@ const ModalChooseTeam = ({ onClose, data }) => {
     return (
       <div
         className="grid grid-cols-12 cursor-pointer hover:outline hover:bg-white p-4 rounded-md even:bg-blue-200 odd:bg-gray-200"
-        onClick={() => selectTeam(idx)}
+        onClick={() => goToFreeSlot(team.team_name)}
       >
         <div className={`col-span-2 md:col-span-1 flex items-center`}>
           <div
             style={{ background: pastelColors[idx % 5] }}
             className={`w-[75%] h-full rounded-full  flex items-center justify-center border-2 border-black`}
           >
-            {team.name[0]}
-            {/* S */}
+            {team.team_name[0]}
           </div>
         </div>
         <div className="col-span-10 md:col-span-11">
-          <div>{team.name}</div>
+          <div>{team.team_name}</div>
           <div>{team.members}</div>
-          {/* <div>STC</div>
-          <div>Akash, Ananay, Anirudh, Anitej, Arushi, Astha</div> */}
         </div>
       </div>
     );
@@ -93,10 +126,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
         </div>
       </div>
       <div className="h-[50vh] overflow-y-auto p-4 my-4 flex flex-col gap-y-4 ">
-        {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((team, idx) => (
-          <TeamCard team={team} idx={idx} />
-        ))} */}
-        {(searchValue === "" ? data : results).map((team, idx) => (
+        {(searchValue === "" ? regNoArr : results).map((team, idx) => (
           <TeamCard team={searchValue === "" ? team : team.item} idx={idx} />
         ))}
       </div>

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import DropDownSidebar from "../Dropdowns/DropDownSidebar";
 import DropDownSidebar from "../Dropdowns/DropDownSidebar";
 import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
+import axios from "../../axios";
 
 function Sidebar({ filter, setFilter }) {
+  const [urlPath, setUrlPath] = useState("");
   const isLg = window.matchMedia("(min-width: 1024px)").matches;
   const [seeFilters, setSeeFilters] = useState(isLg ? true : false);
-  // const [groups, setGroups] = useState([])
+
+  const [groups, setGroups] = useState([]);
   const days = [
     "Monday",
     "Tuesday",
@@ -16,40 +19,36 @@ function Sidebar({ filter, setFilter }) {
     "Friday",
     "Saturday",
   ];
-  const groups = [
-    {
-      name: "Apple",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Cat",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "ZZZ",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Dasd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "AAasdas",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "BBasd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Casd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-    {
-      name: "Dasd",
-      members: "Akash, Ananay, Anirudh, Anitej, Arushi, Astha",
-    },
-  ];
+
+  useEffect(() => {
+    setUrlPath(window.location.pathname);
+    // console.log(urlPath);
+  }, [urlPath]);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user.stsTokenManager.accessToken;
+    // console.log(user, token);
+    async function getData() {
+      // console.log("check");
+      const data = await axios
+        .post(
+          "team/getUserTeams",
+          {
+            email: user.email,
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          // console.log(res);
+          return res.data;
+        });
+      console.log("teams: ", data);
+
+      setGroups(data);
+    }
+    getData();
+  }, []);
+
   return (
     <>
       <aside
@@ -95,10 +94,11 @@ function Sidebar({ filter, setFilter }) {
                 clearable
                 placeholder="Group"
                 selection
+                disabled={urlPath === "/freeslot" ? true : false}
                 options={groups.map((group) => ({
-                  key: group.name,
-                  text: group.name,
-                  value: group.name,
+                  key: group.team_name,
+                  text: group.team_name,
+                  value: group.team_name,
                 }))}
                 onChange={(e, { value }) => {
                   setFilter({

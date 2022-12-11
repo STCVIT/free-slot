@@ -4,7 +4,7 @@ import NestedModal from "./meetingModal";
 import { GoKebabVertical } from "react-icons/go";
 const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
-  
+
   return (
     <div
       className="drop-shadow absolute z-[1000] top-10  md:right-6 hidden p-4 mb-4 rounded-md bg-white w-[80vw]  md:w-[25rem]"
@@ -31,8 +31,17 @@ const MeetingInfoModal = (props) => {
 };
 
 const MeetingCardTemplate = (props) => {
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   const MeetingCardsArray = props.list.map((dataItem) => {
-    console.log(dataItem)
+    // console.log(dataItem);
     const handleOpen = (id) => {
       const modal = document.getElementById("meetingInfoCard" + id);
       modal.classList.toggle("hidden");
@@ -43,6 +52,8 @@ const MeetingCardTemplate = (props) => {
       tab: props.tab,
       refresh: props.refresh,
     };
+    const getDay = new Date(dataItem.date);
+    // console.log(dataItem);
     return (
       <div
         className="w-3/4 p-6 col-span-1  border relative  bg-white rounded-lg my-4 shadow "
@@ -59,9 +70,18 @@ const MeetingCardTemplate = (props) => {
         </div>
         {/* )} */}
         <div className="absolute top-5 right-10 cursor-pointer">
-          <GoKebabVertical size={25} onClick={() => handleOpen(dataItem.meet_id)} />
+          <GoKebabVertical
+            size={25}
+            onClick={() => handleOpen(dataItem.meet_id)}
+          />
         </div>
-        <p className="px-2 text-2xl font-bold  text-black">{dataItem.start_time} - {dataItem.end_time}</p>
+        <p>
+          <span>{weekday[getDay.getDay()]}</span>
+          <span className="font-semibold">, {dataItem.date}</span>
+        </p>
+        <p className="px-2 text-2xl font-bold  text-black">
+          {dataItem.start_time} - {dataItem.end_time}
+        </p>
         <div className="flex items-center gap-x-4 my-4 font-semibold text-myBlue">
           <IoLocationSharp size={20} />
           {dataItem.location}
@@ -69,10 +89,11 @@ const MeetingCardTemplate = (props) => {
         <p className="font-normal flex flex-col gap-y-1 text-black ">
           {/* <span className="font-semibold">Created by {dataItem.by}</span> */}
           <span className="font-semibold">Created by X</span>
-          <span className="font-semibold">{dataItem.date}</span>
+
           {/* <span>{dataItem.day}</span> */}
-          <span>Monday</span>
-          <span>{dataItem.tile}</span>
+
+          <span>{dataItem.title}</span>
+          <span>{dataItem.team_name}</span>
         </p>
         <div className="flex w-full gap-x-4">
           {["Mark as done", "Cancel"].map((button) => (
