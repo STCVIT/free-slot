@@ -10,9 +10,10 @@ const { checkUser, sessionLogout, sessionLogin } = require('../middleware/auth')
 
 router.post('/create', addUserInDb)
 router.get('/getUser',checkUser, getUser)
-router.get('/getUsers/:meet_id', getUsers)
+//router.get('/getUsers/:meet_id', getUsers)
 router.patch('/updateUser',checkUser, updateUser)
-router.delete('/deleteUser/:regno',checkUser, deleteUser, sessionLogout)
+//router.delete('/deleteUser',checkUser, deleteUser, sessionLogout)
+router.delete('/deleteUser', deleteUser)
 router.post('/sessionlogin', sessionLogin)
 router.post('/sessionlogout', sessionLogout)
 

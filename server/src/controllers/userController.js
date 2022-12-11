@@ -1,10 +1,17 @@
 const db = require('../db/db')
 const User = db.users;
+const Team = db.teams
 const { NotFoundError, BadRequestError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler');
 const {busy_time} = require('./freeSlotScreenshot');
 const { createUserWithEmailAndPassword } = require('firebase/auth');
 
+
+//delete hook
+User.beforeDestroy( user =>{
+    const regno = user.reg_no
+    console.log(regno)
+})
 // Adding User in database
 const addUserInDb = async (req, res, next)=>{
     try {
@@ -88,7 +95,7 @@ const updateUser = async (req, res)=>{
 //delete user
 const deleteUser = async (req, res)=>{
     try {
-        let regno =req.params.regno
+        let regno = req.body.regno
         if(!regno || regno == undefined){
             return res.status(418).send("Invalid registration number")
         }
@@ -98,6 +105,7 @@ const deleteUser = async (req, res)=>{
          if(!user) {
             return errorHandler(new NotFoundError, req, res)
         }
+
         await user.destroy()
         res.status(200).send(user)
     } catch (error) {

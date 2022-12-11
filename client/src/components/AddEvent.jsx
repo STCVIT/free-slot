@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../axios/index";
 import PageHeading from "./Headings/PageHeading";
 import { toast } from "react-toastify";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+//import userModel from "../../../server/src/models/user.model";
 
 const EntryField = ({ label, value, onChange, isDesc }) => {
   return (
@@ -33,6 +34,7 @@ const AddEvent = () => {
   const [eventDate, setEventDate] = React.useState("");
   const [eventLocation, setEventLocation] = React.useState("Google meet");
   const [eventLink, setEventLink] = React.useState("");
+  const user = JSON.parse(localStorage.getItem("user"))
   var { start_time, end_time } = chosenSlotTime;
   const [notified, setNotified] = useState(false);
   start_time = parseInt(chosenSlotTime.end_time.slice(0, 2));
@@ -54,8 +56,9 @@ const AddEvent = () => {
       toast.error("Start time must be less than end time");
       return;
     } else {
-      axios.post("http://localhost:6969/", {
-        name: eventName,
+      axios.post("/meet/create", {
+        email: user.email,
+        title: eventName,
         description: eventDescription,
         date: eventDate,
         location: eventLocation,

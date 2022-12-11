@@ -74,8 +74,6 @@ export function UserAuthContextProvider({ children }) {
         const email = user.email;
         return user.getIdToken().then((token) => {
           setToken(token)
-          const csrfToken = Cookies.get("XSRF-TOKEN");
-          console.log(csrfToken);
           axios.post(
             "user/create",
             {
@@ -90,7 +88,7 @@ export function UserAuthContextProvider({ children }) {
               },
             }
           );
-          axios.post("user/sessionlogin", {
+          axios.post("user/sessionlogin", {},{
             headers: {
               Authorization: `Bearer ${token}`,
               //'CSRF-Token': Cookies.get("_csrf")
@@ -109,7 +107,7 @@ export function UserAuthContextProvider({ children }) {
         user.getIdToken().then((token) => {
           setToken(token)
           axios
-            .get("user/getuser", {
+            .post("user/getuser", {},{
               headers: {
                 Authorization: `Bearer ${token}`,
               },

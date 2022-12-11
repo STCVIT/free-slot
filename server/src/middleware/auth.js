@@ -7,15 +7,9 @@ const path = require('path')
 require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
 admin.initializeApp({
     credential: admin.credential.cert({
-        apiKey: process.env.API_KEY,
         privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
         clientEmail: process.env.CLIENT_EMAIL,
-        authDomain: process.env.AUTH_DOMAIN,
-        projectId: process.env.PROJECT_ID,
-        storageBucket: process.env.STORAGE_BUCKET,
-        messagingSenderId: process.env.MESSAGING_SENDER_ID,
-        appId: process.env.APP_ID,
-        measurementId: process.env.MEASUREMENT_ID
+        projectId: process.env.PROJECT_ID
     })
 })
 const sessionLogin = async (req, res)=>{
@@ -50,19 +44,17 @@ const checkUser = (req, res, next)=>{
         return errorHandler(new AuthError(), req, res)
     }
     const tokenString = req.header("Authorization").split(" ")[1];
-    const sessionCookie = req.cookies.session
-    //console.log(sessionCookie)
+    //const sessionCookie = req.cookies.session
     admin
     .auth()
     .verifyIdToken(tokenString)
-    .verifySessionCookie(sessionCookie, true)
+    //.verifySessionCookie(sessionCookie, true)
     .then((user)=>{
-        const uid = user.uid
-        console.log(uid)
+        //console.log("Check User Passed")
         next()
     })
     .catch((err)=>{
-        console.log(err.message);
+        console.log("checkUser Error "+err.message);
         errorHandler(new AuthError(), req, res)
     })
 }

@@ -12,12 +12,13 @@ const {
 const { addSlot } = require('../controllers/freeSlotController')
 const { getUserReg, getUserName } = require('../controllers/userController')
 const { getAllTeams } = require('../controllers/teamController')
+const { checkUser } = require('../middleware/auth')
 
 router.post('/create', getUserName, addMeet, addSlot)
 router.post('/getmeets', getAllTeams, getAllMeets)
-router.post('/getUpcoming', getAllTeams, getAllUpcomingMeets)
-router.post('/getPast', getAllTeams, getAllPastMeets)
-router.post('/getCancelled', getAllTeams, getAllCancelledMeets)
+router.post('/getUpcoming', checkUser, getAllTeams, getAllUpcomingMeets)
+router.post('/getPast', checkUser, getAllTeams, getAllPastMeets)
+router.post('/getCancelled', checkUser, getAllTeams, getAllCancelledMeets)
 router.patch('/updateMeet', updateMeet)
 router.delete('/deleteMeet/:meet_id', deleteMeet)
 

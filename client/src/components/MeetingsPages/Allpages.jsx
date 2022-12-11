@@ -5,6 +5,7 @@ import axios from "../../axios/index";
 import { UserAuth } from '../../context/UserAuthContext'
 export const AllPages = ({ filter, tab }) => {
   const user = JSON.parse(localStorage.getItem("user"))
+ const token = user.stsTokenManager.accessToken
   const group = new Set();
   const [UpcomingData, setUpcomingData] = useState([]);
   const [PastData, setPastData] = useState([]);
@@ -22,11 +23,14 @@ export const AllPages = ({ filter, tab }) => {
   useEffect(() => {
     async function getData() { 
       const upcoming = await axios.post("meet/getUpcoming", {
-        email: user.email,
-        abc: "def"
-      });
-      const past = await axios.get("meet/getPast");
-      const cancelled = await axios.get("meet/getCancelled");
+        email: user.email
+      }, {headers: {'Authorization': `Bearer ${token}`}});
+      const past = await axios.post("meet/getPast", {
+        email: user.email
+      }, {headers: {'Authorization': `Bearer ${token}`}});
+      const cancelled = await axios.post("meet/getCancelled",{
+        email: user.email
+      }, {headers: {'Authorization': `Bearer ${token}`}});
       console.log(upcoming.data);
       setUpcomingData(upcoming.data);
       setPastData(past.data);
