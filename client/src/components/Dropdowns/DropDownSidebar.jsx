@@ -12,6 +12,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 // import ComponentModal from "./ComponentModal";
 import axios from "axios";
+import { ClickAwayListener } from "@mui/material";
 const isLg = window.matchMedia("(min-width: 1024px)").matches;
 const style = {
   position: "absolute",
@@ -75,6 +76,14 @@ export default function Example({ data }) {
     : { position: "fixed", zIndex: 10000, bottom: 5, right: 5 };
 
   const ComponentModal = () => {
+    function modalOff() {
+      if (responsesOpen) setResponsesOpen(false);
+      if (newTeamOpen) setNewTeamOpen(false);
+      if (chooseTeamOpen) setChooseTeamOpen(false);
+    }
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") modalOff();
+    });
     return (
       <div>
         <Modal
@@ -89,20 +98,22 @@ export default function Example({ data }) {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
-            {chooseTeamOpen && (
-              <ModalChooseTeam
-                data={data}
-                onClose={() => setChooseTeamOpen(false)}
-              />
-            )}
-            {newTeamOpen && (
-              <ModalNewTeam onClose={() => setNewTeamOpen(false)} />
-            )}
-            {responsesOpen && (
-              <Responses onClose={() => setResponsesOpen(false)} />
-            )}
-          </Box>
+          <ClickAwayListener onClickAway={modalOff}>
+            <Box sx={style}>
+              {chooseTeamOpen && (
+                <ModalChooseTeam
+                  data={data}
+                  onClose={() => setChooseTeamOpen(false)}
+                />
+              )}
+              {newTeamOpen && (
+                <ModalNewTeam onClose={() => setNewTeamOpen(false)} />
+              )}
+              {responsesOpen && (
+                <Responses onClose={() => setResponsesOpen(false)} />
+              )}
+            </Box>
+          </ClickAwayListener>
         </Modal>
       </div>
     );
