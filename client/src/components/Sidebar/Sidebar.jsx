@@ -9,7 +9,7 @@ function Sidebar({ filter, setFilter }) {
   const [urlPath, setUrlPath] = useState("");
   const isLg = window.matchMedia("(min-width: 1024px)").matches;
   const [seeFilters, setSeeFilters] = useState(isLg ? true : false);
-
+  const [teams, setTeams] = useState([]);
   const [groups, setGroups] = useState([]);
   const days = [
     "Monday",
@@ -42,13 +42,14 @@ function Sidebar({ filter, setFilter }) {
           // console.log(res);
           return res.data;
         });
-      // console.log("teams: ", data[0]);
+      console.log("teams: ", data);
 
-      setGroups(data[0]);
+      setGroups(data);
+      setTeams(Object.keys(data[1]));
     }
     getData();
   }, []);
-
+  // console.log(Object.keys(groups[1]));
   return (
     <>
       <aside
@@ -92,14 +93,14 @@ function Sidebar({ filter, setFilter }) {
 
               <Dropdown
                 clearable
-                placeholder="Group"
-                selection
+                placeholder="Team"
                 multiple={false}
+                selection
                 disabled={urlPath === "/freeslot" ? true : false}
-                options={groups.map((group) => ({
-                  key: group.team_name,
-                  text: group.team_name,
-                  value: group.team_name,
+                options={teams.map((group) => ({
+                  key: group,
+                  text: group,
+                  value: group,
                 }))}
                 onChange={(e, { value }) => {
                   setFilter({
@@ -118,6 +119,7 @@ function Sidebar({ filter, setFilter }) {
                 selection
                 options={[
                   <input
+                    key={"filterTimeInput"}
                     className="w-full p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
                     type="time"
                     onChange={(e) =>

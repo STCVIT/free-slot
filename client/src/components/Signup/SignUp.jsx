@@ -7,53 +7,54 @@ import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import axios from "../../axios/index";
 import { getAuth } from "firebase/auth";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 const SignUp = () => {
-  document.title = "Sign Up"
-  const [name, setName] = useState("")
-  const [regno, setRegno] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
+  document.title = "Sign Up";
+  const [name, setName] = useState("");
+  const [regno, setRegno] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { googleSignUp, signUp } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
-  const uid = window.location.pathname.match(/[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g)
-  async function handleSubmit(e){
-    e.preventDefault()
+  const uid = window.location.pathname.match(
+    /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
+  );
+  async function handleSubmit(e) {
+    e.preventDefault();
     try {
-      setError("")
-      setLoading(true)
-      const response = await axios.post('user/create', 
-      {
+      setError("");
+      setLoading(true);
+      const response = await axios.post("user/create", {
         name,
         regno,
-        email
-      })
-      if(response.status===200){
-        const res = await signUp(email, password)
-          if(res && uid) {
-            navigate("/timetable/"+uid)
-          } else if(res){
-            navigate('/timetable')
-          }
+        email,
+      });
+      if (response.status === 200) {
+        const res = await signUp(email, password);
+        if (res && uid) {
+          navigate("/timetable/" + uid);
+        } else if (res) {
+          navigate("/timetable");
+        }
       }
     } catch (error) {
-      setError("Failed to create an account")
-      console.error(error)
+      setError("Failed to create an account");
+      console.error(error);
     }
-    setLoading(false)
-  } 
+    setLoading(false);
+  }
   const oAuth = async (e) => {
     setError("");
     try {
-      const res =await googleSignUp();
-      if(res && uid) {
-        navigate("/timetable/"+uid)
-      } else if(res){
-        navigate('/timetable')
+      const res = await googleSignUp();
+      if (res && uid) {
+        navigate("/timetable/" + uid);
+      } else if (res) {
+        navigate("/timetable");
       }
     } catch (error) {
       setError(e.message);
@@ -82,14 +83,14 @@ const SignUp = () => {
           <div className="px-3 sm:py-2 sm:px-16 md:py-3.5 md:px-24 lg:py-5 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-5">Sign-Up</h1>
             <button
-                className="flex justify-center w-full border-2 border-myBlue text-black font-semibold mx-auto py-2 rounded "
-                type="button"
-                onClick={oAuth}
-              >
-                <img className="px-2" src={googleLogo} alt="" />
-                <p>Continue with Google</p>
-              </button>
-              <div className="relative py-2">
+              className="flex justify-center w-full border-2 border-myBlue text-black font-semibold mx-auto py-2 rounded "
+              type="button"
+              onClick={oAuth}
+            >
+              <img className="px-2" src={googleLogo} alt="" />
+              <p>Continue with Google</p>
+            </button>
+            <div className="relative py-2">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-b border-gray-300"></div>
               </div>
@@ -100,37 +101,54 @@ const SignUp = () => {
             <form>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">Name</label>
-                <input className="focus:outline-none border-2 rounded py-3 px-4"
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e)=> setName(e.target.value)}
-                required />
+                <input
+                  className="focus:outline-none border-2 rounded py-3 px-4"
+                  id="name"
+                  type="text"
+                  value={name}
+                  autoComplete="false"
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
               </div>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">
                   VIT Registration No.
                 </label>
-                <input className="focus:outline-none border-2 rounded py-3 px-4"
-                id="regno"
-                type="text"
-                value={regno}
-                onChange={(e)=> setRegno(e.target.value)}
-                required/>
+                <input
+                  className="focus:outline-none border-2 rounded py-3 px-4"
+                  id="regno"
+                  type="text"
+                  value={regno}
+                  autoComplete="false"
+                  onChange={(e) => setRegno(e.target.value)}
+                  required
+                />
               </div>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">Email</label>
                 <input
+                  autoComplete="false"
                   className="focus:outline-none border-2 rounded py-3 px-4"
-                  id="email" type="email" value={email} onChange={(e)=> setEmail(e.target.value)} required/>
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
               <div className="flex flex-col py-2">
                 <label className=" font-semibold py-1">Password</label>
                 <div className="flex flex-row border-2 rounded">
                   <input
+                    autoComplete="false"
                     className=" focus:outline-none px-4 py-3 w-full"
                     type={passwordType}
-                    id="password" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
                   <div onClick={togglePassword}>
                     {passwordType === "password" ? (
                       <img className="py-4 px-2" src={Visible} alt="Eye Icon" />
@@ -147,17 +165,23 @@ const SignUp = () => {
             </form>
             <div className="pt-8 pb-1 text-center ">
               <Link to="/timetable">
-              <button className="bg-myBlue text-white w-full font-bold mx-auto py-2 rounded" disabled={loading} onClick={handleSubmit}>
-                Next
-              </button>
+                <button
+                  className="bg-myBlue text-white w-full font-bold mx-auto py-2 rounded"
+                  disabled={loading}
+                  onClick={handleSubmit}
+                >
+                  Next
+                </button>
               </Link>
             </div>
-            
+
             <div className="py-3">
-              
               <h6 className="text-sm text-grey py-2">
                 Already have an account?
-                <Link to={uid ? '/login/'+uid : '/login'} className="pl-2 text-myBlue">
+                <Link
+                  to={uid ? "/login/" + uid : "/login"}
+                  className="pl-2 text-myBlue"
+                >
                   Login
                 </Link>
               </h6>

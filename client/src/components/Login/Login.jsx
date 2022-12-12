@@ -18,16 +18,18 @@ const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   // eslint-disable-next-line no-unused-vars
   const [passwordInput, setPasswordInput] = useState("");
-  const uid = window.location.pathname.match(/[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g)
+  const uid = window.location.pathname.match(
+    /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
+  );
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       const res = await logIn(email, password);
-      if (res && uid){
-        navigate("/addtoteam/"+uid);
-      } else if(res){
-        navigate('/home')
+      if (res && uid) {
+        navigate("/addtoteam/" + uid);
+      } else if (res) {
+        navigate("/home");
       }
     } catch (error) {
       setError(error.message);
@@ -43,10 +45,10 @@ const Login = () => {
     setError("");
     try {
       const res = await googleSignIn();
-      if (res && uid){
-        navigate("/addtoteam/"+uid);
-      } else if(res){
-        navigate('/home')
+      if (res && uid) {
+        navigate("/addtoteam/" + uid);
+      } else if (res) {
+        navigate("/home");
       }
     } catch (error) {}
   };
@@ -75,6 +77,7 @@ const Login = () => {
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-2">Email</label>
                 <input
+                  autoComplete="true"
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   className="focus:outline-none border-2 rounded py-3 px-4"
@@ -84,6 +87,7 @@ const Login = () => {
                 <label className=" font-semibold py-2">Password</label>
                 <div className="flex flex-row border-2 rounded">
                   <input
+                    autoComplete="false"
                     className=" focus:outline-none px-4 py-3 w-full"
                     type={passwordType}
                     value={password}
@@ -136,7 +140,10 @@ const Login = () => {
               </button>
               <h6 className="text-sm text-grey py-2">
                 Don't have an account?
-                <Link to={uid ? '/signup/'+uid : '/signup'} className="pl-2 text-myBlue">
+                <Link
+                  to={uid ? "/signup/" + uid : "/signup"}
+                  className="pl-2 text-myBlue"
+                >
                   Sign-Up
                 </Link>
               </h6>

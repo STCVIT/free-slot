@@ -15,7 +15,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
   const { selectedTeam, setSelectedTeam, justFindFreeSlot } = FindFreeSlot();
   const regNoArr = data[0];
   const teamObj = data[1];
-
+  console.log(teamObj);
   const goToFreeSlot = async (team_name) => {
     const regArr = new Set();
     teamObj[team_name].forEach((team) => {
@@ -110,7 +110,11 @@ const ModalChooseTeam = ({ onClose, data }) => {
       </div>
       <div className="h-[50vh] overflow-y-auto p-4 my-4 flex flex-col gap-y-4 ">
         {(searchValue === "" ? regNoArr : results).map((team, idx) => (
-          <TeamCard team={searchValue === "" ? team : team.item} idx={idx} />
+          <TeamCard
+            key={idx}
+            team={searchValue === "" ? team : team.item}
+            idx={idx}
+          />
         ))}
       </div>
     </div>

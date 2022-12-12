@@ -40,7 +40,7 @@ const MeetingCardTemplate = (props) => {
     "Friday",
     "Saturday",
   ];
-  const MeetingCardsArray = props.list.map((dataItem) => {
+  const MeetingCardsArray = props.list.map((dataItem, idx) => {
     // console.log(dataItem);
     const handleOpen = (id) => {
       const modal = document.getElementById("meetingInfoCard" + id);
@@ -56,6 +56,7 @@ const MeetingCardTemplate = (props) => {
     // console.log(dataItem);
     return (
       <div
+        key={idx}
         className="w-3/4 p-6 col-span-1  border relative  bg-white rounded-lg my-4 shadow "
         id={dataItem.meet_id}
       >
@@ -96,8 +97,8 @@ const MeetingCardTemplate = (props) => {
           <span>{dataItem.team_name}</span>
         </p>
         <div className="flex w-full gap-x-4">
-          {["Mark as done", "Cancel"].map((button) => (
-            <NestedModal desc={button} data={data} />
+          {["Mark as done", "Cancel"].map((button, idx) => (
+            <NestedModal desc={button} data={data} key={idx} />
           ))}
         </div>
       </div>

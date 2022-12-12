@@ -134,8 +134,8 @@ export default function Example({ data }) {
             } absolute z-50 mt-2 w-max rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none`}
           >
             <div className="py-1 p-3">
-              {items.map((item) => (
-                <Menu.Item>
+              {items.map((item, idx) => (
+                <Menu.Item key={idx}>
                   {({ active }) => (
                     <>
                       <div

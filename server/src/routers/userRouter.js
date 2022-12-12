@@ -13,6 +13,7 @@ const { checkUser } = require("../middleware/auth");
 router.post("/create", addUserInDb);
 router.get("/getUser", checkUser, getUser);
 //router.get('/getUsers/:meet_id', getUsers)
+router.post("/getUserByEmail", getUserByEmail);
 router.patch("/updateUser", checkUser, updateUser);
 //router.delete('/deleteUser',checkUser, deleteUser, sessionLogout)
 router.delete("/deleteUser", deleteUser);

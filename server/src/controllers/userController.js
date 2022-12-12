@@ -154,4 +154,5 @@ module.exports = {
   deleteUser,
   getUserReg,
   getUserName,
+  getUserByEmail,
 };
