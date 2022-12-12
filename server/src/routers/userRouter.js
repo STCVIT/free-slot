@@ -6,7 +6,7 @@ const {
     updateUser,
     deleteUser } = require('../controllers/userController')
 
-const { checkUser, sessionLogout, sessionLogin } = require('../middleware/auth')
+const { checkUser } = require('../middleware/auth')
 
 router.post('/create', addUserInDb)
 router.get('/getUser',checkUser, getUser)
@@ -14,7 +14,7 @@ router.get('/getUser',checkUser, getUser)
 router.patch('/updateUser',checkUser, updateUser)
 //router.delete('/deleteUser',checkUser, deleteUser, sessionLogout)
 router.delete('/deleteUser', deleteUser)
-router.post('/sessionlogin', sessionLogin)
-router.post('/sessionlogout', sessionLogout)
+//router.post('/sessionlogin', sessionLogin)
+//router.post('/sessionlogout', sessionLogout)
 
 module.exports = router

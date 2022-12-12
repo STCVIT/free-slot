@@ -20,10 +20,10 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { googleSignUp, signUp } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
+  const uid = window.location.pathname.match(/[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g)
   async function handleSubmit(e){
     e.preventDefault()
     try {
-      const auth = getAuth()
       setError("")
       setLoading(true)
       const response = await axios.post('user/create', 
@@ -33,8 +33,12 @@ const SignUp = () => {
         email
       })
       if(response.status===200){
-        await signUp(email, password)
-        navigate("/timetable")
+        const res = await signUp(email, password)
+          if(res && uid) {
+            navigate("/timetable/"+uid)
+          } else if(res){
+            navigate('/timetable')
+          }
       }
     } catch (error) {
       setError("Failed to create an account")
@@ -45,8 +49,12 @@ const SignUp = () => {
   const oAuth = async (e) => {
     setError("");
     try {
-      await googleSignUp();
-      navigate("/timetable");
+      const res =await googleSignUp();
+      if(res && uid) {
+        navigate("/timetable/"+uid)
+      } else if(res){
+        navigate('/timetable')
+      }
     } catch (error) {
       setError(e.message);
       console.log(e.message);
@@ -149,7 +157,7 @@ const SignUp = () => {
               
               <h6 className="text-sm text-grey py-2">
                 Already have an account?
-                <Link to="/login" className="pl-2 text-myBlue">
+                <Link to={uid ? '/login/'+uid : '/login'} className="pl-2 text-myBlue">
                   Login
                 </Link>
               </h6>

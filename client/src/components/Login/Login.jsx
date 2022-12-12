@@ -7,6 +7,7 @@ import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { uuidv4 } from "@firebase/util";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,13 +18,17 @@ const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   // eslint-disable-next-line no-unused-vars
   const [passwordInput, setPasswordInput] = useState("");
-
+  const uid = window.location.pathname.match(/[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      await logIn(email, password);
-      navigate("/home");
+      const res = await logIn(email, password);
+      if (res && uid){
+        navigate("/addtoteam/"+uid);
+      } else if(res){
+        navigate('/home')
+      }
     } catch (error) {
       setError(error.message);
       console.log(error.message)
@@ -37,8 +42,12 @@ const Login = () => {
   const oAuth = async (e) => {
     setError("");
     try {
-      await googleSignIn();
-      navigate("/home");
+      const res = await googleSignIn();
+      if (res && uid){
+        navigate("/addtoteam/"+uid);
+      } else if(res){
+        navigate('/home')
+      }
     } catch (error) {}
   };
   const togglePassword = (e) => {
@@ -49,7 +58,6 @@ const Login = () => {
     }
     setPasswordType("password");
   };
-
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-4">
@@ -128,7 +136,7 @@ const Login = () => {
               </button>
               <h6 className="text-sm text-grey py-2">
                 Don't have an account?
-                <Link to="/signup" className="pl-2 text-myBlue">
+                <Link to={uid ? '/signup/'+uid : '/signup'} className="pl-2 text-myBlue">
                   Sign-Up
                 </Link>
               </h6>

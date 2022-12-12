@@ -16,6 +16,8 @@ import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import FreeSlot from "./pages/Freeslot";
 import ContactUs from "./components/contactUs/contactUs";
+import AddMeToTeam from "./components/Links/AddMeToTeam";
+import RedirectingMiddleware from './components/Links/RedirectingMiddleware'
 export default function App() {
   return (
     <>
@@ -33,9 +35,12 @@ export default function App() {
                 }
               />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/signup/:id" element={<Signup />} />
               <Route path="/timetable" element={<Timetable />} />
+              <Route path="/timetable/:id" element={<Timetable />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/login/:id" element={<Login />} />
               <Route path="/about" element={<About />} />
               <Route path="/schedule" element={<Schedule />} />
               <Route
@@ -44,6 +49,9 @@ export default function App() {
               />
               <Route path="/addEvent" element={<AddEvent />} />
               <Route path="/freeslot" element={<FreeSlot />} />
+              <Route path="/addtoteam/:id" element={<AddMeToTeam />} />
+              {/* <Route path='/:id' element={localStorage.getItem("user")? <AddMeToTeam /> : <Login/>}/> */}
+              <Route path='/:id' element={<RedirectingMiddleware/>}/>
             </Routes>
             <ToastContainer />
           </BrowserRouter>

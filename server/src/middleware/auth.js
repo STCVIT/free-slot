@@ -12,32 +12,32 @@ admin.initializeApp({
         projectId: process.env.PROJECT_ID
     })
 })
-const sessionLogin = async (req, res)=>{
-    if(req.header("Authorization")==undefined || !req.header("Authorization")) {
-                 return errorHandler(new AuthError(), req, res)
-             }
-    const idToken = req.header("Authorization").split(" ")[1]
-    const expiresIn = 432000000
-    await admin
-            .auth()
-            .createSessionCookie(idToken, { expiresIn })
-            .then(
-                (sessionCookie)=>{
-                    const options = {maxAge: expiresIn, secure: true, httpOnly: false } //make this true in production
-                    res.cookie("session", sessionCookie, options)
-                    res.end(JSON.stringify({status: "success"}))
-                })
-            .catch((error)=>{
-                    res.status(401).send("Unauthorized request")
-                    console.error(error)
-                }
-            )
-}
+// const sessionLogin = async (req, res)=>{
+//     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
+//                  return errorHandler(new AuthError(), req, res)
+//              }
+//     const idToken = req.header("Authorization").split(" ")[1]
+//     const expiresIn = 432000000
+//     await admin
+//             .auth()
+//             .createSessionCookie(idToken, { expiresIn })
+//             .then(
+//                 (sessionCookie)=>{
+//                     const options = {maxAge: expiresIn, secure: true, httpOnly: false } //make this true in production
+//                     res.cookie("session", sessionCookie, options)
+//                     res.end(JSON.stringify({status: "success"}))
+//                 })
+//             .catch((error)=>{
+//                     res.status(401).send("Unauthorized request")
+//                     console.error(error)
+//                 }
+//             )
+// }
 
-const sessionLogout = async (req, res)=>{
-    await res.clearCookie("session")
-    res.redirect('/login')
-}
+// const sessionLogout = async (req, res)=>{
+//     await res.clearCookie("session")
+//     res.redirect('/login')
+// }
 
 const checkUser = (req, res, next)=>{
     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
@@ -63,4 +63,4 @@ const deleteUser = async (req, res)=>{
     await admin.auth().deleteUser(id);
     return successHandler(new UserDeletedSuccess(), res)
 }
-module.exports = { checkUser, deleteUser, sessionLogin, sessionLogout }
+module.exports = { checkUser, deleteUser }

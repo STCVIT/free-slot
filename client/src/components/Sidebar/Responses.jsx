@@ -35,7 +35,11 @@ const statusArray = ResponseData.map((x) => {
   );
 });
 const Responses = ({ onClose }) => {
-  //const {link, serLink} = FindFreeSlot()
+  const {link, setLink, setLinkCreator, linkTeam, setLinkTeam, getLink} = FindFreeSlot()
+  console.log(link)
+  const getLinkHandler = async()=>{
+    await getLink()
+  }
   const showCopiedToast = () => {
     toast.success("Link copied successfully!", {
       position: toast.POSITION.TOP_RIGHT,
@@ -52,14 +56,19 @@ const Responses = ({ onClose }) => {
       </div>
       <div className=" md:mx-16">
         <div className="w-full md:w-2/4">
+        <div>
+        <h1 className="text-[#9C9C9C] text-2xl">Enter team name</h1>
+        <div><input className="border" value={linkTeam} onChange={(e)=> setLinkTeam(e.target.value)}></input><button onClick={getLinkHandler}>Get link</button></div>
+        </div>
           <h1 className="text-[#9C9C9C] text-2xl">
             Share this link with your peers
           </h1>
           <div className="grid grid-cols-12  rounded-md border-2 border-gray-200 p-2 my-2">
             <div className="col-span-11 flex items-center">
               <h1 className="self-center text-sm overflow-hidden whitespace-nowrap text-ellipsis">
-                Link comes hereLink comes hereLink comes hereLink comes hereLink
-                comes here Link comes hereLink comes hereLink comes here
+                {/* Link comes hereLink comes hereLink comes hereLink comes hereLink
+                comes here Link comes hereLink comes hereLink comes here */}
+                {link}
               </h1>
             </div>
             <div className="col-span-1">

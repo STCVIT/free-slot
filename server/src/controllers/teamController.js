@@ -10,8 +10,21 @@ const addTeam = async (req, res) => {
   try {
     const team = await Team.create(req.body);
     const members = await team.addUsers(req.body.members);
-    res.status(201).send(team);
-    console.log("hi");
+    //res.status(201).send(team);
+    res.status(201)
+  } catch (error) {
+    errorHandler(new BadRequestError(), req, res);
+    console.error(error.message);
+  }
+};
+//add team by link
+const addTeamByLink = async (req, res, next) => {
+  try {
+    const team = await Team.create(req.body);
+    const member = await team.addUsers(req.body.regno);
+    //res.status(201).send(team);
+    res.status(201)
+    next()
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -105,7 +118,7 @@ const getUserTeams = async (req, res) => {
     // console.log(teams);
     res.status(200).send([teams, finalObj]);
 
-    console.log(finalObj);
+    //console.log(finalObj);
     // console.log(finalArr);
     // console.log(teams);
   } catch (error) {
@@ -129,7 +142,7 @@ const getTeamMembers = async (req, res) => {
 };
 //update team
 const updateTeam = async (req, res) => {
-  const updates = Object.keys(req.body);
+  //const updates = Object.keys(req.body);
   try {
     let id = req.params.team_id;
     if (!id || id == undefined) {
@@ -141,9 +154,11 @@ const updateTeam = async (req, res) => {
     if (!team) {
       return errorHandler(new NotFoundError(), req, res);
     }
-    updates.forEach((update) => (team[update] = req.body[update]));
-    await team.save();
-    res.status(200).send(team);
+    //updates.forEach((update) => (team[update] = req.body[update]));
+    //await team.save();
+    const members = await team.addUsers(req.body.members);
+    //res.status(200).send(team);
+    res.status(200)
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -164,7 +179,8 @@ const deleteTeam = async (req, res) => {
       return errorHandler(new NotFoundError(), req, res);
     }
     await team.destroy();
-    res.status(200).send(team);
+    //res.status(200).send(team);
+    res.status(200)
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -173,6 +189,7 @@ const deleteTeam = async (req, res) => {
 
 module.exports = {
   addTeam,
+  addTeamByLink,
   getTeamById,
   getTeamByName,
   getAllTeams,

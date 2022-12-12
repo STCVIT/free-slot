@@ -29,6 +29,7 @@ const TextInput = (props) => {
 export default function Timetable() {
   const [files, setFiles] = useState([]);
   const { sendTimetable } = UserAuth();
+  const uid = window.location.pathname.match(/[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g)
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,10 +39,15 @@ export default function Timetable() {
       reader.readAsDataURL(file);
       reader.onload = () => {
         file = reader.result;
-        console.log(file);
-        sendTimetable(file);
+        //console.log(file);
+        const res = sendTimetable(file);
+        if(res && uid){
+          navigate('/addtoteam/'+uid)
+        } else if(res){
+          navigate("/home");
+        }
       };
-      navigate("/home");
+      
     } catch (error) {
       console.error(error);
     }

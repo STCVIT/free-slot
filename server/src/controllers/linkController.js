@@ -1,7 +1,7 @@
 const link = (req, res, next)=>{
-    var uuid = require('node-uuid');
-    var randomID = uuid.v4();
-    var url = 'http://localhost:3000/timetable/' + randomID;
+    var { v4:uuidv4} = require('uuid');
+    var randomID = uuidv4();
+    var url = 'http://localhost:3000/' + randomID;
     res.send(url)
 }
 module.exports = { link }

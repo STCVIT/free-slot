@@ -23,52 +23,28 @@ export function UserAuthContextProvider({ children }) {
   const [token, setToken] = useState("");
 
   const signUp = async (email, password) => {
-    await createUserWithEmailAndPassword(auth, email, password).then((user) => {
-      user.user.getIdToken().then((token) => {
-        setToken(token);
-        axios.post(
-          "user/sessionlogin",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              //'CSRF-Token': Cookies.get("XSRF-TOKEN")
-            },
-          }
-        );
-      });
-    });
+    return await createUserWithEmailAndPassword(auth, email, password)
+    // .then((user) => {
+    //   user.user.getIdToken().then((token) => {
+    //     setToken(token);
+    //     axios.post(
+    //       "user/sessionlogin",
+    //       {},
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       }
+    //     );
+    //   });
+    // });
   };
   const logIn = async (email, password) => {
-    await signInWithEmailAndPassword(auth, email, password).then(async () => {
-      return auth.currentUser
-        .getIdToken()
-        .then((token) => {
-          setToken(token);
-          return axios.post(
-            "user/sessionlogin",
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                //"CSRF-Token": Cookies.get("XSRF-TOKEN")
-              },
-            }
-          );
-        })
-        .then((res) => {
-          return console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Auth Context Error" + error.message);
-        });
-    });
+    return await signInWithEmailAndPassword(auth, email, password)
   };
 
   const logOut = async () => {
-    await signOut(auth).then(() => {
-      axios.post("user/sessionlogout");
+    return await signOut(auth).then(() => {
       localStorage.clear("user");
     });
   };
@@ -92,17 +68,6 @@ export function UserAuthContextProvider({ children }) {
             {
               headers: {
                 Authorization: `Bearer ${token}`,
-                //'CSRF-Token': Cookies.get("_csrf")
-              },
-            }
-          );
-          axios.post(
-            "user/sessionlogin",
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                //'CSRF-Token': Cookies.get("_csrf")
               },
             }
           );
@@ -113,51 +78,30 @@ export function UserAuthContextProvider({ children }) {
 
   const googleSignIn = async () => {
     const googleAuthProvider = new GoogleAuthProvider();
-    await signInWithPopup(auth, googleAuthProvider);
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        user.getIdToken().then((token) => {
-          setToken(token);
-          axios
-            .post(
-              "user/getuser",
-              {},
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            )
-            .then((res) => {
-              console.log(res);
-            });
-        });
-      }
-    });
-  };
+    return await signInWithPopup(auth, googleAuthProvider);
+   };
   function reset(email) {
     return sendPasswordResetEmail(auth, email);
   }
 
-  const sendTimetable = (file) => {
+  const sendTimetable = async(file) => {
     const email = user.email;
-    axios
-      .post("timetable/string", {
+    return await axios.post("timetable/string", {
         email,
         file,
       })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log(res);
-        }
-      });
+      // .then((res) => {
+      //   if (res.status === 200) {
+      //     console.log(res);
+      //   }
+      // });
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
-        // console.log(user);
+        //console.log(localStorage.getItem("user"));
       }
     });
     return () => {

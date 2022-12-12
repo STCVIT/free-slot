@@ -1,17 +1,8 @@
 const db = require('../db/db')
 const User = db.users;
-const Team = db.teams
 const { NotFoundError, BadRequestError } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler');
-const {busy_time} = require('./freeSlotScreenshot');
-const { createUserWithEmailAndPassword } = require('firebase/auth');
 
-
-//delete hook
-User.beforeDestroy( user =>{
-    const regno = user.reg_no
-    console.log(regno)
-})
 // Adding User in database
 const addUserInDb = async (req, res, next)=>{
     try {
@@ -21,8 +12,8 @@ const addUserInDb = async (req, res, next)=>{
         email: req.body.email
     }
     const user = await User.create(info)
-    res.status(200).send(user)
-
+    //res.status(200).send(user)
+    res.status(200).send()
     }
     catch (error){
         errorHandler(new BadRequestError, req, res)
@@ -84,7 +75,8 @@ const updateUser = async (req, res)=>{
         }
         updates.forEach((update)=> (user[update] = req.body[update]));
         await user.save()
-        res.status(200).send(user)
+        //res.status(200).send(user)
+        res.status(200)
     }
     catch(error){
         errorHandler(new BadRequestError, req, res)
@@ -107,7 +99,8 @@ const deleteUser = async (req, res)=>{
         }
 
         await user.destroy()
-        res.status(200).send(user)
+        //res.status(200).send(user)
+        res.status(200)
     } catch (error) {
         errorHandler(new BadRequestError)
         console.error(error.message);

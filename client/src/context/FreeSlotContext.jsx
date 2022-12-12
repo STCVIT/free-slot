@@ -9,6 +9,8 @@ export function FreeSlotContextProvider({ children }) {
   const [link, setLink] = useState();
   const [chosenSlotTime, setChosenSlotTime] = useState();
   const [selectedTeam, setSelectedTeam] = useState([]);
+  const [linkCreator, setLinkCreator] = useState()
+  const [linkTeam, setLinkTeam] = useState()
   const justFindFreeSlot = async (tags) => {
     console.log(tags);
     try {
@@ -45,8 +47,11 @@ export function FreeSlotContextProvider({ children }) {
   };
   const getLink = async () => {
     try {
-      await axios.get("link").then((res) => {
-        setLink(res);
+      await axios.post("link", {
+        team_name: linkTeam,
+        email: JSON.parse(localStorage.getItem('user')).email
+      }).then((res) => {
+        setLink(res.data);
       });
     } catch (error) {
       console.error("getLink " + error);
@@ -66,6 +71,10 @@ export function FreeSlotContextProvider({ children }) {
         setChosenSlotTime,
         selectedTeam,
         setSelectedTeam,
+        linkCreator,
+        setLinkCreator,
+        linkTeam,
+        setLinkTeam
       }}
     >
       {children}
