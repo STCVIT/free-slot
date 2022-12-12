@@ -119,12 +119,32 @@ const getAllCancelledMeets = async (req, res) => {
   }
 };
 //upadte meet
+<<<<<<< HEAD
 const updateMeet = async (req, res) => {
   const updates = Object.keys(req.body);
   try {
     let id = req.body.meet_id;
     if (!id || id == undefined) {
       return res.status(418).send("Meet does not exist");
+=======
+const updateMeet = async (req, res)=>{
+    console.log(req.body)
+    const updates = Object.keys(req.body)
+    try{
+        let id = req.body.meet_id
+        if(!id || id == undefined){
+            return res.status(418).send("Meet does not exist")
+        }
+        const meet = await Meet.findOne({
+            where: {meet_id: id}
+         })
+        if(!meet) {
+            return errorHandler(new NotFoundError, req, res)
+        }
+        updates.forEach((update)=> (meet[update] = req.body[update]));
+        await meet.save()
+        res.status(200).send(meet)
+>>>>>>> 27d50e6 (status changing functionality)
     }
     const meet = await Meet.findOne({
       where: { meet_id: id },

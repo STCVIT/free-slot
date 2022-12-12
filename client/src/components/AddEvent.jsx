@@ -27,7 +27,7 @@ const EntryField = ({ label, value, onChange, isDesc }) => {
 
 const AddEvent = () => {
   // eslint-disable-next-line no-unused-vars
-  const { chosenSlotTime, setChosenSlotTime } = FindFreeSlot();
+  const { chosenSlotTime, chosenDate } = FindFreeSlot();
   document.title = "Add Event";
   const [eventName, setEventName] = React.useState("");
   const [eventDescription, setEventDescription] = React.useState("");

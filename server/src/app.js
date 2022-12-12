@@ -11,7 +11,7 @@ const path = require('path')
 require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 const cors = require('cors');
 const app = express();
-const whitelist = ['http://127.0.0.1:3000',"http://localhost:3000"]
+const whitelist = ['http://127.0.0.1:3000',"http://localhost:3000", 'https://develop.free-slot.pages.dev/']
 const corsOptions = {
     origin: function(origin, callback){
         if(whitelist.indexOf(origin!==-1)){
@@ -25,7 +25,6 @@ const corsOptions = {
 }
 
 require('./db/db')
-require('./associations')
 
 const userRouter = require('./routers/userRouter')
 const teamRouter = require('./routers/teamRouter')

@@ -4,7 +4,7 @@ import { FindFreeSlot } from '../../context/FreeSlotContext'
 import { useNavigate } from 'react-router-dom'
 
 const Freeslotcard = (props) => {
-  const { chosenSlotTime, setChosenSlotTime } = FindFreeSlot()
+  const { chosenSlotTime, setChosenSlotTime, chosenDate, setChosenDate } = FindFreeSlot()
   const navigate = useNavigate()
     const clickHandler = (data)=>{
         console.log(data)
