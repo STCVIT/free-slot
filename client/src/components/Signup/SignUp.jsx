@@ -6,8 +6,6 @@ import googleLogo from "../../assets/Gooogle-logo.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import axios from "../../axios/index";
-import { getAuth } from "firebase/auth";
-import Cookies from "js-cookie";
 
 const SignUp = () => {
   document.title = "Sign Up";
