@@ -19,9 +19,10 @@ const MainNavbar = ({ active }) => {
             </p>
           </div>
           <div>
-            <ul className="flex gap-x-2 border-b-2 border-black">
-              {["Home", "Schedule", "About"].map((item) => (
+            <ul className="flex gap-x-2">
+              {["Home", "Schedule", "About"].map((item, idx) => (
                 <Link
+                  key={idx}
                   to={`/${item.toLowerCase()}`}
                   style={{ color: "black" }}
                   className={`${mainClass} ${
@@ -42,20 +43,6 @@ const MainNavbar = ({ active }) => {
               </li>
             </ul>
           </div>
-        </div>
-
-        <div className="md:hidden">
-          <ul className={navbarOpen ? "grid grid-cols-1" : "hidden"}>
-            <li>
-              <p className="block ">Help</p>
-            </li>
-            <li>
-              <p className="block ">About</p>
-            </li>
-            <li>
-              <p className="block ">Contact</p>
-            </li>
-          </ul>
         </div>
       </header>
     </>

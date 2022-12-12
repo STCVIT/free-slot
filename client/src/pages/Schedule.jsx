@@ -19,7 +19,7 @@ const sched = {
 
 const ScheduleButton = (props) => {
   return (
-    <div class="p-4 rounded-lg bg-white my-4 grid grid-cols-12 text-xl font-semibold ">
+    <div className="p-4 rounded-lg bg-white my-4 grid grid-cols-12 text-xl font-semibold ">
       <div className="col-span-4">{props.subject}</div>
       <div className="col-span-8">{props.time}</div>
     </div>
@@ -45,8 +45,9 @@ const Schedule = () => {
             </button>
             <div>
               <div className="flex gap-x-3 w-full justify-between border-b-2 border-black">
-                {["Mon", "Tues", "Wed", "Thurs", "Fri"].map((day) => (
+                {["Mon", "Tues", "Wed", "Thurs", "Fri"].map((day, idx) => (
                   <button
+                    key={idx}
                     className={`${mainClass} ${
                       activeTab === day.toLocaleLowerCase()
                         ? activeClass
@@ -60,8 +61,8 @@ const Schedule = () => {
               </div>
             </div>
             <div className="bg-transparent" id="myTabContent">
-              {sched[activeTab].map((x) => (
-                <ScheduleButton time={x.time} subject={x.subject} />
+              {sched[activeTab].map((x, idx) => (
+                <ScheduleButton key={idx} time={x.time} subject={x.subject} />
               ))}
             </div>
           </div>

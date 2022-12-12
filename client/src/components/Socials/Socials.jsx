@@ -21,8 +21,8 @@ const socialsData = [
 const Socials = () => {
   return (
     <div className="flex w-full justify-center items-center gap-x-8 pt-16 pb-6">
-      {socialsData.map((social) => (
-        <a target="_blank" href={social.link} rel="noreferrer">
+      {socialsData.map((social, idx) => (
+        <a key={idx} target="_blank" href={social.link} rel="noreferrer">
           {social.platform}
         </a>
       ))}

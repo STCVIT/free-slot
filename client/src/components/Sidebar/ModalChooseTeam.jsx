@@ -72,30 +72,13 @@ const ModalChooseTeam = ({ onClose, data }) => {
   // }, [results]);
   // console.log(selectedTeam);
   // console.log("teams obj:", teamObj);
-  const TeamCard = ({ team, idx }) => {
-    const pastelColors = [
-      "#F2C4DE",
-      "#71B1D9",
-      "#AED8F2",
-      "#F2DEA2",
-      "#F2CDC4",
-    ];
-
-    // console.log(bgColor);
+  const TeamCard = ({ team }) => {
     return (
       <div
-        className="grid grid-cols-12 cursor-pointer hover:outline hover:bg-white p-4 rounded-md even:bg-blue-200 odd:bg-gray-200"
+        className="cursor-pointer hover:outline hover:bg-white p-4 rounded-md even:bg-blue-200 odd:bg-gray-200"
         onClick={() => goToFreeSlot(team.team_name)}
       >
-        <div className={`col-span-2 md:col-span-1 flex items-center`}>
-          <div
-            style={{ background: pastelColors[idx % 5] }}
-            className={`w-[75%] h-full rounded-full  flex items-center justify-center border-2 border-black`}
-          >
-            {team.team_name[0]}
-          </div>
-        </div>
-        <div className="col-span-10 md:col-span-11">
+        <div>
           <div>{team.team_name}</div>
           <div>{team.members}</div>
         </div>

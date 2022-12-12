@@ -11,12 +11,12 @@ import Slider from "@mui/material/Slider";
 const EntryField = ({ label, value, onChange, isDesc }) => {
   return (
     <div>
-      <label class="text-sm font-medium text-slate-500">{label}</label>
+      <label className="text-sm font-medium text-slate-500">{label}</label>
       <textarea
         rows={isDesc ? "4" : "1"}
         type="text"
         id="description"
-        class="border-2 resize-none border-gray-300 text-black-900 text-sm rounded-lg w-full p-2"
+        className="border-2 resize-none border-gray-300 text-black-900 text-sm rounded-lg w-full p-2"
         required
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -34,7 +34,7 @@ const AddEvent = () => {
   const [eventDate, setEventDate] = React.useState("");
   const [eventLocation, setEventLocation] = React.useState("Google meet");
   const [eventLink, setEventLink] = React.useState("");
-  const user = JSON.parse(localStorage.getItem("user"))
+  const user = JSON.parse(localStorage.getItem("user"));
   var { start_time, end_time } = chosenSlotTime;
   const [notified, setNotified] = useState(false);
   start_time = parseInt(chosenSlotTime.end_time.slice(0, 2));
@@ -114,13 +114,13 @@ const AddEvent = () => {
               onChange={setEventName}
             />
             <div>
-              <label class="rounded-md text-sm font-medium text-slate-500">
+              <label className="rounded-md text-sm font-medium text-slate-500">
                 Event Location/Platform{" "}
               </label>
               <br />
               <select
                 id="event_location"
-                class="form-select  border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg p-3 w-fit"
+                className="form-select  border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg p-3 w-fit"
                 aria-label="Default select example"
                 onChange={(e) => setEventLocation(e.target.value)}
               >
@@ -159,14 +159,14 @@ const AddEvent = () => {
               <button
                 onClick={handleCancel}
                 type="cancel"
-                class="text-black bg-white border-none font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center"
+                className="text-black bg-white border-none font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 onClick={handleSubmit}
-                class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center dark:bg-blue-600 "
+                className="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center dark:bg-blue-600 "
               >
                 Submit
               </button>

@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/UserAuthContext";
 import PageHeading from "../components/Headings/PageHeading";
 import MainNavbar from "../components/Menus/MainNavbar";
-const { user } = UserAuth;
-console.log("User: ", user);
+import axios from "../axios";
 const Profile = () => {
+  // const { user } = UserAuth();
+  // const [name, setName] = useState("")
+  // const [regNo, setRegNo] = useState("")
+  // console.log("User: ", user);
+  // useEffect(() => {
+  //   axios.post("user/getUserByEmail", {
+  //     email: user.email,
+  //   })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
   document.title = "Profile";
   return (
     <>
@@ -19,18 +33,20 @@ const Profile = () => {
                   <h1 className="text-gray-600 text-2xl mb-4">Login Details</h1>
                   <div>
                     <table className="w-full">
-                      <tr>
-                        <td className="text-start">Name</td>
-                        <td className="text-end">Ayush Mhetre</td>
-                      </tr>
-                      <tr>
-                        <td className="text-start">Registration No.</td>
-                        <td className="text-end">21BCE2887</td>
-                      </tr>
-                      <tr>
-                        <td className="text-start">Email</td>
-                        <td className="text-end">ayush@gmail.com</td>
-                      </tr>
+                      <tbody>
+                        <tr>
+                          <td className="text-start">Name</td>
+                          <td className="text-end">Ayush Mhetre</td>
+                        </tr>
+                        <tr>
+                          <td className="text-start">Registration No.</td>
+                          <td className="text-end">21BCE2887</td>
+                        </tr>
+                        <tr>
+                          <td className="text-start">Email</td>
+                          <td className="text-end">ayush@gmail.com</td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -51,16 +67,22 @@ const Profile = () => {
                 <form className="flex flex-col md:flex-row gap-y-4 gap-x-5 w-full md:w-2/4 justify-between">
                   <div className="flex flex-col gap-y-2 items-start md:w-1/2">
                     Date Format
-                    <select class="relative form-select border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3">
-                      <option selected>DD/MM/YY</option>
-                      <option value="1">MM/DD/YY</option>
+                    <select
+                      defaultValue={1}
+                      className="relative form-select border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3"
+                    >
+                      <option value={1}>DD/MM/YY</option>
+                      <option value={2}>MM/DD/YY</option>
                     </select>
                   </div>
                   <div className="flex flex-col gap-y-2 md:w-1/2 items-start">
                     Time Format
-                    <select class="relative form-select  border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3">
-                      <option selected>12H(AM/PM)</option>
-                      <option value="1">24H</option>
+                    <select
+                      defaultValue={1}
+                      className="relative form-select  border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3"
+                    >
+                      <option value={1}>12H(AM/PM)</option>
+                      <option value={2}>24H</option>
                     </select>
                   </div>
                 </form>
@@ -71,7 +93,7 @@ const Profile = () => {
                     Meet Frequency
                   </h1>
                   <div className="flex gap-x-4">
-                    <label for="meetingFrequencySetter" className="w-fit">
+                    <label htmlFor="meetingFrequencySetter" className="w-fit">
                       <input
                         id="meetingFrequencySetter"
                         type="number"

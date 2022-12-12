@@ -20,8 +20,8 @@ const data = [
 
 const ExpandingCard = () => {
   const [isHovered, setIsHovered] = useState(true);
-  const [currentIdx, setcurrentIdx] = useState([0]);
-  const [mouseFinally, setMouseFinally] = useState(false);
+  const [currentIdx, setcurrentIdx] = useState([0, 1, 2]);
+  const [mouseFinally, setMouseFinally] = useState(true);
 
   const handleMouseLeave = () => {
     setcurrentIdx([0, 1, 2]);
@@ -39,6 +39,7 @@ const ExpandingCard = () => {
         {data.map((item, idx) => {
           return (
             <div
+              key={idx}
               className={`flex  items-start border-l border-r border-black p-6 h-[600px] ${
                 isHovered && currentIdx.includes(idx)
                   ? "w-full text-full"

@@ -42,9 +42,9 @@ function Sidebar({ filter, setFilter }) {
           // console.log(res);
           return res.data;
         });
-      console.log("teams: ", data);
+      // console.log("teams: ", data[0]);
 
-      setGroups(data);
+      setGroups(data[0]);
     }
     getData();
   }, []);
@@ -94,6 +94,7 @@ function Sidebar({ filter, setFilter }) {
                 clearable
                 placeholder="Group"
                 selection
+                multiple={false}
                 disabled={urlPath === "/freeslot" ? true : false}
                 options={groups.map((group) => ({
                   key: group.team_name,

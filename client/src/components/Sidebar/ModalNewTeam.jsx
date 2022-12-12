@@ -256,7 +256,7 @@ const FreeSlot = ({ onClose }) => {
           <button
             type="submit"
             onClick={submitFreeSlot}
-            class="text-white bg-myBlue font-medium rounded-lg text-sm w-60 py-2.5 text-center border-2 border-myBlue"
+            className="text-white bg-myBlue font-medium rounded-lg text-sm w-60 py-2.5 text-center border-2 border-myBlue"
           >
             Find Free Slot!
           </button>
@@ -265,7 +265,7 @@ const FreeSlot = ({ onClose }) => {
               setConfirmationOpen(!confirmationOpen);
             }}
             type="cancel"
-            class="text-black bg-white border-none font-medium rounded-lg underline-offset-2 text-sm w-60 outline text-center underline decoration-dotted"
+            className="text-black bg-white border-none font-medium rounded-lg underline-offset-2 text-sm w-60 outline text-center underline decoration-dotted"
           >
             Cancel
           </button>

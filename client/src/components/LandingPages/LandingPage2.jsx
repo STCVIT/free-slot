@@ -14,16 +14,16 @@ const LandingPage2 = () => {
         by STC
       </h1>
 
-      <div class="mx-8 mb-8">
-        <div class="space-y-4 sm:grid sm:grid-cols-3 sm:gad-6 sm:space-y-0 lg:gap-8 shadow-2xl rounded-lg">
-          <div class="aspect-w-3 aspect-h-2 sm:aspect-w-1 sm:aspect-h-1 lg:aspect-w-3 lg:aspect-h-4">
+      <div className="mx-8 mb-8">
+        <div className="space-y-4 sm:grid sm:grid-cols-3 sm:gad-6 sm:space-y-0 lg:gap-8 shadow-2xl rounded-lg">
+          <div className="aspect-w-3 aspect-h-2 sm:aspect-w-1 sm:aspect-h-1 lg:aspect-w-3 lg:aspect-h-4">
             <img
-              class="object-cover"
+              className="object-cover"
               src={require("../../assets/ScheduleMeeting.png")}
               alt=""
             />
           </div>
-          <div class="sm:col-span-2 space-y-4 text-2xl mt-8 p-8 md:mt-0">
+          <div className="sm:col-span-2 space-y-4 text-2xl mt-8 p-8 md:mt-0">
             In this fast-paced world, it is hard to keep track of one’s
             schedule. And, it is harder to find a perfect time when you & your
             friends are off- work. Freeslot is the solution. A picture and

@@ -20,6 +20,7 @@ const TabNavbar = ({ activeTab, setActiveTab }) => {
     <ul className="md:grid flex md:w-1/2   md:gap-x-0 grid-cols-3 w-full text-center">
       {["upcoming", "cancelled", "past"].map((tab, idx) => (
         <li
+          key={idx}
           className={`${mainClass} ${
             activeTab === tab ? activeClass : inactiveClass
           }`}

@@ -31,11 +31,11 @@ const Login = () => {
       }
     } catch (error) {
       setError(error.message);
-      console.log(error.message)
-      if(error.message==="Firebase: Error (auth/wrong-password)."){
-        toast.error("Incorrect Password")
-      } else if(error.message==="Firebase: Error (auth/invalid-email)."){
-        toast.error("Invalid Email")
+      console.log(error.message);
+      if (error.message === "Firebase: Error (auth/wrong-password).") {
+        toast.error("Incorrect Password");
+      } else if (error.message === "Firebase: Error (auth/invalid-email).") {
+        toast.error("Invalid Email");
       }
     }
   };
@@ -117,12 +117,12 @@ const Login = () => {
                 Forgot Password?
               </a>
             </h6>
-            <div class="relative py-4">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-b border-gray-300"></div>
+            <div className="relative py-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-b border-gray-300"></div>
               </div>
-              <div class="relative flex justify-center">
-                <span class="bg-white px-4 text- text-gray-500">OR</span>
+              <div className="relative flex justify-center">
+                <span className="bg-white px-4 text- text-gray-500">OR</span>
               </div>
             </div>
             <div className="py-5">

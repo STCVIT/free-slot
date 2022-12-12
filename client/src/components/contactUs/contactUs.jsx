@@ -38,7 +38,7 @@ const ContactUs = ({ isHomePage }) => {
       <PageHeading title="Contact Us" />
       <div className={`flex flex-col w-full items-center gap-y-4 `}>
         <div className="w-full md:w-2/4 flex flex-col gap-y-3 px-4 md:px-0">
-          <label for="contactUsName">Name</label>
+          <label htmlFor="contactUsName">Name</label>
           <input
             id="contactUsName"
             className="p-2 rounded-md"

@@ -21,13 +21,13 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const { logOut} = UserAuth()
-  const navigate = useNavigate()
-  const logOutHandler = async ()=>{
-    await logOut()
-    navigate("/")
-    console.log("logged out")
-  }
+  const { logOut } = UserAuth();
+  const navigate = useNavigate();
+  const logOutHandler = async () => {
+    await logOut();
+    navigate("/");
+    console.log("logged out");
+  };
   const [open, setOpen] = useState(false);
   return (
     <Menu as="div" className="flex items-center">
@@ -46,8 +46,8 @@ export default function Example() {
       >
         <Menu.Items className="origin-top-right absolute right-1 top-20 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-0 focus:outline-none">
           <div className="py-1">
-            {items.map((item) => (
-              <Menu.Item>
+            {items.map((item, idx) => (
+              <Menu.Item key={idx}>
                 {({ active }) => (
                   <Link
                     to={item.to}
@@ -65,7 +65,7 @@ export default function Example() {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                onClick={logOutHandler}
+                  onClick={logOutHandler}
                   to="/"
                   className={classNames(
                     active ? "bg-gray-100 text-[#CC2F3F]" : "text-[#CC2F3F]",
