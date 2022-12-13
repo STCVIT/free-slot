@@ -78,7 +78,7 @@ const SignUp = () => {
           />
         </div>
         <div className="visible col-span-1 sm:col-span-2 mt-7">
-          <div className="px-3 sm:py-2 sm:px-16 md:py-3.5 md:px-24 lg:py-5 lg:px-48">
+          <div className="px-3 sm:py-2 sm:px-16 lg:py-3.5 lg:px-24 lg:py-5 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-5">Sign-Up</h1>
             <button
               className="flex justify-center w-full border-2 border-myBlue text-black font-semibold mx-auto py-2 rounded "

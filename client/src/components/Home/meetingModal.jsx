@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import axios from "axios";
+import axios from "../../axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const style = {
@@ -28,17 +28,54 @@ export default function NestedModal({ desc, data }) {
     "flex-1 items-center py-3 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-2 border-myBlue";
   const cancel =
     "flex-1 rounded px-4 items-center py-2 text-black underline bg-white border-2 border-black rounded-lg";
-  const { idx, tab, refresh } = data;
+  const { idx, tab, refresh, setRefresh } = data;
+
   const Confirm = ({ action }) => {
-    const handleYes = () => {
-      deleteCard(idx, tab, refresh);
-      action === "done"
-        ? toast.success("Meeting marked as done")
-        : toast.error("Meeting cancelled");
+    // const handleYes = () => {
+    //   deleteCard(idx, tab, refresh);
+    //   action === "done"
+    //     ? toast.success("Meeting marked as done")
+    //     : toast.error("Meeting cancelled");
+    // };
+
+    const handleMarkAsDone = async () => {
+      // console.log(idx);
+      try {
+        await axios
+          .patch("meet/updateMeet", {
+            meet_id: idx,
+            status: "past",
+          })
+          .then((res) => {
+            console.log(res);
+            if (res) {
+              setRefresh(!refresh);
+              setOpen(false);
+            }
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const handleCancelMeet = async () => {
+      // console.log("inside cancel");
+      // console.log(idx);
+      await axios
+        .patch("meet/updateMeet", {
+          meet_id: idx,
+          status: "cancelled",
+        })
+        .then(() => {
+          setRefresh(!refresh);
+          setOpen(false);
+        });
     };
     return (
       <div className="flex justify-evenly mt-4 gap-x-4">
-        <button className={markAsDone} onClick={handleYes}>
+        <button
+          className={markAsDone}
+          onClick={action === "done" ? handleMarkAsDone : handleCancelMeet}
+        >
           Yes
         </button>
         <button className={cancel} onClick={handleClose}>
@@ -48,19 +85,7 @@ export default function NestedModal({ desc, data }) {
     );
   };
   //   console.log(idx, tab, refresh);
-  async function deleteCard(idx, tab, refresh) {
-    // console.log("inside delete: ", idx, tab, refresh);
-    return (
-      await axios.delete("http://localhost:6969/", {
-        data: {
-          id: idx,
-          tab: tab,
-        },
-      }),
-      refresh.set(!refresh.refresh),
-      handleClose()
-    );
-  }
+
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}

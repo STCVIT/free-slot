@@ -76,22 +76,23 @@ const getUsers = async (req, res) => {
 
 // update user
 const updateUser = async (req, res) => {
-  const updates = Object.keys(req.body);
+  // const updates = Object.keys(req.body);
   try {
-    let regno = req.body.reg_no;
-    if (!regno || regno == undefined) {
+    let email = req.body.email;
+    if (!email || email == undefined) {
       return res.status(418).send("Invalid registration number");
     }
     const user = await User.findOne({
-      where: { reg_no: regno },
+      where: { email: email },
     });
     if (!user) {
       return errorHandler(new NotFoundError(), req, res);
     }
-    updates.forEach((update) => (user[update] = req.body[update]));
+    // updates.forEach((update) => (user[update] = req.body[update]));
+    user["timetable"] = req.body["timetable"];
     await user.save();
     //res.status(200).send(user)
-    res.status(200);
+    return res.status(200);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);

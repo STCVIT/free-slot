@@ -15,8 +15,8 @@ const Home = () => {
     <>
       <MainNavbar active="home" />
       <div className="max-w-screen pr-4 bg-[#f2f2f2]">
-        <div className="md:grid grid-cols-12 gap-4">
-          <div className=" md:block col-span-2">
+        <div className="lg:grid grid-cols-12 gap-4">
+          <div className=" lg:block col-span-2">
             <Sidebar filter={filter} setFilter={setFilter} group={group} />
           </div>
           <div className="col-span-10">

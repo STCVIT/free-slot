@@ -9,10 +9,10 @@ const LandingPage3 = () => {
       <div className="grid grid-cols-2 gap-4 w-full mt-12 m-6">
         <div>
           <div className="ml-9">
-            <h1 className="m-1 md:m-4 text-black font-bold text-4xl md:text-6xl">
+            <h1 className="m-1 lg:m-4 text-black font-bold text-4xl lg:text-6xl">
               Get in
             </h1>
-            <h1 className="m-1 md:m-4 text-black font-bold text-4xl md:text-6xl">
+            <h1 className="m-1 lg:m-4 text-black font-bold text-4xl lg:text-6xl">
               touch
             </h1>
           </div>

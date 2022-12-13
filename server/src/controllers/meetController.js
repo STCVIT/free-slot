@@ -13,7 +13,7 @@ const addMeet = async (req, res) => {
     });
     await team.addMeet(meet);
     //res.status(201).send(meet);
-    res.status(201)
+    res.status(201);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -104,8 +104,9 @@ const getAllCancelledMeets = async (req, res) => {
 };
 //upadte meet
 const updateMeet = async (req, res) => {
-  const updates = Object.keys(req.body);
+  // const updates = Object.keys(req.body);
   try {
+    console.log("Hi");
     let id = req.body.meet_id;
     if (!id || id == undefined) {
       return res.status(418).send("Meet does not exist");
@@ -116,10 +117,12 @@ const updateMeet = async (req, res) => {
     if (!meet) {
       return errorHandler(new NotFoundError(), req, res);
     }
-    updates.forEach((update) => (meet[update] = req.body[update]));
+
+    // updates.forEach((update) => (meet[update] = req.body[update]));
+    meet["status"] = req.body.status;
     await meet.save();
     // res.status(200).send(meet);
-    res.status(200)
+    res.sendStatus(200);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -141,7 +144,7 @@ const deleteMeet = async (req, res) => {
     }
     await meet.destroy();
     // res.status(200).send(meet);
-    res.status(200)
+    res.status(200);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);

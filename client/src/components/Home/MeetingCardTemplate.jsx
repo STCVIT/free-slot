@@ -1,13 +1,13 @@
-import axios from "axios";
 import { IoLocationSharp } from "react-icons/io5";
 import NestedModal from "./meetingModal";
 import { GoKebabVertical } from "react-icons/go";
+import moment from "moment";
 const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
 
   return (
     <div
-      className="drop-shadow absolute z-[1000] top-10  md:right-6 hidden p-4 mb-4 rounded-md bg-white w-[80vw]  md:w-[25rem]"
+      className="drop-shadow absolute z-[1000] top-10  lg:right-6 hidden p-4 mb-4 rounded-md bg-white w-[80vw]  lg:w-[25rem]"
       id={"meetingInfoCard" + props.id}
     >
       <div>
@@ -51,8 +51,10 @@ const MeetingCardTemplate = (props) => {
       idx: dataItem.meet_id,
       tab: props.tab,
       refresh: props.refresh,
+      setRefresh: props.setRefresh,
     };
     const getDay = new Date(dataItem.date);
+    // dataItem.date = moment(dataItem.date).format("Do MMM YY");
     // console.log(dataItem);
     return (
       <div
@@ -78,10 +80,12 @@ const MeetingCardTemplate = (props) => {
         </div>
         <p>
           <span>{weekday[getDay.getDay()]}</span>
-          <span className="font-semibold">, {dataItem.date}</span>
+          <span className="font-semibold">
+            , {moment(dataItem.date).format("Do MMM YY")}
+          </span>
         </p>
         <p className="px-2 text-2xl font-bold  text-black">
-          {dataItem.start_time} - {dataItem.end_time}
+          {dataItem.start_time.slice(0, -3)} - {dataItem.end_time.slice(0, -3)}
         </p>
         <div className="flex items-center gap-x-4 my-4 font-semibold text-myBlue">
           <IoLocationSharp size={20} />
@@ -96,17 +100,19 @@ const MeetingCardTemplate = (props) => {
           <span>{dataItem.title}</span>
           <span>{dataItem.team_name}</span>
         </p>
-        <div className="flex w-full gap-x-4">
-          {["Mark as done", "Cancel"].map((button, idx) => (
-            <NestedModal desc={button} data={data} key={idx} />
-          ))}
-        </div>
+        {props.tab === "upcoming" && (
+          <div className="flex w-full gap-x-4">
+            {["Mark as done", "Cancel"].map((button, idx) => (
+              <NestedModal desc={button} data={data} key={idx} />
+            ))}
+          </div>
+        )}
       </div>
       // <div>{dataItem.description}</div>
     );
   });
   return (
-    <div className="flex flex-col w-full items-center justify-center md:grid grid-cols-3 gap-x-4 md:mx-2">
+    <div className="flex flex-col w-full items-center justify-center lg:grid grid-cols-3 gap-x-4 lg:mx-2">
       {MeetingCardsArray}
     </div>
   );

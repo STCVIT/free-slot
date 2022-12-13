@@ -161,7 +161,7 @@ const FreeSlot = ({ onClose }) => {
       "flex-1 rounded px-4 items-center w-fit h-fit py-2 text-black underline bg-white border-2 border-black rounded-lg";
     return (
       <div className="flex rounded-md justify-evenly items-center mt-4 gap-x-4 absolute z-[2000] w-full h-full bg-white/80">
-        <div className="flex flex-col rounded-md px-4 md:px-0 md:w-1/2 py-4 justify-evenly items-center bg-gray-200">
+        <div className="flex flex-col rounded-md px-4 lg:px-0 lg:w-1/2 py-4 justify-evenly items-center bg-gray-200">
           <p className="text-lg font-semibold text-center  border-b-2 border-black ">
             Are you sure you want to cancel?
           </p>
@@ -204,7 +204,7 @@ const FreeSlot = ({ onClose }) => {
             </div>
             <div className="self-center">{tagNote}</div>
             <div className="flex flex-col items-center w-full rounded-md justify-center gap-2 border self-center">
-              <div className="flex flex-wrap w-full md:flex-row overflow-x-auto lg:overflow-hidden max-h-[200px] md:h-full items-center justify-center gap-3 py-4">
+              <div className="flex flex-wrap w-full lg:flex-row overflow-x-auto lg:overflow-hidden max-h-[200px] lg:h-full items-center justify-center gap-3 py-4">
                 {tags.map((tag, index) => (
                   <button
                     onClick={() => removeTag(index)}
@@ -230,7 +230,7 @@ const FreeSlot = ({ onClose }) => {
             Clear all
           </button>
         </div>
-        <div className="flex md:flex-row flex-col gap-3  md:items-center mb-4">
+        <div className="flex lg:flex-row flex-col gap-3  lg:items-center mb-4">
           <div
             className="flex  gap-x-3 items-center font-bold cursor-pointer"
             onClick={() => {
@@ -240,7 +240,7 @@ const FreeSlot = ({ onClose }) => {
             {saveTeam ? <CheckBox /> : <CheckBoxOutlineBlank />}
             Save this team
           </div>
-          <div className="md:self-center">
+          <div className="lg:self-center">
             {saveTeam && (
               <input
                 className="px-2 py-2 border-2 rounded-md w-full"
@@ -252,7 +252,7 @@ const FreeSlot = ({ onClose }) => {
             )}
           </div>
         </div>
-        <div className="self-center flex w-3/4 md:w-2/4 justify-between gap-x-3">
+        <div className="self-center flex w-3/4 lg:w-2/4 justify-between gap-x-3">
           <button
             type="submit"
             onClick={submitFreeSlot}

@@ -12,9 +12,9 @@ const MainNavbar = ({ active }) => {
   return (
     <>
       <header className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
-        <div className="flex items-center md:flex-row flex-col justify-between w-full">
+        <div className="flex items-center lg:flex-row flex-col justify-between w-full">
           <div>
-            <p className="font-logo flex items-center w-full p-7 md:p1 text-5xl ">
+            <p className="font-logo flex items-center w-full p-7 lg:p1 text-5xl ">
               Free Slots
             </p>
           </div>

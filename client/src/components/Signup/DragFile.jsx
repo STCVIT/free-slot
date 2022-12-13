@@ -47,18 +47,18 @@ const DragFile = ({ files, setFiles }) => {
       <label
         for="imageUpload"
         onChange={imageUploaded()}
-        className="hidden h-full md:flex flex-col items-center justify-center text-center w-full gap-y-5"
+        className="hidden h-full lg:flex flex-col items-center justify-center text-center w-full gap-y-5"
       >
         <input
           {...getRootProps()}
-          className="block md:hidden"
+          className="block lg:hidden"
           id="imageUpload"
           style={{ visibility: "hidden" }}
           type="none"
         />
         {isUploaded && <h1>Preview:</h1>}
         {!isUploaded && (
-          <div className="hidden md:flex flex-col items-center justify-center text-center gap-y-3 w-full">
+          <div className="hidden lg:flex flex-col items-center justify-center text-center gap-y-3 w-full">
             <h1>Drag & Drop your timetable</h1>
             <img src={fileUpload} alt="" />
             <h1>OR</h1>
@@ -80,7 +80,7 @@ const DragFile = ({ files, setFiles }) => {
           </button>
         )}
       </label>
-      <button className="flex h-full md:hidden flex-col items-center justify-center text-center w-full gap-y-5">
+      <button className="flex h-full lg:hidden flex-col items-center justify-center text-center w-full gap-y-5">
         <label
           {...getRootProps()}
           for="imageUploadPhone"
@@ -91,7 +91,7 @@ const DragFile = ({ files, setFiles }) => {
         </label>
         <img src={images} alt="Select File" />
         <input
-          className="block  md:hidden"
+          className="block  lg:hidden"
           id="imageUploadPhone"
           style={{ visibility: "hidden" }}
           type="file"

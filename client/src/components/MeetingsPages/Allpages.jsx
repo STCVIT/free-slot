@@ -101,7 +101,7 @@ export const AllPages = ({ filter, tab }) => {
         cancelled: CancelledData.filter((item) => item.team_name === groups),
       });
     }
-  }, [CancelledData, PastData, UpcomingData, filter]);
+  }, [CancelledData, PastData, UpcomingData, filter, refresh]);
   const list = dataSet[tab];
 
   const NoMeetingsState = () => {
@@ -122,7 +122,7 @@ export const AllPages = ({ filter, tab }) => {
     }, []);
 
     return (
-      <div className="flex justify-center items-center h-full my-4  md:my-16">
+      <div className="flex justify-center items-center h-full my-4  lg:my-16">
         <div className="flex flex-col items-center gap-y-4">
           <p className="text-base font-medium">
             {!isFilterApplied
@@ -144,7 +144,9 @@ export const AllPages = ({ filter, tab }) => {
       <MeetingCardTemplate
         list={list}
         tab={tab}
-        refresh={{ refresh, set: setRefresh }}
+        // refresh={{ refresh, set: setRefresh }}
+        refresh={refresh}
+        setRefresh={setRefresh}
       />
     </div>
   );

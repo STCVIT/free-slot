@@ -29,7 +29,9 @@ const TextInput = (props) => {
 export default function Timetable() {
   const [files, setFiles] = useState([]);
   const { sendTimetable } = UserAuth();
-  const uid = window.location.pathname.match(/[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g)
+  const uid = window.location.pathname.match(
+    /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
+  );
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,28 +39,26 @@ export default function Timetable() {
       var file = files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => {
+      reader.onload = async () => {
         file = reader.result;
-        //console.log(file);
-        const res = sendTimetable(file);
-        if(res && uid){
-          navigate('/addtoteam/'+uid)
-        } else if(res){
+        const res = await sendTimetable(file);
+        if (res && uid) {
+          navigate("/addtoteam/" + uid);
+        } else if (res) {
           navigate("/home");
         }
       };
-      
     } catch (error) {
       console.error(error);
     }
   };
   return (
     <>
-      <div className="px-4 md:px-0 md:grid grid-cols-12">
-        <div className="hidden md:block col-span-6 bg-myBlue ">
+      <div className="px-4 lg:px-0 lg:grid grid-cols-12">
+        <div className="hidden lg:block col-span-6 bg-myBlue ">
           <img src={timetableInfoImg} alt="" />
         </div>
-        <div className="md:grid grid-cols-6 col-span-6">
+        <div className="lg:grid grid-cols-6 col-span-6">
           <div className="col-span-1"></div>
           <div className="col-span-4 grid grid-rows-6 w-full h-screen py-4">
             <div className="text-center row-span-1">

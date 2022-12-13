@@ -85,7 +85,7 @@ const AddEvent = () => {
       <PageHeading title="Add Event" />
       <div>
         <div className="flex justify-center w-full px-4">
-          <div className="flex flex-col gap-y-10 w-full md:w-2/4">
+          <div className="flex flex-col gap-y-10 w-full lg:w-2/4">
             <div className="flex justify-evenly items-center">
               <div className="p-2 rounded-md bg-myBlue text-white font-semibold">
                 {value[0]}

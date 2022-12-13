@@ -17,7 +17,7 @@ const TabNavbar = ({ activeTab, setActiveTab }) => {
     });
   };
   return (
-    <ul className="md:grid flex md:w-1/2   md:gap-x-0 grid-cols-3 w-full text-center">
+    <ul className="lg:grid flex lg:w-1/2   lg:gap-x-0 grid-cols-3 w-full text-center">
       {["upcoming", "cancelled", "past"].map((tab, idx) => (
         <li
           key={idx}

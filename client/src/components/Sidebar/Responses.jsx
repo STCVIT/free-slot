@@ -11,37 +11,33 @@ import {
   RiTimeFill,
 } from "react-icons/ri";
 import axios from "../../axios";
-import { useEffect } from "react";
-
-const isLg = window.innerWidth > 768;
-const statusArray = ResponseData.map((x) => {
-  let statusIcon;
-  switch (x.uploadStatus) {
-    case "Uploaded":
-      statusIcon = <RiCheckboxCircleFill size={19} color="#2BAD75" />;
-      break;
-    case "Waiting":
-      statusIcon = <RiTimeFill size={19} color="#FFA133" />;
-      break;
-    case "Error":
-      statusIcon = <RiErrorWarningFill size={19} color="#CC2F3F" />;
-      break;
-    default:
-      break;
-  }
-  return (
-    <tr className="text-xl md:text-2xl odd:bg-gray-200">
-      <td className="p-2">{x.regNo}</td>
-      <td className="p-2">{x.userName}</td>
-      {isLg && <td className="p-2">{x.email}</td>}
-    </tr>
-  );
-});
+import { useState, useEffect } from "react";
 
 const Responses = ({ onClose }) => {
-  const { link, linkTeam, setLinkTeam, getLink } = FindFreeSlot();
+  const {
+    link,
+    setLink,
+    linkCreator,
+    setLinkCreator,
+    linkTeam,
+    setLinkTeam,
+    getLink,
+  } = FindFreeSlot();
+  //console.log(link);
+  // useEffect(() => {
+  //   setLinkCreator(linkCreator);
+  // }, [linkCreator]);
   const getLinkHandler = async () => {
-    await getLink()
+    const user = JSON.parse(localStorage.getItem("user"));
+    const getUser = await axios.post("user/getUserByEmail", {
+      email: user.email,
+    });
+    console.log(getUser);
+    if (getUser) {
+      setLinkCreator(getUser.data.name);
+      console.log(linkCreator);
+    }
+    await getLink();
   };
   const showCopiedToast = () => {
     toast.success("Link copied successfully!", {
@@ -49,6 +45,39 @@ const Responses = ({ onClose }) => {
       icon: <RiFileCopyLine className="-scale-x-100" size={25} color="green" />,
     });
   };
+  const [isLg, setIsLg] = useState(
+    window.matchMedia("(min-width: 1024px)").matches
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLg(window.matchMedia("(min-width: 1024px)").matches);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  const statusArray = ResponseData.map((x) => {
+    let statusIcon;
+    switch (x.uploadStatus) {
+      case "Uploaded":
+        statusIcon = <RiCheckboxCircleFill size={19} color="#2BAD75" />;
+        break;
+      case "Waiting":
+        statusIcon = <RiTimeFill size={19} color="#FFA133" />;
+        break;
+      case "Error":
+        statusIcon = <RiErrorWarningFill size={19} color="#CC2F3F" />;
+        break;
+      default:
+        break;
+    }
+    return (
+      <tr className="text-xl lg:text-2xl odd:bg-gray-200">
+        <td className="p-2">{x.regNo}</td>
+        <td className="p-2">{x.userName}</td>
+        {isLg && <td className="p-2">{x.email}</td>}
+      </tr>
+    );
+  });
   return (
     <div className="relative rounded-md">
       <button className="absolute top-5 right-5" onClick={onClose}>
@@ -57,15 +86,15 @@ const Responses = ({ onClose }) => {
       <div>
         <PageHeading title="Responses" />
       </div>
-      <div className=" md:mx-16">
-        <div className="w-full md:w-2/4">
+      <div className=" lg:mx-16">
+        <div className="w-full lg:w-2/4">
           <div>
             <p>
               A new team will be made by this name, to which new members can
               join using the link further produced.
             </p>
             <h1 className="text-[#9C9C9C] text-2xl">Enter team name</h1>
-            <div className="flex flex-col md:grid grid-cols-12 gap-4 rounded-md border-2 border-gray-200 p-2 my-2">
+            <div className="flex flex-col lg:grid grid-cols-12 gap-4 rounded-md border-2 border-gray-200 p-2 my-2">
               <div className="col-span-9 flex items-center">
                 <input
                   className="border w-full h-full p-2"
@@ -106,7 +135,7 @@ const Responses = ({ onClose }) => {
             </div>
           </div>
         </div>
-        <div className=" mt-5 items-center drop-shadow overflow-y-auto h-[25vh] border-2 border-gray-200 bg-white px-2 md:px-16 py-4 rounded-md">
+        <div className=" mt-5 items-center drop-shadow overflow-y-auto h-[25vh] border-2 border-gray-200 bg-white px-2 lg:px-16 py-4 rounded-md">
           <table
             style={{ borderCollapse: "separate", borderSpacing: "0px 8px" }}
             className="table-auto w-full text-left "

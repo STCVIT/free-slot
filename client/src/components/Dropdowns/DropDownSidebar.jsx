@@ -5,7 +5,7 @@ import { RiAddLine } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
 import ModalNewTeam from "../Sidebar/ModalNewTeam";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalChooseTeam from "../Sidebar/ModalChooseTeam";
 import Responses from "../Sidebar/Responses";
 import Modal from "@mui/material/Modal";
@@ -13,21 +13,18 @@ import Box from "@mui/material/Box";
 // import ComponentModal from "./ComponentModal";
 import axios from "axios";
 import { ClickAwayListener } from "@mui/material";
-const isLg = window.matchMedia("(min-width: 1024px)").matches;
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: isLg ? "75%" : "95%",
-  bgcolor: "white",
-
-  borderRadius: "0.5rem",
-  boxShadow: 12,
-  p: 4,
-};
 
 export default function Example({ data }) {
+  const [isLg, setIsLg] = useState(
+    window.matchMedia("(min-width: 1024px)").matches
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLg(window.matchMedia("(min-width: 1024px)").matches);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   // axios.get("http://localhost:6969/").then((res) => {
   //   console.log(res.data);
   // });
@@ -69,8 +66,18 @@ export default function Example({ data }) {
       onClick: clickedLink,
     },
   ];
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: isLg ? "75%" : "95%",
+    bgcolor: "white",
 
-  const isLg = window.matchMedia("(min-width: 1024px)").matches;
+    borderRadius: "0.5rem",
+    boxShadow: 12,
+    p: 4,
+  };
   const createStyle = isLg
     ? {}
     : { position: "fixed", zIndex: 10000, bottom: 5, right: 5 };
