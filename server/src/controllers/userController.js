@@ -23,7 +23,7 @@ const addUserInDb = async (req, res, next) => {
 // Get one user
 const getUser = async (req, res) => {
   try {
-    let regno = req.body.reg_no;
+    let regno = req.body.email;
     if (!regno || regno == undefined) {
       return res.status(418).send("Invalid registration number");
     }

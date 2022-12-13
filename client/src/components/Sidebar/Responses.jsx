@@ -39,22 +39,9 @@ const statusArray = ResponseData.map((x) => {
 });
 
 const Responses = ({ onClose }) => {
-  const { link, setLink, linkCreator, setLinkCreator, linkTeam, setLinkTeam, getLink } = FindFreeSlot();
-    //console.log(link);
-  // useEffect(() => {
-  //   setLinkCreator(linkCreator);
-  // }, [linkCreator]);
+  const { link, linkTeam, setLinkTeam, getLink } = FindFreeSlot();
   const getLinkHandler = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const getUser = await axios.post("user/getUserByEmail", {
-      email: user.email,
-    });
-    console.log(getUser);
-    if(getUser){
-      setLinkCreator(getUser.data.name)
-      console.log(linkCreator)
-    }
-    await getLink();
+    await getLink()
   };
   const showCopiedToast = () => {
     toast.success("Link copied successfully!", {
