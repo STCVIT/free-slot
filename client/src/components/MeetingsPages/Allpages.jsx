@@ -24,7 +24,6 @@ export const AllPages = ({ filter, tab }) => {
   useEffect(() => {
     async function getData() {
       try {
-        setIsLoading(true);
         const upcoming = await axios.post(
           "meet/getUpcoming",
           {
@@ -50,12 +49,14 @@ export const AllPages = ({ filter, tab }) => {
         setUpcomingData(upcoming.data);
         setPastData(past.data);
         setCancelledData(cancelled.data);
-        setIsLoading(false);
+        // setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     }
+    setIsLoading(true);
     getData();
+    setIsLoading(false);
   }, [refresh]);
   const weekday = [
     "Sunday",
