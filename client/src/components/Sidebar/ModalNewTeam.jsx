@@ -6,17 +6,18 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "../../axios";
 import PageHeading from "../Headings/PageHeading";
 const FreeSlot = ({ onClose }) => {
   const navigate = useNavigate();
-  const { justFindFreeSlot, saveTeamAndFindFreeSlot } = FindFreeSlot();
+  const { justFindFreeSlot, saveTeamAndFindFreeSlot, setNewTeamName } =
+    FindFreeSlot();
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
   const [saveTeam, setSaveTeam] = useState(true);
   const [teamName, setTeamName] = useState("");
-
+  const [currentVaue, setCurrentValue] = useState("");
   const ToastMessageContainer = (props) => {
     return (
       <div>
@@ -28,31 +29,71 @@ const FreeSlot = ({ onClose }) => {
       </div>
     );
   };
-  function handleKeyDown(e) {
-    if (e.key !== "Enter") return;
+
+  const userFound = async (element) => {
+    console.log("HERE");
+    const user = JSON.parse(localStorage.getItem("user"));
+    const getUser = await axios.post(
+      "user/checkUserByReg",
+      {
+        reg_no: element,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.stsTokenManager.accessToken}`,
+        },
+      }
+    );
+    return getUser.data;
+  };
+
+  async function handleKeyDown(e) {
+    if (e.key !== "Enter" && e.key !== ",") return;
     else {
+      e.preventDefault();
+      setCurrentValue("");
       setTagNote("Click a tag to remove.");
       let value = e.target.value;
       if (value[value.length - 1] === ",") {
         value = value.slice(0, -1);
+        if (await userFound(value)) {
+          tags.push(value);
+          setTags(tags);
+        } else {
+          toast.error("User not found!");
+        }
       }
       if (value.includes(",")) {
         const invalid = [];
         const duplicates = [];
-        e.target.value = "";
-        let newTag = [];
         let tag = value.split(",");
+        console.log(tag);
         tag = new Set(tag);
-        tag.forEach((element) => {
+        const newTags = [];
+        [...tag].forEach(async (element) => {
           if (tags.includes(element)) {
             duplicates.push(element);
           } else if (regex.test(element)) {
-            newTag.push(element);
+            // console.log(element);
+            newTags.push(element);
           } else {
             invalid.push(element);
             return;
           }
         });
+        const notFound = [];
+        newTags.forEach(async (element) => {
+          if (await userFound(element)) {
+            tags.push(element);
+            setTags(tags);
+          } else {
+            notFound.push(element);
+          }
+        });
+        if (notFound.length > 0) {
+          const notFoundTags = notFound.join(", ");
+          toast.error(notFoundTags + " not found!");
+        }
         if (invalid.length > 0) {
           const invalidTags = invalid.join(", ");
           toast.error(
@@ -82,7 +123,8 @@ const FreeSlot = ({ onClose }) => {
           );
         }
 
-        setTags([...tags, ...newTag]);
+        // setTags([...tags, ...newTag]);
+        console.log(tags);
       } else {
         if (!value.trim()) return;
         else if (!regex.test(value) || value.length > 9) {
@@ -109,7 +151,12 @@ const FreeSlot = ({ onClose }) => {
           e.target.value = "";
           return;
         }
-        setTags([...tags, value.toUpperCase()]);
+        if (await userFound(value)) {
+          setTags([...tags, value.toUpperCase()]);
+        }
+        if (!(await userFound(value))) {
+          toast.error("User not found!");
+        }
         e.target.value = "";
       }
     }
@@ -126,8 +173,8 @@ const FreeSlot = ({ onClose }) => {
 
   //this is what you need in backend @Saarim
   const submitFreeSlot = async () => {
-    if (tags.length === 0) {
-      toast.error("Please add a tag!");
+    if (tags.length < 2) {
+      toast.error("Please add at least 2 tags!");
       return;
     }
     if (saveTeam && teamName === "") {
@@ -135,6 +182,7 @@ const FreeSlot = ({ onClose }) => {
       return;
     }
     if (saveTeam) {
+      setNewTeamName(teamName);
       await saveTeamAndFindFreeSlot(teamName, tags);
     } else {
       await justFindFreeSlot(tags);
@@ -145,7 +193,6 @@ const FreeSlot = ({ onClose }) => {
     console.log(teamName);
     setTags([]);
     setTeamName("");
-    toast.success("Free slot added successfully!");
     onClose();
   };
   const [confirmationOpen, setConfirmationOpen] = useState(false);
@@ -216,6 +263,8 @@ const FreeSlot = ({ onClose }) => {
                 ))}
                 <input
                   onKeyDown={handleKeyDown}
+                  value={currentVaue}
+                  onChange={(e) => setCurrentValue(e.target.value)}
                   type="text"
                   className="text-center border rounded-md py-2"
                   placeholder="21XXX0000"

@@ -1,6 +1,7 @@
 import { IoLocationSharp } from "react-icons/io5";
 import NestedModal from "./meetingModal";
 import { GoKebabVertical } from "react-icons/go";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import moment from "moment";
 const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
@@ -40,8 +41,9 @@ const MeetingCardTemplate = (props) => {
     "Friday",
     "Saturday",
   ];
+
   const MeetingCardsArray = props.list.map((dataItem, idx) => {
-    // console.log(dataItem);
+    console.log(dataItem);
     const handleOpen = (id) => {
       const modal = document.getElementById("meetingInfoCard" + id);
       modal.classList.toggle("hidden");
@@ -93,7 +95,7 @@ const MeetingCardTemplate = (props) => {
         </div>
         <p className="font-normal flex flex-col gap-y-1 text-black ">
           {/* <span className="font-semibold">Created by {dataItem.by}</span> */}
-          <span className="font-semibold">Created by X</span>
+          <span className="font-semibold">Created by {dataItem.admin}</span>
 
           {/* <span>{dataItem.day}</span> */}
 

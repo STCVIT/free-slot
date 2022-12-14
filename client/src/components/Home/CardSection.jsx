@@ -2,8 +2,9 @@ import axios from "../axios/index";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect } from "react";
 import { UserAuth } from "../../context/UserAuthContext";
-
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 const CardSection = ({ token }) => {
+  // const {setIsLoading} = FindFreeSlot()
   useEffect(() => {
     if (token) {
       fetchData(token);

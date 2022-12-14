@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import axios from "../../axios";
 import { toast } from "react-toastify";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
 const style = {
   position: "absolute",
@@ -17,6 +18,7 @@ const style = {
 };
 
 export default function NestedModal({ desc, data }) {
+  const { setIsLoading } = FindFreeSlot();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -41,6 +43,7 @@ export default function NestedModal({ desc, data }) {
     const handleMarkAsDone = async () => {
       // console.log(idx);
       try {
+        setIsLoading(true);
         await axios
           .patch("meet/updateMeet", {
             meet_id: idx,
@@ -53,22 +56,24 @@ export default function NestedModal({ desc, data }) {
               setOpen(false);
             }
           });
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
     const handleCancelMeet = async () => {
-      // console.log("inside cancel");
-      // console.log(idx);
-      await axios
-        .patch("meet/updateMeet", {
+      try {
+        setIsLoading(true);
+        await axios.patch("meet/updateMeet", {
           meet_id: idx,
           status: "cancelled",
-        })
-        .then(() => {
-          setRefresh(!refresh);
-          setOpen(false);
         });
+        setRefresh(!refresh);
+        setOpen(false);
+        setIsLoading(true);
+      } catch (err) {
+        console.log(err);
+      }
     };
     return (
       <div className="flex justify-evenly mt-4 gap-x-4">

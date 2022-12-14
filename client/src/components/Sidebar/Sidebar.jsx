@@ -65,8 +65,9 @@ function Sidebar({ filter, setFilter }) {
     return (
       <div className={`w-full flex flex-col gap-y-4`}>
         <Dropdown
-          clearable={filter.day !== "all" ? true : false}
-          value={filter.day !== "all" && filter.day}
+          // clearable={filter.day !== "all" ? true : false}
+          // value={filter.day !== "all" && filter.day}
+          clearable
           multiple={false}
           placeholder="Day"
           selection
@@ -75,16 +76,17 @@ function Sidebar({ filter, setFilter }) {
             text: day,
             value: day,
           }))}
+          button={true}
           onChange={(e, { value }) => {
             setFilter({ ...filter, day: value === "" ? "all" : value });
           }}
-          button={true}
           defaultSelectedLabel="all"
         />
 
         <Dropdown
-          clearable={filter.groups !== "all" ? true : false}
-          value={filter.groups !== "all" && filter.groups}
+          // clearable={filter.groups !== "all" ? true : false}
+          // value={filter.groups !== "all" && filter.groups}
+          clearable
           placeholder="Team"
           multiple={false}
           selection

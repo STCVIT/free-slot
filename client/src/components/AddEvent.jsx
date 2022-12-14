@@ -6,6 +6,7 @@ import { FindFreeSlot } from "../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useNavigate } from "react-router-dom";
 //import userModel from "../../../server/src/models/user.model";
 
 const EntryField = ({ label, value, onChange, isDesc }) => {
@@ -27,19 +28,23 @@ const EntryField = ({ label, value, onChange, isDesc }) => {
 
 const AddEvent = () => {
   // eslint-disable-next-line no-unused-vars
-  const { chosenSlotTime, chosenDate } = FindFreeSlot();
+  const { chosenSlotTime, chosenDate, currentTeamId, newTeamName } =
+    FindFreeSlot();
   document.title = "Add Event";
   const [eventName, setEventName] = React.useState("");
   const [eventDescription, setEventDescription] = React.useState("");
   const [eventDate, setEventDate] = React.useState("");
   const [eventLocation, setEventLocation] = React.useState("Google meet");
-  const [eventLink, setEventLink] = React.useState("");
+  const [eventLink, setEventLink] = React.useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
   var { start_time, end_time } = chosenSlotTime;
-  const [notified, setNotified] = useState(false);
+  console.log(chosenSlotTime);
   start_time = parseInt(chosenSlotTime.end_time.slice(0, 2));
   end_time = parseInt(chosenSlotTime.start_time.slice(0, 2));
   const [value, setValue] = React.useState([start_time, end_time]);
+  const [newStartTime, setNewStartTime] = React.useState(null);
+  const [newEndTime, setNewEndTime] = React.useState(null);
+  const navigate = useNavigate();
   const handleSubmit = () => {
     if (!eventName) {
       toast.error("Please fill Event Name");
@@ -47,25 +52,44 @@ const AddEvent = () => {
       toast.error("Please fill Event Description");
     } else if (!eventLocation) {
       toast.error("Please fill Event Location");
-    } else if (value[0] === start_time && value[1] === end_time && !notified) {
-      toast.error(
-        "You have not modified the time, If you want to continue, please submit again"
+    }
+    //  else if (value[0] === start_time && value[1] === end_time && !notified) {
+    //   toast.error(
+    //     "You have not modified the time, If you want to continue, please submit again"
+    //   );
+    //   setNotified(true);
+    // }
+    // else if (time[0] >= time[1]) {
+    //   toast.error("Start time must be less than end time");
+    //   return;
+    // }
+    else {
+      console.log(newTeamName);
+      try {
+        axios.post("/meet/create", {
+          team_id: localStorage.getItem("team_id"),
+          email: user.email,
+          title: eventName,
+          start_time: newStartTime,
+          end_time: newEndTime,
+          team_name: newTeamName,
+          description: eventDescription,
+          date: "2022-12-14",
+          location: eventLocation,
+          link: eventLink,
+        });
+
+        navigate("/home");
+      } catch (err) {
+        console.log(err);
+      }
+      console.log(
+        newStartTime,
+        newEndTime,
+        eventName,
+        eventDescription,
+        eventLocation
       );
-      setNotified(true);
-    } else if (value[0] >= value[1]) {
-      toast.error("Start time must be less than end time");
-      return;
-    } else {
-      axios.post("/meet/create", {
-        email: user.email,
-        title: eventName,
-        description: eventDescription,
-        date: eventDate,
-        location: eventLocation,
-        link: eventLink,
-      });
-      toast.success("Event Added Successfully");
-      console.log(value, eventName, eventDescription, eventLocation);
     }
   };
   const handleCancel = () => {
@@ -76,9 +100,9 @@ const AddEvent = () => {
     setEventName("");
     setValue([start_time, end_time]);
   };
-  const handleChange = (e) => {
-    setValue(e);
-  };
+  // const handleChange = (e) => {
+  //   setValue(e);
+  // };
 
   return (
     <div>
@@ -86,28 +110,45 @@ const AddEvent = () => {
       <div>
         <div className="flex justify-center w-full px-4">
           <div className="flex flex-col gap-y-10 w-full lg:w-2/4">
-            <div className="flex justify-evenly items-center">
+            <div className="flex gap-x-8 items-center">
               <div className="p-2 rounded-md bg-myBlue text-white font-semibold">
-                {value[0]}
+                {/* {newStartTime} */}
               </div>
               <div>
-                <Box sx={{ width: "15rem" }}>
+                {/* <Box sx={{ width: "15rem" }}>
                   <Slider
                     step={1}
                     getAriaLabel={() => "Temperature range"}
                     value={value}
-                    min={start_time}
-                    max={end_time}
+                    min={10}
+                    max={12}
                     onChange={(e) => handleChange(e.target.value)}
                     valueLabelDisplay="auto"
                     disableSwap
                   />
-                </Box>
+                </Box> */}
+                <h1>Start Time: </h1>
+                <input
+                  type="time"
+                  onChange={(e) =>
+                    // setTime((prevState) => (prevState[0] = e.target.value))
+                    setNewStartTime(e.target.value)
+                  }
+                />
+                <h1>End Time: </h1>
+                <input
+                  type="time"
+                  onChange={(e) =>
+                    // setTime((prevState) => (prevState[1] = e.target.value))
+                    setNewEndTime(e.target.value)
+                  }
+                />
               </div>
               <div className="p-2 rounded-md bg-myBlue text-white font-semibold">
-                {value[1]}
+                {/* {newEndTime} */}
               </div>
             </div>
+            <h1>Date: {chosenDate}</h1>
             <EntryField
               label="Event Name"
               value={eventName}

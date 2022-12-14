@@ -5,6 +5,7 @@ import axios from "../../axios/index";
 import { ReactComponent as NoMeetings } from "../../assets/noMeetings.svg";
 import { ReactComponent as NoFilterMatch } from "../../assets/noFilterMatch.svg";
 import { UserAuth } from "../../context/UserAuthContext";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 export const AllPages = ({ filter, tab }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = user.stsTokenManager.accessToken;
@@ -19,34 +20,40 @@ export const AllPages = ({ filter, tab }) => {
     past: [],
     cancelled: [],
   });
-
+  const { setIsLoading } = FindFreeSlot();
   useEffect(() => {
     async function getData() {
-      const upcoming = await axios.post(
-        "meet/getUpcoming",
-        {
-          email: user.email,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      const past = await axios.post(
-        "meet/getPast",
-        {
-          email: user.email,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      const cancelled = await axios.post(
-        "meet/getCancelled",
-        {
-          email: user.email,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      try {
+        setIsLoading(true);
+        const upcoming = await axios.post(
+          "meet/getUpcoming",
+          {
+            email: user.email,
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const past = await axios.post(
+          "meet/getPast",
+          {
+            email: user.email,
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const cancelled = await axios.post(
+          "meet/getCancelled",
+          {
+            email: user.email,
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
 
-      setUpcomingData(upcoming.data);
-      setPastData(past.data);
-      setCancelledData(cancelled.data);
+        setUpcomingData(upcoming.data);
+        setPastData(past.data);
+        setCancelledData(cancelled.data);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     }
     getData();
   }, [refresh]);

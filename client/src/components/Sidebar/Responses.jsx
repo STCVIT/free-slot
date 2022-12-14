@@ -12,32 +12,31 @@ import {
 } from "react-icons/ri";
 import axios from "../../axios";
 import { useState, useEffect } from "react";
-
 const Responses = ({ onClose }) => {
   const {
     link,
     setLink,
-    linkCreator,
-    setLinkCreator,
+    linkMaker,
+    setLinkMaker,
     linkTeam,
     setLinkTeam,
     getLink,
+    setIsLoading,
   } = FindFreeSlot();
   //console.log(link);
   // useEffect(() => {
   //   setLinkCreator(linkCreator);
   // }, [linkCreator]);
   const getLinkHandler = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const getUser = await axios.post("user/getUserByEmail", {
-      email: user.email,
-    });
-    console.log(getUser);
-    if (getUser) {
-      setLinkCreator(getUser.data.name);
-      console.log(linkCreator);
+    try {
+      setLink("");
+      setIsLoading(true);
+
+      await getLink();
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
     }
-    await getLink();
   };
   const showCopiedToast = () => {
     toast.success("Link copied successfully!", {

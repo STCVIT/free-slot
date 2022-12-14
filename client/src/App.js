@@ -17,7 +17,8 @@ import Home from "./pages/Home";
 import FreeSlot from "./pages/Freeslot";
 import ContactUs from "./components/contactUs/contactUs";
 import AddMeToTeam from "./components/Links/AddMeToTeam";
-import RedirectingMiddleware from './components/Links/RedirectingMiddleware'
+import RedirectingMiddleware from "./components/Links/RedirectingMiddleware";
+import Loader from "./components/Loader/Loader";
 export default function App() {
   return (
     <>
@@ -51,9 +52,10 @@ export default function App() {
               <Route path="/freeslot" element={<FreeSlot />} />
               <Route path="/addtoteam/:id" element={<AddMeToTeam />} />
               {/* <Route path='/:id' element={localStorage.getItem("user")? <AddMeToTeam /> : <Login/>}/> */}
-              <Route path='/:id' element={<RedirectingMiddleware/>}/>
+              <Route path="/:id" element={<RedirectingMiddleware />} />
             </Routes>
             <ToastContainer />
+            <Loader />
           </BrowserRouter>
         </FreeSlotContextProvider>
       </UserAuthContextProvider>

@@ -7,11 +7,13 @@ import { GrClose } from "react-icons/gr";
 import { useState } from "react";
 import MainNavbar from "../components/Menus/MainNavbar";
 import PageHeading from "../components/Headings/PageHeading";
+import { FindFreeSlot } from "../context/FreeSlotContext";
 import { useEffect } from "react";
 // import axios from "../axios";
 import axios from "../axios";
 const Schedule = () => {
   document.title = "Schedule";
+  const { setIsLoading } = FindFreeSlot();
   const [isModified, setIsModified] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [timeTable, setTimeTable] = useState([
@@ -37,22 +39,28 @@ const Schedule = () => {
   const daysData = ["Mon", "Tues", "Wed", "Thurs", "Fri"];
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    const getUser = async () => {
-      const userData = await axios.post(
-        "user/getUserByEmail",
-        {
-          email: user.email,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user.stsTokenManager.accessToken}`,
+    try {
+      setIsLoading(true);
+      const getUser = async () => {
+        const userData = await axios.post(
+          "user/getUserByEmail",
+          {
+            email: user.email,
           },
-        }
-      );
-      setTimeTable(userData.data.timetable);
-      console.log(userData.data.timetable);
-    };
-    getUser();
+          {
+            headers: {
+              Authorization: `Bearer ${user.stsTokenManager.accessToken}`,
+            },
+          }
+        );
+        setTimeTable(userData.data.timetable);
+        console.log(userData.data.timetable);
+      };
+      getUser();
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   }, [fetchTimetable]);
 
   const activateEdit = (idx) => {
@@ -61,7 +69,9 @@ const Schedule = () => {
 
   const editCard = (idx, param, value) => {
     const newTimeTable = [...timeTable];
-    newTimeTable[activeTab][idx][param] = value !== "" ? value : "";
+    (value !== "" || value !== null) &&
+      (newTimeTable[activeTab][idx][param] = value);
+    // newTimeTable[activeTab][idx][param] = value !== "" ? value : null;
     setTimeTable(newTimeTable);
   };
 
@@ -81,6 +91,8 @@ const Schedule = () => {
     availableCard.start_time &&
       editCard(idx, "start_time", availableCard.start_time);
     availableCard.end_time && editCard(idx, "end_time", availableCard.end_time);
+    setNewTask({ start_time: "", end_time: "", type: "" });
+    setAvailableCard({ start_time: "", end_time: "", type: "" });
     setIsModified(true);
     setCurrentlyEditing(null);
   };

@@ -21,7 +21,6 @@ const ModalChooseTeam = ({ onClose, data }) => {
     teamObj[team_name].forEach((team) => {
       regArr.add(team);
     });
-    // console.log([...regArr]);
     let finalArr = [];
     [...regArr].forEach((reg) => {
       finalArr.push(reg.reg_no);
@@ -36,42 +35,14 @@ const ModalChooseTeam = ({ onClose, data }) => {
     onClose(selectedTeam);
   };
 
-  // useEffect(() => {
-  //   const selectTeam = (team_name) => {
-
-  //     setSelectedTeam([...regArr]);
-  //   };
-  //   console.log("Selected team: ", selectedTeam);
-  //   if (selectedTeam.length > 0) {
-  //   }
-  // }, [selectedTeam]);
-  // const [teams, setTeams] = useState([]);
-  // console.log(data);
   const options = {
-    // isCaseSensitive: false,
-    // includeScore: false,
     shouldSort: true,
-    // includeMatches: false,
-    // findAllMatches: false,
-    // minMatchCharLength: 1,
-    // location: 0,
-    // threshold: 0.6,
-    // distance: 100,
-    // useExtendedSearch: false,
-    // ignoreLocation: false,
-    // ignoreFieldNorm: false,
-    // fieldNormWeight: 1,
     keys: ["team_name"],
   };
-  // const teamNames = data.map((team) => team.team_name);
-  // console.log(teamNames);
+
   const fuse = new Fuse(regNoArr, options);
   const results = fuse.search(searchValue);
-  // useEffect(() => {
-  //   console.log(results);
-  // }, [results]);
-  // console.log(selectedTeam);
-  // console.log("teams obj:", teamObj);
+
   const TeamCard = ({ team }) => {
     return (
       <div

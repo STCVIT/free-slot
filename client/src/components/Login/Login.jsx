@@ -17,6 +17,8 @@ const Login = () => {
   const { logIn, googleSignIn } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
   // eslint-disable-next-line no-unused-vars
+  const emailPattern = /([a-z|.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/;
+
   const [passwordInput, setPasswordInput] = useState("");
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
@@ -24,6 +26,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    if (emailPattern.test(email) === false) {
+      toast.error("VIT mail needed");
+      return;
+    }
+
     try {
       const res = await logIn(email, password);
       if (res && uid) {

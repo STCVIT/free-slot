@@ -11,7 +11,7 @@ const addTeam = async (req, res) => {
     const team = await Team.create(req.body);
     const members = await team.addUsers(req.body.members);
     //res.status(201).send(team);
-    res.sendStatus(201)
+    res.status(201)
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -23,8 +23,8 @@ const addTeamByLink = async (req, res, next) => {
     const team = await Team.create(req.body);
     const member = await team.addUsers(req.body.regno);
     //res.status(201).send(team);
-    res.status(201)
-    next()
+    res.status(201);
+    next();
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -158,7 +158,7 @@ const updateTeam = async (req, res) => {
     //await team.save();
     const members = await team.addUsers(req.body.members);
     //res.status(200).send(team);
-    res.sendStatus(200)
+    res.status(200)
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -180,7 +180,7 @@ const deleteTeam = async (req, res) => {
     }
     await team.destroy();
     //res.status(200).send(team);
-    res.sendStatus(200)
+    res.status(200)
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);

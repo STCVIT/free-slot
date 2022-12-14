@@ -4,10 +4,13 @@ import PageHeading from "../components/Headings/PageHeading";
 import MainNavbar from "../components/Menus/MainNavbar";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
+import { FindFreeSlot } from "../context/FreeSlotContext";
+import Loader from "../components/Loader/Loader";
 const Profile = () => {
   const { user } = UserAuth();
   const [userDetails, setUserDetails] = useState({});
   const [showUpload, setShowUpload] = useState(false);
+  const { isLoading, setIsLoading } = FindFreeSlot();
   console.log("User: ", user);
   useEffect(() => {
     axios
@@ -33,20 +36,18 @@ const Profile = () => {
   );
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
+      e.preventDefault();
+      setIsLoading(true);
       var file = files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => {
+      reader.onload = async () => {
         file = reader.result;
         //console.log(file);
-        const res = sendTimetable(file);
-        if (res && uid) {
-          navigate("/addtoteam/" + uid);
-        } else if (res) {
-          navigate("/home");
-        }
+        await sendTimetable(file);
+
+        setIsLoading(false);
       };
     } catch (error) {
       console.error(error);

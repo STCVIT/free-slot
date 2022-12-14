@@ -134,6 +134,22 @@ const getUserReg = async (req, res, next) => {
     console.error(error.message);
   }
 };
+const checkUserByReg = async (req, res, next) => {
+  try {
+    const reg = req.body.reg_no;
+    const regno = await User.findOne({
+      where: { reg_no: reg },
+    });
+    if (!regno) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
+  } catch (error) {
+    errorHandler(new BadRequestError());
+    console.error(error.message);
+  }
+};
 const getUserName = async (req, res, next) => {
   try {
     const name = await User.findOne({
@@ -156,4 +172,5 @@ module.exports = {
   getUserReg,
   getUserName,
   getUserByEmail,
+  checkUserByReg,
 };
