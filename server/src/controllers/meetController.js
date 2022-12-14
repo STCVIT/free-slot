@@ -13,7 +13,7 @@ const addMeet = async (req, res) => {
     });
     await team.addMeet(meet);
     //res.status(201).send(meet);
-    res.status(201);
+    res.sendStatus(201);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -28,7 +28,7 @@ const getMeet = async (req, res) => {
     if (!meet) {
       return errorHandler(new NotFoundError(), req, res);
     }
-    res.status(201).send(meet);
+    res.status(200).send(meet);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -64,7 +64,7 @@ const getAllUpcomingMeets = async (req, res) => {
         }
       }
     }
-    return res.send(results);
+    res.status(200).send(results);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -80,7 +80,7 @@ const getAllPastMeets = async (req, res) => {
         if (meet.status === "past") results.push(meet);
       }
     }
-    return res.send(results);
+    res.status(200).send(results);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -96,7 +96,7 @@ const getAllCancelledMeets = async (req, res) => {
         if (meet.status === "cancelled") results.push(meet);
       }
     }
-    return res.send(results);
+    res.status(200).send(results);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -104,7 +104,6 @@ const getAllCancelledMeets = async (req, res) => {
 };
 //upadte meet
 const updateMeet = async (req, res) => {
-  // const updates = Object.keys(req.body);
   try {
     console.log("Hi");
     let id = req.body.meet_id;
@@ -117,8 +116,6 @@ const updateMeet = async (req, res) => {
     if (!meet) {
       return errorHandler(new NotFoundError(), req, res);
     }
-
-    // updates.forEach((update) => (meet[update] = req.body[update]));
     meet["status"] = req.body.status;
     await meet.save();
     // res.status(200).send(meet);
@@ -144,7 +141,7 @@ const deleteMeet = async (req, res) => {
     }
     await meet.destroy();
     // res.status(200).send(meet);
-    res.status(200);
+    res.sendStatus(200);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -160,7 +157,7 @@ const getAllMeets = async (req, res) => {
         results.push(meet);
       }
     }
-    return res.send(results);
+    return res.status(200).send(results);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);

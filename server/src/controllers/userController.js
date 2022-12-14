@@ -13,7 +13,7 @@ const addUserInDb = async (req, res, next) => {
     };
     const user = await User.create(info);
     //res.status(200).send(user)
-    res.status(200).send();
+    res.sendStatus(200);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -92,7 +92,7 @@ const updateUser = async (req, res) => {
     user["timetable"] = req.body["timetable"];
     await user.save();
     //res.status(200).send(user)
-    return res.status(200);
+    res.sendStatus(200);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -115,7 +115,7 @@ const deleteUser = async (req, res) => {
 
     await user.destroy();
     //res.status(200).send(user)
-    res.status(200);
+    res.sendStatus(200);
   } catch (error) {
     errorHandler(new BadRequestError());
     console.error(error.message);

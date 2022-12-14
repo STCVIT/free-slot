@@ -28,11 +28,10 @@ const checkFreeSlot = async (req, res, next)=>{
 //adding timetbale of user by screenshot method
 const freeSlotScreenshot = async(req, res, next)=>{
     try {
-        console.log(req)
         const timetable = await User.update(
             {timetable: busy_time(req.body.timetable)}, {where: {email: req.body.email}}
         )
-        res.status(200).send(timetable)
+        res.sendStatus(200)
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
         console.error(error.message);
@@ -45,7 +44,8 @@ const freeSlotCp = async(req, res, next)=>{
             {timetable: freeSlotCopyPaste(req.body.timetable)},
             {where: {reg_no: req.body.regno}}
         )
-        res.status(200).send(timetable)
+        // res.status(200).send(timetable)
+        res.sendStatus(200)
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
         console.error(error.message);
@@ -78,7 +78,8 @@ const addSlot = async (req, res)=>{
                 }
             }
         }
-        res.status(200).send(timetables)
+        // res.status(200).send(timetables)
+        res.sendStatus(200)
 
     } catch (error) {
         errorHandler(new BadRequestError, req, res)
