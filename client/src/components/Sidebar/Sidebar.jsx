@@ -67,7 +67,7 @@ function Sidebar({ filter, setFilter }) {
         <Dropdown
           // clearable={filter.day !== "all" ? true : false}
           // value={filter.day !== "all" && filter.day}
-          clearable
+          clearable="true"
           multiple={false}
           placeholder="Day"
           selection
@@ -86,7 +86,7 @@ function Sidebar({ filter, setFilter }) {
         <Dropdown
           // clearable={filter.groups !== "all" ? true : false}
           // value={filter.groups !== "all" && filter.groups}
-          clearable
+          clearable="true"
           placeholder="Team"
           multiple={false}
           selection
@@ -106,7 +106,7 @@ function Sidebar({ filter, setFilter }) {
           defaultSelectedLabel="all"
         />
         <Dropdown
-          clearable
+          clearable="true"
           multiple={false}
           placeholder="Time"
           selection

@@ -56,7 +56,8 @@ export function FreeSlotContextProvider({ children }) {
         console.log(res.data);
       });
     setIsLoading(false);
-    console.log(currentTeamId);
+    // console.log(currentTeamId);
+
     toast.success("Free slots found");
   };
   const getLink = async () => {

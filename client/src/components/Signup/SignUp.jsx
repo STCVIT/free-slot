@@ -15,15 +15,33 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [emailAlert, setEmailAlert] = useState(false);
+  const [regAlert, setRegAlert] = useState(false);
   const navigate = useNavigate();
   const { googleSignUp, signUp } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
+  const emailPattern = /([a-z|.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/;
+  const regPattern = /([0-9]{2})([A-Z]{3})([0-9]{4})/g;
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      if (!emailPattern.test(email) || !regPattern.test(regno)) {
+        if (!emailPattern.test(email)) {
+          setEmailAlert(true);
+          setError("VIT mail needed");
+        }
+        if (!regPattern.test(regno)) {
+          setRegAlert(true);
+          setError("Invalid Registration Number");
+        }
+
+        return;
+      }
+      setRegAlert(false);
+      setEmailAlert(false);
       setError("");
       setLoading(true);
       const response = await axios.post("user/create", {
@@ -122,6 +140,11 @@ const SignUp = () => {
                   onChange={(e) => setRegno(e.target.value)}
                   required
                 />
+                {regAlert && (
+                  <p className="text-red-400 mt-2 text-sm">
+                    *Invalid Register Number
+                  </p>
+                )}
               </div>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">Email</label>
@@ -134,6 +157,11 @@ const SignUp = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
+                {emailAlert && (
+                  <p className="text-red-400 mt-2 text-sm">
+                    *VIT Email ID needed
+                  </p>
+                )}
               </div>
               <div className="flex flex-col py-2">
                 <label className=" font-semibold py-1">Password</label>

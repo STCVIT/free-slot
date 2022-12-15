@@ -1,18 +1,18 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("./config")[process.env.NODE_ENV || "development"];
 //for locally running
-// const sequelize = new Sequelize(config.postgres)
+const sequelize = new Sequelize(config.postgres);
 
 // for hosting
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
-});
+// const sequelize = new Sequelize(process.env.DATABASE_URL, {
+//   dialect: "postgres",
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false,
+//     },
+//   },
+// });
 sequelize
   .authenticate()
   .then(() => {
