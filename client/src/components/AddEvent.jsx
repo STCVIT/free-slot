@@ -38,9 +38,9 @@ const AddEvent = () => {
   const [eventLink, setEventLink] = React.useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
   var { start_time, end_time } = chosenSlotTime;
-  console.log(chosenSlotTime);
-  start_time = parseInt(chosenSlotTime.end_time.slice(0, 2));
-  end_time = parseInt(chosenSlotTime.start_time.slice(0, 2));
+  // console.log(chosenSlotTime);
+  // start_time = parseInt(chosenSlotTime.end_time.slice(0, 2));
+  // end_time = parseInt(chosenSlotTime.start_time.slice(0, 2));
   const [value, setValue] = React.useState([start_time, end_time]);
   const [newStartTime, setNewStartTime] = React.useState(null);
   const [newEndTime, setNewEndTime] = React.useState(null);
@@ -53,6 +53,7 @@ const AddEvent = () => {
     } else if (!eventLocation) {
       toast.error("Please fill Event Location");
     }
+
     //  else if (value[0] === start_time && value[1] === end_time && !notified) {
     //   toast.error(
     //     "You have not modified the time, If you want to continue, please submit again"
@@ -111,11 +112,7 @@ const AddEvent = () => {
         <div className="flex justify-center w-full px-4">
           <div className="flex flex-col gap-y-10 w-full lg:w-2/4">
             <div className="flex gap-x-8 items-center">
-              <div className="p-2 rounded-md bg-myBlue text-white font-semibold">
-                {/* {newStartTime} */}
-              </div>
-              <div>
-                {/* <Box sx={{ width: "15rem" }}>
+              {/* <Box sx={{ width: "15rem" }}>
                   <Slider
                     step={1}
                     getAriaLabel={() => "Temperature range"}
@@ -127,26 +124,53 @@ const AddEvent = () => {
                     disableSwap
                   />
                 </Box> */}
-                <h1>Start Time: </h1>
-                <input
-                  type="time"
-                  onChange={(e) =>
-                    // setTime((prevState) => (prevState[0] = e.target.value))
-                    setNewStartTime(e.target.value)
-                  }
-                />
-                <h1>End Time: </h1>
+              <div className="flex flex-col gap-y-4 w-1/2">
+                <div className="flex items-center justify-between ">
+                  <div>
+                    <h3>Start Time: </h3>
+                  </div>
+                  <div>
+                    <input
+                      type="time"
+                      required
+                      className="p-2 rounded-md"
+                      onChange={(e) => setNewStartTime(e.target.value)}
+                    />
+                    {newStartTime && newStartTime < start_time && (
+                      <p className="text-red-500 text-sm">
+                        Start time must be greater than {start_time}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center justify-between ">
+                  <div>
+                    <h3>End Time: </h3>
+                  </div>
+                  <div>
+                    <input
+                      type="time"
+                      required
+                      className="p-2 rounded-md"
+                      onChange={(e) => setNewEndTime(e.target.value)}
+                    />
+                    {newEndTime && newEndTime < end_time && (
+                      <p className="text-red-500 text-sm">
+                        End time must be less than {end_time}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* <h3>End Time: </h3>
                 <input
                   type="time"
                   onChange={(e) =>
                     // setTime((prevState) => (prevState[1] = e.target.value))
                     setNewEndTime(e.target.value)
                   }
-                />
-              </div>
-              <div className="p-2 rounded-md bg-myBlue text-white font-semibold">
-                {/* {newEndTime} */}
-              </div>
+                /> */}
             </div>
             <h1>Date: {chosenDate}</h1>
             <EntryField

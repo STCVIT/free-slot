@@ -49,15 +49,15 @@ const Schedule = () => {
           },
           {
             headers: {
-              Authorization: `Bearer ${user.stsTokenManager.accessToken}`,
+              Authorization: `Bearer ${user.token}`,
             },
           }
         );
         setTimeTable(userData.data.timetable);
         console.log(userData.data.timetable);
       };
-      getUser();
       setIsLoading(false);
+      getUser();
     } catch (error) {
       console.log(error);
     }
@@ -105,26 +105,30 @@ const Schedule = () => {
     setTimeTable(newTimeTable);
   };
   const handleModifyClick = async () => {
-    !showModify && setShowModify(true);
-    if (!showModify) {
-      setShowModify(true);
-      return;
-    }
-    setShowModify(false);
-
-    await axios.patch(
-      "user/updateUser",
-      {
-        email: user.email,
-        timetable: timeTable,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.stsTokenManager.accessToken}`,
-        },
+    try {
+      !showModify && setShowModify(true);
+      if (!showModify) {
+        setShowModify(true);
+        return;
       }
-    );
-    setFetchTimetable(!fetchTimetable);
+      setShowModify(false);
+
+      await axios.patch(
+        "user/updateUser",
+        {
+          email: user.email,
+          timetable: timeTable,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      setFetchTimetable(!fetchTimetable);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

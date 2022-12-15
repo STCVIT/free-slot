@@ -8,14 +8,16 @@ import { FindFreeSlot } from "../context/FreeSlotContext";
 import Loader from "../components/Loader/Loader";
 const Profile = () => {
   const { user } = UserAuth();
+  const localUser = JSON.parse(localStorage.getItem("user"));
   const [userDetails, setUserDetails] = useState({});
   const [showUpload, setShowUpload] = useState(false);
   const { isLoading, setIsLoading } = FindFreeSlot();
   console.log("User: ", user);
+
   useEffect(() => {
     axios
       .post("user/getUserByEmail", {
-        email: user.email,
+        email: localUser.email,
       })
       .then((res) => {
         // console.log(res.data);
@@ -49,6 +51,29 @@ const Profile = () => {
 
         setIsLoading(false);
       };
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      console.log(localUser.email);
+      await axios.delete(
+        "user/deleteUser",
+        {
+          email: localUser.email,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localUser.token}`,
+          },
+        }
+      );
+
+      localStorage.removeItem("user");
+      navigate("/");
+      console.log("Acc deleted");
     } catch (error) {
       console.error(error);
     }
@@ -115,72 +140,15 @@ const Profile = () => {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col gap-y-3 bg-white rounded-md p-4 my-6">
-                <h1 className="text-gray-600 text-2xl mb-4">Format</h1>
-                <form className="flex flex-col lg:flex-row gap-y-4 gap-x-5 w-full lg:w-2/4 justify-between">
-                  <div className="flex flex-col gap-y-2 items-start lg:w-1/2">
-                    Date Format
-                    <select
-                      defaultValue={1}
-                      className="relative form-select border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3"
-                    >
-                      <option value={1}>DD/MM/YY</option>
-                      <option value={2}>MM/DD/YY</option>
-                    </select>
-                  </div>
-                  <div className="flex flex-col gap-y-2 lg:w-1/2 items-start">
-                    Time Format
-                    <select
-                      defaultValue={1}
-                      className="relative form-select  border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg w-full p-3"
-                    >
-                      <option value={1}>12H(AM/PM)</option>
-                      <option value={2}>24H</option>
-                    </select>
-                  </div>
-                </form>
-              </div>
-              <div>
-                <div className="bg-white rounded-md p-4">
-                  <h1 className="text-gray-600 text-2xl mb-4">
-                    Meet Frequency
-                  </h1>
-                  <div className="flex gap-x-4">
-                    <label htmlFor="meetingFrequencySetter" className="w-fit">
-                      <input
-                        id="meetingFrequencySetter"
-                        type="number"
-                        placeholder={1}
-                        style={{
-                          width: "3rem",
-                          textAlign: "center",
-                          textDecoration: "underline",
-                        }}
-                      />
-                    </label>
-                    meets per
-                    <select className="underline">
-                      <option>Day</option>
-                      <option>Week</option>
-                      <option>Month</option>
-                    </select>
-                  </div>
-                </div>
 
-                <div className="my-6 flex justify-between w-full lg:flex-row flex-col gap-y-3">
-                  <div className="flex w-full lg:w-2/4 justify-between lg:justify-start gap-x-5">
-                    <button className="lg:w-fit w-full border border-black rounded-md col-span-1 underline decoration-dotted p-2">
-                      Cancel
-                    </button>
-                    <button className="col-span-1 lg:w-fit w-full bg-blue-600 rounded-md px-4 py-2 text-white">
-                      Save Changes
-                    </button>
-                  </div>
-                  <div className="flex col-span-1 items-center justify-center lg:justify-end w-full lg:w-2/4">
-                    <button className=" bg-red-600 rounded-md py-2 px-4 text-white ">
-                      Delete Timetable
-                    </button>
-                  </div>
+              <div>
+                <div className="mt-4">
+                  <button
+                    onClick={handleDeleteAccount}
+                    className=" bg-red-600 rounded-md py-2 px-4 text-white "
+                  >
+                    Delete Account
+                  </button>
                 </div>
               </div>
             </div>

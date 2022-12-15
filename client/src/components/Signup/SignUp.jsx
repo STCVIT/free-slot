@@ -6,20 +6,20 @@ import googleLogo from "../../assets/Gooogle-logo.svg";
 import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import axios from "../../axios/index";
-
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 const SignUp = () => {
   document.title = "Sign Up";
   const [name, setName] = useState("");
   const [regno, setRegno] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [emailAlert, setEmailAlert] = useState(false);
   const [regAlert, setRegAlert] = useState(false);
   const navigate = useNavigate();
   const { googleSignUp, signUp } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
+  const { setIsLoading } = FindFreeSlot();
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
@@ -43,7 +43,8 @@ const SignUp = () => {
       setRegAlert(false);
       setEmailAlert(false);
       setError("");
-      setLoading(true);
+      setIsLoading(true);
+
       const response = await axios.post("user/create", {
         name,
         regno,
@@ -57,11 +58,12 @@ const SignUp = () => {
           navigate("/timetable");
         }
       }
+      setIsLoading(false);
     } catch (error) {
       setError("Failed to create an account");
       console.error(error);
     }
-    setLoading(false);
+    setIsLoading(false);
   }
   const oAuth = async (e) => {
     setError("");
@@ -175,7 +177,7 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <div onClick={togglePassword}>
+                  <div className="cursor-pointer" onClick={togglePassword}>
                     {passwordType === "password" ? (
                       <img className="py-4 px-2" src={Visible} alt="Eye Icon" />
                     ) : (
@@ -193,7 +195,7 @@ const SignUp = () => {
               <Link to="/timetable">
                 <button
                   className="bg-myBlue text-white w-full font-bold mx-auto py-2 rounded"
-                  disabled={loading}
+                  // disabled={loading}
                   onClick={handleSubmit}
                 >
                   Next

@@ -102,12 +102,14 @@ const updateUser = async (req, res) => {
 //delete user
 const deleteUser = async (req, res) => {
   try {
-    let regno = req.body.regno;
-    if (!regno || regno == undefined) {
-      return res.status(418).send("Invalid registration number");
+    let userEmail = req.body.email;
+    console.log(userEmail);
+
+    if (!userEmail || userEmail == undefined) {
+      return res.status(418).send("Invalid email number");
     }
     const user = await User.findOne({
-      where: { reg_no: regno },
+      where: { email: userEmail },
     });
     if (!user) {
       return errorHandler(new NotFoundError(), req, res);

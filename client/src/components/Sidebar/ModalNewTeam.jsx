@@ -2,8 +2,9 @@ import React from "react";
 import { GrClose } from "react-icons/gr";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
+import { UserAuth } from "../../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios";
@@ -18,6 +19,28 @@ const FreeSlot = ({ onClose }) => {
   const [saveTeam, setSaveTeam] = useState(true);
   const [teamName, setTeamName] = useState("");
   const [currentVaue, setCurrentValue] = useState("");
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  const [error, setError] = useState("");
+  const [userDetails, setUserDetails] = useState({});
+  if (!tags.includes(userDetails.reg_no) && userDetails.reg_no)
+    tags.push(userDetails.reg_no);
+
+  useEffect(() => {
+    axios
+      .post("user/getUserByEmail", {
+        email: localUser.email,
+      })
+      .then((res) => {
+        setUserDetails(res.data);
+        // tags.push(res.data.reg_no);
+        // setTags(tags);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // tags.push(userDetails.reg_no);
+  }, []);
+  console.log("User Details: ", userDetails);
   const ToastMessageContainer = (props) => {
     return (
       <div>
@@ -40,11 +63,31 @@ const FreeSlot = ({ onClose }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user.stsTokenManager.accessToken}`,
+          Authorization: `Bearer ${user.token}`,
         },
       }
     );
-    return getUser.data;
+    const userData = await axios.post(
+      "user/getUserByEmail",
+      {
+        email: user.email,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    if (!getUser.data) {
+      toast.error("User not found!");
+      return false;
+    } else if (
+      !userData.data.timeTable ||
+      userData.data.timeTable.length === 0
+    ) {
+      toast.error("User has no timetable!");
+      return false;
+    } else return true;
   };
 
   async function handleKeyDown(e) {
@@ -59,8 +102,6 @@ const FreeSlot = ({ onClose }) => {
         if (await userFound(value)) {
           tags.push(value);
           setTags(tags);
-        } else {
-          toast.error("User not found!");
         }
       }
       if (value.includes(",")) {
@@ -151,18 +192,23 @@ const FreeSlot = ({ onClose }) => {
           e.target.value = "";
           return;
         }
-        if (await userFound(value)) {
-          setTags([...tags, value.toUpperCase()]);
-        }
-        if (!(await userFound(value))) {
-          toast.error("User not found!");
-        }
+        // if (await userFound(value)) {
+        //   setTags([...tags, value.toUpperCase()]);
+        // }
+        // if (!(await userFound(value))) {
+        //   // toast.error("User not found!");
+        // }
+        (await userFound(value)) && setTags([...tags, value.toUpperCase()]);
         e.target.value = "";
       }
     }
   }
 
   function removeTag(index) {
+    if (tags[index] === userDetails.reg_no) {
+      toast.error("You cannot remove yourself!");
+      return;
+    }
     setTags(tags.filter((el, i) => i !== index));
     if (tags.length === 0) setTagNote("Add a tag!");
   }
@@ -198,7 +244,6 @@ const FreeSlot = ({ onClose }) => {
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const Confirm = ({ setConfirmationOpen }) => {
     const handleYes = () => {
-      toast.success("Submission cancelled!");
       setConfirmationOpen(false);
       onClose();
     };

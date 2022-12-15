@@ -37,7 +37,7 @@ function Sidebar({ filter, setFilter }) {
   }, [urlPath]);
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.stsTokenManager.accessToken;
+    const token = user.token;
     // console.log(user, token);
     async function getData() {
       // console.log("check");
@@ -65,9 +65,8 @@ function Sidebar({ filter, setFilter }) {
     return (
       <div className={`w-full flex flex-col gap-y-4`}>
         <Dropdown
-          // clearable={filter.day !== "all" ? true : false}
-          // value={filter.day !== "all" && filter.day}
-          clearable="true"
+          clearable={filter.day !== "all" ? true : false}
+          value={filter.day !== "all" && filter.day}
           multiple={false}
           placeholder="Day"
           selection
@@ -84,9 +83,9 @@ function Sidebar({ filter, setFilter }) {
         />
 
         <Dropdown
-          // clearable={filter.groups !== "all" ? true : false}
-          // value={filter.groups !== "all" && filter.groups}
-          clearable="true"
+          search={true}
+          clearable={filter.groups !== "all" ? true : false}
+          value={filter.groups !== "all" && filter.groups}
           placeholder="Team"
           multiple={false}
           selection
@@ -105,7 +104,7 @@ function Sidebar({ filter, setFilter }) {
           button={true}
           defaultSelectedLabel="all"
         />
-        <Dropdown
+        {/* <Dropdown
           clearable="true"
           multiple={false}
           placeholder="Time"
@@ -128,7 +127,7 @@ function Sidebar({ filter, setFilter }) {
           }}
           button={true}
           defaultSelectedLabel="all"
-        />
+        /> */}
       </div>
     );
   };

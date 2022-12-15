@@ -134,28 +134,12 @@ const Responses = ({ onClose }) => {
             </div>
           </div>
         </div>
-        <div className=" mt-5 items-center drop-shadow overflow-y-auto h-[25vh] border-2 border-gray-200 bg-white px-2 lg:px-16 py-4 rounded-md">
-          <table
-            style={{ borderCollapse: "separate", borderSpacing: "0px 8px" }}
-            className="table-auto w-full text-left "
-          >
-            <thead>
-              <tr>
-                {(isLg
-                  ? ["Reg No.", "Name", "Email"]
-                  : ["Reg No.", "Name"]
-                ).map((item, idx) => (
-                  <th key={idx} className=" text-[#9C9C9C]  font-body">
-                    {item}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>{statusArray}</tbody>
-          </table>
-        </div>
+
         <div className="flex gap-x-5 justify-center items-center ">
-          <button className="border-2 border-black rounded-md col-span-1 underline decoration-dotted px-4 py-2 my-5">
+          <button
+            onClick={onClose}
+            className="border-2 border-black rounded-md col-span-1 underline decoration-dotted px-4 py-2 my-5"
+          >
             Cancel
           </button>
           <button className="col-span-1 border-2 border-blue-600 bg-blue-600 rounded-md px-4 py-2 text-white">

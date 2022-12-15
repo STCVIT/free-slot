@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ContactUs from "../components/contactUs/contactUs";
 import Socials from "../components/Socials/Socials";
 
 const Landing = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
+  const returnToHome = () => {
+    if (user) {
+      navigate("/home");
+    }
+  };
+  useEffect(() => {
+    returnToHome();
+  });
+
   const navigateSignup = () => {
     navigate("/signup");
   };
   const navigateLogin = () => {
     navigate("/login");
   };
+
+  console.log(localStorage.getItem("user"));
   return (
     <div className=" py-4">
       <nav className="flex px-12 py-6">

@@ -3,7 +3,7 @@ import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
 import { Link, useNavigate } from "react-router-dom";
 import DragFile from "./DragFile";
 import { UserAuth } from "../../context/UserAuthContext";
-
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { Box, TextField } from "@mui/material";
 const TextInput = (props) => {
   // eslint-disable-next-line no-unused-vars
@@ -29,6 +29,7 @@ const TextInput = (props) => {
 export default function Timetable() {
   const [files, setFiles] = useState([]);
   const { sendTimetable } = UserAuth();
+  const { setIsLoading } = FindFreeSlot();
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
@@ -48,6 +49,7 @@ export default function Timetable() {
           navigate("/home");
         }
       };
+      // setIsLoading(false);
     } catch (error) {
       console.error(error);
     }

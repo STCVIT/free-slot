@@ -57,7 +57,7 @@ const MeetingCardTemplate = (props) => {
     };
     const getDay = new Date(dataItem.date);
     // dataItem.date = moment(dataItem.date).format("Do MMM YY");
-    // console.log(dataItem);
+    console.log(dataItem);
     return (
       <div
         key={idx}

@@ -78,7 +78,7 @@ const Login = () => {
           />
         </div>
         <div className="visible col-span-1 sm:col-span-2 mt-7">
-          <div className="px-3 sm:py-5 sm:px-16 lg:py-7.5 lg:px-24 lg:py-10 lg:px-48">
+          <div className="px-3 sm:py-5 sm:px-16 lg:py-7.5 lg:py-10 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-10">Login</h1>
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col py-2 w-full">
@@ -100,7 +100,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <div onClick={togglePassword}>
+                  <div onClick={togglePassword} className="cursor-pointer">
                     {passwordType === "password" ? (
                       <img className="py-4 px-2" src={Visible} alt="Eye Icon" />
                     ) : (

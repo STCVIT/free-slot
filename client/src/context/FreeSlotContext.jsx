@@ -2,7 +2,6 @@ import React from "react";
 import { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../axios/index";
-
 const freeSlotContext = createContext();
 
 export function FreeSlotContextProvider({ children }) {
@@ -17,9 +16,9 @@ export function FreeSlotContextProvider({ children }) {
   const [currentTeamId, setCurrentTeamId] = useState(null);
   const [newTeamName, setNewTeamName] = useState(null);
   const justFindFreeSlot = async (tags) => {
-    console.log(tags);
     try {
       setIsLoading(true);
+      console.log(tags);
       await axios
         .post("timetable/freeslot", {
           members: tags,
@@ -36,29 +35,28 @@ export function FreeSlotContextProvider({ children }) {
     }
   };
   const saveTeamAndFindFreeSlot = async (teamName, tags) => {
-    await axios
-      .post("team/create", {
+    // console.log(tags);
+    try {
+      setIsLoading(true);
+      const res = await axios.post("team/create", {
         team_name: teamName,
         members: tags,
-      })
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("team_id", res.data.team_id);
-        // setCurrentTeamId(res.data.team_id);
-        // console.log(currentTeamId);
       });
-    await axios
-      .post("timetable/freeslot", {
+      console.log(res.data);
+      localStorage.setItem("team_id", res.data.team_id);
+      // setCurrentTeamId(res.data.team_id);  // console.log(currentTeamId);
+      // console.log(tags);
+      const tt = await axios.post("timetable/freeslot", {
         members: tags,
-      })
-      .then((res) => {
-        setData(res.data);
-        console.log(res.data);
       });
-    setIsLoading(false);
-    // console.log(currentTeamId);
 
-    toast.success("Free slots found");
+      setData(tt.data);
+      console.log(tt.data);
+      setIsLoading(false);
+      toast.success("Free slots found");
+    } catch (error) {
+      console.error("saveTeamAndFindFreeSlot " + error);
+    }
   };
   const getLink = async () => {
     try {
