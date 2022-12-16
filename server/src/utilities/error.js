@@ -34,6 +34,12 @@ class TeamNotFoundError{
         this.message = "Team Not Found"
     }
 }
+class MeetNotFoundError{
+    constructor(){
+        this.statusCode = 404
+        this.message = "Meet Not Found"
+    }
+}
 class DuplicateUser{
     constructor(){
         this.statusCode = 409
@@ -55,19 +61,25 @@ class InvalidEmail{
 class InvalidTeamId{
     constructor(){
         this.statusCode = 403
-        this.message = "Team Id Provided"
+        this.message = "Team Id Not Provided"
+    }
+}
+class InvalidMeetId{
+    constructor(){
+        this.statusCode = 403
+        this.message = "Meet Id Not Provided"
     }
 }
 class TeamNameError{
     constructor(){
         this.statusCode = 403
-        this.message = "Team name not provided"
+        this.message = "Team Name Not Provided"
     }
 }
 class MembersError{
     constructor(){
         this.statusCode = 403
-        this.message = "Members not provided"
+        this.message = "Members Not Provided"
     }
 }
 module.exports = { 
@@ -77,10 +89,12 @@ module.exports = {
     NotFoundError,
     UserNotFoundError,
     TeamNotFoundError,
+    MeetNotFoundError,
     DuplicateUser,
     InvalidRegNo,
     InvalidEmail,
     InvalidTeamId,
+    InvalidMeetId,
     TeamNameError,
     MembersError
 }

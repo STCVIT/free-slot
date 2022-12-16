@@ -1,16 +1,23 @@
 const db = require("../db/db");
 const Meet = db.meets;
-const { NotFoundError, BadRequestError } = require("../utilities/error");
+const { NotFoundError, BadRequestError, TeamNotFoundError, MeetNotFoundError, InvalidTeamId, InvalidEmail, UserNotFoundError, InvalidMeetId } = require("../utilities/error");
 const errorHandler = require("../middleware/errorHandler");
 const Team = db.teams;
 const User = db.users;
 //Adding Meet
 const addMeet = async (req, res) => {
   try {
+    let teamId = req.body.team_id;
+    if(!teamId || teamId == undefined){
+      return errorHandler(new InvalidTeamId(), req, res)
+    }
     const meet = await Meet.create(req.body);
     const team = await Team.findOne({
       where: { team_id: req.body.team_id },
     });
+    if(!team){
+      return errorHandler(new TeamNotFoundError(), req, res)
+    }
     await team.addMeet(meet);
     //res.status(201).send(meet);
     res.sendStatus(201);
@@ -36,11 +43,21 @@ const getMeet = async (req, res) => {
 };
 const getMeets = async (req, res) => {
   try {
+    let email = req.body.email
+    if(!email || email == undefined){
+      return errorHandler(new InvalidEmail(), req, res)
+    }
     const regno = await User.findOne({
-      where: { email: req.body.email },
+      where: { email: email },
       attributes: ["reg_no"],
     });
+    if(!regno){
+      return errorHandler(new UserNotFoundError(), req, res)
+    }
     const teams = await regno.getTeams(); //doubt
+    if(!teams){
+      return errorHandler(new TeamNotFoundError(), req, res)
+    }
     teams.forEach(async (team) => {
       await team.getMeets();
     });
@@ -103,18 +120,17 @@ const getAllCancelledMeets = async (req, res) => {
   }
 };
 //upadte meet
-const updateMeet = async (req, res) => {
+const updateMeetStatus = async (req, res) => {
   try {
-    console.log("Hi");
     let id = req.body.meet_id;
     if (!id || id == undefined) {
-      return res.status(418).send("Meet does not exist");
+      return errorHandler(new InvalidMeetId(), req, res)
     }
     const meet = await Meet.findOne({
       where: { meet_id: id },
     });
     if (!meet) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new MeetNotFoundError(), req, res);
     }
     meet["status"] = req.body.status;
     await meet.save();
@@ -131,13 +147,13 @@ const deleteMeet = async (req, res) => {
   try {
     let id = req.params.meet_id;
     if (!id || id == undefined) {
-      return res.status(418).send("Meet does not exist");
+      return errorHandler(new InvalidMeetId(), req, res)
     }
     const meet = await Meet.findOne({
       where: { meet_id: id },
     });
     if (!meet) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new MeetNotFoundError(), req, res);
     }
     await meet.destroy();
     // res.status(200).send(meet);
@@ -171,6 +187,6 @@ module.exports = {
   getAllUpcomingMeets,
   getAllPastMeets,
   getAllCancelledMeets,
-  updateMeet,
+  updateMeetStatus,
   deleteMeet,
 };
