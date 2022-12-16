@@ -14,7 +14,7 @@ const app = express();
 const whitelist = ['http://127.0.0.1:3000',"http://localhost:3000", 'https://develop.free-slot.pages.dev/']
 const corsOptions = {
     origin: function(origin, callback){
-        if(whitelist.indexOf(origin!==-1)){
+        if(whitelist.indexOf(origin)!==-1){
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS!'))
