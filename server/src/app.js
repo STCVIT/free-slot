@@ -2,8 +2,6 @@ const express = require('express');
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const path = require('path')
-//const csrf = require('csurf')
-//const csrfMiddleware = csrf({cookie:true})
 //hosting
 //require('dotenv').config({path: path.resolve(__dirname, './.env')})
 
@@ -11,15 +9,16 @@ const path = require('path')
 require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 const cors = require('cors');
 const app = express();
-const whitelist = ['http://127.0.0.1:3000',"http://localhost:3000", 'https://develop.free-slot.pages.dev/']
+const whitelist = ['http://127.0.0.1:3000',"http://localhost:3000", 'https://develop.free-slot.pages.dev/', 'http://localhost:4000']
 const corsOptions = {
-    origin: function(origin, callback){
-        if(whitelist.indexOf(origin)!==-1){
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS!'))
-        }
-    },
+    origin: '*',
+    // origin: function(origin, callback){
+    //     if(whitelist.indexOf(origin)!==-1){
+    //         callback(null, true)
+    //     } else {
+    //         callback(new Error('Not allowed by CORS!'))
+    //     }
+    // },
     methods: ["GET, POST, PUT, PATCH, DELETE"],
     allowHeaders: '*'
 }

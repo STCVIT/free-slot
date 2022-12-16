@@ -50,7 +50,7 @@ const SignUp = () => {
         regno,
         email,
       });
-      if (response.status === 200) {
+      if (response.status === 201) {
         const res = await signUp(email, password);
         if (res && uid) {
           navigate("/timetable/" + uid);

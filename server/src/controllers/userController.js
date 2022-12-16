@@ -1,6 +1,10 @@
 const db = require("../db/db");
 const User = db.users;
-const { NotFoundError, BadRequestError } = require("../utilities/error");
+const { UserNotFoundError,
+        BadRequestError,
+        DuplicateUser,
+        InvalidEmail,
+        InvalidRegNo } = require("../utilities/error");
 const errorHandler = require("../middleware/errorHandler");
 
 // Adding User in database
@@ -15,23 +19,28 @@ const addUserInDb = async (req, res, next) => {
     //res.status(200).send(user)
     res.sendStatus(201);
   } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
+    if(error.message=="Validation error"){
+      errorHandler(new DuplicateUser(), req, res);
+      console.error(error.message);
+    }else{
+      errorHandler(new BadRequestError(), req, res);
+      console.error(error.message);
+    }
   }
 };
 
 // Get one user
 const getUser = async (req, res) => {
   try {
-    let regno = req.body.email;
+    let regno = req.body.regno;
     if (!regno || regno == undefined) {
-      return res.status(418).send("Invalid registration number");
+      return errorHandler(new InvalidRegNo(), req, res);
     }
     const user = await User.findOne({
       where: { reg_no: regno },
     });
     if (!user) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new UserNotFoundError(), req, res);
     }
     res.status(200).send(user);
   } catch (error) {
@@ -43,13 +52,13 @@ const getUserByEmail = async (req, res) => {
   try {
     let email = req.body.email;
     if (!email || email == undefined) {
-      return res.status(418).send("Invalid registration number");
+      return errorHandler(new InvalidEmail(), req, res);
     }
     const user = await User.findOne({
       where: { email: email },
     });
     if (!user) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new UserNotFoundError(), req, res);
     }
     res.status(200).send(user);
   } catch (error) {
@@ -65,7 +74,7 @@ const getUsers = async (req, res) => {
       where: { meet_id: req.body.meet_id },
     }).sort();
     if (!users) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new UserNotFoundError(), req, res);
     }
     res.status(200).send(users);
   } catch (error) {
@@ -80,13 +89,13 @@ const updateUser = async (req, res) => {
   try {
     let email = req.body.email;
     if (!email || email == undefined) {
-      return res.status(418).send("Invalid registration number");
+      return errorHandler(new InvalidEmail(), req, res);
     }
     const user = await User.findOne({
       where: { email: email },
     });
     if (!user) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new UserNotFoundError(), req, res);
     }
     // updates.forEach((update) => (user[update] = req.body[update]));
     user["timetable"] = req.body["timetable"];
@@ -102,19 +111,16 @@ const updateUser = async (req, res) => {
 //delete user
 const deleteUser = async (req, res) => {
   try {
-    let userEmail = req.body.email;
-    console.log(userEmail);
-
-    if (!userEmail || userEmail == undefined) {
-      return res.status(418).send("Invalid email number");
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidEmail(), req, res);
     }
     const user = await User.findOne({
-      where: { email: userEmail },
+      where: { email: email }
     });
     if (!user) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new UserNotFoundError(), req, res);
     }
-
     await user.destroy();
     //res.status(200).send(user)
     res.sendStatus(200);
@@ -125,10 +131,17 @@ const deleteUser = async (req, res) => {
 };
 const getUserReg = async (req, res, next) => {
   try {
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidEmail(), req, res);
+    }
     const regno = await User.findOne({
-      where: { email: req.body.email },
+      where: { email: email },
       attributes: ["reg_no"],
     });
+    if(!regno){
+      return errorHandler(new UserNotFoundError(), req, res);
+    }
     req.body.regno = regno;
     next();
   } catch (error) {
@@ -139,6 +152,9 @@ const getUserReg = async (req, res, next) => {
 const checkUserByReg = async (req, res, next) => {
   try {
     const reg = req.body.reg_no;
+    if (!reg || reg == undefined) {
+      return errorHandler(new InvalidRegNo(), req, res);
+    }
     const regno = await User.findOne({
       where: { reg_no: reg },
     });
@@ -154,10 +170,17 @@ const checkUserByReg = async (req, res, next) => {
 };
 const getUserName = async (req, res, next) => {
   try {
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidEmail(), req, res);
+    }
     const name = await User.findOne({
       where: { email: req.body.email },
       attributes: ["name"],
     });
+    if(!name){
+      return errorHandler(new UserNotFoundError(), req, res);
+    }
     req.body.admin = name.name;
     next();
   } catch (error) {
