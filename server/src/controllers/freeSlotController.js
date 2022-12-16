@@ -2,7 +2,7 @@ const db = require('../db/db')
 const User = db.users
 const {getFreeSlotsUsers, busy_time} = require('./freeSlotScreenshot')
 const {freeSlotCopyPaste} = require('./freeSlotCopyPaste')
-const { BadRequestError, NotFoundError } = require('../utilities/error')
+const { BadRequestError, NotFoundError, InvalidEmail } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler')
 const axios = require('axios')
 const moment = require('moment')
@@ -28,8 +28,12 @@ const checkFreeSlot = async (req, res, next)=>{
 //adding timetbale of user by screenshot method
 const freeSlotScreenshot = async(req, res, next)=>{
     try {
+        let email = req.body.email
+        if(!email || email == undefined){
+        return errorHandler(new InvalidEmail(), req, res)
+        }
         const timetable = await User.update(
-            {timetable: busy_time(req.body.timetable)}, {where: {email: req.body.email}}
+            {timetable: busy_time(req.body.timetable)}, {where: {email: email}}
         )
         res.sendStatus(200)
     } catch (error) {
@@ -40,9 +44,13 @@ const freeSlotScreenshot = async(req, res, next)=>{
 //adding timetbale of user by copy-paste method
 const freeSlotCp = async(req, res, next)=>{
     try {
+        let email = req.body.email
+        if(!email || email == undefined){
+        return errorHandler(new InvalidEmail(), req, res)
+        }
         const timetable = await User.update(
             {timetable: freeSlotCopyPaste(req.body.timetable)},
-            {where: {reg_no: req.body.regno}}
+            {where: {email: email}}
         )
         // res.status(200).send(timetable)
         res.sendStatus(200)
