@@ -13,7 +13,7 @@ const addUserInDb = async (req, res, next) => {
     };
     const user = await User.create(info);
     //res.status(200).send(user)
-    res.sendStatus(200);
+    res.sendStatus(201);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
