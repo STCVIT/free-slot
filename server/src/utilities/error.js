@@ -28,6 +28,12 @@ class UserNotFoundError{
         this.message = "User Not Found"
     }
 }
+class TeamNotFoundError{
+    constructor(){
+        this.statusCode = 404
+        this.message = "Team Not Found"
+    }
+}
 class DuplicateUser{
     constructor(){
         this.statusCode = 409
@@ -46,13 +52,35 @@ class InvalidEmail{
         this.message = "Email Not Provided"
     }
 }
+class InvalidTeamId{
+    constructor(){
+        this.statusCode = 403
+        this.message = "Team Id Provided"
+    }
+}
+class TeamNameError{
+    constructor(){
+        this.statusCode = 403
+        this.message = "Team name not provided"
+    }
+}
+class MembersError{
+    constructor(){
+        this.statusCode = 403
+        this.message = "Members not provided"
+    }
+}
 module.exports = { 
     AuthError,
     EmailNotVerifiedError,
     BadRequestError,
     NotFoundError,
     UserNotFoundError,
+    TeamNotFoundError,
     DuplicateUser,
     InvalidRegNo,
-    InvalidEmail
+    InvalidEmail,
+    InvalidTeamId,
+    TeamNameError,
+    MembersError
 }
