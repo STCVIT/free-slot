@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./components/Signup/SignUp";
 import Timetable from "./components/Signup/Timetable";
 import Login from "./components/Login/Login";
+import Forgot from "./components/Login/Forgot";
 import About from "./pages/About";
 import Landing from "./pages/Landing";
 import Schedule from "./pages/Schedule";
@@ -42,6 +43,7 @@ export default function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/login/:id" element={<Login />} />
+              <Route path="/forgot" element={<Forgot />} />
               <Route path="/about" element={<About />} />
               <Route path="/schedule" element={<Schedule />} />
               <Route

@@ -14,6 +14,7 @@ module.exports = {
 
       fontFamily: {
         logo: ["Roboto"],
+        head: ["Roboto"],
         body: ["Nunito"],
       },
     },

@@ -7,7 +7,6 @@ import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { uuidv4 } from "@firebase/util";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +29,6 @@ const Login = () => {
       toast.error("VIT mail needed");
       return;
     }
-
     try {
       const res = await logIn(email, password);
       if (res && uid) {
@@ -122,12 +120,11 @@ const Login = () => {
                 Login
               </button>
             </div>
-            <h6 className="text-sm text-grey">
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="" className="text-myBlue">
+            <Link to="/forgot">
+              <h6 className="text-sm text-myBlue pt-2 pb-5 sm:pb-10">
                 Forgot Password?
-              </a>
-            </h6>
+              </h6>
+            </Link>
             <div className="relative py-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-b border-gray-300"></div>

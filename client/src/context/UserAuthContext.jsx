@@ -97,8 +97,8 @@ export function UserAuthContextProvider({ children }) {
     //     }
     return await signInWithPopup(auth, googleAuthProvider);
   };
-  function reset(email) {
-    return sendPasswordResetEmail(auth, email);
+  const reset = async (email)=> {
+    return await sendPasswordResetEmail(auth, email);
   }
 
   const sendTimetable = async (file) => {
