@@ -5,31 +5,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { GrClose } from "react-icons/gr";
-import {
-  RiCheckboxCircleFill,
-  RiErrorWarningFill,
-  RiTimeFill,
-} from "react-icons/ri";
 import axios from "../../axios";
 import { useState, useEffect } from "react";
 const Responses = ({ onClose }) => {
-  const {
-    link,
-    setLink,
-    linkMaker,
-    setLinkMaker,
-    linkTeam,
-    setLinkTeam,
-    getLink,
-    setIsLoading,
-  } = FindFreeSlot();
-  //console.log(link);
-  // useEffect(() => {
-  //   setLinkCreator(linkCreator);
-  // }, [linkCreator]);
+  const { link, setLinkTeam, getLink, setIsLoading } = FindFreeSlot();
+  const [newTeamName, setNewTeamName] = useState(null);
   const getLinkHandler = async () => {
     try {
-      setLink("");
+      setLinkTeam(newTeamName);
       setIsLoading(true);
 
       await getLink();
@@ -54,29 +37,7 @@ const Responses = ({ onClose }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const statusArray = ResponseData.map((x) => {
-    let statusIcon;
-    switch (x.uploadStatus) {
-      case "Uploaded":
-        statusIcon = <RiCheckboxCircleFill size={19} color="#2BAD75" />;
-        break;
-      case "Waiting":
-        statusIcon = <RiTimeFill size={19} color="#FFA133" />;
-        break;
-      case "Error":
-        statusIcon = <RiErrorWarningFill size={19} color="#CC2F3F" />;
-        break;
-      default:
-        break;
-    }
-    return (
-      <tr className="text-xl lg:text-2xl odd:bg-gray-200">
-        <td className="p-2">{x.regNo}</td>
-        <td className="p-2">{x.userName}</td>
-        {isLg && <td className="p-2">{x.email}</td>}
-      </tr>
-    );
-  });
+
   return (
     <div className="relative rounded-md">
       <button className="absolute top-5 right-5" onClick={onClose}>
@@ -97,13 +58,19 @@ const Responses = ({ onClose }) => {
               <div className="col-span-9 flex items-center">
                 <input
                   className="border w-full h-full p-2"
-                  value={linkTeam}
-                  onChange={(e) => setLinkTeam(e.target.value)}
+                  value={
+                    newTeamName === ""
+                      ? localStorage.getItem("teamName")
+                      : newTeamName
+                  }
+                  onChange={(e) => setNewTeamName(e.target.value)}
                 ></input>
               </div>
               <div className="col-span-3">
                 <button
-                  onClick={getLinkHandler}
+                  onClick={() => {
+                    getLinkHandler();
+                  }}
                   className="w-full border-2 border-blue-600 bg-blue-600 rounded-md px-4 py-2 text-white"
                 >
                   Get Link
@@ -125,8 +92,9 @@ const Responses = ({ onClose }) => {
               <button
                 className=" rounded-md p-2"
                 onClick={() => {
-                  showCopiedToast();
-                  navigator.clipboard.writeText(link);
+                  link && navigator.clipboard.writeText(link);
+                  link && showCopiedToast();
+                  !link && toast.error("No link to copy!");
                 }}
               >
                 <RiFileCopyLine className="-scale-x-100" size={16} />

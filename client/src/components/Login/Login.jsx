@@ -7,7 +7,11 @@ import Visible from "../../assets/fi_eye.svg";
 import NotVisible from "../../assets/fi_eye-off.svg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { uuidv4 } from "@firebase/util";
+import RedirectingMiddleware from "../Links/RedirectingMiddleware";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 const Login = () => {
+  const { setLinkUid } = FindFreeSlot();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // eslint-disable-next-line no-unused-vars
@@ -32,8 +36,14 @@ const Login = () => {
     try {
       const res = await logIn(email, password);
       if (res && uid) {
-        navigate("/addtoteam/" + uid);
-      } else if (res) {
+        // <RedirectingMiddleware />;
+        // navigate("/addtoteam/" + uid);
+        setLinkUid(uid);
+        localStorage.setItem("linkTeam");
+        navigate("/home");
+        // setIsRedirected(true);
+      }
+      if (res) {
         navigate("/home");
       }
     } catch (error) {

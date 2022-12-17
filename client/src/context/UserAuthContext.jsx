@@ -124,12 +124,15 @@ export function UserAuthContextProvider({ children }) {
         };
         localStorage.setItem("user", JSON.stringify(localUser));
         //console.log(localStorage.getItem("user"));
+      } else {
+        setUser(null);
+        localStorage.clear("user");
       }
     });
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [user, token]);
   return (
     <userAuthContext.Provider
       value={{

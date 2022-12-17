@@ -15,6 +15,8 @@ export function FreeSlotContextProvider({ children }) {
   const [chosenDate, setChosenDate] = useState(null);
   const [currentTeamId, setCurrentTeamId] = useState(null);
   const [newTeamName, setNewTeamName] = useState(null);
+  const [redirected, setRedirected] = useState(false);
+  const [linkUid, setLinkUid] = useState(null);
   const justFindFreeSlot = async (tags) => {
     try {
       setIsLoading(true);
@@ -73,7 +75,7 @@ export function FreeSlotContextProvider({ children }) {
       console.error("getLink " + error);
     }
   };
-  console.log(linkMaker);
+  // console.log(linkMaker);
   return (
     <freeSlotContext.Provider
       value={{
@@ -100,6 +102,10 @@ export function FreeSlotContextProvider({ children }) {
         setCurrentTeamId,
         newTeamName,
         setNewTeamName,
+        redirected,
+        setRedirected,
+        linkUid,
+        setLinkUid,
       }}
     >
       {children}

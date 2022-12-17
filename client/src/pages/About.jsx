@@ -2,18 +2,18 @@ import PageHeading from "../components/Headings/PageHeading";
 import Socials from "../components/Socials/Socials";
 import MainNavbar from "../components/Menus/MainNavbar";
 import ExpandingCard from "../components/ExpandingCard/ExpandingCard";
-const AboutCard = ({ title, desc }) => {
+const AboutCard = ({ title, desc, reverse }) => {
   return (
-    <div className="rounded-md drop-shadow bg-white px-6 py-4">
-      <h3 className="text-xl font-bold">{title}</h3>
-      <div className="grid grid-cols-10 gap-x-12">
+    <div className="rounded-md drop-shadow bg-white px-6 ">
+      <div className="grid grid-cols-10">
         <div className="col-span-3">
           <img
             src={`/assets/${title.toLowerCase().replace(" ", "-")}.png`}
             alt={title}
           />
         </div>
-        <div className="col-span-7 flex items-center">
+        <div className="col-span-7 ml-32 py-4">
+          <h3 className="text-xl font-bold">{title}</h3>
           <p>{desc}</p>
         </div>
       </div>
@@ -49,7 +49,7 @@ const About = () => {
       <MainNavbar active="about" />
       <div>
         <PageHeading title="About" />
-        <div className="px-[30%] flex flex-col gap-y-16">
+        <div className="flex flex-col gap-y-16">
           {data.map((item, idx) => (
             <AboutCard
               key={idx}
