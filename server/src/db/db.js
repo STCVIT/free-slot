@@ -2,19 +2,19 @@ const { Sequelize, DataTypes } = require("sequelize");
 const config = require("./config")[process.env.NODE_ENV || "development"];
 const path = require('path')
 //for locally running
-//const sequelize = new Sequelize(config.postgres);
+const sequelize = new Sequelize(config.postgres);
 
 // for hosting
-require('dotenv').config({path: path.resolve(__dirname, '../../../')})
-const sequelize = new Sequelize(process.env.APPSETTING_DATABASE_URL, {
-  dialect: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
-});
+// require('dotenv').config({path: path.resolve(__dirname, '../../../')})
+// const sequelize = new Sequelize(process.env.APPSETTING_DATABASE_URL, {
+//   dialect: "postgres",
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false,
+//     },
+//   },
+// });
 sequelize
   .authenticate()
   .then(() => {

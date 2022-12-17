@@ -5,23 +5,23 @@ const { AuthError, EmailNotVerifiedError } = require('../utilities/error');
 const { UserDeletedSuccess } = require('../utilities/success');
 const path = require('path')
 //locally running
-// require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
-// admin.initializeApp({
-//     credential: admin.credential.cert({
-//         privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
-//         clientEmail: process.env.CLIENT_EMAIL,
-//         projectId: process.env.PROJECT_ID
-//     })
-// })
-//hosting
-require('dotenv').config({path: path.resolve(__dirname, '../../../')})
+require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
 admin.initializeApp({
     credential: admin.credential.cert({
-        privateKey: process.env.APPSETTING_PRIVATE_KEY.replace(/\\n/g, '\n'),
-        clientEmail: process.env.APPSETTING_CLIENT_EMAIL,
-        projectId: process.env.APPSETTING_PROJECT_ID
+        privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+        clientEmail: process.env.CLIENT_EMAIL,
+        projectId: process.env.PROJECT_ID
     })
 })
+//hosting
+// require('dotenv').config({path: path.resolve(__dirname, '../../../')})
+// admin.initializeApp({
+//     credential: admin.credential.cert({
+//         privateKey: process.env.APPSETTING_PRIVATE_KEY.replace(/\\n/g, '\n'),
+//         clientEmail: process.env.APPSETTING_CLIENT_EMAIL,
+//         projectId: process.env.APPSETTING_PROJECT_ID
+//     })
+// })
 // const sessionLogin = async (req, res)=>{
 //     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
 //                  return errorHandler(new AuthError(), req, res)
