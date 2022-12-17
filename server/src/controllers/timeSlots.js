@@ -46,7 +46,7 @@ const time_slots_screenshot = [
             end_time: "19:00"
         },
         14: {
-            start_time: "19:00",
+            start_time: "19:01",
             end_time: "19:50"
         }
     },

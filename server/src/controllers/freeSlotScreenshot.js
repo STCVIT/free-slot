@@ -47,7 +47,7 @@ function busy_time(tt_response){
     let temp = []
     for (var i=0; i<10; i++){
         let arr = []
-        for (var j=1; j<14; j++){
+        for (var j=1; j<15; j++){
             if (Object.values(tt_response[i])[j]==="YES"){
                 if (Object.values(tt_response[i])[0].match(/Thry/g)){
                     arr.push(time_slots_screenshot[0][j])
@@ -67,11 +67,11 @@ function busy_time(tt_response){
         final[x].forEach((item)=>{
             item['type']='class'
         })
-        final[x].forEach((item)=>{
-            
+        final[x].sort((right, left)=>{
+            return moment(right.start_time, "hh:mm").diff(moment(left.start_time, "hh:mm"))
         })
     }
-    console.log(final)
+    //console.log(final)
     return final
 }
 //no use of this function
@@ -107,7 +107,6 @@ const sortSlot = (commonSlots)=>{
   })
 return commonSlots
 }
-
 // function to find union of busy slots of users
 const findCommonSlots = (res)=>{
     let final = []
