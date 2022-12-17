@@ -4,7 +4,8 @@ const config = require("./config")[process.env.NODE_ENV || "development"];
 //const sequelize = new Sequelize(config.postgres);
 
 // for hosting
-const sequelize = new Sequelize(APPSETTING_DATABASE_URL, {
+require('dotenv').config({path: path.resolve(__dirname, '../../../')})
+const sequelize = new Sequelize(process.env.APPSETTING_DATABASE_URL, {
   dialect: "postgres",
   dialectOptions: {
     ssl: {

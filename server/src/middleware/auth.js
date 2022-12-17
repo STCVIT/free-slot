@@ -14,6 +14,7 @@ const path = require('path')
 //     })
 // })
 //hosting
+require('dotenv').config({path: path.resolve(__dirname, '../../../')})
 admin.initializeApp({
     credential: admin.credential.cert({
         privateKey: process.env.APPSETTING_PRIVATE_KEY.replace(/\\n/g, '\n'),
