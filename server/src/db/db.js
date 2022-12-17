@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("./config")[process.env.NODE_ENV || "development"];
+const path = require('path')
 //for locally running
 //const sequelize = new Sequelize(config.postgres);
 
