@@ -6,19 +6,19 @@ const path = require('path')
 //require('dotenv').config({path: path.resolve(__dirname, './.env')})
 
 //locally running
-require('dotenv').config({path: path.resolve(__dirname, '../.env')})
+//require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 const cors = require('cors');
 const app = express();
 const whitelist = ['http://127.0.0.1:3000',"http://localhost:3000", 'https://develop.free-slot.pages.dev/', 'http://localhost:4000']
 const corsOptions = {
-    origin: '*',
-    // origin: function(origin, callback){
-    //     if(whitelist.indexOf(origin)!==-1){
-    //         callback(null, true)
-    //     } else {
-    //         callback(new Error('Not allowed by CORS!'))
-    //     }
-    // },
+    //origin: '*',
+    origin: function(origin, callback){
+        if(whitelist.indexOf(origin)!==-1){
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS!'))
+        }
+    },
     methods: ["GET, POST, PUT, PATCH, DELETE"],
     allowHeaders: '*'
 }
@@ -31,17 +31,17 @@ const meetRouter = require('./routers/meetRouter')
 const freeSlotRouter = require('./routers/freeSlotRouter')
 const linkRouter = require('./routers/linkRouter')
 const testRouter = require('./routers/testRouter');
-const { link } = require('fs');
+//const { link } = require('fs');
 
 app.use(express.urlencoded({ limit: '50mb', extended: true}));
 app.use(express.json({limit: '50mb'}));
 app.use(cors(corsOptions))
-app.use(session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false
-}))
-app.use(cookieParser())
+// app.use(session({
+//     secret: process.env.SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }))
+//app.use(cookieParser())
 //app.use(csrfMiddleware)
 
 app.use('/user', userRouter)
