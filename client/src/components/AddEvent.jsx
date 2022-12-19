@@ -71,8 +71,8 @@ const AddEvent = () => {
           team_id: localStorage.getItem("team_id"),
           email: user.email,
           title: eventName,
-          start_time: "12:00",
-          end_time: "13:00",
+          start_time: start_time,
+          end_time: end_time,
           // start_time: newStartTime,
           // end_time: newEndTime,
           team_name: newTeamName,
@@ -83,6 +83,7 @@ const AddEvent = () => {
         });
 
         navigate("/home");
+        localStorage.removeItem("team_id")
       } catch (err) {
         console.log(err);
       }

@@ -68,8 +68,9 @@ const getTeamById = async (req, res) => {
 //get team by name
 const getTeamByName = async (req, res) => {
   try {
+    let teamName = req.body.team_name
     const team = await Team.findOne({
-      where: { name: req.params.name },
+      where: { team_name: teamName },
     });
     // if (!team) {
     //   return errorHandler(new NotFoundError(), req, res);
