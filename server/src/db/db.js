@@ -1,9 +1,9 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("./config")[process.env.NODE_ENV || "development"];
-const path = require('path')
+// const path = require('path')
+// require('dotenv').config({path: path.resolve(__dirname, '../../')})
 //for locally running
 const sequelize = new Sequelize(config.postgres);
-
 // for hosting
 // require('dotenv').config({path: path.resolve(__dirname, '../../../')})
 // const sequelize = new Sequelize(process.env.APPSETTING_DATABASE_URL, {
@@ -18,7 +18,7 @@ const sequelize = new Sequelize(config.postgres);
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connected successfully");
+    console.log("Connected successfully to " + process.env.DB_NAME);
   })
   .catch(() => {
     console.log("Couldn't connect to database");
@@ -34,7 +34,7 @@ db.meets.belongsTo(db.teams, { foreignKey: "meet_id" });
 db.teams.belongsToMany(db.users, { through: "userteams" });
 db.users.belongsToMany(db.teams, { through: "userteams" });
 sequelize
-  .sync({ force: false })
+  .sync({ alter: true })
   .then(() => {
     console.log("Database, tables & associations created");
   })

@@ -53,42 +53,42 @@ const FreeSlot = ({ onClose }) => {
     );
   };
 
-  const userFound = async (element) => {
-    console.log("HERE");
-    const user = JSON.parse(localStorage.getItem("user"));
-    const getUser = await axios.post(
-      "user/checkUserByReg",
-      {
-        reg_no: element,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-    const userData = await axios.post(
-      "user/getUserByEmail",
-      {
-        email: user.email,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-    if (!getUser.data) {
-      toast.error("User not found!");
-      return false;
-    } else if (
-      !userData.data.timeTable ||
-      userData.data.timeTable.length === 0
-    ) {
-      toast.error("User has no timetable!");
-      return false;
-    } else return true;
-  };
+  // const userFound = async (element) => {
+  //   console.log("HERE");
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   const getUser = await axios.post(
+  //     "user/checkUserByReg",
+  //     {
+  //       reg_no: element,
+  //     },
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     }
+  //   );
+  //   const userData = await axios.post(
+  //     "user/getUserByEmail",
+  //     {
+  //       email: user.email,
+  //     },
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     }
+  //   );
+  //   if (!getUser.data) {
+  //     toast.error("User not found!");
+  //     return false;
+  //   } else if (
+  //     !userData.data.timeTable ||
+  //     userData.data.timeTable.length === 0
+  //   ) {
+  //     toast.error("User has no timetable!");
+  //     return false;
+  //   } else return true;
+  //  };
 
   async function handleKeyDown(e) {
     if (e.key !== "Enter" && e.key !== ",") return;
@@ -99,10 +99,10 @@ const FreeSlot = ({ onClose }) => {
       let value = e.target.value;
       if (value[value.length - 1] === ",") {
         value = value.slice(0, -1);
-        if (await userFound(value)) {
+        // if (await userFound(value)) {
           tags.push(value);
           setTags(tags);
-        }
+        // }
       }
       if (value.includes(",")) {
         const invalid = [];
@@ -124,12 +124,12 @@ const FreeSlot = ({ onClose }) => {
         });
         const notFound = [];
         newTags.forEach(async (element) => {
-          if (await userFound(element)) {
+          // if (await userFound(element)) {
             tags.push(element);
             setTags(tags);
-          } else {
-            notFound.push(element);
-          }
+          // } else {
+            // notFound.push(element);
+          // }
         });
         if (notFound.length > 0) {
           const notFoundTags = notFound.join(", ");
@@ -198,8 +198,9 @@ const FreeSlot = ({ onClose }) => {
         // if (!(await userFound(value))) {
         //   // toast.error("User not found!");
         // }
-        (await userFound(value)) && setTags([...tags, value.toUpperCase()]);
-        e.target.value = "";
+        // (await userFound(value)) && setTags([...tags, value.toUpperCase()]);
+        setTags([...tags,value.toUpperCase()])
+        // e.target.value = "";
       }
     }
   }

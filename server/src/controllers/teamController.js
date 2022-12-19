@@ -55,9 +55,9 @@ const getTeamById = async (req, res) => {
     const team = await Team.findOne({
       where: { id: req.params.team_id },
     });
-    if (!team) {
-      return errorHandler(new NotFoundError(), req, res);
-    }
+    // if (!team) {
+    //   return errorHandler(new NotFoundError(), req, res);
+    // }
     res.status(200).send(team);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
@@ -71,9 +71,9 @@ const getTeamByName = async (req, res) => {
     const team = await Team.findOne({
       where: { name: req.params.name },
     });
-    if (!team) {
-      return errorHandler(new NotFoundError(), req, res);
-    }
+    // if (!team) {
+    //   return errorHandler(new NotFoundError(), req, res);
+    // }
     res.status(200).send(team);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
@@ -95,9 +95,9 @@ const getAllTeams = async (req, res, next) => {
       return errorHandler(new UserNotFoundError(), req, res) 
     }
     const teams = await user.getTeams();
-    if(!teams){
-      return errorHandler(new TeamNotFoundError(), req, res)
-    }
+    // if(!teams){
+    //   return errorHandler(new TeamNotFoundError(), req, res)
+    // }
     req.body.teams = teams;
     next();
   } catch (error) {
@@ -115,13 +115,13 @@ const getUserTeams = async (req, res) => {
     const user = await User.findOne({
       where: { email: email },
     });
-    if(!user){
-      return errorHandler(new UserNotFoundError(), req, res) 
-    }
-    const teams = await user.getTeams();
-    if(!teams){
-      return errorHandler(new TeamNotFoundError(), req, res)
-    }
+    // if(!user){
+      //   return errorHandler(new UserNotFoundError(), req, res) 
+      // }
+      const teams = await user.getTeams();
+    // if(!teams){
+    //   return errorHandler(new TeamNotFoundError(), req, res)
+    // }
     const teamsArr = new Set();
     const finalObj = {};
     const individualTeam = [];
@@ -174,9 +174,9 @@ const getTeamMembers = async (req, res) => {
       return errorHandler(new TeamNotFoundError(), req, res)
     }
     const users = await team.getUsers();
-    if(!users){
-      return errorHandler(new UserNotFoundError(), req, res) 
-    }
+    // if(!users){
+    //   return errorHandler(new UserNotFoundError(), req, res) 
+    // }
     res.status(200).send(users);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
@@ -198,9 +198,9 @@ const updateTeam = async (req, res) => {
     const team = await Team.findOne({
       where: { id: id },
     });
-    if (!team) {
-      return errorHandler(new TeamNotFoundError(), req, res);
-    }
+    // if (!team) {
+    //   return errorHandler(new TeamNotFoundError(), req, res);
+    // }
     //updates.forEach((update) => (team[update] = req.body[update]));
     //await team.save();
     const members = await team.addUsers(req.body.members);

@@ -55,9 +55,9 @@ const getMeets = async (req, res) => {
       return errorHandler(new UserNotFoundError(), req, res)
     }
     const teams = await regno.getTeams(); //doubt
-    if(!teams){
-      return errorHandler(new TeamNotFoundError(), req, res)
-    }
+    // if(!teams){
+    //   return errorHandler(new TeamNotFoundError(), req, res)
+    // }
     teams.forEach(async (team) => {
       await team.getMeets();
     });

@@ -100,7 +100,9 @@ export function UserAuthContextProvider({ children }) {
   const reset = async (email)=> {
     return await sendPasswordResetEmail(auth, email);
   }
-
+  const deleteUser = ()=>{
+    return auth.currentUser.delete();
+  }
   const sendTimetable = async (file) => {
     const email = user.email;
     return await axios.post("timetable/string", {
@@ -146,6 +148,7 @@ export function UserAuthContextProvider({ children }) {
         googleSignIn,
         sendTimetable,
         reset,
+        deleteUser
       }}
     >
       {children}

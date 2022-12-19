@@ -9,7 +9,7 @@ const path = require('path')
 //require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 const cors = require('cors');
 const app = express();
-const whitelist = ['http://127.0.0.1:3000',"http://localhost:3000", 'https://develop.free-slot.pages.dev/', 'http://localhost:4000']
+const whitelist = ['http://127.0.0.1:3000','http://localhost:3000', 'https://develop.free-slot.pages.dev/', 'http://localhost:4000']
 const corsOptions = {
     //origin: '*',
     origin: function(origin, callback){

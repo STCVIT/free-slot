@@ -161,6 +161,7 @@ const checkUserByReg = async (req, res, next) => {
     if (!regno) {
       res.send(false);
     } else {
+      console.log(regno)
       res.send(true);
     }
   } catch (error) {
