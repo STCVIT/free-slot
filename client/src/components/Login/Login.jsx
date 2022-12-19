@@ -60,9 +60,7 @@ const Login = () => {
     setError("");
     try {
       const res = await googleSignIn();
-      if (res && uid) {
-        navigate("/addtoteam/" + uid);
-      } else if (res) {
+      if (res) {
         navigate("/home");
       }
     } catch (error) {}

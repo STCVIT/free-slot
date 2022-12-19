@@ -54,9 +54,9 @@ const About = () => {
             ))}
           </div>
           <ExpandingCard />
-          <div className="p-11">
+          {/* <div className="p-11">
             <img src="/assets/the-purpose.png" alt="illustration" />
-          </div>
+          </div> */}
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-8xl font-bold">THE COMMUNITY</h3>
             <img

@@ -5,9 +5,12 @@ import DragFile from "./DragFile";
 import { UserAuth } from "../../context/UserAuthContext";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { Box, TextField } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "../../axios";
 const TextInput = (props) => {
   // eslint-disable-next-line no-unused-vars
-  const [textValue, setTextValue] = useState("");
+
   return (
     <Box>
       <Box>
@@ -16,9 +19,10 @@ const TextInput = (props) => {
             type={props.type}
             id={props.id}
             label={props.label}
+            value={props.textValue}
             size="small"
             fullWidth
-            onChange={(e) => setTextValue(e.target.value)}
+            onChange={(e) => props.setTextValue(e.target.value)}
           />
         </Box>
       </Box>
@@ -33,22 +37,33 @@ export default function Timetable() {
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
+  const [inputValue, setInputValue] = useState(null);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      var file = files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        file = reader.result;
-        const res = await sendTimetable(file);
-        if (res && uid) {
-          navigate("/addtoteam/" + uid);
-        } else if (res) {
-          navigate("/home");
-        }
-      };
+      if (files[0]) {
+        var file = files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = async () => {
+          file = reader.result;
+          const res = await sendTimetable(file);
+          if (res) {
+            navigate("/home");
+          }
+        };
+        return;
+      } else if (inputValue) {
+        const res = await axios.post("timetable/freeSlotCopyPaste", {
+          timetable: inputValue,
+          email: JSON.parse(localStorage.getItem("user")).email,
+        });
+        res === 200 && navigate("/home");
+        return;
+      } else {
+        toast.error("Please provide timetable in either of the ways.");
+      }
       // setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -79,11 +94,21 @@ export default function Timetable() {
             <div className="row-span-2">
               <div className="text-center my-5">OR</div>
               <div className="w-full">
-                <TextInput
-                  type="text"
-                  id="textTimeTable"
-                  label="Paste your VIT Timetable"
-                />
+                <Box>
+                  <Box>
+                    <Box>
+                      <TextField
+                        type="text"
+                        id="textTimeTable"
+                        label="Paste your VIT Timetable"
+                        value={inputValue}
+                        size="small"
+                        fullWidth
+                        onChange={(e) => setInputValue(e.target.value)}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
               </div>
               <div className="grid my-4 place-content-center w-full gap-x-3">
                 <a href="/home">
