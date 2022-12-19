@@ -20,6 +20,7 @@ import ContactUs from "./components/contactUs/contactUs";
 import AddMeToTeam from "./components/Links/AddMeToTeam";
 import RedirectingMiddleware from "./components/Links/RedirectingMiddleware";
 import Loader from "./components/Loader/Loader";
+import MobileNav from "./components/Menus/MobileNavbar";
 export default function App() {
   return (
     <>
@@ -52,6 +53,7 @@ export default function App() {
               />
               <Route path="/addEvent" element={<AddEvent />} />
               <Route path="/freeslot" element={<FreeSlot />} />
+              <Route path="/mobileNav" element={<MobileNav />} />
               <Route path="/addtoteam/:id" element={<AddMeToTeam />} />
               {/* <Route path='/:id' element={localStorage.getItem("user")? <AddMeToTeam /> : <Login/>}/> */}
               <Route path="/:id" element={<RedirectingMiddleware />} />

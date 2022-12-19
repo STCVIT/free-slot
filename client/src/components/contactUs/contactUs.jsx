@@ -34,8 +34,7 @@ const ContactUs = ({ isHomePage }) => {
   return (
     <div className="bg-[#f2f2f2]">
       {!isHomePage && <MainNavbar active="account" />}
-
-      <PageHeading title="Contact Us" />
+      {!isHomePage && <PageHeading title="Contact Us" />}
       <div className={`flex flex-col w-full items-center gap-y-4 `}>
         <div className="w-full lg:w-2/4 flex flex-col gap-y-3 px-4 lg:px-0">
           <label htmlFor="contactUsName">Name</label>

@@ -1,0 +1,87 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+
+import { Link } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Divider } from "semantic-ui-react";
+const mainClass =
+  " font-light cursor-pointer transition-colors duration-300 w-full";
+const activeClass = "border-black !font-bold";
+const inactiveClass = "border-transparent hover:border-gray-200";
+const MobileNav = ({ optionList, activeTab }) => {
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        {optionList.map((item, index) => (
+          <div>
+            <ListItem key={index} disablePadding>
+              <ListItemButton className="border-b-2 border-black">
+                <Link
+                  key={index}
+                  to={`/${item.toLowerCase()}`}
+                  style={{ color: "black" }}
+                  className={`${mainClass} ${
+                    activeTab === item.toLocaleLowerCase()
+                      ? activeClass
+                      : inactiveClass
+                  }`}
+                >
+                  {item}
+                </Link>
+              </ListItemButton>
+            </ListItem>
+            <Divider />
+          </div>
+        ))}
+      </List>
+    </Box>
+  );
+
+  return (
+    <div>
+      {["bottom"].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <Button onClick={toggleDrawer(anchor, true)}>
+            <GiHamburgerMenu />
+          </Button>
+          <SwipeableDrawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+            onOpen={toggleDrawer(anchor, true)}
+          >
+            {list(anchor)}
+          </SwipeableDrawer>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
+export default MobileNav;

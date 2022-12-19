@@ -1,22 +1,33 @@
 const db = require("../db/db");
 const Meet = db.meets;
-const { NotFoundError, BadRequestError, TeamNotFoundError, MeetNotFoundError, InvalidTeamId, InvalidEmail, UserNotFoundError, InvalidMeetId } = require("../utilities/error");
+const {
+  NotFoundError,
+  BadRequestError,
+  TeamNotFoundError,
+  MeetNotFoundError,
+  InvalidTeamId,
+  InvalidEmail,
+  UserNotFoundError,
+  InvalidMeetId,
+} = require("../utilities/error");
 const errorHandler = require("../middleware/errorHandler");
 const Team = db.teams;
 const User = db.users;
 //Adding Meet
 const addMeet = async (req, res) => {
   try {
+    console.log(req.body);
     let teamId = req.body.team_id;
-    if(!teamId || teamId == undefined){
-      return errorHandler(new InvalidTeamId(), req, res)
+    if (!teamId || teamId == undefined) {
+      return errorHandler(new InvalidTeamId(), req, res);
     }
     const meet = await Meet.create(req.body);
     const team = await Team.findOne({
       where: { team_id: req.body.team_id },
+      // where: { team_id: "7a3a12c2-b21e-451c-9968-5322a6243bfa" },
     });
-    if(!team){
-      return errorHandler(new TeamNotFoundError(), req, res)
+    if (!team) {
+      return errorHandler(new TeamNotFoundError(), req, res);
     }
     await team.addMeet(meet);
     //res.status(201).send(meet);
@@ -43,16 +54,16 @@ const getMeet = async (req, res) => {
 };
 const getMeets = async (req, res) => {
   try {
-    let email = req.body.email
-    if(!email || email == undefined){
-      return errorHandler(new InvalidEmail(), req, res)
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidEmail(), req, res);
     }
     const regno = await User.findOne({
       where: { email: email },
       attributes: ["reg_no"],
     });
-    if(!regno){
-      return errorHandler(new UserNotFoundError(), req, res)
+    if (!regno) {
+      return errorHandler(new UserNotFoundError(), req, res);
     }
     const teams = await regno.getTeams(); //doubt
     // if(!teams){
@@ -124,7 +135,7 @@ const updateMeetStatus = async (req, res) => {
   try {
     let id = req.body.meet_id;
     if (!id || id == undefined) {
-      return errorHandler(new InvalidMeetId(), req, res)
+      return errorHandler(new InvalidMeetId(), req, res);
     }
     const meet = await Meet.findOne({
       where: { meet_id: id },
@@ -147,7 +158,7 @@ const deleteMeet = async (req, res) => {
   try {
     let id = req.params.meet_id;
     if (!id || id == undefined) {
-      return errorHandler(new InvalidMeetId(), req, res)
+      return errorHandler(new InvalidMeetId(), req, res);
     }
     const meet = await Meet.findOne({
       where: { meet_id: id },

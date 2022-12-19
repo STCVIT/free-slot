@@ -2,6 +2,7 @@ import React from "react";
 import DropDownProfile from "../Dropdowns/DropDownProfile";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import MobileNav from "./MobileNavbar";
 const MainNavbar = ({ active }) => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [activeTab, setActiveTab] = useState(active);
@@ -11,15 +12,15 @@ const MainNavbar = ({ active }) => {
   const inactiveClass = "border-transparent hover:border-gray-200";
   return (
     <>
-      <header className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
+      <div className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
         <div className="flex items-center lg:flex-row flex-col justify-between w-full">
           <div>
             <p className="font-logo flex items-center w-full p-7 lg:p1 text-5xl ">
               Free Slots
             </p>
           </div>
-          <div>
-            <ul className="flex gap-x-2">
+          <div className="hidden lg:block">
+            <ul className="flex gap-x-2 w-fit lg:w-full">
               {["Home", "Schedule", "About"].map((item, idx) => (
                 <Link
                   key={idx}
@@ -43,8 +44,14 @@ const MainNavbar = ({ active }) => {
               </li>
             </ul>
           </div>
+          <div className="lg:hidden">
+            <MobileNav
+              activeTab={active}
+              optionList={["Home", "Schedule", "About"]}
+            />
+          </div>
         </div>
-      </header>
+      </div>
     </>
   );
 };

@@ -100,8 +100,8 @@ const FreeSlot = ({ onClose }) => {
       if (value[value.length - 1] === ",") {
         value = value.slice(0, -1);
         // if (await userFound(value)) {
-          tags.push(value);
-          setTags(tags);
+        tags.push(value);
+        setTags(tags);
         // }
       }
       if (value.includes(",")) {
@@ -125,10 +125,10 @@ const FreeSlot = ({ onClose }) => {
         const notFound = [];
         newTags.forEach(async (element) => {
           // if (await userFound(element)) {
-            tags.push(element);
-            setTags(tags);
+          tags.push(element);
+          setTags(tags);
           // } else {
-            // notFound.push(element);
+          // notFound.push(element);
           // }
         });
         if (notFound.length > 0) {
@@ -199,7 +199,7 @@ const FreeSlot = ({ onClose }) => {
         //   // toast.error("User not found!");
         // }
         // (await userFound(value)) && setTags([...tags, value.toUpperCase()]);
-        setTags([...tags,value.toUpperCase()])
+        setTags([...tags, value.toUpperCase()]);
         // e.target.value = "";
       }
     }

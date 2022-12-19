@@ -53,6 +53,7 @@ export const AllPages = ({ filter, tab }) => {
         setIsLoading(false);
       } catch (err) {
         alert(err);
+        setIsLoading(false);
       }
     }
     // setIsLoading(true);

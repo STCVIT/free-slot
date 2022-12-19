@@ -120,7 +120,7 @@ const Profile = () => {
                   /> */}
                   <button
                     onClick={() => setShowUpload(true)}
-                    className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-fit self-center lg:self-start"
+                    className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-full lg:w-fit self-center lg:self-start"
                   >
                     Upload new timetable
                   </button>

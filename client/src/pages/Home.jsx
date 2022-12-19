@@ -5,6 +5,7 @@ import MainNavbar from "../components/Menus/MainNavbar";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import RedirectingMiddleware from "../components/Links/RedirectingMiddleware";
 import AddMeToTeam from "../components/Links/AddMeToTeam";
+import MobileNav from "../components/Menus/MobileNavbar";
 const Home = () => {
   const [filter, setFilter] = useState({
     date: "all",

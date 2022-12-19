@@ -4,41 +4,33 @@ import MainNavbar from "../components/Menus/MainNavbar";
 import ExpandingCard from "../components/ExpandingCard/ExpandingCard";
 const AboutCard = ({ title, desc, reverse }) => {
   return (
-    <div className="rounded-md drop-shadow bg-white px-6 ">
-      <div className="grid grid-cols-10">
-        <div className="col-span-3">
-          <img
-            src={`/assets/${title.toLowerCase().replace(" ", "-")}.png`}
-            alt={title}
-          />
-        </div>
-        <div className="col-span-7 ml-32 py-4">
-          <h3 className="text-xl font-bold">{title}</h3>
-          <p>{desc}</p>
-        </div>
+    <div className="flex flex-col py-4 lg:py-10 justify-between items-center bg-white rounded-md h-full">
+      <div>
+        <h3 className="text-4xl font-bold">{title}</h3>
+      </div>
+      <div className="h-2/3 my-3 lg:my-10">
+        <img
+          className="h-full"
+          src={`/assets/${title.toLowerCase().replace(" ", "-")}.png`}
+          alt={title}
+        />
+      </div>
+      <div className="flex justify-center h-full">
+        <p className="lg:w-3/4 lg:text-2xl px-3">{desc}</p>
       </div>
     </div>
   );
 };
-
 const data = [
   {
     title: "THE PROJECT",
+    reverse: false,
     desc: `In present times, where people have busy schedules and it is difficult for them to find the time slot suitable for them, asking each member of the team individually is a tedious task. In a meeting where inputs of all the members are required, short attendance due to conflicting time schedule hampers the objective of the meeting`,
   },
   {
-    title: "THE IDEA",
+    title: "IDEA BEHIND",
+    reverse: true,
     desc: `The idea of FreeSlot originated with the thought of reducing human effort of asking each person his schedule and manually finding a common slot. This project will give the user or the meeting lead an ease to schedule a meeting with maximum participants attending it.     `,
-  },
-  {
-    title: "THE PURPOSE",
-    desc: `The versatility of this project enables everyone to use it irrespective of their technical expertise. The easy interface is 
-    aimed at making the project easy to use for students in VIT.`,
-  },
-  {
-    title: "THE COMMUNITY",
-    desc: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    `,
   },
 ];
 
@@ -48,23 +40,38 @@ const About = () => {
     <>
       <MainNavbar active="about" />
       <div>
-        <PageHeading title="About" />
-        <div className="flex flex-col gap-y-16">
-          {data.map((item, idx) => (
-            <AboutCard
-              key={idx}
-              title={item.title}
-              image={item.image}
-              desc={item.desc}
-            />
-          ))}
-        </div>
-        <div className="px-16">
+        <PageHeading title="About Us" />
+        <div className="flex flex-col gap-y-40 px-11">
+          <div className="flex flex-col gap-y-4 lg:grid grid-cols-2 gap-x-16 px-4 lg:px-16">
+            {data.map((item, idx) => (
+              <AboutCard
+                key={idx}
+                reverse={item.reverse}
+                title={item.title}
+                image={item.image}
+                desc={item.desc}
+              />
+            ))}
+          </div>
           <ExpandingCard />
+          <div className="p-11">
+            <img src="/assets/the-purpose.png" alt="illustration" />
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <h3 className="text-8xl font-bold">THE COMMUNITY</h3>
+            <img
+              className="w-1/6 my-10"
+              src="/assets/the-community.png"
+              alt="community"
+            />
+            <p className="w-1/4">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor in dolore eu fugiat nulla pariatur. Excepteur sint
+              occaecat cupidatat non proident, sunt in culpa qui officia .
+            </p>
+          </div>
         </div>
-        {/* <div className="flex w-full py-4 px-2 justify-center items-center"> */}
         <Socials />
-        {/* </div> */}
       </div>
     </>
   );

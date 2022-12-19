@@ -4,6 +4,7 @@ import { MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { BsCheck } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
+
 import { useState } from "react";
 import MainNavbar from "../components/Menus/MainNavbar";
 import PageHeading from "../components/Headings/PageHeading";
@@ -132,20 +133,30 @@ const Schedule = () => {
   };
 
   return (
-    <>
+    <div>
       <MainNavbar active="schedule" />
       <div className="py-5 lg:py-0 lg:h-screen">
         <PageHeading title="Schedule" />
-        <div className="grid place-content-center ">
-          <div className="rounded-lg w-[30vw] flex flex-col gap-y-5 ">
+        <div className="lg:grid place-content-center">
+          <div className="rounded-lg lg:w-[30vw] flex flex-col gap-y-5 w-min">
             <button
               onClick={() => handleModifyClick()}
-              className="w-max self-end text-sm font-extralight px-8 py-2 m-4 rounded-full bg-blue-500 text-white "
+              className="hidden lg:block w-max self-end text-sm font-extralight px-8 py-2 m-4 rounded-full bg-blue-500 text-white "
             >
               {showModify ? "Done" : "Modify"}
             </button>
+            <button
+              onClick={() => handleModifyClick()}
+              className="lg:hidden rounded-full p-2 drop-shadow-lg bg-myBlue fixed z-50 bottom-[10vh] right-[10vw]"
+            >
+              {showModify ? (
+                <BsCheck color="white" size={36} />
+              ) : (
+                <MdEdit color="white" size={36} />
+              )}
+            </button>
             <div>
-              <div className="flex gap-x-3 w-full justify-between border-b-2 border-black">
+              <div className="flex gap-x-3 lg:w-full justify-between border-b-2 border-black ">
                 {daysData.map((day, idx) => (
                   <button
                     key={idx}
@@ -164,7 +175,10 @@ const Schedule = () => {
             </div>
             <div className="bg-transparent" id="myTabContent">
               {timeTable[activeTab].map((x, idx) => (
-                <div className="p-4 rounded-lg bg-white my-4 grid grid-cols-12 text-xl font-semibold ">
+                <div
+                  key={idx}
+                  className="p-4 rounded-lg bg-white my-4 grid grid-cols-12 text-xl font-semibold "
+                >
                   {currentlyEditing !== idx && (
                     <div className="col-span-3">
                       {x.type &&
@@ -180,6 +194,7 @@ const Schedule = () => {
                         x.type[0].toUpperCase() + x.type.slice(1)
                       }
                       type="text"
+                      value={availableCard.type}
                       onChange={(e) => {
                         // editCard(idx, "type", e.target.value);
                         setAvailableCard({
@@ -194,6 +209,7 @@ const Schedule = () => {
                     {currentlyEditing !== idx && <div>{x.start_time}</div>}
                     {currentlyEditing === idx && (
                       <input
+                        value={availableCard.start_time}
                         className="col-span-1"
                         placeholder={x.start_time}
                         type="time"
@@ -210,6 +226,7 @@ const Schedule = () => {
                     {currentlyEditing !== idx && <div>{x.end_time}</div>}
                     {currentlyEditing === idx && (
                       <input
+                        value={availableCard.end_time}
                         className="col-span-1"
                         placeholder={x.end_time}
                         type="time"
@@ -298,7 +315,7 @@ const Schedule = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
