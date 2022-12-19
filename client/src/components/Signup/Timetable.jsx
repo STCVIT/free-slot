@@ -59,7 +59,7 @@ export default function Timetable() {
           timetable: inputValue,
           email: JSON.parse(localStorage.getItem("user")).email,
         });
-        res === 200 && navigate("/home");
+        res.status === 200 && navigate("/home");
         return;
       } else {
         toast.error("Please provide timetable in either of the ways.");

@@ -1,7 +1,7 @@
 const db = require('../db/db')
 const User = db.users
 const {getFreeSlotsUsers, busy_time} = require('./freeSlotScreenshot')
-const {freeSlotCopyPaste} = require('./freeSlotCopyPaste')
+const freeSlotCopyPaste = require('./freeSlotCopyPaste')
 const { BadRequestError, NotFoundError, InvalidEmail } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler')
 const axios = require('axios')
@@ -46,7 +46,7 @@ const freeSlotCp = async(req, res, next)=>{
     try {
         let email = req.body.email
         if(!email || email == undefined){
-        return errorHandler(new InvalidEmail(), req, res)
+            return errorHandler(new InvalidEmail(), req, res)
         }
         const timetable = await User.update(
             {timetable: freeSlotCopyPaste(req.body.timetable)},
