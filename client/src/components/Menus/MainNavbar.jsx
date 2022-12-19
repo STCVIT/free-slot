@@ -44,7 +44,7 @@ const MainNavbar = ({ active }) => {
               </li>
             </ul>
           </div>
-          <div className="lg:hidden">
+          <div className="p-4 lg:hidden">
             <MobileNav
               activeTab={active}
               optionList={["Home", "Schedule", "About"]}
