@@ -18,7 +18,7 @@ const config = require("./config")[process.env.NODE_ENV || "development"];
 //     },
 //   },
 // });
-const sequelize = new Sequelize(config.postgres);
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 sequelize
   .authenticate()
   .then(() => {
