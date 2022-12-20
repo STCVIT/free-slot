@@ -43,7 +43,7 @@ const Confirmation = ({ text }) => {
 const AddMeToTeam = () => {
   const { setIsLoading, linkUid, setLinkUid } = FindFreeSlot();
   const [linkMaker, setLinkMaker] = useState(null);
-  const linkTeam = localStorage.getItem("linkTeam");
+  const linkTeam = localStorage.getItem("team_name");
   const [isConfirm, setIsConfirm] = useState(null);
   useEffect(() => {
     const setUser = async () => {

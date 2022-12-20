@@ -12,11 +12,13 @@ const Responses = ({ onClose }) => {
   const [newTeamName, setNewTeamName] = useState(null);
   const getLinkHandler = async () => {
     try {
-      setLinkTeam(newTeamName);
+      localStorage.setItem("team_name", newTeamName);
+      // setLinkTeam(newTeamName);
       setIsLoading(true);
 
       await getLink();
       setIsLoading(false);
+      // localStorage.removeItem("team_name");
     } catch (err) {
       console.log(err);
     }
@@ -57,20 +59,14 @@ const Responses = ({ onClose }) => {
             <div className="flex flex-col lg:grid grid-cols-12 gap-4 rounded-md border-2 border-gray-200 p-2 my-2">
               <div className="col-span-9 flex items-center">
                 <input
+                  value={newTeamName}
                   className="border w-full h-full p-2"
-                  value={
-                    newTeamName === ""
-                      ? localStorage.getItem("teamName")
-                      : newTeamName
-                  }
                   onChange={(e) => setNewTeamName(e.target.value)}
-                ></input>
+                />
               </div>
               <div className="col-span-3">
                 <button
-                  onClick={() => {
-                    getLinkHandler();
-                  }}
+                  onClick={getLinkHandler}
                   className="w-full border-2 border-blue-600 bg-blue-600 rounded-md px-4 py-2 text-white"
                 >
                   Get Link

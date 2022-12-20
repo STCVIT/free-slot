@@ -62,15 +62,17 @@ export function FreeSlotContextProvider({ children }) {
   };
   const getLink = async () => {
     try {
-      localStorage.setItem("linkTeam", JSON.stringify(linkTeam));
+      // localStorage.setItem("linkTeam", JSON.stringify(linkTeam));
+      const teamName = localStorage.getItem("team_name");
       await axios
         .post("link", {
-          team_name: linkTeam,
+          team_name: teamName,
           email: JSON.parse(localStorage.getItem("user")).email,
         })
         .then((res) => {
           setLink(res.data);
         });
+      localStorage.removeItem("team_name");
     } catch (error) {
       console.error("getLink " + error);
     }
