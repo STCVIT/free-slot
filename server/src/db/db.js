@@ -3,8 +3,6 @@ const path = require('path')
 // require('dotenv').config({path: path.resolve(__dirname, '../../')})
 require('dotenv').config()
 const config = require("./config")[process.env.NODE_ENV || "development"];
-console.log("HELLO "+process.env.PGPORT)
-console.log("Second HELLO "+process.env.NODE_ENV)
 // const path = require('path')
 // require('dotenv').config({path: path.resolve(__dirname, '../../')})
 //for locally running
