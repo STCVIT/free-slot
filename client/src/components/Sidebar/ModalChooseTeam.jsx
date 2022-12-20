@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useEffect } from "react";
-import { GrClose } from "react-icons/gr";
+
 import { UserAuth } from "../../context/UserAuthContext";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import axios from "../../axios/index";
@@ -26,13 +26,12 @@ const ModalChooseTeam = ({ onClose, data }) => {
       finalArr.push(reg.reg_no);
     });
     console.log(finalArr);
-    
-    
+
     try {
-      const teamId = await axios.post("team/getTeam",{
-        team_name: team_name
-      })
-      localStorage.setItem("team_id", teamId.data.team_id)
+      const teamId = await axios.post("team/getTeam", {
+        team_name: team_name,
+      });
+      localStorage.setItem("team_id", teamId.data.team_id);
       await justFindFreeSlot(finalArr);
       navigate("/freeslot");
     } catch (error) {
@@ -65,11 +64,9 @@ const ModalChooseTeam = ({ onClose, data }) => {
   return (
     <div className="relative">
       <PageHeading title="Select your team" />
-      <button className="absolute top-5 right-5" onClick={onClose}>
-        <GrClose size={16} />
-      </button>
+
       <div>
-        <div className="flex border-2 border-black rounded-md">
+        <div className="flex border-2 border-black rounded-md mx-4">
           <input
             autoComplete="off"
             type="search"

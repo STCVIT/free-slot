@@ -28,8 +28,14 @@ const EntryField = ({ label, value, onChange, isDesc }) => {
 
 const AddEvent = () => {
   // eslint-disable-next-line no-unused-vars
-  const { chosenSlotTime, chosenDate, currentTeamId, newTeamName } =
-    FindFreeSlot();
+  const {
+    chosenSlotTime,
+    chosenDate,
+    currentTeamId,
+    newTeamName,
+    setRefresh,
+    refresh,
+  } = FindFreeSlot();
   document.title = "Add Event";
   const [eventName, setEventName] = React.useState("");
   const [eventDescription, setEventDescription] = React.useState("");
@@ -73,17 +79,16 @@ const AddEvent = () => {
           title: eventName,
           start_time: start_time,
           end_time: end_time,
-          // start_time: newStartTime,
-          // end_time: newEndTime,
           team_name: newTeamName,
           description: eventDescription,
-          date: "2022-12-14",
+          date: chosenDate,
           location: eventLocation,
           link: eventLink,
         });
 
+        setRefresh(!refresh);
         navigate("/home");
-        localStorage.removeItem("team_id")
+        localStorage.removeItem("team_id");
       } catch (err) {
         console.log(err);
       }

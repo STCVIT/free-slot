@@ -42,9 +42,6 @@ const Responses = ({ onClose }) => {
 
   return (
     <div className="relative rounded-md">
-      <button className="absolute top-5 right-5" onClick={onClose}>
-        <GrClose size={16} />
-      </button>
       <div>
         <PageHeading title="Responses" />
       </div>

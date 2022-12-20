@@ -40,7 +40,14 @@ const Freeslotcard = (props) => {
                   .isoWeekday(index + 1)
                   .format("ddd")}
                 ,{" "}
-                  {index+1<moment().isoWeekday() ? moment().add(1,'weeks').isoWeekday(index + 1).format("D MMM, YYYY") : moment().isoWeekday(index + 1).format("D MMM, YYYY")}
+                {index + 1 < moment().isoWeekday()
+                  ? moment()
+                      .add(1, "weeks")
+                      .isoWeekday(index + 1)
+                      .format("D MMM, YYYY")
+                  : moment()
+                      .isoWeekday(index + 1)
+                      .format("D MMM, YYYY")}
               </div>
               <div className="text-xl font-bold">
                 {value.start_time} - {value.end_time}

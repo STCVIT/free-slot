@@ -4,7 +4,7 @@ import DropDownSidebar from "../Dropdowns/DropDownSidebar";
 import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import axios from "../../axios";
-
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 function Sidebar({ filter, setFilter }) {
   const [urlPath, setUrlPath] = useState("");
   const [isLg, setIsLg] = useState(
@@ -64,8 +64,8 @@ function Sidebar({ filter, setFilter }) {
   const FilterOptions = () => {
     return (
       <div
-        className={`bg-white w-full flex flex-col gap-y-4 ${
-          isLg ? "" : "absolute z-[1000] p-8 h-screen w-screen"
+        className={`relative z-[50] flex flex-col gap-y-4 ${
+          isLg ? "" : "p-8  w-screen "
         }`}
       >
         <Dropdown
@@ -108,30 +108,6 @@ function Sidebar({ filter, setFilter }) {
           button={true}
           defaultSelectedLabel="all"
         />
-        {/* <Dropdown
-          clearable="true"
-          multiple={false}
-          placeholder="Time"
-          selection
-          options={[
-            <input
-              key={"filterTimeInput"}
-              className=" p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 "
-              type="time"
-              onSubmit={(e) => {
-                setFilter({ ...filter, time: e.target.value });
-              }}
-            />,
-          ]}
-          onChange={(e, { value }) => {
-            setFilter({
-              ...filter,
-              date: value === "" ? "all" : value,
-            });
-          }}
-          button={true}
-          defaultSelectedLabel="all"
-        /> */}
       </div>
     );
   };
@@ -151,7 +127,7 @@ function Sidebar({ filter, setFilter }) {
               <h1 className="ml-3 whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider">
                 Filters
               </h1>
-              <div className="w-1/2">
+              <div className="">
                 <FilterOptions />
               </div>
             </div>
@@ -161,12 +137,17 @@ function Sidebar({ filter, setFilter }) {
           <div>
             <button
               onClick={() => setSeeFilters(!seeFilters)}
-              className="whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider"
+              className="whitespace-nowrap text-2xl  font-logo font-semibold tracking-wider flex gap-x-1 items-center"
             >
-              Filters {seeFilters ? "▲" : "▼"}
+              Filters{" "}
+              <MdOutlineKeyboardArrowDown
+                className={`${
+                  seeFilters && "rotate-180"
+                } transition-all duration-500`}
+              />
             </button>
             <DropDownSidebar data={groups} />
-            <div className="relative">{seeFilters && <FilterOptions />}</div>
+            <div>{seeFilters && <FilterOptions />}</div>
           </div>
         )}
       </div>

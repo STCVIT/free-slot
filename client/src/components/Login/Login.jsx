@@ -53,6 +53,8 @@ const Login = () => {
         toast.error("Incorrect Password");
       } else if (error.message === "Firebase: Error (auth/invalid-email).") {
         toast.error("Invalid Email");
+      } else if (error.message === "Firebase: Error (auth/user-not-found).") {
+        toast.error("User not found");
       }
     }
   };

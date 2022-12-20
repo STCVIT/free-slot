@@ -1,14 +1,11 @@
 import React from "react";
-import { GrClose } from "react-icons/gr";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
-import { UserAuth } from "../../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios";
-import PageHeading from "../Headings/PageHeading";
 const FreeSlot = ({ onClose }) => {
   const navigate = useNavigate();
   const { justFindFreeSlot, saveTeamAndFindFreeSlot, setNewTeamName } =
@@ -20,7 +17,6 @@ const FreeSlot = ({ onClose }) => {
   const [teamName, setTeamName] = useState("");
   const [currentVaue, setCurrentValue] = useState("");
   const localUser = JSON.parse(localStorage.getItem("user"));
-  const [error, setError] = useState("");
   const [userDetails, setUserDetails] = useState({});
   if (!tags.includes(userDetails.reg_no) && userDetails.reg_no)
     tags.push(userDetails.reg_no);
@@ -32,13 +28,10 @@ const FreeSlot = ({ onClose }) => {
       })
       .then((res) => {
         setUserDetails(res.data);
-        // tags.push(res.data.reg_no);
-        // setTags(tags);
       })
       .catch((err) => {
         console.log(err);
       });
-    // tags.push(userDetails.reg_no);
   }, []);
   console.log("User Details: ", userDetails);
   const ToastMessageContainer = (props) => {
@@ -53,43 +46,6 @@ const FreeSlot = ({ onClose }) => {
     );
   };
 
-  // const userFound = async (element) => {
-  //   console.log("HERE");
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   const getUser = await axios.post(
-  //     "user/checkUserByReg",
-  //     {
-  //       reg_no: element,
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${user.token}`,
-  //       },
-  //     }
-  //   );
-  //   const userData = await axios.post(
-  //     "user/getUserByEmail",
-  //     {
-  //       email: user.email,
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${user.token}`,
-  //       },
-  //     }
-  //   );
-  //   if (!getUser.data) {
-  //     toast.error("User not found!");
-  //     return false;
-  //   } else if (
-  //     !userData.data.timeTable ||
-  //     userData.data.timeTable.length === 0
-  //   ) {
-  //     toast.error("User has no timetable!");
-  //     return false;
-  //   } else return true;
-  //  };
-
   async function handleKeyDown(e) {
     if (e.key !== "Enter" && e.key !== ",") return;
     else {
@@ -99,10 +55,9 @@ const FreeSlot = ({ onClose }) => {
       let value = e.target.value;
       if (value[value.length - 1] === ",") {
         value = value.slice(0, -1);
-        // if (await userFound(value)) {
+
         tags.push(value);
         setTags(tags);
-        // }
       }
       if (value.includes(",")) {
         const invalid = [];
@@ -115,7 +70,6 @@ const FreeSlot = ({ onClose }) => {
           if (tags.includes(element)) {
             duplicates.push(element);
           } else if (regex.test(element)) {
-            // console.log(element);
             newTags.push(element);
           } else {
             invalid.push(element);
@@ -124,12 +78,8 @@ const FreeSlot = ({ onClose }) => {
         });
         const notFound = [];
         newTags.forEach(async (element) => {
-          // if (await userFound(element)) {
           tags.push(element);
           setTags(tags);
-          // } else {
-          // notFound.push(element);
-          // }
         });
         if (notFound.length > 0) {
           const notFoundTags = notFound.join(", ");
@@ -140,7 +90,6 @@ const FreeSlot = ({ onClose }) => {
           toast.error(
             <ToastMessageContainer
               error="Invalid tag(s) found!"
-              // type="Invalid tag(s)"
               description={invalidTags}
             />,
             {
@@ -155,7 +104,6 @@ const FreeSlot = ({ onClose }) => {
             <ToastMessageContainer
               error="Duplicate tag(s) found!"
               description={duplicateTags}
-              // description={duplicateTags}
             />,
             {
               pauseOnFocusLoss: true,
@@ -164,7 +112,6 @@ const FreeSlot = ({ onClose }) => {
           );
         }
 
-        // setTags([...tags, ...newTag]);
         console.log(tags);
       } else {
         if (!value.trim()) return;
@@ -249,13 +196,13 @@ const FreeSlot = ({ onClose }) => {
       onClose();
     };
     const markAsDone =
-      "flex-1 items-center w-fit h-fit py-2 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-2 border-myBlue";
+      "flex-1 items-center w-fit h-fit py-2 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-sm hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-myBlue";
     const cancel =
-      "flex-1 rounded px-4 items-center w-fit h-fit py-2 text-black underline bg-white border-2 border-black rounded-lg";
+      "flex-1 rounded  px-4 items-center py-2 text-black underline border-[1px] border-gray-400 rounded-sm";
     return (
       <div className="flex rounded-md justify-evenly items-center mt-4 gap-x-4 absolute z-[2000] w-full h-full bg-white/80">
-        <div className="flex flex-col rounded-md px-4 lg:px-0 lg:w-1/2 py-4 justify-evenly items-center bg-gray-200">
-          <p className="text-lg font-semibold text-center  border-b-2 border-black ">
+        <div className="flex flex-col rounded-md px-4 lg:px-0 lg:w-1/2 py-4 justify-evenly items-center bg-white border drop-shadow-md">
+          <p className="text-lg font-semibold text-center  ">
             Are you sure you want to cancel?
           </p>
           <div className="flex w-1/2 items-center justify-between gap-x-4">
@@ -278,22 +225,33 @@ const FreeSlot = ({ onClose }) => {
       {confirmationOpen && (
         <Confirm setConfirmationOpen={setConfirmationOpen} />
       )}
-      <button className="absolute top-5 right-5" onClick={onClose}>
-        <GrClose size={16} />
-      </button>
+      {/* <button
+        className="text-white absolute -top-7 right-5 p-2"
+        onClick={onClose}
+      >
+        <AiOutlineClose size={16} color="white" />
+      </button> */}
       <div className="flex justify-center flex-col gap-y-3  rounded-md p-3">
-        <PageHeading title="Check Free Slot" />
+        {/* <PageHeading title="Check Free Slot" /> */}
         <div>
-          <div className="flex flex-col gap-y-3 justify-center items-start px-2 py-6">
-            <div>
-              Enter the reg no. or name of the members:
-              <br />
-              <i>Press Enter to seperate tags.</i>
-              <br />
-              <b>
-                *Note: Paste a string having registration numbers separated by
-                commas to add all at once.
-              </b>
+          <h1 className="font-semibold text-5xl text-center py-3">
+            Check Free Slot
+          </h1>
+          <div className="flex flex-col gap-y-3 justify-center items-start py-6">
+            <div className="leading-8">
+              <ul>
+                {[
+                  `<span class="text-green-700 font-black text-xl">#</span> Enter the registration number of the members`,
+                  `<span class="font-black text-xl">⏎</span> Press Enter to separate tags.`,
+                  "💡 Tip: Paste a string having registration numbers separated by commas to add all at once.",
+                ].map((data, index) => (
+                  <li
+                    className="flex items-center gap-x-1"
+                    dangerouslySetInnerHTML={{ __html: data }}
+                    key={index}
+                  ></li>
+                ))}
+              </ul>
             </div>
             <div className="self-center">{tagNote}</div>
             <div className="flex flex-col items-center w-full rounded-md justify-center gap-2 border self-center">
@@ -301,7 +259,7 @@ const FreeSlot = ({ onClose }) => {
                 {tags.map((tag, index) => (
                   <button
                     onClick={() => removeTag(index)}
-                    className="p-2 bg-myBlue text-white rounded-md hover:bg-red-400 hover:line-through h hover:scale-110"
+                    className="p-2 bg-myBlue text-white border border-myBlue rounded-md hover:bg-red-400 hover:line-through h hover:scale-110"
                     key={index}
                   >
                     <span className="text">{tag}</span>
@@ -312,18 +270,14 @@ const FreeSlot = ({ onClose }) => {
                   value={currentVaue}
                   onChange={(e) => setCurrentValue(e.target.value)}
                   type="text"
-                  className="text-center border rounded-md py-2"
-                  placeholder="21XXX0000"
+                  style={{ padding: 0, margin: 0 }}
+                  className="text-center border rounded-md !py-2 "
+                  placeholder="21BCE1234"
                 />
               </div>
             </div>
           </div>
-          <button
-            className="underline decoration-dotted underline-offset-2 font-semibold"
-            onClick={removeAll}
-          >
-            Clear all
-          </button>
+          <button onClick={removeAll}>Clear all</button>
         </div>
         <div className="flex lg:flex-row flex-col gap-3  lg:items-center mb-4">
           <div
@@ -347,23 +301,27 @@ const FreeSlot = ({ onClose }) => {
             )}
           </div>
         </div>
-        <div className="self-center flex w-3/4 lg:w-2/4 justify-between gap-x-3">
-          <button
-            type="submit"
-            onClick={submitFreeSlot}
-            className="text-white bg-myBlue font-medium rounded-lg text-sm w-60 py-2.5 text-center border-2 border-myBlue"
-          >
-            Find Free Slot!
-          </button>
-          <button
-            onClick={() => {
-              setConfirmationOpen(!confirmationOpen);
-            }}
-            type="cancel"
-            className="text-black bg-white border-none font-medium rounded-lg underline-offset-2 text-sm w-60 outline text-center underline decoration-dotted"
-          >
-            Cancel
-          </button>
+        <div className="self-center justify-between flex w-3/4 lg:w-2/4 gap-x-3">
+          <div className="w-full">
+            <button
+              type="submit"
+              onClick={submitFreeSlot}
+              className="text-white w-full bg-myBlue font-medium rounded-lg text-sm  py-2.5 text-center border-2 border-myBlue"
+            >
+              Find Free Slot!
+            </button>
+          </div>
+          <div className="w-full">
+            <button
+              onClick={() => {
+                setConfirmationOpen(!confirmationOpen);
+              }}
+              type="cancel"
+              className="flex-1 h-full w-full items-center  text-black underline border-[1px] border-gray-400 rounded-md"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 
 const TabNavbar = ({ activeTab, setActiveTab }) => {
   const mainClass =
-    "px-4 py-2 border-b-4 col-span-1 cursor-pointer transition-colors duration-300";
-  const activeClass = "border-myBlue";
+    "px-4 py-2 border-b-4  col-span-1 cursor-pointer transition-colors duration-300";
+  const activeClass = "border-myBlue font-semibold";
   const inactiveClass = "border-transparent hover:border-gray-200";
 
   var desc = document.querySelectorAll('[id^="meetingInfoCard"]');
@@ -51,7 +51,7 @@ const Tabs = ({ filter, setGroup }) => {
     <div>
       {isLg && <PageHeading title="Meetings" />}
       <div className="sticky top-0 z-20 drop-shadow">
-        <div className="border-b w-full bg-white pt-4">
+        <div className="border-b w-full bg-white pt-4 mt-10">
           <TabNavbar
             filter={filter}
             numberOfCards={numberOfCards}
