@@ -1,12 +1,13 @@
 const { Sequelize, DataTypes } = require("sequelize");
+require('dotenv').config('../../')
 const config = require("./config")[process.env.NODE_ENV || "development"];
 // const path = require('path')
 // require('dotenv').config({path: path.resolve(__dirname, '../../')})
 //for locally running
-const sequelize = new Sequelize(config.postgres);
+//const sequelize = new Sequelize(config.postgres);
 // for hosting
-// require('dotenv').config({path: path.resolve(__dirname, '../../../')})
-// const sequelize = new Sequelize(process.env.APPSETTING_DATABASE_URL, {
+
+// const sequelize = new Sequelize(config.production, {
 //   dialect: "postgres",
 //   dialectOptions: {
 //     ssl: {
@@ -15,10 +16,11 @@ const sequelize = new Sequelize(config.postgres);
 //     },
 //   },
 // });
+const sequelize = new Sequelize(config.postgres);
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connected successfully to " + process.env.DB_NAME);
+    console.log("Connected successfully to " + process.env.PGDATABASE);
   })
   .catch(() => {
     console.log("Couldn't connect to database");
