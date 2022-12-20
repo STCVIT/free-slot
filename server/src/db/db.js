@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
-require('dotenv').config('../../')
+require('dotenv').config()
 const config = require("./config")[process.env.NODE_ENV || "development"];
+console.log("HELLO "+process.env.DB_PORT)
 // const path = require('path')
 // require('dotenv').config({path: path.resolve(__dirname, '../../')})
 //for locally running
