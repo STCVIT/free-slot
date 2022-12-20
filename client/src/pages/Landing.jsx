@@ -3,7 +3,15 @@ import { useNavigate } from "react-router-dom";
 import ContactUs from "../components/contactUs/contactUs";
 import PageHeading from "../components/Headings/PageHeading";
 import Socials from "../components/Socials/Socials";
-
+import { Link } from "react-router-dom";
+import { Divider } from "semantic-ui-react";
+import Box from "@mui/material/Box";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import { GiHamburgerMenu } from "react-icons/gi";
 const features = [
   {
     title: "Uploading Timetable",
@@ -39,6 +47,9 @@ const FeaturesCard = ({ title, desc }) => {
 
 const Landing = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  const [state, setState] = React.useState({
+    right: false,
+  });
   const navigate = useNavigate();
   const returnToHome = () => {
     if (user) {
@@ -55,14 +66,67 @@ const Landing = () => {
   const navigateLogin = () => {
     navigate("/login");
   };
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
 
+    setState({ ...state, [anchor]: open });
+  };
   return (
     <div className="pb-4">
       <div className="flex justify-between px-12 py-7 border-b-2">
         <div>
           <p className="text-5xl font-semibold">Freeslot</p>
         </div>
-        <div className="flex gap-x-4">
+        <div className="p-4 lg:hidden">
+          {["right"].map((anchor) => (
+            <React.Fragment key={anchor}>
+              <Button onClick={toggleDrawer(anchor, true)}>
+                <GiHamburgerMenu size={25} color="black" />
+              </Button>
+              <SwipeableDrawer
+                anchor={anchor}
+                open={state[anchor]}
+                onClose={toggleDrawer(anchor, false)}
+                onOpen={toggleDrawer(anchor, true)}
+              >
+                <Box
+                  sx={{
+                    width:
+                      anchor === "top" || anchor === "bottom" ? "auto" : 250,
+                  }}
+                  role="presentation"
+                  onClick={toggleDrawer(anchor, false)}
+                  onKeyDown={toggleDrawer(anchor, false)}
+                >
+                  <List>
+                    <ListItem disablePadding>
+                      <ListItemButton className="border-b-2 border-black">
+                        <Link to={`/login`} style={{ color: "black" }}>
+                          Login
+                        </Link>
+                      </ListItemButton>
+                    </ListItem>
+                    <Divider />
+                    <ListItem disablePadding>
+                      <ListItemButton className="border-b-2 border-black">
+                        <Link to={`/signup`} style={{ color: "black" }}>
+                          Signup
+                        </Link>
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
+                </Box>
+              </SwipeableDrawer>
+            </React.Fragment>
+          ))}
+        </div>
+        <div className="lg:flex gap-x-4 hidden">
           <button
             onClick={navigateLogin}
             className=" text-myBlue py-4 px-6 border border-myBlue rounded-md"
