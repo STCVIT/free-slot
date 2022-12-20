@@ -5,10 +5,12 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-
+// import { UserAuth } from "../../context/UserAuth";
+import { UserAuth } from "../../context/UserAuthContext";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Divider } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
 const mainClass =
   " font-light cursor-pointer transition-colors duration-300 w-full";
 const activeClass = "border-black !font-bold";
@@ -17,7 +19,8 @@ const MobileNav = ({ optionList, activeTab }) => {
   const [state, setState] = React.useState({
     right: false,
   });
-
+  const navigate = useNavigate();
+  const { logOut } = UserAuth();
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
@@ -29,7 +32,11 @@ const MobileNav = ({ optionList, activeTab }) => {
 
     setState({ ...state, [anchor]: open });
   };
-
+  const logOutHandler = async () => {
+    await logOut();
+    navigate("/");
+    console.log("logged out");
+  };
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -59,6 +66,11 @@ const MobileNav = ({ optionList, activeTab }) => {
             <Divider />
           </div>
         ))}
+        <ListItem key={1} disablePadding>
+          <ListItemButton className="border-b-2 border-black">
+            <button onClick={logOutHandler}>Logout</button>
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -68,7 +80,7 @@ const MobileNav = ({ optionList, activeTab }) => {
       {["bottom"].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>
-            <GiHamburgerMenu />
+            <GiHamburgerMenu size={25} color="black" />
           </Button>
           <SwipeableDrawer
             anchor={anchor}

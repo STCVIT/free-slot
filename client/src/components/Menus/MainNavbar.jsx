@@ -14,10 +14,18 @@ const MainNavbar = ({ active }) => {
     <>
       <div className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
         <div className="flex items-center lg:flex-row flex-col justify-between w-full">
-          <div>
-            <p className="font-logo flex items-center w-full p-7 lg:p1 text-5xl ">
-              Free Slots
-            </p>
+          <div className="flex justify-between">
+            <div>
+              <p className="font-logo flex items-center w-full p-7 lg:p1 text-5xl ">
+                Free Slots
+              </p>
+            </div>
+            <div className="p-4 lg:hidden">
+              <MobileNav
+                activeTab={active}
+                optionList={["Home", "Schedule", "About"]}
+              />
+            </div>
           </div>
           <div className="hidden lg:block">
             <ul className="flex gap-x-2 w-fit lg:w-full">
@@ -43,12 +51,6 @@ const MainNavbar = ({ active }) => {
                 <DropDownProfile setActiveTab={setActiveTab} />
               </li>
             </ul>
-          </div>
-          <div className="p-4 lg:hidden">
-            <MobileNav
-              activeTab={active}
-              optionList={["Home", "Schedule", "About"]}
-            />
           </div>
         </div>
       </div>
