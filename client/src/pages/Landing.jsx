@@ -141,16 +141,16 @@ const Landing = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col px-4 lg:px-12 py-12 gap-y-32">
+      <div className="flex flex-col px-4 lg:px-12 py-12 gap-y-32 ">
         <div className="flex flex-col gap-y-8 lg:grid grid-cols-2 ">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-center lg:justify-between">
             <p className="font-bold text-5xl">
               Scheduling
               <br />
               meetings for <i className="text-myBlue">everyone</i>
             </p>
           </div>
-          <div>
+          <div className="flex justify-center lg:block">
             <img
               src="/assets/landingCard.png"
               alt="scheduling meetings for everyone"

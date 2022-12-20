@@ -136,10 +136,11 @@ const SignUp = () => {
                 <input
                   className="focus:outline-none border-2 rounded py-3 px-4"
                   id="regno"
+                  autoCapitalize={"true"}
                   type="text"
-                  value={regno}
+                  value={regno.toUpperCase()}
                   autoComplete="false"
-                  onChange={(e) => setRegno(e.target.value)}
+                  onChange={(e) => setRegno(e.target.value.toUpperCase())}
                   required
                 />
                 {regAlert && (
