@@ -105,17 +105,25 @@ const Landing = () => {
                   onKeyDown={toggleDrawer(anchor, false)}
                 >
                   <List>
-                    <ListItem disablePadding>
-                      <ListItemButton className="border-b-2 border-black w-full">
-                        <Link to={`/login`} style={{ color: "black" }}>
+                    <ListItem className=" w-full">
+                      <ListItemButton className="border-b-2 border-black">
+                        <Link
+                          to={`/login`}
+                          style={{ color: "black" }}
+                          className="w-full"
+                        >
                           Login
                         </Link>
                       </ListItemButton>
                     </ListItem>
                     <Divider />
                     <ListItem disablePadding>
-                      <ListItemButton className="border-b-2 border-black w-full">
-                        <Link to={`/signup`} style={{ color: "black" }}>
+                      <ListItemButton className="border-b-2 border-black ">
+                        <Link
+                          to={`/signup`}
+                          style={{ color: "black" }}
+                          className="w-full"
+                        >
                           Signup
                         </Link>
                       </ListItemButton>

@@ -31,9 +31,7 @@ export default function Example() {
   const [open, setOpen] = useState(false);
   return (
     <Menu as="div" className="flex items-center">
-      <div>
-        <Menu.Button onClick={() => setOpen(!open)}>My Account</Menu.Button>
-      </div>
+      <Menu.Button onClick={() => setOpen(!open)}>My Account</Menu.Button>
 
       <Transition
         as={Fragment}
@@ -44,7 +42,7 @@ export default function Example() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="origin-top-right absolute right-1 top-20 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-0 focus:outline-none">
+        <Menu.Items className="origin-top-right absolute right-5 lg:right-1 top-20 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-0 focus:outline-none">
           <div className="py-1">
             {items.map((item, idx) => (
               <Menu.Item key={idx}>

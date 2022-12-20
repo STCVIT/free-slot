@@ -33,11 +33,12 @@ const Home = () => {
       {linkUid && <AddMeToTeam />}
       <div className="max-w-screen pr-4 bg-[#f2f2f2]">
         {!isLg && <PageHeading title="Meetings" />}
-        <div className="lg:grid grid-cols-12 gap-4">
-          <div className=" lg:block col-span-2">
+        {/* <div className="lg:grid grid-cols-12 gap-4"> */}
+        <div className="lg:flex gap-4">
+          <div>
             <Sidebar filter={filter} setFilter={setFilter} group={group} />
           </div>
-          <div className="col-span-10">
+          <div className="w-full ">
             <Tabs filter={filter} setGroup={setGroup} />
           </div>
         </div>

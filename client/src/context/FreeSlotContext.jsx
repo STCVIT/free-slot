@@ -17,6 +17,7 @@ export function FreeSlotContextProvider({ children }) {
   const [newTeamName, setNewTeamName] = useState(null);
   const [redirected, setRedirected] = useState(false);
   const [linkUid, setLinkUid] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const justFindFreeSlot = async (tags) => {
     try {
       setIsLoading(true);
@@ -108,6 +109,8 @@ export function FreeSlotContextProvider({ children }) {
         setRedirected,
         linkUid,
         setLinkUid,
+        refresh,
+        setRefresh,
       }}
     >
       {children}

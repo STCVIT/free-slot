@@ -135,10 +135,10 @@ const Schedule = () => {
   return (
     <div>
       <MainNavbar active="schedule" />
-      <div className="py-5 lg:py-0 lg:h-screen">
+      <div>
         <PageHeading title="Schedule" />
-        <div className="lg:grid place-content-center">
-          <div className="rounded-lg lg:w-[30vw] flex flex-col gap-y-5 w-min">
+        <div className="grid place-content-center ">
+          <div className="rounded-lg lg:max-w-[30vw] mx-4 flex flex-col gap-y-5 w-min">
             <button
               onClick={() => handleModifyClick()}
               className="hidden lg:block w-max self-end text-sm font-extralight px-8 py-2 m-4 rounded-full bg-blue-500 text-white "
@@ -222,7 +222,9 @@ const Schedule = () => {
                         }}
                       />
                     )}
-                    <div className="col-span-1">-</div>
+                    <div className="col-span-1 grid place-content-center">
+                      -
+                    </div>
                     {currentlyEditing !== idx && <div>{x.end_time}</div>}
                     {currentlyEditing === idx && (
                       <input

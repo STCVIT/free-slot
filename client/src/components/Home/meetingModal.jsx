@@ -27,19 +27,12 @@ export default function NestedModal({ desc, data }) {
     setOpen(false);
   }
   const markAsDone =
-    "flex-1 items-center py-3 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-2 border-myBlue";
+    "flex-1 items-center py-3 px-5 text-sm w-full font-medium text-center text-white bg-myBlue rounded-md hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-2 border-myBlue";
   const cancel =
-    "flex-1 rounded px-4 items-center py-2 text-black underline bg-white border-2 border-black rounded-lg";
-  const { idx, tab, refresh, setRefresh } = data;
+    "flex-1 rounded  px-4 items-center py-2 text-black underline border-[1px] border-gray-400 rounded-md";
+  const { idx, refresh, setRefresh } = data;
 
   const Confirm = ({ action }) => {
-    // const handleYes = () => {
-    //   deleteCard(idx, tab, refresh);
-    //   action === "done"
-    //     ? toast.success("Meeting marked as done")
-    //     : toast.error("Meeting cancelled");
-    // };
-
     const handleMarkAsDone = async () => {
       // console.log(idx);
       try {
@@ -92,11 +85,13 @@ export default function NestedModal({ desc, data }) {
   //   console.log(idx, tab, refresh);
 
   return (
-    <div>
+    <div className="w-full">
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <button
         onClick={handleOpen}
-        className={desc === "Mark as done" ? markAsDone : cancel + " h-full"}
+        className={
+          desc === "Mark as done" ? markAsDone : cancel + " h-full w-full"
+        }
       >
         {desc}
       </button>

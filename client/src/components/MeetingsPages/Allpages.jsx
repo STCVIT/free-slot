@@ -13,7 +13,10 @@ export const AllPages = ({ filter, tab }) => {
   const [UpcomingData, setUpcomingData] = useState([]);
   const [PastData, setPastData] = useState([]);
   const [CancelledData, setCancelledData] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+
+  // const [refresh, setRefresh] = useState(false);
+  const { refresh, setRefresh, isLoading } = FindFreeSlot();
+
   const { day, date, time, groups } = filter;
   const [dataSet, setDataSet] = useState({
     upcoming: [],
@@ -148,16 +151,23 @@ export const AllPages = ({ filter, tab }) => {
   };
 
   return (
-    <div className="sticky top-0">
+    <div className="sticky top-0 ">
       {list && list.length === 0 && <NoMeetingsState />}
-
-      <MeetingCardTemplate
-        list={list}
-        tab={tab}
-        // refresh={{ refresh, set: setRefresh }}
-        refresh={refresh}
-        setRefresh={setRefresh}
-      />
+      <div
+        className={`${
+          isLoading
+            ? "opacity-0 absolute translate-x-[12px] "
+            : "opacity-1  translate-0"
+        } transition-all  duration-700`}
+      >
+        <MeetingCardTemplate
+          list={list}
+          tab={tab}
+          // refresh={{ refresh, set: setRefresh }}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
+      </div>
     </div>
   );
 };

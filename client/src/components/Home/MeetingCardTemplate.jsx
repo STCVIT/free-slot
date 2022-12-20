@@ -2,10 +2,26 @@ import { IoLocationSharp } from "react-icons/io5";
 import NestedModal from "./meetingModal";
 import { GoKebabVertical } from "react-icons/go";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
+import { useState, useEffect } from "react";
 import moment from "moment";
+import axios from "../../axios";
 const MeetingInfoModal = (props) => {
   // return <div>asd</div>;
+  // const [teamMembers, setTeamMembers] = useState([]);
 
+  // const getTeamMembers = async () => {
+  //   console.log(props.team_id);
+  //   const response = await axios.post("team/getTeamMembers", {
+  //     team_id: props.team_id,
+  //   });
+  //   console.log(response.data);
+  //   setTeamMembers(response.data);
+  // };
+  // useEffect(() => {
+  //   getTeamMembers();
+  // }, []);
+  // console.log(teamMembers);
+  // teamMembers.join(", ");
   return (
     <div
       className="drop-shadow absolute z-[1000] top-10  lg:right-6 hidden p-4 mb-4 rounded-md bg-white w-[80vw]  lg:w-[25rem]"
@@ -20,7 +36,10 @@ const MeetingInfoModal = (props) => {
           Members
           <br />
           <span className="text-black overflow-hidden">
-            ASD
+            {/* {props.members.map((member, idx) => {}
+             */}
+            {props.members}
+            {/* {props.members.join(", ")} */}
             {/* {props.members.length < 45
               ? props.members
               : props.members.slice(0, 45) + "..."} */}
@@ -32,6 +51,19 @@ const MeetingInfoModal = (props) => {
 };
 
 const MeetingCardTemplate = (props) => {
+  const [members, setMembers] = useState("");
+  const [teamMembers, setTeamMembers] = useState([]);
+  const getTeamMembers = async () => {
+    console.log(props.team_id);
+    const response = await axios.post("team/getTeamMembers", {
+      team_id: props.team_id,
+    });
+    console.log(response.data);
+    setTeamMembers(response.data);
+  };
+  useEffect(() => {
+    getTeamMembers();
+  }, []);
   const weekday = [
     "Sunday",
     "Monday",
@@ -44,9 +76,15 @@ const MeetingCardTemplate = (props) => {
 
   const MeetingCardsArray = props.list.map((dataItem, idx) => {
     console.log(dataItem);
-    const handleOpen = (id) => {
+    const handleOpen = async (id) => {
+      const response = await axios.post("team/getTeamMembers", {
+        team_id: dataItem.team_id,
+      });
+      console.log(response.data);
       const modal = document.getElementById("meetingInfoCard" + id);
       modal.classList.toggle("hidden");
+      // setMembers(response.data);
+      setMembers([response.data.map((member) => member.name)].join(",\t"));
     };
 
     const data = {
@@ -57,24 +95,27 @@ const MeetingCardTemplate = (props) => {
     };
     const getDay = new Date(dataItem.date);
     // dataItem.date = moment(dataItem.date).format("Do MMM YY");
+
     console.log(dataItem);
     return (
       <div
         key={idx}
-        className="w-3/4 p-6 col-span-1  border relative  bg-white rounded-lg my-4 shadow "
+        className="  self-center w-full px-8 mx-4 py-8 col-span-1  border relative  bg-white rounded-lg my-4 shadow "
         id={dataItem.meet_id}
       >
         {/* {meetingInfoModalOpen( */}
         <div className="relative">
           <MeetingInfoModal
             // members={dataItem.members}
-            members={"asd"}
+            teamId={dataItem.team_id}
+            // members={teamMembers}
+            members={members}
             id={dataItem.meet_id}
             desc={dataItem.description}
           />
         </div>
         {/* )} */}
-        <div className="absolute top-5 right-10 cursor-pointer">
+        <div className="absolute top-5 right-5 cursor-pointer">
           <GoKebabVertical
             size={25}
             onClick={() => handleOpen(dataItem.meet_id)}
@@ -103,7 +144,7 @@ const MeetingCardTemplate = (props) => {
           <span>{dataItem.team_name}</span>
         </p>
         {props.tab === "upcoming" && (
-          <div className="flex w-full gap-x-4">
+          <div className="flex w-full gap-x-3">
             {["Mark as done", "Cancel"].map((button, idx) => (
               <NestedModal desc={button} data={data} key={idx} />
             ))}
@@ -114,8 +155,21 @@ const MeetingCardTemplate = (props) => {
     );
   });
   return (
-    <div className="flex flex-col w-full items-center justify-center lg:grid grid-cols-3 gap-x-4 lg:mx-2">
-      {MeetingCardsArray}
+    // <div className="flex w-full items-center flex-auto flex-wrap justify-between  gap-x-4 lg:mx-2">
+    // <div className="flex flex-wrap justify-between after:flex-auto">
+    <div>
+      <div
+        className=" "
+        style={{
+          display: "grid",
+          placeItems: "center",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px,1fr))",
+          gridGap: "1rem",
+          // justifyContent: "space-between",
+        }}
+      >
+        {MeetingCardsArray}
+      </div>
     </div>
   );
   // return <div>{trial}</div>;

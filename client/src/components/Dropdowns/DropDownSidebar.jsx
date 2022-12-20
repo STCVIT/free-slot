@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { RiAddLine } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
 import ModalNewTeam from "../Sidebar/ModalNewTeam";
 import { useState, useEffect } from "react";
@@ -71,12 +72,12 @@ export default function Example({ data }) {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: isLg ? "75%" : "95%",
+    width: isLg ? "65%" : "95%",
     bgcolor: "white",
 
     borderRadius: "0.5rem",
     boxShadow: 12,
-    p: 4,
+    // p: 4,
   };
   const createStyle = isLg
     ? {}
@@ -91,8 +92,9 @@ export default function Example({ data }) {
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") modalOff();
     });
+
     return (
-      <div>
+      <div className="flex flex-col">
         <Modal
           BackdropProps={{
             style: {
@@ -107,12 +109,18 @@ export default function Example({ data }) {
         >
           <ClickAwayListener onClickAway={modalOff}>
             <Box sx={style}>
+              <div className="w-full py-2 px-2 bg-myBlue rounded-t-xl flex justify-end">
+                <button className="text-white  p-2 " onClick={modalOff}>
+                  <AiOutlineClose size={22} color="white" />
+                </button>
+              </div>
               {chooseTeamOpen && (
                 <ModalChooseTeam
                   data={data}
                   onClose={() => setChooseTeamOpen(false)}
                 />
               )}
+
               {newTeamOpen && (
                 <ModalNewTeam onClose={() => setNewTeamOpen(false)} />
               )}
@@ -126,7 +134,7 @@ export default function Example({ data }) {
     );
   };
   return (
-    <div style={createStyle} className="relative right-0">
+    <div style={createStyle} className="relative right-0 !z-[10000]">
       <ComponentModal />
       <Menu as="div" className="relative inline-block text-left ">
         <div>

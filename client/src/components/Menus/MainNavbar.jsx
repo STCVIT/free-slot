@@ -4,12 +4,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import MobileNav from "./MobileNavbar";
 const MainNavbar = ({ active }) => {
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [activeTab, setActiveTab] = useState(active);
   const mainClass =
-    "px-4 py-2 border-b-4 col-span-1 font-light cursor-pointer transition-colors duration-300";
-  const activeClass = "border-black !font-bold";
-  const inactiveClass = "border-transparent hover:border-gray-200";
+    "px-4 py-2 col-span-1 font-light cursor-pointer transition-colors duration-300";
+  const activeClass = "!font-bold";
+  const inactiveClass = "hover:border-gray-200 ";
   return (
     <>
       <div className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
@@ -20,7 +19,8 @@ const MainNavbar = ({ active }) => {
                 Free Slots
               </p>
             </div>
-            <div className="p-4 lg:hidden">
+            <div className="p-4 lg:hidden flex gap-x-4 items-center">
+              <DropDownProfile />
               <MobileNav
                 activeTab={active}
                 optionList={["Home", "Schedule", "About"]}

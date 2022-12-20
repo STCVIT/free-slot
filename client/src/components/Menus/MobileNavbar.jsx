@@ -68,7 +68,7 @@ const MobileNav = ({ optionList, activeTab }) => {
         ))}
         <ListItem key={1} disablePadding>
           <ListItemButton className="border-b-2 border-black">
-            <button className="w-full" onClick={logOutHandler}>
+            <button className="text-left w-full" onClick={logOutHandler}>
               Logout
             </button>
           </ListItemButton>
