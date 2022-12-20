@@ -106,7 +106,7 @@ const Landing = () => {
                 >
                   <List>
                     <ListItem disablePadding>
-                      <ListItemButton className="border-b-2 border-black">
+                      <ListItemButton className="border-b-2 border-black w-full">
                         <Link to={`/login`} style={{ color: "black" }}>
                           Login
                         </Link>
@@ -114,7 +114,7 @@ const Landing = () => {
                     </ListItem>
                     <Divider />
                     <ListItem disablePadding>
-                      <ListItemButton className="border-b-2 border-black">
+                      <ListItemButton className="border-b-2 border-black w-full">
                         <Link to={`/signup`} style={{ color: "black" }}>
                           Signup
                         </Link>

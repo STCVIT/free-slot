@@ -17,7 +17,7 @@ const TabNavbar = ({ activeTab, setActiveTab }) => {
     });
   };
   return (
-    <ul className="lg:grid flex lg:w-1/2   lg:gap-x-0 grid-cols-3 w-full text-center">
+    <ul className="lg:grid flex lg:w-1/2 justify-between lg:justify-start  lg:gap-x-0 grid-cols-3 w-full text-center">
       {["upcoming", "cancelled", "past"].map((tab, idx) => (
         <li
           key={idx}
@@ -37,10 +37,19 @@ const Tabs = ({ filter, setGroup }) => {
   const [activeTab, setActiveTab] = useState("upcoming");
 
   const [numberOfCards, setNumberOfCards] = useState([]);
-
+  const [isLg, setIsLg] = useState(
+    window.matchMedia("(min-width: 1024px)").matches
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLg(window.matchMedia("(min-width: 1024px)").matches);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div>
-      <PageHeading title="Meetings" />
+      {isLg && <PageHeading title="Meetings" />}
       <div className="sticky top-0 z-20 drop-shadow">
         <div className="border-b w-full bg-white pt-4">
           <TabNavbar

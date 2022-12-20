@@ -52,7 +52,7 @@ export const AllPages = ({ filter, tab }) => {
         setCancelledData(cancelled.data);
         setIsLoading(false);
       } catch (err) {
-        alert(err);
+        // alert(err);
         setIsLoading(false);
       }
     }

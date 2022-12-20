@@ -80,7 +80,7 @@ export default function Example({ data }) {
   };
   const createStyle = isLg
     ? {}
-    : { position: "fixed", zIndex: 10000, bottom: 5, right: 5 };
+    : { position: "fixed", zIndex: 10000, bottom: "5vh", right: "7vw" };
 
   const ComponentModal = () => {
     function modalOff() {

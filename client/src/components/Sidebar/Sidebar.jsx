@@ -63,7 +63,11 @@ function Sidebar({ filter, setFilter }) {
   // console.log(Object.keys(groups[1]));
   const FilterOptions = () => {
     return (
-      <div className={`w-full flex flex-col gap-y-4`}>
+      <div
+        className={`bg-white w-full flex flex-col gap-y-4 ${
+          isLg ? "" : "absolute z-[1000] p-8 h-screen w-screen"
+        }`}
+      >
         <Dropdown
           clearable={filter.day !== "all" ? true : false}
           value={filter.day !== "all" && filter.day}
@@ -161,8 +165,8 @@ function Sidebar({ filter, setFilter }) {
             >
               Filters {seeFilters ? "▲" : "▼"}
             </button>
-
-            {seeFilters && <FilterOptions />}
+            <DropDownSidebar data={groups} />
+            <div className="relative">{seeFilters && <FilterOptions />}</div>
           </div>
         )}
       </div>

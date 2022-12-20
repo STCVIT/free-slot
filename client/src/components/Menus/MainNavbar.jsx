@@ -14,7 +14,7 @@ const MainNavbar = ({ active }) => {
     <>
       <div className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
         <div className="flex items-center lg:flex-row flex-col justify-between w-full">
-          <div className="flex justify-between">
+          <div className="flex justify-between w-full lg:w-fit">
             <div>
               <p className="font-logo flex items-center w-full p-7 lg:p1 text-5xl ">
                 Free Slots

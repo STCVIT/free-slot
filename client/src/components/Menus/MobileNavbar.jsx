@@ -79,7 +79,7 @@ const MobileNav = ({ optionList, activeTab }) => {
 
   return (
     <div>
-      {["bottom"].map((anchor) => (
+      {["right"].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>
             <GiHamburgerMenu size={25} color="black" />
