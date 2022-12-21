@@ -1,19 +1,19 @@
 import { Twitter, GitHub, Instagram, LinkedIn } from "@mui/icons-material";
 const socialsData = [
   {
-    platform: <Twitter htmlColor="#818181" />,
+    platform: <Twitter sx={{ fontSize: "40px" }} htmlColor="#818181" />,
     link: "https://twitter.com/stcvit",
   },
   {
-    platform: <LinkedIn htmlColor="#818181" />,
+    platform: <LinkedIn sx={{ fontSize: "40px" }} htmlColor="#818181" />,
     link: "https://www.linkedin.com/company/micvitvellore/mycompany/",
   },
   {
-    platform: <GitHub htmlColor="#818181" />,
+    platform: <GitHub sx={{ fontSize: "40px" }} htmlColor="#818181" />,
     link: "https://github.com/STCVIT/",
   },
   {
-    platform: <Instagram htmlColor="#818181" />,
+    platform: <Instagram sx={{ fontSize: "40px" }} htmlColor="#818181" />,
     link: "https://www.instagram.com/stcvit/",
   },
 ];

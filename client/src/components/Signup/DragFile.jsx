@@ -23,13 +23,16 @@ export const OrComponent = ({ isCaps }) => {
 
 const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
   const [preview, setPreview] = useState(null);
-  const images = files.map((file) => (
-    <div className="flex justify-center w-full" key={file.name}>
-      <div>
-        <img src={file.preview} alt="preview" />
-      </div>
-    </div>
-  ));
+
+  const images = files
+    ? files.map((file) => (
+        <div className="flex justify-center w-full" key={file.name}>
+          <div>
+            <img src={file.preview} alt="preview" />
+          </div>
+        </div>
+      ))
+    : [];
   function navToHome() {
     window.location.pathname === "/timetable" && navigate("/home");
   }
@@ -48,8 +51,6 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         reader.onload = async () => {
           file = reader.result;
           const res = await sendTimetable(file);
-          // console.log(res.data);
-          // res && navToHome();
         };
         setIsLoading(false);
         return;
@@ -60,6 +61,10 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
           email: JSON.parse(localStorage.getItem("user")).email,
         });
         setIsLoading(false);
+        toast.success(
+          "Timetable updated successfully. Please check schedule page to confirm"
+        );
+        setInputValue("");
         navToHome();
         if (res.status === 200) {
           res.data ? navToHome() : setErrorType("text");
@@ -71,7 +76,6 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
       }
     } catch (error) {
       console.error(error);
-      // toast.error("Could not upload timetable, please try again later.");
       errorType === "image" &&
         toast.error(
           "Could not read image, please re-upload or try another method."
@@ -120,7 +124,7 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
                 </div>
               </div>
             )}
-            {preview && (
+            {preview && files && (
               <div>
                 {images}
                 <p className="text-center mt-8 ">
@@ -131,6 +135,16 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
           </div>
         )}
       </Dropzone>
+      {preview && files && (
+        <button
+          className="p-2 rounded-md bg-red-500 text-white text-semibold"
+          onClick={() => {
+            return setPreview(null), setFiles(null);
+          }}
+        >
+          Clear
+        </button>
+      )}
       <OrComponent isCaps={true} />
       <Box className="w-full">
         <Box>

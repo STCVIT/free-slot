@@ -1,4 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
+import { AiFillPlusCircle } from "react-icons/ai";
+import { BsPlusCircleFill } from "react-icons/bs";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { RiAddLine } from "react-icons/ri";
@@ -11,8 +13,7 @@ import ModalChooseTeam from "../Sidebar/ModalChooseTeam";
 import Responses from "../Sidebar/Responses";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-// import ComponentModal from "./ComponentModal";
-import axios from "axios";
+
 import { ClickAwayListener } from "@mui/material";
 
 export default function Example({ data }) {
@@ -53,17 +54,17 @@ export default function Example({ data }) {
   const items = [
     {
       name: "Make New Team",
-      icon: <RiAddLine size={16} color="rgb(51 137 255" />,
+      icon: <RiAddLine size={16} color="black" />,
       onClick: clickedNew,
     },
     {
       name: "Choose from existing",
-      icon: <AiOutlineUnorderedList size={16} color="rgb(51 137 255" />,
+      icon: <AiOutlineUnorderedList size={16} color="black" />,
       onClick: clickedChoose,
     },
     {
       name: "Create Link",
-      icon: <BiLinkExternal size={16} color="rgb(51 137 255" />,
+      icon: <BiLinkExternal size={16} color="black" />,
       onClick: clickedLink,
     },
   ];
@@ -139,9 +140,12 @@ export default function Example({ data }) {
       <Menu as="div" className="relative inline-block text-left ">
         <div>
           <Menu.Button>
-            <p className=" justify-center items-center rounded-full bg-myBlue p-5 px-8 tracking-wider text-slate-100">
-              {isLg ? "+ Create" : "+"}
-            </p>
+            {isLg && (
+              <p className="text-5xl lg:text-xl justify-center items-center rounded-full bg-blue-800 p-3 px-6 lg:p-5 lg:px-8 tracking-wider text-slate-100">
+                + My Teams
+              </p>
+            )}
+            {!isLg && <AiFillPlusCircle size={65} color="#1E40AF" />}
           </Menu.Button>
         </div>
 
@@ -157,7 +161,7 @@ export default function Example({ data }) {
           <Menu.Items
             className={`${
               !isLg ? "bottom-20 right-5" : ""
-            } absolute z-50 mt-2 w-max rounded-md shadow-xl bg-white ring-2 ring-myBlue drop-shadow  focus:outline-none`}
+            } absolute z-50 mt-2 w-max rounded-md shadow-xl bg-white   drop-shadow  `}
           >
             <div className="py-1 p-3">
               {items.map((item, idx) => (

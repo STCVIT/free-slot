@@ -6,7 +6,7 @@ const Freeslot = () => {
   return (
     <>
       <Navbar active={"home"} />
-      <div className="flex bg-myBg ">
+      <div className="flex bg-myBg w-full pb-10">
         {/* <Sidebar /> */}
         <Freeslotsection />
       </div>

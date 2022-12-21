@@ -32,54 +32,62 @@ const ContactUs = ({ isHomePage }) => {
     setMsgLength(e.target.value.length);
   };
   return (
-    <div className="bg-[#f2f2f2]">
+    <div className={`bg-[#f2f2f2] h-full `}>
       {!isHomePage && <MainNavbar active="account" />}
       {!isHomePage && <PageHeading title="Contact Us" />}
-      <div className={`flex flex-col w-full items-center gap-y-4 `}>
-        <div className="w-full lg:w-2/4 flex flex-col gap-y-3 px-4 lg:px-0">
-          <label htmlFor="contactUsName">Name</label>
-          <input
-            id="contactUsName"
-            className="p-2 rounded-md"
-            placeholder="Name"
-            value={name}
-            onChange={handleName}
-          />
-          <div className="my-2">
-            <div className="flex justify-between ">
-              <p>Type a message</p>
-              <p className="text-sm font-bold">{msgLength}/500</p>
-            </div>
-            <div className="relative w-full">
-              <textarea
-                className="w-full p-2 rounded-md resize-none"
-                rows={10}
-                cols={6}
-                maxLength={500}
-                style={{ textDecoration: "hidden" }}
-                placeholder="Enter your message here"
-                value={message}
-                onChange={handleMessage}
-              />
-              {/* <p className="absolute top-2 right-5 text-sm font-bold">
+      <div
+        className={!isHomePage && `flex justify-center flex-col items-center`}
+      >
+        <div
+          className={`flex h-full flex-col w-3/4 justify-between  items-center gap-y-4 `}
+        >
+          <div className="w-full h-full flex flex-col gap-y-3 px-4 lg:px-0">
+            <label htmlFor="contactUsName" className="text-2xl">
+              Name
+            </label>
+            <input
+              id="contactUsName"
+              className="p-2 py-4 rounded-md"
+              placeholder="Name"
+              value={name}
+              onChange={handleName}
+            />
+            <div className="my-2">
+              <div className="flex justify-between ">
+                <p className="text-2xl">Type a message</p>
+                <p className="text-sm font-bold">{msgLength}/500</p>
+              </div>
+              <div className="relative w-full">
+                <textarea
+                  className="w-full p-2 py-4 rounded-md resize-none"
+                  rows={10}
+                  cols={6}
+                  maxLength={500}
+                  style={{ textDecoration: "hidden" }}
+                  placeholder="Enter your message here"
+                  value={message}
+                  onChange={handleMessage}
+                />
+                {/* <p className="absolute top-2 right-5 text-sm font-bold">
               {msgLength}/500
             </p> */}
-              {msgLength === 500 && (
-                <p className="text-red-600">Max Length Reached</p>
-              )}
+                {msgLength === 500 && (
+                  <p className="text-red-600">Max Length Reached</p>
+                )}
+              </div>
             </div>
           </div>
+          <div>
+            <button
+              className="flex-1 text-lg items-center h-fit w-full py-3 px-5  font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              onClick={handleSubmit}
+            >
+              Send Message
+            </button>
+          </div>
         </div>
-        <div>
-          <button
-            className="flex-1 items-center h-fit w-fit py-3 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300"
-            onClick={handleSubmit}
-          >
-            Send Message
-          </button>
-        </div>
+        {!isHomePage && <Socials />}
       </div>
-      {!isHomePage && <Socials />}
     </div>
   );
 };

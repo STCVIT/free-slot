@@ -221,7 +221,7 @@ const FreeSlot = ({ onClose }) => {
     );
   };
   return (
-    <div className="relative">
+    <div className="relative lg:text-xl">
       {confirmationOpen && (
         <Confirm setConfirmationOpen={setConfirmationOpen} />
       )}
@@ -234,10 +234,10 @@ const FreeSlot = ({ onClose }) => {
       <div className="flex justify-center flex-col gap-y-3  rounded-md p-3">
         {/* <PageHeading title="Check Free Slot" /> */}
         <div>
-          <h1 className="font-semibold text-5xl text-center py-3">
+          <h1 className="font-semibold lg:text-[38px] text-center py-3">
             Check Free Slot
           </h1>
-          <div className="flex flex-col gap-y-3 justify-center items-start py-6">
+          <div className="flex  flex-col gap-y-3 justify-center items-start py-6">
             <div className="leading-8">
               <ul>
                 {[

@@ -12,12 +12,12 @@ import { useNavigate } from "react-router-dom";
 const EntryField = ({ label, value, onChange, isDesc }) => {
   return (
     <div>
-      <label className="text-sm font-medium text-slate-500">{label}</label>
+      <label className="text-sm font-medium text-slate-500 ">{label}</label>
       <textarea
         rows={isDesc ? "4" : "1"}
         type="text"
         id="description"
-        className="border-2 resize-none border-gray-300 text-black-900 text-sm rounded-lg w-full p-2"
+        className="focus:border-myBlue focus:!outline-none ring-0 border-2 resize-none  text-black-900 text-sm rounded-lg w-full p-2"
         required
         value={value}
         onChange={(e) => onChange(e.target.value)}

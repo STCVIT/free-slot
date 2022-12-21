@@ -12,6 +12,9 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { GiHamburgerMenu } from "react-icons/gi";
+// import { ReactComponent as IllLogo } from "../assets/landingCard";
+import { ReactComponent as IllLogo } from "../assets/landingCard.svg";
+
 const features = [
   {
     title: "Uploading Timetable",
@@ -151,18 +154,15 @@ const Landing = () => {
       </div>
       <div className="flex flex-col px-4 lg:px-12 py-12 gap-y-32 ">
         <div className="flex flex-col gap-y-8 lg:grid grid-cols-2 ">
-          <div className="flex items-center justify-center lg:justify-between">
-            <p className="font-bold text-5xl">
+          <div className="flex items-center justify-center ">
+            <p className="font-bold text-4xl lg:text-7xl">
               Scheduling
               <br />
               meetings for <i className="text-myBlue">everyone</i>
             </p>
           </div>
-          <div className="flex justify-center lg:block">
-            <img
-              src="/assets/landingCard.png"
-              alt="scheduling meetings for everyone"
-            />
+          <div className="flex justify-center w-full px-8">
+            <IllLogo />
           </div>
         </div>
         <div>
@@ -179,16 +179,16 @@ const Landing = () => {
               </span>
             </p>
           </div>
-          <div className="flex flex-col gap-y-4 lg:grid grid-cols-2 gap-x-4 bg-white rounded-md py-14 px-10">
-            <div>
+          <div className=" flex flex-col gap-y-4 justify-between lg:flex-row  bg-white rounded-md pt-14 px-10">
+            <div className="w-1/2">
               <img src="/assets/landing-1.png" alt="scheduling meetings" />
             </div>
-            <div className="flex items-center">
-              <p className="text-base lg:text-4xl ">
+            <div className="flex w-full justify-center items-center">
+              <p className=" lg:text-4xl lg:w-3/4 py-4">
                 In this fast-paced world, it is hard to keep track of one&apos;s
                 schedule. And, it is harder to find a perfect time when you &
-                your friends are off- work. Freeslot is the solution. A picture
-                and registration number is all it takes.
+                your friends are off- work. Freeslot is the solution. <br />A
+                picture and registration number is all it takes.
               </p>
             </div>
           </div>
@@ -201,13 +201,9 @@ const Landing = () => {
             ))}
           </div>
         </div>
-        <div className="lg:grid grid-cols-2">
-          <div className="hidden lg:flex flex-col gap-y-4">
-            <p className="font-bold text-9xl">
-              Get in
-              <br />
-              touch
-            </p>
+        <div className="lg:grid grid-cols-2 ">
+          <div className="ml-10 hidden lg:flex flex-col gap-y-4">
+            <p className="font-bold text-6xl">Get in touch</p>
             <img
               className="w-1/2"
               src="/assets/contact.png"
@@ -215,11 +211,13 @@ const Landing = () => {
             />
           </div>
 
-          <div>
-            <p className="text-4xl font-bold lg:hidden text-center">
+          <div className="h-full">
+            <p className="text-2xl font-bold lg:hidden text-center">
               Get in touch
             </p>
-            <ContactUs isHomePage={true} />
+            <div className="h-full">
+              <ContactUs isHomePage={true} />
+            </div>
           </div>
         </div>
       </div>

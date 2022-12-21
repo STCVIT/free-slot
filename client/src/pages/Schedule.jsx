@@ -35,10 +35,10 @@ const Schedule = () => {
   });
   const [fetchTimetable, setFetchTimetable] = useState(false);
   const mainClass =
-    "px-4 py-2 border-b-4 col-span-1 font-bold cursor-pointer transition-colors duration-300";
+    "px-4 py-2 border-b-4 col-span-1 font-bold cursor-pointer transition-colors duration-300 text-sm lg:text-xl";
   const activeClass = "border-black";
   const inactiveClass = "border-transparent hover:border-gray-200";
-  const daysData = ["Mon", "Tues", "Wed", "Thurs", "Fri"];
+  const daysData = ["Mon", "Tue", "Wed", "Thur", "Fri"];
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     try {
@@ -138,11 +138,11 @@ const Schedule = () => {
       <MainNavbar active="schedule" />
       <div>
         <PageHeading title="Schedule" />
-        <div className="grid place-content-center ">
-          <div className="rounded-lg lg:max-w-[30vw] mx-4 flex flex-col gap-y-5 w-min">
+        <div className="flex justify-center ">
+          <div className="rounded-lg  mx-4 flex flex-col gap-y-5 w-3/4">
             <button
               onClick={() => handleModifyClick()}
-              className="hidden lg:block w-max self-end text-sm font-extralight px-8 py-2 m-4 rounded-full bg-blue-500 text-white "
+              className="hidden lg:block w-max text-xl self-end  font-extralight px-8 py-3 m-4 rounded-full bg-blue-500 text-white "
             >
               {showModify ? "Done" : "Modify"}
             </button>

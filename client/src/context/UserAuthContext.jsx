@@ -97,11 +97,7 @@ export const UserAuthContextProvider = ({ children }) => {
     googleAuthProvider.setCustomParameters({
       hd: "@vitstudent.ac.in",
     });
-    // const emailValid = emailPattern.test(email);
-    //     if (!emailValid) {
-    //       toast.error("Please use your VIT email");
-    //       return;
-    //     }
+
     return await signInWithPopup(auth, googleAuthProvider);
   };
   const reset = async (email) => {

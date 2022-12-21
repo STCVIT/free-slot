@@ -57,19 +57,20 @@ const About = () => {
           {/* <div className="p-11">
             <img src="/assets/the-purpose.png" alt="illustration" />
           </div> */}
-          <div className="flex flex-col justify-center items-center">
-            <h3 className="text-8xl font-bold">The Community</h3>
-            <img
-              className="w-1/6 my-10"
-              src="/assets/the-community.png"
-              alt="community"
-            />
-            <p className="w-1/4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor in dolore eu fugiat nulla pariatur. Excepteur sint
-              occaecat cupidatat non proident, sunt in culpa qui officia .
-            </p>
-          </div>
+        </div>
+        <div className="flex my-28 flex-col justify-center items-center">
+          <h3 className="text-8xl font-bold">The Community</h3>
+          <img
+            className="w-1/6 my-6"
+            src="/assets/the-community.png"
+            alt="community"
+          />
+          <p className="w-1/4 text-xl">
+            The idea of FreeSlot originated with the thought of reducing human
+            effort of asking each person his schedule and manually finding a
+            common slot. This project will give the user or the meeting lead an
+            ease to schedule a meeting with maximum participants attending it.
+          </p>
         </div>
         <Socials />
       </div>

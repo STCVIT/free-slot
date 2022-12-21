@@ -127,10 +127,10 @@ const MeetingCardTemplate = (props) => {
             , {moment(dataItem.date).format("Do MMM YY")}
           </span>
         </p>
-        <p className="px-2 text-2xl font-bold  text-black">
+        <p className="text-2xl font-bold  text-black">
           {dataItem.start_time.slice(0, -3)} - {dataItem.end_time.slice(0, -3)}
         </p>
-        <div className="flex items-center gap-x-4 my-4 font-semibold text-myBlue">
+        <div className="flex gap-x-4 my-4 font-semibold text-myBlue">
           <IoLocationSharp size={20} />
           {dataItem.location}
         </div>

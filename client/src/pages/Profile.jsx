@@ -8,6 +8,7 @@ import { FindFreeSlot } from "../context/FreeSlotContext";
 import Loader from "../components/Loader/Loader";
 import Dropzone from "react-dropzone";
 import DragFile from "../components/Signup/DragFile";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const { user } = UserAuth();
@@ -41,36 +42,6 @@ const Profile = () => {
   );
   const [inputValue, setInputValue] = useState(null);
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (files[0]) {
-        var file = files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = async () => {
-          file = reader.result;
-          const res = await sendTimetable(file);
-          if (res) {
-            navigate("/home");
-          }
-        };
-        return;
-      } else if (inputValue) {
-        const res = await axios.post("timetable/freeSlotCopyPaste", {
-          timetable: inputValue,
-          email: JSON.parse(localStorage.getItem("user")).email,
-        });
-        res.status === 200 && navigate("/home");
-        return;
-      } else {
-        alert("Please provide timetable in either of the ways.");
-      }
-      // setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleDeleteAccount = async () => {
     try {

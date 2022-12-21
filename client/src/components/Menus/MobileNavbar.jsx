@@ -13,7 +13,7 @@ import { Divider } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 const mainClass =
   " font-light cursor-pointer transition-colors duration-300 w-full";
-const activeClass = "border-black !font-bold";
+const activeClass = " border-black !font-bold";
 const inactiveClass = "border-transparent hover:border-gray-200";
 const MobileNav = ({ optionList, activeTab }) => {
   const [state, setState] = React.useState({
@@ -53,7 +53,7 @@ const MobileNav = ({ optionList, activeTab }) => {
                   key={index}
                   to={`/${item.toLowerCase()}`}
                   style={{ color: "black" }}
-                  className={`${mainClass} ${
+                  className={` ${mainClass} ${
                     activeTab === item.toLocaleLowerCase()
                       ? activeClass
                       : inactiveClass

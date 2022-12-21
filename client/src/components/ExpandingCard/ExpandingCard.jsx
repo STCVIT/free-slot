@@ -65,14 +65,20 @@ const ExpandingCard = () => {
                           />
                         </div>
                         {currentIdx.length !== 3 && (
-                          <div className="flex flex-col gap-y-2 py-2 leading-tight">
-                            <p className="text-5xl p-0 m-0 font-bold">
+                          <div
+                            className={`flex flex-col gap-y-2 py-2 leading-tight`}
+                          >
+                            <p
+                              className={`${
+                                currentIdx.includes(idx) && " text-5xl"
+                              } transition-all duration-75 delay-100`}
+                            >
                               {idx + 1}
                             </p>
                             <p className="text-4xl p-0 m-0 font-bold">
                               {item.title}
                             </p>
-                            <p className="text-base ">{item.desc}</p>
+                            <p>{item.desc}</p>
                           </div>
                         )}
                       </div>

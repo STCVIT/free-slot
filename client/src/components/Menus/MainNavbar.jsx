@@ -6,16 +6,16 @@ import MobileNav from "./MobileNavbar";
 const MainNavbar = ({ active }) => {
   const [activeTab, setActiveTab] = useState(active);
   const mainClass =
-    "px-4 py-2 col-span-1 font-light cursor-pointer transition-colors duration-300";
+    "text-xl px-4 py-2 col-span-1 font-light cursor-pointer transition-colors duration-300";
   const activeClass = "!font-bold";
   const inactiveClass = "hover:border-gray-200 ";
   return (
     <>
       <div className="shadow z-20 bg-[#f2f2f2]  drop-shadow relative">
-        <div className="flex items-center lg:flex-row flex-col justify-between w-full">
+        <div className="flex items-center lg:flex-row flex-col justify-between lg:px-10 w-full">
           <div className="flex justify-between w-full lg:w-fit">
             <div>
-              <p className="font-logo flex items-center w-full p-7 lg:p1 text-5xl ">
+              <p className="font-logo flex items-center w-full py-7 lg:p1 text-5xl ">
                 Free Slots
               </p>
             </div>
@@ -44,7 +44,7 @@ const MainNavbar = ({ active }) => {
                 </Link>
               ))}
               <li
-                className={`relative ${mainClass} ${
+                className={`relative flex items-center ${mainClass} ${
                   activeTab === "account" ? activeClass : inactiveClass
                 }`}
               >
