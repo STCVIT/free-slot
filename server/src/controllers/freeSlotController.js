@@ -2,7 +2,7 @@ const db = require('../db/db')
 const User = db.users
 const {getFreeSlotsUsers, busy_time} = require('./freeSlotScreenshot')
 const freeSlotCopyPaste = require('./freeSlotCopyPaste')
-const { BadRequestError, NotFoundError, InvalidEmail } = require('../utilities/error')
+const { BadRequestError, NotFoundError, InvalidEmail, CouldNotExtractData } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler')
 const axios = require('axios')
 const moment = require('moment')
@@ -35,9 +35,9 @@ const freeSlotScreenshot = async(req, res, next)=>{
         const timetable = await User.update(
             {timetable: busy_time(req.body.timetable)}, {where: {email: email}}
         )
-        res.sendStatus(200)
+        res.status(200).send(req.body.timetable[0][0].length?true:false)
     } catch (error) {
-        errorHandler(new BadRequestError, req, res)
+        errorHandler(new CouldNotExtractData, req, res)
         console.error(error.message);
     }
 }

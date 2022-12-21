@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 // import fileUpload from "../../assets/file-upload.svg";
 import { ReactComponent as FileUpload } from "../../assets/file-upload.svg";
 
-const OrComponent = ({ isCaps }) => {
+export const OrComponent = ({ isCaps }) => {
   const mainClass = `w-1/2 h-[1px] bg-gray-400 rounded-md`;
   return (
     <div className={`flex gap-x-2 ${isCaps ? "w-full" : "w-2/4"} items-center`}>

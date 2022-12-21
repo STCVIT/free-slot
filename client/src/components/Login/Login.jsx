@@ -8,7 +8,9 @@ import NotVisible from "../../assets/fi_eye-off.svg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { uuidv4 } from "@firebase/util";
+import GoogleButton from "react-google-button";
 import RedirectingMiddleware from "../Links/RedirectingMiddleware";
+import { OrComponent } from "../Signup/DragFile";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 const Login = () => {
   const { setLinkUid } = FindFreeSlot();
@@ -78,7 +80,7 @@ const Login = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-4">
-        <div className="hidden sm:block sm:col-span-2 bg-myBlue ">
+        <div className="hidden sm:block sm:col-span-2 bg-[#84B7FF] ">
           <img
             src={LoginImage}
             alt=""
@@ -93,6 +95,7 @@ const Login = () => {
                 <label className="font-semibold py-2">Email</label>
                 <input
                   autoComplete="true"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   className="focus:outline-none border-2 rounded py-3 px-4"
@@ -130,29 +133,13 @@ const Login = () => {
                 Login
               </button>
             </div>
-            <Link to="/forgot">
-              <h6 className="text-sm text-myBlue pt-2 pb-5 sm:pb-10">
-                Forgot Password?
-              </h6>
-            </Link>
-            <div className="relative py-4">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-b border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center">
-                <span className="bg-white px-4 text- text-gray-500">OR</span>
-              </div>
+            <div className="w-fit text-myBlue my-2 p-2">
+              <Link to="/forgot">Forgot Password?</Link>
             </div>
+            <OrComponent isCaps={true} />
             <div className="py-5">
-              <button
-                className="flex justify-center w-full border-2 border-myBlue text-black font-semibold mx-auto py-3 rounded "
-                type="button"
-                onClick={oAuth}
-              >
-                <img className="px-2" src={googleLogo} alt="" />
-                <p>Continue with Google</p>
-              </button>
-              <h6 className="text-sm text-grey py-2">
+              <GoogleButton style={{ width: "100%" }} onClick={oAuth} />
+              <h6 className="text-sm text-grey py-2 mt-2">
                 Don't have an account?
                 <Link
                   to={uid ? "/signup/" + uid : "/signup"}
