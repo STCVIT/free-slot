@@ -35,7 +35,10 @@ const freeSlotScreenshot = async(req, res, next)=>{
         const timetable = await User.update(
             {timetable: busy_time(req.body.timetable)}, {where: {email: email}}
         )
-        res.status(200).send(req.body.timetable[0][0].length?true:false)
+        if(!typeof req.body.timetable===object){
+            errorHandler(new CouldNotExtractData, req, res)
+        }
+        res.status(200).send(req.body.timetable[0][0]?true:false)
     } catch (error) {
         errorHandler(new CouldNotExtractData, req, res)
         console.error(error.message);
