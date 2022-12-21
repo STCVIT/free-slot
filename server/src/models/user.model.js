@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes)=>{
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                is: /^.*[a-zA-Z]/
+            }
         },
         email: {
             type: DataTypes.STRING,
@@ -23,14 +26,6 @@ module.exports = (sequelize, DataTypes)=>{
         },
         timetable: {
             type: DataTypes.ARRAY(DataTypes.JSON),
-            allowNull: true
-        },
-        date_format: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
-        time_format: {
-            type: DataTypes.STRING,
             allowNull: true
         }
     }, {
