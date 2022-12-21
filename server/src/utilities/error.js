@@ -82,6 +82,12 @@ class MembersError{
         this.message = "Members Not Provided"
     }
 }
+class CouldNotExtractData{
+    constructor(){
+        this.statusCode = 404
+        this.message = "Could Not Extract Data"
+    }
+}
 module.exports = { 
     AuthError,
     EmailNotVerifiedError,
@@ -96,5 +102,6 @@ module.exports = {
     InvalidTeamId,
     InvalidMeetId,
     TeamNameError,
-    MembersError
+    MembersError,
+    CouldNotExtractData
 }
