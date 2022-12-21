@@ -6,7 +6,6 @@ import axios from "../../axios";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import fileUpload from "../../assets/file-upload.svg";
 import { ReactComponent as FileUpload } from "../../assets/file-upload.svg";
 
 export const OrComponent = ({ isCaps }) => {
@@ -42,6 +41,7 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
     );
     console.log(window.location.href);
   }
+  const [errorType, setErrorType] = useState(null);
   const { sendTimetable } = UserAuth();
   const navigate = useNavigate();
   const { setIsLoading } = FindFreeSlot();
@@ -57,9 +57,9 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
           file = reader.result;
           const res = await sendTimetable(file);
           console.log(res);
-          if (res.status === 200) {
-            notify();
-          }
+          // if (res.status === 200) {
+          //   res.data ? notify() : setErrorType("image");
+          // }
         };
         setIsLoading(false);
         return;
@@ -72,14 +72,21 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         setIsLoading(false);
 
         if (res.status === 200) {
-          notify();
+          res.data ? notify() : setErrorType("text");
         }
+        console.log(res.status);
         return;
       } else {
         alert.error("Please provide timetable in either of the ways.");
       }
     } catch (error) {
       console.error(error);
+      // toast.error("Could not upload timetable, please try again later.");
+      errorType === "image" &&
+        toast.error(
+          "Could not read image, please re-upload or try another method."
+        );
+      errorType === "text" && toast.error("Please enter a valid timetable.");
       setIsLoading(false);
     }
   };

@@ -97,18 +97,30 @@ export function UserAuthContextProvider({ children }) {
     //     }
     return await signInWithPopup(auth, googleAuthProvider);
   };
-  const reset = async (email)=> {
+  const reset = async (email) => {
     return await sendPasswordResetEmail(auth, email);
-  }
-  const deleteUser = ()=>{
+  };
+  const deleteUser = () => {
     return auth.currentUser.delete();
-  }
+  };
   const sendTimetable = async (file) => {
-    const email = user.email;
-    return await axios.post("timetable/string", {
-      email,
-      file,
-    });
+    try {
+      const email = user.email;
+      const res = await axios.post("timetable/string", {
+        email,
+        file,
+      });
+      console.log(res);
+      if (res.status === 200) {
+        !res.data && toast.error("Could not read timetable, please re-upload");
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(
+        "Could not read timetable, please re-upload or try the copy-paste option"
+      );
+    }
     // .then((res) => {
     //   if (res.status === 200) {
     //     console.log(res);
@@ -148,7 +160,7 @@ export function UserAuthContextProvider({ children }) {
         googleSignIn,
         sendTimetable,
         reset,
-        deleteUser
+        deleteUser,
       }}
     >
       {children}
