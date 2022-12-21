@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import Loader from "../components/Loader/Loader";
+import Dropzone from "react-dropzone";
+import DragFile from "../components/Signup/DragFile";
+
 const Profile = () => {
   const { user } = UserAuth();
   const localUser = JSON.parse(localStorage.getItem("user"));
@@ -36,21 +39,34 @@ const Profile = () => {
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
+  const [inputValue, setInputValue] = useState(null);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      setIsLoading(true);
-      var file = files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        file = reader.result;
-        //console.log(file);
-        await sendTimetable(file);
-
-        setIsLoading(false);
-      };
+      if (files[0]) {
+        var file = files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = async () => {
+          file = reader.result;
+          const res = await sendTimetable(file);
+          if (res) {
+            navigate("/home");
+          }
+        };
+        return;
+      } else if (inputValue) {
+        const res = await axios.post("timetable/freeSlotCopyPaste", {
+          timetable: inputValue,
+          email: JSON.parse(localStorage.getItem("user")).email,
+        });
+        res.status === 200 && navigate("/home");
+        return;
+      } else {
+        alert("Please provide timetable in either of the ways.");
+      }
+      // setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -126,16 +142,18 @@ const Profile = () => {
                   </button>
                   {showUpload && (
                     <div>
-                      <input
-                        type="file"
-                        onChange={(e) => setFiles(e.target.files)}
+                      <DragFile
+                        setFiles={setFiles}
+                        inputValue={inputValue}
+                        setInputValue={setInputValue}
+                        files={files}
                       />
-                      <button
+                      {/* <button
                         onClick={handleSubmit}
                         className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-fit self-center lg:self-start"
                       >
                         Upload
-                      </button>
+                      </button> */}
                     </div>
                   )}
                 </div>
