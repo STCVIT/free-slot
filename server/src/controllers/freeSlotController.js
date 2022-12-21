@@ -59,10 +59,10 @@ const freeSlotCp = async(req, res, next)=>{
         console.error(error.message);
     }
 }
-const freeslotML = (req, res, next)=>{
+const freeslotML = async(req, res, next)=>{
     //var MLoutput = ""
     const string = req.body.file
-    axios.post('https://freeslot.azurewebsites.net/', {string})
+    await axios.post('https://freeslot.azurewebsites.net/', {string})
     .then((res)=>{
         const MLoutput = res.data;
         req.body.timetable=MLoutput

@@ -30,6 +30,7 @@ function freeSlotCopyPaste(timetable){
         let start_time = item[1];
         let end_time = item[2];
         let obj = new Object
+        obj.type="class";
         obj.start_time=start_time;
         obj.end_time=end_time;
         temp[day_number].push(obj)
@@ -38,6 +39,7 @@ function freeSlotCopyPaste(timetable){
     for(var i=0; i<5; i++){
         final.push(sortSlot(removeDuplicates(temp[i])));
     }
+    console.log(final);
     return final;
 }
 //finalCopyPaste(timetable)
