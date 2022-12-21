@@ -1,5 +1,3 @@
-// import React, { useState } from "react";
-// import { useDropzone } from "react-dropzone";
 import { useState } from "react";
 import Dropzone from "react-dropzone";
 import { UserAuth } from "../../context/UserAuthContext";
@@ -9,107 +7,20 @@ import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 // import fileUpload from "../../assets/file-upload.svg";
-// const DragFile = ({ files, setFiles }) => {
-//   // eslint-disable-next-line no-unused-vars
-//   const [dropText, setDropText] = useState("Select file from your device");
-//   const [isUploaded, setIsUploaded] = useState(false);
-//   const [imageClass, setImageClass] = useState();
-//   // eslint-disable-next-line no-unused-vars
-//   const { getRootProps, getInputProps } = useDropzone({
-//     accept: "image/*",
-//     onDrop: (acceptedFiles) => {
-//       setDropText((prevText) => "Change Image");
-//       setIsUploaded(true);
-//       setImageClass("outline rounded-md outline-offset-2 p-1");
-//       setFiles(
-//         acceptedFiles.map((file) =>
-//           Object.assign(file, {
-//             preview: URL.createObjectURL(file),
-//           })
-//         )
-//       );
-//     },
-//   });
-//   const imageUploaded = () => {
-//     if (files.length) {
-//       let file = files[0];
-//       let reader = new FileReader();
-//       reader.onloadend = function () {
-//         // document.write("RESULT: ", reader.result);
-//         console.log("RESULT: ", reader.result);
-//         // setFiles(x=>x.append(reader.result))
-//         // console.log()
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-//   const images = files.map((file) => (
-//     <div key={file.name}>
-//       <div>
-//         <img src={file.preview} style={{ width: "200px" }} alt="preview" />
-//       </div>
-//     </div>
-//   ));
-//   return (
-//     <div className="h-full w-full border-dashed border-4 rounded-md">
-//       <label
-//         for="imageUpload"
-//         onChange={imageUploaded()}
-//         className="hidden h-full lg:flex flex-col items-center justify-center text-center w-full gap-y-5"
-//       >
-//         <input
-//           {...getRootProps()}
-//           className="block lg:hidden"
-//           id="imageUpload"
-//           style={{ visibility: "hidden" }}
-//           type="none"
-//         />
-//         {isUploaded && <h1>Preview:</h1>}
-//         {!isUploaded && (
-//           <div className="hidden lg:flex flex-col items-center justify-center text-center gap-y-3 w-full">
-//             <h1>Drag & Drop your timetable</h1>
-//             <img src={fileUpload} alt="" />
-//             <h1>OR</h1>
-//           </div>
-//         )}
-//         <div className={imageClass}> {images} </div>
-//         {!isUploaded && (
-//           <button
-//             {...getRootProps()}
-//             className="rounded-md border-2 border-black p-2"
-//           >
-//             Select file from your device
-//           </button>
-//         )}
-//         {isUploaded && <h1>{files[0].name}</h1>}
-//         {isUploaded && (
-//           <button className="rounded-md border-2 border-black p-2">
-//             Change image
-//           </button>
-//         )}
-//       </label>
-//       <button className="flex h-full lg:hidden flex-col items-center justify-center text-center w-full gap-y-5">
-//         <label
-//           {...getRootProps()}
-//           for="imageUploadPhone"
-//           onChange={imageUploaded()}
-//           className="rounded-md border-2 border-black p-2"
-//         >
-//           Select file from your device
-//         </label>
-//         <img src={images} alt="Select File" />
-//         <input
-//           className="block  lg:hidden"
-//           id="imageUploadPhone"
-//           style={{ visibility: "hidden" }}
-//           type="file"
-//         />
-//       </button>
-//     </div>
-//   );
-// };
+import { ReactComponent as FileUpload } from "../../assets/file-upload.svg";
 
-// export default DragFile;
+const OrComponent = ({ isCaps }) => {
+  const mainClass = `w-1/2 h-[1px] bg-gray-400 rounded-md`;
+  return (
+    <div className={`flex gap-x-2 ${isCaps ? "w-full" : "w-2/4"} items-center`}>
+      <div className={mainClass}></div>
+      <div>
+        <p>{isCaps ? "OR" : "or"}</p>
+      </div>
+      <div className={mainClass}></div>
+    </div>
+  );
+};
 
 const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
   const [preview, setPreview] = useState(null);
@@ -173,38 +84,59 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
     }
   };
   return (
-    <div>
+    <div className="w-full flex flex-col items-center gap-y-11">
       <Dropzone
         onDrop={(acceptedFiles) => {
-          toast.success("File Uploaded!");
-          setFiles(
-            acceptedFiles.map((file) =>
-              Object.assign(file, {
-                preview: URL.createObjectURL(file),
-              })
-            )
-          );
-          setPreview(
-            acceptedFiles.map((file) =>
-              Object.assign(file, {
-                preview: URL.createObjectURL(file),
-              })
+          return (
+            toast.success("File Uploaded!"),
+            setFiles(
+              acceptedFiles.map((file) =>
+                Object.assign(file, {
+                  preview: URL.createObjectURL(file),
+                })
+              )
+            ),
+            setPreview(
+              acceptedFiles.map((file) =>
+                Object.assign(file, {
+                  preview: URL.createObjectURL(file),
+                })
+              )
             )
           );
         }}
       >
         {({ getRootProps, getInputProps }) => (
-          <div className="p-8 cursor-pointer outline " {...getRootProps()}>
-            <input {...getInputProps()} />
+          <div
+            className="p-8 cursor-pointer outline-dashed outline-3  w-full  border-dashed rounded-md outline-gray-300 "
+            {...getRootProps()}
+          >
+            <input className="h-full w-full" {...getInputProps()} />
             {!preview && (
-              <p>Drag 'n' drop some files here, or click to select files</p>
+              <div className="flex flex-col items-center gap-y-6">
+                <div>
+                  <FileUpload />
+                </div>
+                <div>Drag & Drop your timetable here</div>
+                <OrComponent />
+                <div className="text-center w-2/4 self-center cursor-pointer p-2 rounded-md border-2 border-gray-400">
+                  Select from device
+                </div>
+              </div>
             )}
-            {preview && images}
+            {preview && (
+              <div>
+                {images}
+                <p className="text-center mt-8 ">
+                  Click/tap preview to reupload
+                </p>
+              </div>
+            )}
           </div>
         )}
       </Dropzone>
-      OR
-      <Box>
+      <OrComponent isCaps={true} />
+      <Box className="w-full">
         <Box>
           <Box>
             <TextField
@@ -220,7 +152,7 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         </Box>
       </Box>
       <button
-        className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-2 rounded-md"
+        className="border col-span-1 w-full border-blue-600 bg-blue-600 text-white px-4 py-3 rounded-md"
         onClick={handleSubmit}
       >
         Submit
