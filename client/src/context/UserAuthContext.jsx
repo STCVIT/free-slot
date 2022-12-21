@@ -125,7 +125,9 @@ export const UserAuthContextProvider = ({ children }) => {
           "Timetable updated successfully. Please check schedule page to confirm"
         );
         setTtLoader(false);
-        window.location.href = "/home";
+        if (window.location.pathname === "/timetable") {
+          window.location.href = "/home";
+        }
         return;
       }
       setTtLoader(false);

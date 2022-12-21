@@ -58,7 +58,7 @@ const About = () => {
             <img src="/assets/the-purpose.png" alt="illustration" />
           </div> */}
           <div className="flex flex-col justify-center items-center">
-            <h3 className="text-8xl font-bold">THE COMMUNITY</h3>
+            <h3 className="text-8xl font-bold">The Community</h3>
             <img
               className="w-1/6 my-10"
               src="/assets/the-community.png"

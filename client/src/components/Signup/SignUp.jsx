@@ -11,11 +11,11 @@ import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { OrComponent } from "./DragFile";
 const SignUp = () => {
   document.title = "Sign Up";
-  const [name, setName] = useState("");
-  const [regno, setRegno] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [name, setName] = useState(null);
+  const [regno, setRegno] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [error, setError] = useState(null);
   const [emailAlert, setEmailAlert] = useState(false);
   const [regAlert, setRegAlert] = useState(false);
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const SignUp = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      if (!emailPattern.test(email) || !regPattern.test(regno)) {
+      if (!emailPattern.test(email) || !regPattern.test(regno) || !name) {
         if (!emailPattern.test(email)) {
           setEmailAlert(true);
           setError("VIT mail needed");
@@ -39,12 +39,15 @@ const SignUp = () => {
           setRegAlert(true);
           setError("Invalid Registration Number");
         }
-
+        if (!name) {
+          setError("Name is required");
+        }
         return;
       }
       setRegAlert(false);
       setEmailAlert(false);
-      setError("");
+      setError(null);
+      setName(null);
       setIsLoading(true);
 
       const response = await axios.post("user/create", {
@@ -113,11 +116,16 @@ const SignUp = () => {
                   className="focus:outline-none border-2 rounded py-3 px-4"
                   id="name"
                   type="text"
-                  value={name}
+                  // value={name}
                   autoComplete="false"
                   onChange={(e) => setName(e.target.value)}
                   required
                 />
+                {regAlert && (
+                  <p className="text-red-400 mt-2 text-sm">
+                    *Please enter name
+                  </p>
+                )}
               </div>
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-1">
@@ -128,7 +136,7 @@ const SignUp = () => {
                   id="regno"
                   autoCapitalize={"true"}
                   type="text"
-                  value={regno.toUpperCase()}
+                  // value={regno.toUpperCase()}
                   autoComplete="false"
                   onChange={(e) => setRegno(e.target.value.toUpperCase())}
                   required
@@ -146,7 +154,7 @@ const SignUp = () => {
                   className="focus:outline-none border-2 rounded py-3 px-4"
                   id="email"
                   type="email"
-                  value={email}
+                  // value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
@@ -164,7 +172,7 @@ const SignUp = () => {
                     className=" focus:outline-none px-4 py-3 w-full"
                     type={passwordType}
                     id="password"
-                    value={password}
+                    // value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />

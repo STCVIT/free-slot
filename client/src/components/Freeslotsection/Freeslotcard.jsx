@@ -30,7 +30,7 @@ const Freeslotcard = (props) => {
       {props.data?.map((days, index) =>
         days.map((value) => (
           <div
-            className="max-w-sm rounded-lg overflow-hidden shadow-lg font-body"
+            className="max-w-sm rounded-lg overflow-hidden shadow-lg "
             key={index}
           >
             <div className="px-6 py-4 grid grid-rows-4 gap-2">

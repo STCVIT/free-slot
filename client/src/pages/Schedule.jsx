@@ -1,5 +1,6 @@
 import React from "react";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { BsCheck } from "react-icons/bs";
@@ -79,7 +80,7 @@ const Schedule = () => {
   const addTask = () => {
     const newTimeTable = [...timeTable];
     if (!newTask.type || !newTask.start_time || !newTask.end_time) {
-      alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
       return;
     }
     newTimeTable[activeTab].push(newTask);

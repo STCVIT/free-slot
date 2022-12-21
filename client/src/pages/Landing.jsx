@@ -105,7 +105,7 @@ const Landing = () => {
                   onKeyDown={toggleDrawer(anchor, false)}
                 >
                   <List>
-                    <ListItem className=" w-full">
+                    <ListItem disablePadding>
                       <ListItemButton className="border-b-2 border-black">
                         <Link
                           to={`/login`}
