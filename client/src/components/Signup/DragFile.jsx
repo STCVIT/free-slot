@@ -24,22 +24,14 @@ export const OrComponent = ({ isCaps }) => {
 const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
   const [preview, setPreview] = useState(null);
   const images = files.map((file) => (
-    <div key={file.name}>
+    <div className="flex justify-center w-full" key={file.name}>
       <div>
         <img src={file.preview} alt="preview" />
       </div>
     </div>
   ));
-  function notify() {
+  function navToHome() {
     window.location.pathname === "/timetable" && navigate("/home");
-    toast.success(
-      <div>
-        Timetable Updated!
-        <br />
-        Please check schedule to confirm
-      </div>
-    );
-    console.log(window.location.href);
   }
   const [errorType, setErrorType] = useState(null);
   const { sendTimetable } = UserAuth();
@@ -56,10 +48,8 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         reader.onload = async () => {
           file = reader.result;
           const res = await sendTimetable(file);
-          console.log(res);
-          // if (res.status === 200) {
-          //   res.data ? notify() : setErrorType("image");
-          // }
+          // console.log(res.data);
+          // res && navToHome();
         };
         setIsLoading(false);
         return;
@@ -70,9 +60,9 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
           email: JSON.parse(localStorage.getItem("user")).email,
         });
         setIsLoading(false);
-
+        navToHome();
         if (res.status === 200) {
-          res.data ? notify() : setErrorType("text");
+          res.data ? navToHome() : setErrorType("text");
         }
         console.log(res.status);
         return;
@@ -95,7 +85,6 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
       <Dropzone
         onDrop={(acceptedFiles) => {
           return (
-            toast.success("File Uploaded!"),
             setFiles(
               acceptedFiles.map((file) =>
                 Object.assign(file, {

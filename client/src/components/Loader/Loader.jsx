@@ -1,10 +1,12 @@
 import { FindFreeSlot } from "../../context/FreeSlotContext";
+import { UserAuth } from "../../context/UserAuthContext";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { ReactComponent as LoaderImage } from "./clockSvg.svg";
 import { useState, useEffect } from "react";
 const Loader = () => {
   const { isLoading } = FindFreeSlot();
+  const { ttLoader } = UserAuth();
   const [isLg, setIsLg] = useState(
     window.matchMedia("(min-width: 1024px)").matches
   );
@@ -36,7 +38,7 @@ const Loader = () => {
             opacity: 0.8,
           },
         }}
-        open={isLoading}
+        open={isLoading || ttLoader}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

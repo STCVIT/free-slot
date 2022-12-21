@@ -15,10 +15,17 @@ import axios from "../axios/index";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FindFreeSlot } from "./FreeSlotContext";
 
 const userAuthContext = createContext();
 const emailPattern = /([a-z|.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/;
-export function UserAuthContextProvider({ children }) {
+// import { Navigate } from "react-router-dom";
+
+export const UserAuthContextProvider = ({ children }) => {
+  // export function UserAuthContextProvider({ children }) {
+  // const navigate = Navigate();
+  const [ttLoader, setTtLoader] = useState(false);
+  // const { setIsLoading } = FindFreeSlot();
   const [user, setUser] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState("");
@@ -105,6 +112,7 @@ export function UserAuthContextProvider({ children }) {
   };
   const sendTimetable = async (file) => {
     try {
+      setTtLoader(true);
       const email = user.email;
       const res = await axios.post("timetable/string", {
         email,
@@ -113,13 +121,20 @@ export function UserAuthContextProvider({ children }) {
       console.log(res);
       if (res.status === 200) {
         !res.data && toast.error("Could not read timetable, please re-upload");
+        toast.success(
+          "Timetable updated successfully. Please check schedule page to confirm"
+        );
+        setTtLoader(false);
+        window.location.href = "/home";
         return;
       }
+      setTtLoader(false);
     } catch (err) {
       console.log(err);
       toast.error(
         "Could not read timetable, please re-upload or try the copy-paste option"
       );
+      setTtLoader(false);
     }
     // .then((res) => {
     //   if (res.status === 200) {
@@ -161,12 +176,14 @@ export function UserAuthContextProvider({ children }) {
         sendTimetable,
         reset,
         deleteUser,
+        ttLoader,
+        setTtLoader,
       }}
     >
       {children}
     </userAuthContext.Provider>
   );
-}
+};
 export const UserAuth = () => {
   return useContext(userAuthContext);
 };
