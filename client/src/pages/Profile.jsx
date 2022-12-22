@@ -19,6 +19,7 @@ const Profile = () => {
   console.log("User: ", user);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .post("user/getUserByEmail", {
         email: localUser.email,
@@ -26,6 +27,9 @@ const Profile = () => {
       .then((res) => {
         // console.log(res.data);
         setUserDetails(res.data);
+      })
+      .then(() => {
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);

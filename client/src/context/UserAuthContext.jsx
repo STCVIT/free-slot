@@ -26,6 +26,7 @@ export const UserAuthContextProvider = ({ children }) => {
   // const navigate = Navigate();
   const [ttLoader, setTtLoader] = useState(false);
   // const { setIsLoading } = FindFreeSlot();
+  const [saveTeam, setSaveTeam] = useState(true);
   const [user, setUser] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState("");
@@ -176,6 +177,8 @@ export const UserAuthContextProvider = ({ children }) => {
         deleteUser,
         ttLoader,
         setTtLoader,
+        saveTeam,
+        setSaveTeam,
       }}
     >
       {children}

@@ -52,6 +52,8 @@ const AddEvent = () => {
   const [newEndTime, setNewEndTime] = React.useState(null);
   const navigate = useNavigate();
   const handleSubmit = () => {
+    // console.log(newStartTime, newEndTime);
+    const date = new Date();
     if (!eventName) {
       toast.error("Please fill Event Name");
     } else if (!eventDescription) {
@@ -77,8 +79,8 @@ const AddEvent = () => {
           team_id: localStorage.getItem("team_id"),
           email: user.email,
           title: eventName,
-          start_time: start_time,
-          end_time: end_time,
+          start_time: newStartTime,
+          end_time: newEndTime,
           team_name: newTeamName,
           description: eventDescription,
           date: chosenDate,
@@ -199,19 +201,23 @@ const AddEvent = () => {
               >
                 <option
                   onClick={() => setEventLocation("Google meet")}
+                  value="Google meet"
                   selected
                 >
                   Google meet
                 </option>
-                <option onClick={() => setEventLocation("Discord")} value="1">
+                <option
+                  onClick={() => setEventLocation("Discord")}
+                  value="Discord"
+                >
                   Discord
                 </option>
-                <option onClick={() => setEventLocation("Zoom")} value="2">
+                <option onClick={() => setEventLocation("Zoom")} value="Zoom">
                   Zoom
                 </option>
                 <option
                   onClick={() => setEventLocation("Other Platform")}
-                  value="3"
+                  value="Other Platform"
                 >
                   Other Platform
                 </option>

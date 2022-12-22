@@ -3,7 +3,7 @@ import Freeslotcard from "./Freeslotcard";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import PageHeading from "../Headings/PageHeading";
 const Freeslotsection = () => {
-  const { data, setData } = FindFreeSlot();
+  const { data, setData, saveTeam } = FindFreeSlot();
   return (
     <>
       <div className="w-full">
@@ -11,7 +11,7 @@ const Freeslotsection = () => {
         {/* <div className="px-7 grid grid-cols-4 gap-x-6 gap-y-7 mx-auto">
          */}
         <div>
-          <Freeslotcard data={data} />
+          <Freeslotcard data={data} saveTeam={saveTeam} />
         </div>
       </div>
     </>

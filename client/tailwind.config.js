@@ -16,7 +16,7 @@ module.exports = {
         },
       },
       colors: {
-        myBlue: "#3389FF",
+        myBlue: "#056DFF",
         myGrey: "#898989",
         myBg: "#FBFBFB",
       },

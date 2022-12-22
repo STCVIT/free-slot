@@ -19,6 +19,7 @@ const ContactUs = ({ isHomePage }) => {
     }
     setIsSent(true);
     console.log(name, message);
+
     toast.success("Message Sent");
     setName("");
     setMessage("");

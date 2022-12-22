@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useState } from "react";
 import { UserAuth } from "../../context/UserAuthContext";
@@ -20,7 +20,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+const Example = ({ setActiveTab }) => {
+  const [open, setOpen] = useState(false);
   const { logOut } = UserAuth();
   const navigate = useNavigate();
   const logOutHandler = async () => {
@@ -28,7 +29,6 @@ export default function Example() {
     navigate("/");
     console.log("logged out");
   };
-  const [open, setOpen] = useState(false);
   return (
     <Menu as="div" className="flex items-center">
       <Menu.Button onClick={() => setOpen(!open)}>My Account</Menu.Button>
@@ -94,4 +94,5 @@ export default function Example() {
       </Transition>
     </Menu>
   );
-}
+};
+export default Example;

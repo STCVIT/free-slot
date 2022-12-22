@@ -1,5 +1,6 @@
 import { IoLocationSharp } from "react-icons/io5";
 import NestedModal from "./meetingModal";
+import { BsFillCameraVideoFill } from "react-icons/bs";
 import { GoKebabVertical } from "react-icons/go";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useState, useEffect } from "react";
@@ -128,10 +129,15 @@ const MeetingCardTemplate = (props) => {
           </span>
         </p>
         <p className="text-2xl font-bold  text-black">
-          {dataItem.start_time.slice(0, -3)} - {dataItem.end_time.slice(0, -3)}
+          {moment(dataItem.start_time, "HH:mm:ss").format("hh:mm a")} -{" "}
+          {moment(dataItem.end_time, "HH:mm:ss").format("hh:mm a")}
         </p>
         <div className="flex gap-x-4 my-4 font-semibold text-myBlue">
-          <IoLocationSharp size={20} />
+          {["Google meet", "Zoom", "Discord"].includes(dataItem.location) ? (
+            <BsFillCameraVideoFill size={20} />
+          ) : (
+            <IoLocationSharp size={20} />
+          )}
           {dataItem.location}
         </div>
         <p className="font-normal flex flex-col gap-y-1 text-black ">

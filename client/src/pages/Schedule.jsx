@@ -42,8 +42,8 @@ const Schedule = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     try {
-      setIsLoading(true);
       const getUser = async () => {
+        setIsLoading(true);
         const userData = await axios.post(
           "user/getUserByEmail",
           {
@@ -57,8 +57,8 @@ const Schedule = () => {
         );
         setTimeTable(userData.data.timetable);
         console.log(userData.data.timetable);
+        setIsLoading(false);
       };
-      setIsLoading(false);
       getUser();
     } catch (error) {
       console.log(error);

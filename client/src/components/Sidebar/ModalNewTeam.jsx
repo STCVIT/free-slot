@@ -8,12 +8,20 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios";
 const FreeSlot = ({ onClose }) => {
   const navigate = useNavigate();
-  const { justFindFreeSlot, saveTeamAndFindFreeSlot, setNewTeamName } =
-    FindFreeSlot();
+  const {
+    justFindFreeSlot,
+    saveTeamAndFindFreeSlot,
+    setNewTeamName,
+    setSaveTeam,
+    saveTeam,
+  } = FindFreeSlot();
   var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
-  const [saveTeam, setSaveTeam] = useState(true);
+  const [saveNow, setSaveNow] = useState(true);
+  // const [saveTeam, setSaveTeam] = useState(true);
+  const [noUser, setNoUser] = useState([]);
+  const [noTimetable, setNoTimetable] = useState([]);
   const [teamName, setTeamName] = useState("");
   const [currentVaue, setCurrentValue] = useState("");
   const localUser = JSON.parse(localStorage.getItem("user"));
@@ -45,6 +53,30 @@ const FreeSlot = ({ onClose }) => {
       </div>
     );
   };
+  async function userFound(reg_no, checkAll = false) {
+    try {
+      const res = await axios.post("user/getUser", {
+        regno: reg_no,
+      });
+      console.log(res);
+
+      if (res.data) {
+        if (res.data.timetable) {
+          checkAll && setTags([...tags, reg_no]);
+          return true;
+        } else {
+          !checkAll && toast.error("Timetable not found for " + reg_no + "");
+          checkAll && noTimetable.push(reg_no);
+          return false;
+        }
+      }
+    } catch (err) {
+      // alert("Error: " + err);
+      !checkAll && toast.error("User not found for " + reg_no + "");
+      checkAll && noUser.push(reg_no);
+      console.log(err);
+    }
+  }
 
   async function handleKeyDown(e) {
     if (e.key !== "Enter" && e.key !== ",") return;
@@ -67,6 +99,7 @@ const FreeSlot = ({ onClose }) => {
         tag = new Set(tag);
         const newTags = [];
         [...tag].forEach(async (element) => {
+          await userFound(element, true);
           if (tags.includes(element)) {
             duplicates.push(element);
           } else if (regex.test(element)) {
@@ -111,7 +144,14 @@ const FreeSlot = ({ onClose }) => {
             }
           );
         }
-
+        if (noUser.length > 0) {
+          const noUserTags = new Set(noUser);
+          toast.error([...noUserTags].join(", ") + " not found!");
+        }
+        if (noTimetable.length > 0) {
+          const noTimetableTags = noTimetable.join(", ");
+          toast.error(noTimetableTags + " timetable not found!");
+        }
         console.log(tags);
       } else {
         if (!value.trim()) return;
@@ -120,7 +160,6 @@ const FreeSlot = ({ onClose }) => {
           toast.error(
             <ToastMessageContainer
               error="Invalid tag found!"
-              // type="Invalid tag"
               description={value}
             />
           );
@@ -139,15 +178,9 @@ const FreeSlot = ({ onClose }) => {
           e.target.value = "";
           return;
         }
-        // if (await userFound(value)) {
-        //   setTags([...tags, value.toUpperCase()]);
-        // }
-        // if (!(await userFound(value))) {
-        //   // toast.error("User not found!");
-        // }
-        // (await userFound(value)) && setTags([...tags, value.toUpperCase()]);
-        setTags([...tags, value.toUpperCase()]);
-        // e.target.value = "";
+        (await userFound(value)) && tags.push(value.toUpperCase());
+        setTags([...tags]);
+        console.log(noTimetable);
       }
     }
   }
@@ -171,16 +204,18 @@ const FreeSlot = ({ onClose }) => {
       toast.error("Please add at least 2 tags!");
       return;
     }
-    if (saveTeam && teamName === "") {
+    if (saveNow && teamName === "") {
       toast.error("Please enter a team name!");
       return;
-    }
-    if (saveTeam) {
+    } else if (saveNow) {
       setNewTeamName(teamName);
+      setSaveTeam(true);
       await saveTeamAndFindFreeSlot(teamName, tags);
     } else {
       await justFindFreeSlot(tags);
+      setSaveTeam(false);
     }
+
     navigate("/freeslot");
     console.log(tags);
     console.log(saveTeam);
@@ -268,7 +303,9 @@ const FreeSlot = ({ onClose }) => {
                 <input
                   onKeyDown={handleKeyDown}
                   value={currentVaue}
-                  onChange={(e) => setCurrentValue(e.target.value)}
+                  onChange={(e) =>
+                    setCurrentValue(e.target.value.toUpperCase())
+                  }
                   type="text"
                   style={{ padding: 0, margin: 0 }}
                   className="text-center border rounded-md !py-2 "
@@ -283,14 +320,14 @@ const FreeSlot = ({ onClose }) => {
           <div
             className="flex  gap-x-3 items-center font-bold cursor-pointer"
             onClick={() => {
-              setSaveTeam(!saveTeam);
+              setSaveNow(!saveNow);
             }}
           >
-            {saveTeam ? <CheckBox /> : <CheckBoxOutlineBlank />}
+            {saveNow ? <CheckBox /> : <CheckBoxOutlineBlank />}
             Save this team
           </div>
           <div className="lg:self-center">
-            {saveTeam && (
+            {saveNow && (
               <input
                 className="px-2 py-2 border-2 rounded-md w-full"
                 type="text"
