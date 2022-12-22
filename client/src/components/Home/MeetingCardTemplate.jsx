@@ -133,7 +133,7 @@ const MeetingCardTemplate = (props) => {
           {moment(dataItem.end_time, "HH:mm:ss").format("hh:mm a")}
         </p>
         <div className="flex gap-x-4 my-4 font-semibold text-myBlue">
-          {["Google meet", "Zoom", "Discord"].includes(dataItem.location) ? (
+          {["Gmeet", "Zoom", "Discord"].includes(dataItem.location) ? (
             <BsFillCameraVideoFill size={20} />
           ) : (
             <IoLocationSharp size={20} />

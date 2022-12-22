@@ -5,12 +5,12 @@ import { MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { BsCheck } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
-
 import { useState } from "react";
 import MainNavbar from "../components/Menus/MainNavbar";
 import PageHeading from "../components/Headings/PageHeading";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import { useEffect } from "react";
+
 // import axios from "../axios";
 import axios from "../axios";
 const Schedule = () => {
@@ -139,7 +139,10 @@ const Schedule = () => {
       <div>
         <PageHeading title="Schedule" />
         <div className="flex justify-center ">
-          <div className="rounded-lg  mx-4 flex flex-col gap-y-5 w-3/4">
+          <div
+            className="rounded-lg  mx-4 flex flex-col gap-y-5 w-3/4"
+            style={{ backgroundImage: `url(schedule.png)` }}
+          >
             <button
               onClick={() => handleModifyClick()}
               className="hidden lg:block w-max text-xl self-end  font-extralight px-8 py-3 m-4 rounded-full bg-blue-500 text-white "

@@ -4,23 +4,25 @@ import PageHeading from "./Headings/PageHeading";
 import { toast } from "react-toastify";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
+
 import { useNavigate } from "react-router-dom";
 //import userModel from "../../../server/src/models/user.model";
-
+import { ReactComponent as Gmeet } from "../assets/Gmeet.svg";
+import { ReactComponent as Zoom } from "../assets/Zoom.svg";
+import { ReactComponent as Discord } from "../assets/Discord.svg";
+import { ReactComponent as Offline } from "../assets/Offline.svg";
 const EntryField = ({ label, value, onChange, isDesc }) => {
   return (
     <div>
-      <label className="text-sm font-medium text-slate-500 ">{label}</label>
+      <label className="text-sm font-medium text-slate-500">{label}</label>
       <textarea
         rows={isDesc ? "4" : "1"}
         type="text"
         id="description"
-        className="focus:border-myBlue focus:!outline-none ring-0 border-2 resize-none  text-black-900 text-sm rounded-lg w-full p-2"
+        className="focus:border-myBlue focus:!outline-none mt-4 ring-0 border-2 resize-none  text-black-900 text-sm rounded-lg w-full p-4"
         required
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
       ></textarea>
     </div>
   );
@@ -37,42 +39,40 @@ const AddEvent = () => {
     refresh,
   } = FindFreeSlot();
   document.title = "Add Event";
-  const [eventName, setEventName] = React.useState("");
-  const [eventDescription, setEventDescription] = React.useState("");
-  const [eventDate, setEventDate] = React.useState("");
-  const [eventLocation, setEventLocation] = React.useState("Google meet");
-  const [eventLink, setEventLink] = React.useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [formData, setFormData] = useState({
+    eventName: null,
+    eventDescription: null,
+    eventLocation: null,
+    eventLink: null,
+    newStartTime: null,
+    newEndTime: null,
+  });
+  const {
+    eventName,
+    eventDescription,
+    eventLocation,
+    eventLink,
+    newStartTime,
+    newEndTime,
+  } = formData;
   var { start_time, end_time } = chosenSlotTime;
-  // console.log(chosenSlotTime);
-  // start_time = parseInt(chosenSlotTime.end_time.slice(0, 2));
-  // end_time = parseInt(chosenSlotTime.start_time.slice(0, 2));
   const [value, setValue] = React.useState([start_time, end_time]);
-  const [newStartTime, setNewStartTime] = React.useState(null);
-  const [newEndTime, setNewEndTime] = React.useState(null);
   const navigate = useNavigate();
   const handleSubmit = () => {
-    // console.log(newStartTime, newEndTime);
-    const date = new Date();
     if (!eventName) {
       toast.error("Please fill Event Name");
     } else if (!eventDescription) {
       toast.error("Please fill Event Description");
     } else if (!eventLocation) {
       toast.error("Please fill Event Location");
-    }
-
-    //  else if (value[0] === start_time && value[1] === end_time && !notified) {
-    //   toast.error(
-    //     "You have not modified the time, If you want to continue, please submit again"
-    //   );
-    //   setNotified(true);
-    // }
-    // else if (time[0] >= time[1]) {
-    //   toast.error("Start time must be less than end time");
-    //   return;
-    // }
-    else {
+    } else if (!newStartTime) {
+      toast.error("Please fill Start Time");
+    } else if (!newEndTime) {
+      toast.error("Please fill End Time");
+    } else if (newStartTime > newEndTime) {
+      toast.error("Start Time cannot be greater than End Time");
+    } else {
       console.log(newTeamName);
       try {
         axios.post("/meet/create", {
@@ -99,155 +99,170 @@ const AddEvent = () => {
         newEndTime,
         eventName,
         eventDescription,
-        eventLocation
+        eventLocation,
+        eventLink,
+        newStartTime,
+        newEndTime
       );
     }
   };
   const handleCancel = () => {
-    setEventDate("");
-    setEventDescription("");
-    setEventLink("");
-    setEventLocation("Google meet");
-    setEventName("");
+    setFormData({
+      eventName: null,
+      eventDescription: null,
+      eventDate: null,
+      eventLocation: null,
+      eventLink: null,
+      newStartTime: null,
+      newEndTime: null,
+    });
     setValue([start_time, end_time]);
   };
-  // const handleChange = (e) => {
-  //   setValue(e);
-  // };
 
+  const platforms = [
+    {
+      name: "Discord",
+      icon: <Discord />,
+    },
+    {
+      name: "Gmeet",
+      icon: <Gmeet />,
+    },
+    {
+      name: "Zoom",
+      icon: <Zoom />,
+    },
+
+    {
+      name: "Offline",
+      icon: <Offline />,
+    },
+  ];
   return (
-    <div>
+    <div className="pb-20">
       <PageHeading title="Add Event" />
       <div>
-        <div className="flex justify-center w-full px-4">
-          <div className="flex flex-col gap-y-10 w-full lg:w-2/4">
+        <div className=" flex justify-center w-full p-4 ">
+          <div className="flex bg-blue-50 rounded-md p-6 flex-col gap-y-10 w-full lg:w-2/4">
             <div className="flex gap-x-8 items-center">
-              {/* <Box sx={{ width: "15rem" }}>
-                  <Slider
-                    step={1}
-                    getAriaLabel={() => "Temperature range"}
-                    value={value}
-                    min={10}
-                    max={12}
-                    onChange={(e) => handleChange(e.target.value)}
-                    valueLabelDisplay="auto"
-                    disableSwap
-                  />
-                </Box> */}
-              <div className="flex flex-col gap-y-4 w-1/2">
+              <div className="flex  gap-x-8 w-1/2">
                 <div className="flex items-center justify-between ">
-                  <div>
+                  <div className="">
                     <h3>Start Time: </h3>
-                  </div>
-                  <div>
-                    <input
-                      type="time"
-                      required
-                      className="p-2 rounded-md"
-                      onChange={(e) => setNewStartTime(e.target.value)}
-                    />
-                    {newStartTime && newStartTime < start_time && (
-                      <p className="text-red-500 text-sm">
-                        Start time must be greater than {start_time}
-                      </p>
-                    )}
+                    <div>
+                      <input
+                        type="time"
+                        required
+                        className="p-2 rounded-md"
+                        onChange={(event) =>
+                          setFormData((prev) => {
+                            return {
+                              ...prev,
+                              newStartTime: event.target.value,
+                            };
+                          })
+                        }
+                      />
+                      {newStartTime && newStartTime < start_time && (
+                        <p className="text-red-500 text-sm">
+                          Start time must be greater than {start_time}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center justify-between ">
                   <div>
                     <h3>End Time: </h3>
-                  </div>
-                  <div>
-                    <input
-                      type="time"
-                      required
-                      className="p-2 rounded-md"
-                      onChange={(e) => setNewEndTime(e.target.value)}
-                    />
-                    {newEndTime && newEndTime < end_time && (
-                      <p className="text-red-500 text-sm">
-                        End time must be less than {end_time}
-                      </p>
-                    )}
+                    <div>
+                      <input
+                        type="time"
+                        required
+                        className="p-2 rounded-md"
+                        onChange={(event) =>
+                          setFormData((prev) => {
+                            return { ...prev, newEndTime: event.target.value };
+                          })
+                        }
+                      />
+                      {newEndTime && newEndTime < end_time && (
+                        <p className="text-red-500 text-sm">
+                          End time must be less than {end_time}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-
-              {/* <h3>End Time: </h3>
-                <input
-                  type="time"
-                  onChange={(e) =>
-                    // setTime((prevState) => (prevState[1] = e.target.value))
-                    setNewEndTime(e.target.value)
-                  }
-                /> */}
             </div>
-            <h1>Date: {chosenDate}</h1>
+            {/* <h1>Date: {chosenDate}</h1> */}
             <EntryField
               label="Event Name"
               value={eventName}
-              onChange={setEventName}
+              attr={"eventName"}
+              onChange={(event) =>
+                setFormData((prev) => {
+                  return { ...prev, eventName: event.target.value };
+                })
+              }
             />
-            <div>
-              <label className="rounded-md text-sm font-medium text-slate-500">
-                Event Location/Platform{" "}
-              </label>
-              <br />
-              <select
-                id="event_location"
-                className="form-select  border-2 border-gray-300 text-black-900 text-sm transition ease-in-out rounded-lg p-3 w-fit"
-                aria-label="Default select example"
-                onChange={(e) => setEventLocation(e.target.value)}
-              >
-                <option
-                  onClick={() => setEventLocation("Google meet")}
-                  value="Google meet"
-                  selected
-                >
-                  Google meet
-                </option>
-                <option
-                  onClick={() => setEventLocation("Discord")}
-                  value="Discord"
-                >
-                  Discord
-                </option>
-                <option onClick={() => setEventLocation("Zoom")} value="Zoom">
-                  Zoom
-                </option>
-                <option
-                  onClick={() => setEventLocation("Other Platform")}
-                  value="Other Platform"
-                >
-                  Other Platform
-                </option>
-              </select>
-            </div>
             <EntryField
               label="Description"
               value={eventDescription}
-              onChange={setEventDescription}
+              attr={"eventDescription"}
+              onChange={(event) =>
+                setFormData((prev) => {
+                  return { ...prev, eventDescription: event.target.value };
+                })
+              }
               isDesc={true}
             />
+            <div>
+              <p className="rounded-md text-sm font-medium text-slate-500">
+                Platform:
+              </p>
+              <div className="flex gap-x-4 mt-2">
+                {platforms.map((platform) => (
+                  <div
+                    className={`border hover:border-blue-300 cursor-pointer ${
+                      eventLocation === platform.name && "border-myBlue"
+                    } rounded-md`}
+                    onClick={() =>
+                      setFormData((prev) => {
+                        return { ...prev, eventLocation: platform.name };
+                      })
+                    }
+                  >
+                    {platform.icon}
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <EntryField
               label="Event Link (optional)"
               value={eventLink}
-              onChange={setEventLink}
+              attr={"eventLink"}
+              onChange={(event) =>
+                setFormData((prev) => {
+                  return { ...prev, eventLink: event.target.value };
+                })
+              }
             />
-            <div className="flex w-full justify-between gap-x-3 px-4">
+            <div className="flex w-full  gap-x-4">
               <button
                 onClick={handleCancel}
                 type="cancel"
-                className="text-black bg-white border-none font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center"
+                className="text-black bg-white border-none font-medium rounded-lg text-sm   px-5 py-2.5 text-center"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center dark:bg-blue-600 "
+                className="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5  text-center dark:bg-blue-600 "
               >
-                Submit
+                Save
               </button>
             </div>
           </div>
