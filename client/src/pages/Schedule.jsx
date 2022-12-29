@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,6 +19,7 @@ const Schedule = () => {
   const { setIsLoading } = FindFreeSlot();
   const [isModified, setIsModified] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+  const [overlappingTimes, setOverlappingTimes] = useState([]);
   const [timeTable, setTimeTable] = useState([
     [{ start_time: "", end_time: "", type: "" }],
   ]);
@@ -71,16 +73,53 @@ const Schedule = () => {
 
   const editCard = (idx, param, value) => {
     const newTimeTable = [...timeTable];
-    (value !== "" || value !== null) &&
-      (newTimeTable[activeTab][idx][param] = value);
+
+    newTimeTable[activeTab][idx][param] = value;
     // newTimeTable[activeTab][idx][param] = value !== "" ? value : null;
     setTimeTable(newTimeTable);
   };
 
   const addTask = () => {
     const newTimeTable = [...timeTable];
+    // const overlappingTimes = [];
     if (!newTask.type || !newTask.start_time || !newTask.end_time) {
       toast.error("Please fill all the fields");
+      return;
+    }
+    const beforeTime = moment(newTask.start_time, "HH:mm");
+    const afterTime = moment(newTask.end_time, "HH:mm");
+    if (beforeTime.isAfter(afterTime)) {
+      toast.error("Start time cannot be after end time");
+      return;
+    } else if (beforeTime.isSame(afterTime)) {
+      toast.error("Start time cannot be same as end time");
+      return;
+    }
+    newTimeTable[activeTab].forEach((card, index) => {
+      const cardBeforeTime = moment(card.start_time, "HH:mm");
+      const cardAfterTime = moment(card.end_time, "HH:mm");
+      console.log(
+        beforeTime.isBetween(cardBeforeTime, cardAfterTime),
+        afterTime.isBetween(cardBeforeTime, cardAfterTime)
+      );
+      if (
+        beforeTime.isBetween(cardBeforeTime, cardAfterTime) ||
+        afterTime.isBetween(cardBeforeTime, cardAfterTime)
+      ) {
+        setOverlappingTimes([
+          cardBeforeTime.format("hh:mm a"),
+          cardAfterTime.format("hh:mm a"),
+        ]);
+      }
+    });
+
+    if (overlappingTimes.length > 0) {
+      toast.error(
+        <div>
+          Overlapping times: <br />
+          {overlappingTimes.join(" - ")}
+        </div>
+      );
       return;
     }
     newTimeTable[activeTab].push(newTask);
@@ -210,7 +249,12 @@ const Schedule = () => {
                   )}
 
                   <div className={`col-span-6 grid grid-cols-3`}>
-                    {currentlyEditing !== idx && <div>{x.start_time}</div>}
+                    {/* {currentlyEditing !== idx && <div>{x.start_time}</div>} */}
+                    {currentlyEditing !== idx && (
+                      <div>
+                        {moment(x.start_time, "HH:mm:ss").format("hh:mm a")}
+                      </div>
+                    )}
                     {currentlyEditing === idx && (
                       <input
                         value={availableCard.start_time}
@@ -229,7 +273,12 @@ const Schedule = () => {
                     <div className="col-span-1 grid place-content-center">
                       -
                     </div>
-                    {currentlyEditing !== idx && <div>{x.end_time}</div>}
+                    {/* {currentlyEditing !== idx && <div>{x.end_time}</div>} */}
+                    {currentlyEditing !== idx && (
+                      <div>
+                        {moment(x.end_time, "HH:mm:ss").format("hh:mm a")}
+                      </div>
+                    )}
                     {currentlyEditing === idx && (
                       <input
                         value={availableCard.end_time}

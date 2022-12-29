@@ -50,7 +50,7 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         reader.readAsDataURL(file);
         reader.onload = async () => {
           file = reader.result;
-          const res = await sendTimetable(file);
+          await sendTimetable(file);
         };
         setIsLoading(false);
         return;

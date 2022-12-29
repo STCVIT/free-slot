@@ -5,55 +5,9 @@ import { BsFillCameraVideoFill } from "react-icons/bs";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { GoKebabVertical } from "react-icons/go";
-import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "../../axios";
-// import { isAfter } from "date-fns";
-const MeetingInfoModal = (props) => {
-  // return <div>asd</div>;
-  // const [teamMembers, setTeamMembers] = useState([]);
-
-  // const getTeamMembers = async () => {
-  //   console.log(props.team_id);
-  //   const response = await axios.post("team/getTeamMembers", {
-  //     team_id: props.team_id,
-  //   });
-  //   console.log(response.data);
-  //   setTeamMembers(response.data);
-  // };
-  // useEffect(() => {
-  //   getTeamMembers();
-  // }, []);
-  // console.log(teamMembers);
-  // teamMembers.join(", ");
-  return (
-    <div
-      className="drop-shadow absolute z-[1000] top-10  lg:right-6 hidden p-4 mb-4 rounded-md bg-white w-[80vw]  lg:w-[25rem]"
-      id={"meetingInfoCard" + props.id}
-    >
-      <div>
-        <p className="text-[#7B8A99]">Description</p>
-        <div className="rounded-md bg-[#F4F4F4] w-full  p-4 max-h-[25vh] overflow-y-auto my-2">
-          <p>{props.desc}</p>
-        </div>
-        <p className="text-[#7B8A99]">
-          Members
-          <br />
-          <span className="text-black overflow-hidden">
-            {/* {props.members.map((member, idx) => {}
-             */}
-            {props.members}
-            {/* {props.members.join(", ")} */}
-            {/* {props.members.length < 45
-              ? props.members
-              : props.members.slice(0, 45) + "..."} */}
-          </span>
-        </p>
-      </div>
-    </div>
-  );
-};
 
 const MeetingCardTemplate = (props) => {
   const [isLg, setIsLg] = useState(
@@ -67,7 +21,7 @@ const MeetingCardTemplate = (props) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   const [infoOpen, setInfoOpen] = useState(false);
-  const [members, setMembers] = useState("");
+  const [members, setMembers] = useState(null);
   const [teamMembers, setTeamMembers] = useState([]);
   const [currentMeet, setCurrentMeet] = useState(null);
   const [desc, setDesc] = useState(null);
@@ -148,14 +102,6 @@ const MeetingCardTemplate = (props) => {
         className="  self-center w-full px-8 mx-4 py-8 col-span-1  border relative  bg-white rounded-lg my-4 shadow "
         id={dataItem.meet_id}
       >
-        {/* <Modal
-          hideBackdrop
-          open={infoOpen}
-          onClose={() => setInfoOpen(false)}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
-
-        > */}
         {infoOpen && currentMeet === dataItem.meet_id && (
           <div className="absolute bg-white w-full h-3/4 drop-shadow-md rounded-md z-50 p-4 top-16 left-5">
             <ClickAwayListener onClickAway={handleClose}>
@@ -185,7 +131,6 @@ const MeetingCardTemplate = (props) => {
             </ClickAwayListener>
           </div>
         )}
-        {/* </Modal> */}
         <div className="absolute top-5 right-5 cursor-pointer">
           <GoKebabVertical size={25} onClick={handleOpen} />
         </div>
