@@ -30,7 +30,6 @@ const SignUp = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      setIsLoading(true);
       if (!emailPattern.test(email) || !regPattern.test(regno) || !name) {
         if (!emailPattern.test(email)) {
           setEmailAlert(true);
@@ -43,6 +42,7 @@ const SignUp = () => {
         if (!name) {
           setError("Name is required");
         }
+
         return;
       }
       setRegAlert(false);
@@ -50,7 +50,7 @@ const SignUp = () => {
       setError(null);
       setName(null);
       // setIsLoading(true);
-
+      setIsLoading(true);
       const response = await axios.post("user/create", {
         name,
         regno,

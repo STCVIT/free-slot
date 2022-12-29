@@ -48,8 +48,8 @@ const Login = () => {
 
         // console.log(window.location.pathname.split("??")[1].replace("_", " "));
         // setToAddTeam(window.location.pathname.split("??")[1].replace("_", " "));
+        localStorage.setItem("linkTeam", uid);
         navigate("/addtoteam/" + uid);
-        // localStorage.setItem("linkTeam", );
         navigate("/home");
         // setIsRedirected(true);
       }

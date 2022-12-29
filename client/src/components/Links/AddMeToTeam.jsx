@@ -92,7 +92,7 @@ const AddMeToTeam = () => {
     setTimeout(() => {
       setIsConfirm(null);
       setLinkUid(null);
-      localStorage.removeItem("linkTeam");
+      // localStorage.removeItem("linkTeam");
     }, 2000);
   };
   const rejectHandler = async () => {
@@ -101,7 +101,7 @@ const AddMeToTeam = () => {
     setTimeout(() => {
       setIsConfirm(null);
       setLinkUid(null);
-      localStorage.removeItem("linkTeam");
+      // localStorage.removeItem("linkTeam");
     }, 2000);
   };
   return (
@@ -126,7 +126,7 @@ const AddMeToTeam = () => {
                   <span className="font-semibold">{linkMaker}</span> wants to
                   add you to team
                   <br />
-                  <span className="font-semibold">{uid}</span>
+                  <span className="font-semibold">{linkTeam}</span>
                 </div>
                 <div className="flex w-full justify-evenly my-4 items-center">
                   <button

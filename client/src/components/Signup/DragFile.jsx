@@ -42,6 +42,9 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
   const { setIsLoading } = FindFreeSlot();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!files[0] && !inputValue) {
+      toast.error("Please fill atleast 1 input field.");
+    }
     try {
       setIsLoading(true);
       if (files[0]) {
