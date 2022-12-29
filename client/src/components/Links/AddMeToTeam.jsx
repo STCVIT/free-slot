@@ -41,9 +41,9 @@ const Confirmation = ({ text }) => {
   );
 };
 const AddMeToTeam = () => {
-  const { setIsLoading, linkUid, setLinkUid, toAddTeam } = FindFreeSlot();
+  const { setIsLoading, linkUid, setLinkUid } = FindFreeSlot();
   const [linkMaker, setLinkMaker] = useState(null);
-  const linkTeam = localStorage.getItem("team_name");
+  const linkTeam = localStorage.getItem("newTeamName").split("_").join(" ");
   const [isConfirm, setIsConfirm] = useState(null);
   useEffect(() => {
     const setUser = async () => {
@@ -63,10 +63,13 @@ const AddMeToTeam = () => {
   }, []);
 
   const navigate = useNavigate();
-
+  console.log(window.location.pathname);
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
+
+  // const teamName = window.location.href.split("??")[1].replace("_", " ");
+  // localStorage.setItem("newTeamName", teamName);
 
   // const teamName = window.location.pathname.split("??")[1].replace("_", " ");
   // localStorage.setItem("team_name", teamName);
@@ -86,6 +89,7 @@ const AddMeToTeam = () => {
           //make a success pop up and redirect to home with timeout
         }
       }
+      // localStorage.removeItem("newTeamName");
     } catch (err) {
       console.log(err);
     }
@@ -101,6 +105,8 @@ const AddMeToTeam = () => {
     setTimeout(() => {
       setIsConfirm(null);
       setLinkUid(null);
+      localStorage.removeItem("newTeamName");
+
       // localStorage.removeItem("linkTeam");
     }, 2000);
   };

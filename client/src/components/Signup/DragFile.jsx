@@ -7,7 +7,7 @@ import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ReactComponent as FileUpload } from "../../assets/file-upload.svg";
-
+import RedirectingMiddleware from "../Links/RedirectingMiddleware";
 export const OrComponent = ({ isCaps }) => {
   const mainClass = `w-1/2 h-[1px] bg-gray-400 rounded-md`;
   return (
@@ -33,13 +33,22 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         </div>
       ))
     : [];
+  const { setIsLoading, setLinkUid } = FindFreeSlot();
   function navToHome() {
-    window.location.pathname === "/timetable" && navigate("/home");
+    const uid = window.location.pathname.match(
+      /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
+    );
+    if (uid) {
+      <RedirectingMiddleware />;
+      setLinkUid(uid);
+      // window.location.href.includes("/timetable") && navigate("/home");
+    } else {
+      window.location.href.includes("/timetable") && navigate("/home");
+    }
   }
   const [errorType, setErrorType] = useState(null);
   const { sendTimetable } = UserAuth();
   const navigate = useNavigate();
-  const { setIsLoading } = FindFreeSlot();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!files[0] && !inputValue) {
@@ -56,6 +65,7 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
           await sendTimetable(file);
         };
         setIsLoading(false);
+        navToHome();
         return;
       } else if (inputValue) {
         console.log(window.location.pathname);

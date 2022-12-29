@@ -66,7 +66,6 @@ export function FreeSlotContextProvider({ children }) {
   };
   const getLink = async () => {
     try {
-      // localStorage.setItem("linkTeam", JSON.stringify(linkTeam));
       const teamName = localStorage.getItem("team_name");
       await axios
         .post("link", {
@@ -77,7 +76,7 @@ export function FreeSlotContextProvider({ children }) {
           setLink(
             `${res.data.replace(
               "https://",
-              window.location.origin + "/"
+              window.location.origin + "/login/"
             )}??${teamName.split(" ").join("_")}`
           );
         });

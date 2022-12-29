@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/UserAuthContext";
 import googleLogo from "../../assets/Gooogle-logo.svg";
@@ -24,11 +24,38 @@ const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   // eslint-disable-next-line no-unused-vars
   const emailPattern = /([a-z|.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/;
+  console.log(window.location.pathname);
 
-  const [passwordInput, setPasswordInput] = useState("");
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
+
+  const user = localStorage.getItem("user");
+  if (uid) {
+    // localStorage.removeItem("newTeamName");
+    if (user) {
+      !localStorage.getItem("newTeamName") &&
+        localStorage.setItem(
+          "newTeamName",
+          window.location.href.split("??")[1]
+        );
+    } else {
+      setTimeout(() => {
+        !localStorage.getItem("newTeamName") &&
+          localStorage.setItem(
+            "newTeamName",
+            window.location.href.split("??")[1]
+          );
+      }, 100);
+    }
+  }
+  if (user && uid) {
+    <RedirectingMiddleware />;
+    setLinkUid(uid);
+    setTimeout(navigate("/home"), 1000);
+
+    // navigate("/addtoteam/" + uid);
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -40,18 +67,9 @@ const Login = () => {
       setIsLoading(true);
       const res = await logIn(email, password);
       if (res && uid) {
-        console.log(uid);
         <RedirectingMiddleware />;
-        console.log(uid);
         setLinkUid(uid);
-        // console.log((window.location.pathname).split("-"));
-
-        // console.log(window.location.pathname.split("??")[1].replace("_", " "));
-        // setToAddTeam(window.location.pathname.split("??")[1].replace("_", " "));
-        localStorage.setItem("linkTeam", uid);
-        navigate("/addtoteam/" + uid);
         navigate("/home");
-        // setIsRedirected(true);
       }
       if (res) {
         navigate("/home");
