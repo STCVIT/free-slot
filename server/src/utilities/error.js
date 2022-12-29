@@ -24,19 +24,19 @@ class NotFoundError{
 }
 class UserNotFoundError{
     constructor(){
-        this.statusCode = 404
+        this.statusCode = 400
         this.message = "User Not Found"
     }
 }
 class TeamNotFoundError{
     constructor(){
-        this.statusCode = 404
+        this.statusCode = 400
         this.message = "Team Not Found"
     }
 }
 class MeetNotFoundError{
     constructor(){
-        this.statusCode = 404
+        this.statusCode = 400
         this.message = "Meet Not Found"
     }
 }
@@ -84,7 +84,7 @@ class MembersError{
 }
 class CouldNotExtractData{
     constructor(){
-        this.statusCode = 404
+        this.statusCode = 400
         this.message = "Could Not Extract Data"
     }
 }
