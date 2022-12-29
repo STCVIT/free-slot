@@ -139,7 +139,7 @@ export const AllPages = ({ filter, tab }) => {
         <div className="flex flex-col items-center gap-y-4">
           <p className="text-base font-medium">
             {!isFilterApplied
-              ? "Seems like you don't have any meeting scheduled right now"
+              ? `Seems like you don't have any ${tab} meetings.`
               : "No meetings match the filters"}
           </p>
           <div className="opacity-70">

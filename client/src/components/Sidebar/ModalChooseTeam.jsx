@@ -58,7 +58,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
   const results = fuse.search(searchValue);
   const deleteTeam = async (team_id) => {
     try {
-      alert(team_id);
+      // alert(team_id);
       setIsLoading(true);
       await axios.delete(`team/deleteTeam/${team_id}`);
       setRefreshTeams(!refreshTeams);

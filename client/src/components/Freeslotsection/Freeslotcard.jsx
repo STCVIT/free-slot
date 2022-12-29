@@ -35,7 +35,6 @@ const Freeslotcard = (props) => {
           placeItems: "center",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px,1fr))",
           gridGap: "1rem",
-          // justifyContent: "space-between",
         }}
       >
         {props.data?.map((days, index) =>
