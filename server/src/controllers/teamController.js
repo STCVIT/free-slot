@@ -216,12 +216,12 @@ const updateTeam = async (req, res) => {
 //delete team
 const deleteTeam = async (req, res) => {
   try {
-    let id = req.body.team_id;
+    let id = req.params.team_id;
     if (!id || id == undefined) {
       return errorHandler(new InvalidTeamId(), req, res)
     }
     const team = await Team.findOne({
-      where: { id: id },
+      where: { team_id: id },
     });
     if (!team) {
       return errorHandler(new TeamNotFoundError(), req, res);

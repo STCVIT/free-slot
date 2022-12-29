@@ -17,6 +17,6 @@ router.post("/getTeam", getTeamByName);
 router.post("/getAllTeams", getAllTeams);
 router.post("/getTeamMembers", getTeamMembers); //to query in responses of link feature
 router.patch("/updateTeam/:team_id", updateTeam);
-router.delete("/deleteTeam", deleteTeam);
+router.delete("/deleteTeam/:team_id", deleteTeam);
 router.post("/getUserTeams", getUserTeams);
 module.exports = router;

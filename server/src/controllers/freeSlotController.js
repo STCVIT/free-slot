@@ -72,6 +72,10 @@ const freeslotML = async(req, res, next)=>{
         req.body.timetable=MLoutput
         next()
     })
+    .catch((err)=>{
+        console.error(err.message)
+        errorHandler(new BadRequestError,req, res)
+    })
     
 }
 const addSlot = async (req, res)=>{

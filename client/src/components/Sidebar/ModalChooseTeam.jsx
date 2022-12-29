@@ -60,7 +60,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
     try {
       alert(team_id);
       setIsLoading(true);
-      await axios.delete("team/deleteTeam", { team_id: team_id });
+      await axios.delete(`team/deleteTeam/${team_id}`);
       setRefreshTeams(!refreshTeams);
       setIsLoading(false);
     } catch (err) {
