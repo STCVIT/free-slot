@@ -120,9 +120,8 @@ const SignUp = () => {
                   <input
                     className="focus:outline-none border-2 rounded py-3 px-4"
                     id="name"
+                    autoComplete="off"
                     type="text"
-                    // value={name}
-                    autoComplete="false"
                     onChange={(e) => setName(e.target.value)}
                     required
                   />

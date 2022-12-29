@@ -14,6 +14,7 @@ const ContactUs = ({ isHomePage }) => {
   const [isSent, setIsSent] = useState(false);
 
   const handleSubmit = (e) => {
+    const user = JSON.parse(localStorage.getItem("user"));
     try {
       e.preventDefault();
       if (!name || !message) {
@@ -28,7 +29,8 @@ const ContactUs = ({ isHomePage }) => {
           {
             from_name: name,
             message: message,
-            email: JSON.parse(localStorage.getItem("user")).email,
+
+            email: user ? user.email : name,
           },
           "tCHlzcE0KIYaaoDg1"
         )
@@ -72,6 +74,7 @@ const ContactUs = ({ isHomePage }) => {
               className="p-2 py-4 rounded-md"
               placeholder="Name"
               value={name}
+              autoComplete="off"
               onChange={handleName}
             />
             <div className="my-2">

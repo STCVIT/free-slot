@@ -28,27 +28,28 @@ const MainNavbar = ({ active }) => {
             </div>
           </div>
           <div className="hidden lg:block">
-            <ul className="flex gap-x-2 w-fit lg:w-full">
+            <ul className="flex gap-x-2 w-fit lg:w-full items-center">
               {["Home", "Schedule", "About"].map((item, idx) => (
-                <Link
-                  key={idx}
-                  to={`/${item.toLowerCase()}`}
-                  style={{ color: "black" }}
-                  className={`${mainClass} ${
-                    activeTab === item.toLocaleLowerCase()
-                      ? activeClass
-                      : inactiveClass
-                  }`}
-                >
-                  {item}
-                </Link>
+                <li>
+                  <Link
+                    key={idx}
+                    to={`/${item.toLowerCase()}`}
+                    style={{ color: "black" }}
+                    className={`${mainClass} ${
+                      activeTab === item.toLocaleLowerCase()
+                        ? activeClass
+                        : inactiveClass
+                    }`}
+                  >
+                    {item}
+                  </Link>
+                </li>
               ))}
-              <li
-                className={`relative flex items-center ${mainClass} ${
-                  activeTab === "account" ? activeClass : inactiveClass
-                }`}
-              >
-                <DropDownProfile setActiveTab={setActiveTab} />
+              <li className="relative">
+                <DropDownProfile
+                  setActiveTab={setActiveTab}
+                  activeTab={activeTab}
+                />
               </li>
             </ul>
           </div>

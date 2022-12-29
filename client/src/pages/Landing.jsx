@@ -32,9 +32,10 @@ const features = [
 
 const FeaturesCard = ({ title, desc }) => {
   return (
-    <div className="bg-white rounded-md p-10 w-1/3">
+    <div className="bg-white rounded-md p-10 lg:w-1/3">
       <div className="flex  justify-center">
         <img
+          loading="lazy"
           className="h-[300px] w-[300px]"
           src={`/assets/${title.replace(" ", "-").toLowerCase()}.png`}
           alt={title}
@@ -82,7 +83,7 @@ const Landing = () => {
   };
   return (
     <div className="pb-4">
-      <div className="flex justify-between px-12 py-7 border-b-2">
+      <div className="sticky top-0 bg-white flex justify-between px-12 py-7 border-b-2">
         <div>
           <p className="text-5xl font-semibold">Freeslot</p>
         </div>
@@ -181,7 +182,11 @@ const Landing = () => {
           </div>
           <div className=" flex flex-col gap-y-4 justify-between lg:flex-row  bg-white rounded-md pt-14 px-10">
             <div className="w-1/2">
-              <img src="/assets/landing-1.png" alt="scheduling meetings" />
+              <img
+                loading="lazy"
+                src="/assets/landing-1.png"
+                alt="scheduling meetings"
+              />
             </div>
             <div className="flex w-full justify-center items-center">
               <p className=" lg:text-4xl lg:w-3/4 py-4">
@@ -205,6 +210,7 @@ const Landing = () => {
           <div className="ml-10 hidden lg:flex flex-col gap-y-4">
             <p className="font-bold text-6xl">Get in touch</p>
             <img
+              loading="lazy"
               className="w-1/2"
               src="/assets/contact.png"
               alt="get in touch"

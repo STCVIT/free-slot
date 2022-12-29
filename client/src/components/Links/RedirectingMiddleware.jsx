@@ -12,6 +12,7 @@ const RedirectingMiddleware = () => {
   // setIsLoading(true);
   useEffect(() => {
     setIsLoading(true);
+
     localStorage.getItem("linkTeam", id);
     if (localStorage.getItem("user")) {
       // navigate("/addtoteam" + window.location.pathname, { replace: true });

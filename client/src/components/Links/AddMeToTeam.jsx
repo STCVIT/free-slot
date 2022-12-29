@@ -41,7 +41,7 @@ const Confirmation = ({ text }) => {
   );
 };
 const AddMeToTeam = () => {
-  const { setIsLoading, linkUid, setLinkUid } = FindFreeSlot();
+  const { setIsLoading, linkUid, setLinkUid, toAddTeam } = FindFreeSlot();
   const [linkMaker, setLinkMaker] = useState(null);
   const linkTeam = localStorage.getItem("team_name");
   const [isConfirm, setIsConfirm] = useState(null);
@@ -63,9 +63,13 @@ const AddMeToTeam = () => {
   }, []);
 
   const navigate = useNavigate();
+
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
+
+  // const teamName = window.location.pathname.split("??")[1].replace("_", " ");
+  // localStorage.setItem("team_name", teamName);
   const user = JSON.parse(localStorage.getItem("user"));
   const acceptHandler = async () => {
     setIsConfirm("accept");
@@ -122,7 +126,7 @@ const AddMeToTeam = () => {
                   <span className="font-semibold">{linkMaker}</span> wants to
                   add you to team
                   <br />
-                  <span className="font-semibold">{linkTeam}</span>
+                  <span className="font-semibold">{uid}</span>
                 </div>
                 <div className="flex w-full justify-evenly my-4 items-center">
                   <button

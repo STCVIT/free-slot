@@ -20,8 +20,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Example = ({ setActiveTab }) => {
+const Example = ({ setActiveTab, activeTab }) => {
   const [open, setOpen] = useState(false);
+
   const { logOut } = UserAuth();
   const navigate = useNavigate();
   const logOutHandler = async () => {
@@ -29,9 +30,22 @@ const Example = ({ setActiveTab }) => {
     navigate("/");
     console.log("logged out");
   };
+  const mainClass =
+    "text-xl px-4 py-2 col-span-1 font-light cursor-pointer transition-colors duration-300";
+  const activeClass = "!font-bold";
+  const inactiveClass = "hover:border-gray-200 ";
+
   return (
     <Menu as="div" className="flex items-center">
-      <Menu.Button onClick={() => setOpen(!open)}>My Account</Menu.Button>
+      <Menu.Button onClick={() => setOpen(!open)}>
+        <p
+          className={`${mainClass} ${
+            activeTab === "account" ? activeClass : inactiveClass
+          }`}
+        >
+          My Account
+        </p>
+      </Menu.Button>
 
       <Transition
         as={Fragment}
@@ -74,21 +88,6 @@ const Example = ({ setActiveTab }) => {
                 </Link>
               )}
             </Menu.Item>
-            {/* <form method="POST" action="/">
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        type="submit"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-red-900' : 'text-gray-700',
-                                            'block w-full text-left px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Logout
-                                    </button>
-                                )}
-                            </Menu.Item>
-                        </form> */}
           </div>
         </Menu.Items>
       </Transition>

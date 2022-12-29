@@ -20,6 +20,7 @@ export function FreeSlotContextProvider({ children }) {
   const [refresh, setRefresh] = useState(false);
   const [saveTeam, setSaveTeam] = useState(true);
   const [refreshTeams, setRefreshTeams] = useState(false);
+  const [toAddTeam, setToAddTeam] = useState(null);
   const justFindFreeSlot = async (tags) => {
     try {
       setIsLoading(true);
@@ -73,7 +74,12 @@ export function FreeSlotContextProvider({ children }) {
           email: JSON.parse(localStorage.getItem("user")).email,
         })
         .then((res) => {
-          setLink(res.data.replace("https://", window.location.origin + "/"));
+          setLink(
+            `${res.data.replace(
+              "https://",
+              window.location.origin + "/"
+            )}??${teamName.split(" ").join("_")}`
+          );
         });
     } catch (error) {
       console.error("getLink " + error);
@@ -116,6 +122,8 @@ export function FreeSlotContextProvider({ children }) {
         setSaveTeam,
         refreshTeams,
         setRefreshTeams,
+        setToAddTeam,
+        setToAddTeam,
       }}
     >
       {children}

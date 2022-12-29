@@ -12,8 +12,9 @@ import GoogleButton from "react-google-button";
 import RedirectingMiddleware from "../Links/RedirectingMiddleware";
 import { OrComponent } from "../Signup/DragFile";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
+import axios from "../../axios";
 const Login = () => {
-  const { setLinkUid, setIsLoading } = FindFreeSlot();
+  const { setLinkUid, setIsLoading, setToAddTeam } = FindFreeSlot();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // eslint-disable-next-line no-unused-vars
@@ -39,10 +40,16 @@ const Login = () => {
       setIsLoading(true);
       const res = await logIn(email, password);
       if (res && uid) {
-        // <RedirectingMiddleware />;
-        // navigate("/addtoteam/" + uid);
+        console.log(uid);
+        <RedirectingMiddleware />;
+        console.log(uid);
         setLinkUid(uid);
-        localStorage.setItem("linkTeam");
+        // console.log((window.location.pathname).split("-"));
+
+        // console.log(window.location.pathname.split("??")[1].replace("_", " "));
+        // setToAddTeam(window.location.pathname.split("??")[1].replace("_", " "));
+        navigate("/addtoteam/" + uid);
+        // localStorage.setItem("linkTeam", );
         navigate("/home");
         // setIsRedirected(true);
       }
@@ -101,8 +108,9 @@ const Login = () => {
               <div className="flex flex-col py-2 w-full">
                 <label className="font-semibold py-2">Email</label>
                 <input
-                  autoComplete="true"
-                  value={email}
+                  autoComplete="on"
+                  required
+                  // value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   className="focus:outline-none border-2 rounded py-3 px-4"
@@ -112,7 +120,6 @@ const Login = () => {
                 <label className=" font-semibold py-2">Password</label>
                 <div className="flex flex-row border-2 rounded">
                   <input
-                    autoComplete="false"
                     className=" focus:outline-none px-4 py-3 w-full"
                     type={passwordType}
                     value={password}
