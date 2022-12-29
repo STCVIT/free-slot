@@ -30,6 +30,7 @@ const SignUp = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      setIsLoading(true);
       if (!emailPattern.test(email) || !regPattern.test(regno) || !name) {
         if (!emailPattern.test(email)) {
           setEmailAlert(true);
@@ -48,7 +49,7 @@ const SignUp = () => {
       setEmailAlert(false);
       setError(null);
       setName(null);
-      setIsLoading(true);
+      // setIsLoading(true);
 
       const response = await axios.post("user/create", {
         name,
@@ -67,21 +68,24 @@ const SignUp = () => {
     } catch (error) {
       setError("Failed to create an account");
       console.error(error);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
   const oAuth = async (e) => {
     setError("");
     try {
+      setIsLoading(true);
       const res = await googleSignUp();
       if (res && uid) {
         navigate("/timetable/" + uid);
       } else if (res) {
         navigate("/timetable");
       }
+      setIsLoading(false);
     } catch (error) {
       setError(e.message);
       console.log(e.message);
+      setIsLoading(false);
     }
   };
   const togglePassword = (e) => {

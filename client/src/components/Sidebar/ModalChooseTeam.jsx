@@ -4,15 +4,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useEffect } from "react";
+import { FiTrash2 } from "react-icons/fi";
 
 import { UserAuth } from "../../context/UserAuthContext";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import axios from "../../axios/index";
 import Fuse from "fuse.js";
+import { toast } from "react-toastify";
 const ModalChooseTeam = ({ onClose, data }) => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
-  const { selectedTeam, setSelectedTeam, justFindFreeSlot } = FindFreeSlot();
+  const {
+    selectedTeam,
+    setSelectedTeam,
+    justFindFreeSlot,
+    setRefreshTeams,
+    refreshTeams,
+    setIsLoading,
+  } = FindFreeSlot();
   const regNoArr = data[0];
   const teamObj = data[1];
   console.log(teamObj);
@@ -47,16 +56,34 @@ const ModalChooseTeam = ({ onClose, data }) => {
 
   const fuse = new Fuse(regNoArr, options);
   const results = fuse.search(searchValue);
-
+  const deleteTeam = async (team_id) => {
+    try {
+      alert(team_id);
+      setIsLoading(true);
+      await axios.delete("team/deleteTeam", { team_id: team_id });
+      setRefreshTeams(!refreshTeams);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+      toast.error("Something went wrong");
+    }
+  };
   const TeamCard = ({ team }) => {
     return (
-      <div
-        className="cursor-pointer hover:outline hover:bg-white p-4 rounded-md even:bg-blue-200 odd:bg-gray-200"
-        onClick={() => goToFreeSlot(team.team_name)}
-      >
-        <div>
+      <div className=" flex items-center justify-between hover:outline hover:bg-white rounded-md even:bg-blue-200 odd:bg-gray-200">
+        <div
+          onClick={() => goToFreeSlot(team.team_name)}
+          className="w-full cursor-pointer px-4 py-4"
+        >
           <div>{team.team_name}</div>
           <div>{team.members}</div>
+        </div>
+        <div
+          className="px-4 ml-3 cursor-pointer flex justify-center items-center py-4 border-l border-gray-500"
+          onClick={() => deleteTeam(team.team_id)}
+        >
+          <FiTrash2 />
         </div>
       </div>
     );

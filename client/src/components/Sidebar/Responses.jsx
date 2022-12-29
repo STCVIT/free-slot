@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 const Responses = ({ onClose }) => {
   const { link, setLinkTeam, getLink, setIsLoading } = FindFreeSlot();
   const [newTeamName, setNewTeamName] = useState(null);
+  console.log(window.location.origin);
   const getLinkHandler = async () => {
     try {
       localStorage.setItem("team_name", newTeamName);

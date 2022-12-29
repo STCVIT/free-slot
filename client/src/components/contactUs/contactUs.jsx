@@ -4,6 +4,7 @@ import Socials from "../Socials/Socials";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MainNavbar from "../Menus/MainNavbar";
+import emailjs from "@emailjs/browser";
 const ContactUs = ({ isHomePage }) => {
   // eslint-disable-next-line no-unused-vars
   const [name, setName] = useState();
@@ -11,19 +12,41 @@ const ContactUs = ({ isHomePage }) => {
   const [message, setMessage] = useState();
   const [msgLength, setMsgLength] = useState(0);
   const [isSent, setIsSent] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!name || !message) {
-      toast.error("Please fill all the fields");
-      return;
-    }
-    setIsSent(true);
-    console.log(name, message);
 
-    toast.success("Message Sent");
-    setName("");
-    setMessage("");
-    setMsgLength(0);
+  const handleSubmit = (e) => {
+    try {
+      e.preventDefault();
+      if (!name || !message) {
+        toast.error("Please fill all the fields");
+        return;
+      }
+      setIsSent(true);
+      emailjs
+        .send(
+          "service_5twqp0f",
+          "template_glznn58",
+          {
+            from_name: name,
+            message: message,
+            email: JSON.parse(localStorage.getItem("user")).email,
+          },
+          "tCHlzcE0KIYaaoDg1"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+      toast.success("Message Sent");
+      setName("");
+      setMessage("");
+      setMsgLength(0);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleName = (e) => {
     setName(e.target.value);
@@ -40,12 +63,10 @@ const ContactUs = ({ isHomePage }) => {
         className={!isHomePage && `flex justify-center flex-col items-center`}
       >
         <div
-          className={`flex h-full flex-col w-3/4 justify-between  items-center gap-y-4 `}
+          className={`flex h-full flex-col lg:w-3/4 justify-between  items-center gap-y-4 `}
         >
           <div className="w-full h-full flex flex-col gap-y-3 px-4 lg:px-0">
-            <label htmlFor="contactUsName" className="text-2xl">
-              Name
-            </label>
+            <label className="text-2xl">Name</label>
             <input
               id="contactUsName"
               className="p-2 py-4 rounded-md"
@@ -69,9 +90,6 @@ const ContactUs = ({ isHomePage }) => {
                   value={message}
                   onChange={handleMessage}
                 />
-                {/* <p className="absolute top-2 right-5 text-sm font-bold">
-              {msgLength}/500
-            </p> */}
                 {msgLength === 500 && (
                   <p className="text-red-600">Max Length Reached</p>
                 )}
@@ -80,6 +98,7 @@ const ContactUs = ({ isHomePage }) => {
           </div>
           <div>
             <button
+              type="submit"
               className="flex-1 text-lg items-center h-fit w-full py-3 px-5  font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300"
               onClick={handleSubmit}
             >

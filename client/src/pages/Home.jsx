@@ -8,6 +8,8 @@ import AddMeToTeam from "../components/Links/AddMeToTeam";
 import MobileNav from "../components/Menus/MobileNavbar";
 import PageHeading from "../components/Headings/PageHeading";
 const Home = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const [filter, setFilter] = useState({
     date: "all",
     time: "all",
@@ -35,7 +37,7 @@ const Home = () => {
         {!isLg && <PageHeading title="Meetings" />}
         {/* <div className="lg:grid grid-cols-12 gap-4"> */}
         <div className="lg:flex gap-4">
-          <div>
+          <div className="lg:sticky lg:h-screen top-0">
             <Sidebar filter={filter} setFilter={setFilter} group={group} />
           </div>
           <div className="w-full ">

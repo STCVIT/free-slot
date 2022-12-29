@@ -4,12 +4,14 @@ import DropDownSidebar from "../Dropdowns/DropDownSidebar";
 import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import axios from "../../axios";
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 function Sidebar({ filter, setFilter }) {
   const [urlPath, setUrlPath] = useState("");
   const [isLg, setIsLg] = useState(
     window.matchMedia("(min-width: 1024px)").matches
   );
+  const { refreshTeams } = FindFreeSlot();
   const [seeFilters, setSeeFilters] = useState(isLg ? true : false);
   const [teams, setTeams] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -59,7 +61,7 @@ function Sidebar({ filter, setFilter }) {
       setTeams(Object.keys(data[1]));
     }
     getData();
-  }, []);
+  }, [refreshTeams]);
   // console.log(Object.keys(groups[1]));
   const FilterOptions = () => {
     return (
@@ -116,7 +118,7 @@ function Sidebar({ filter, setFilter }) {
       <div>
         {isLg && (
           <aside
-            className={`${isLg && "sticky h-screen"} top-0 shadow p-3`}
+            className={`sticky h-screen top-0 shadow p-3`}
             aria-label="Sidebar"
           >
             <div className="rounded">

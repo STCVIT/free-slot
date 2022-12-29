@@ -30,14 +30,7 @@ const EntryField = ({ label, value, onChange, isDesc }) => {
 
 const AddEvent = () => {
   // eslint-disable-next-line no-unused-vars
-  const {
-    chosenSlotTime,
-    chosenDate,
-    currentTeamId,
-    newTeamName,
-    setRefresh,
-    refresh,
-  } = FindFreeSlot();
+  const { chosenSlotTime, chosenDate, newTeamName } = FindFreeSlot();
   document.title = "Add Event";
   const user = JSON.parse(localStorage.getItem("user"));
   const [formData, setFormData] = useState({
@@ -73,7 +66,6 @@ const AddEvent = () => {
     } else if (newStartTime > newEndTime) {
       toast.error("Start Time cannot be greater than End Time");
     } else {
-      console.log(newTeamName);
       try {
         axios.post("/meet/create", {
           team_id: localStorage.getItem("team_id"),
@@ -88,22 +80,11 @@ const AddEvent = () => {
           link: eventLink,
         });
 
-        setRefresh(!refresh);
         navigate("/home");
         localStorage.removeItem("team_id");
       } catch (err) {
         console.log(err);
       }
-      console.log(
-        newStartTime,
-        newEndTime,
-        eventName,
-        eventDescription,
-        eventLocation,
-        eventLink,
-        newStartTime,
-        newEndTime
-      );
     }
   };
   const handleCancel = () => {

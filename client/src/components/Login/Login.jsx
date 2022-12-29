@@ -13,7 +13,7 @@ import RedirectingMiddleware from "../Links/RedirectingMiddleware";
 import { OrComponent } from "../Signup/DragFile";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 const Login = () => {
-  const { setLinkUid } = FindFreeSlot();
+  const { setLinkUid, setIsLoading } = FindFreeSlot();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // eslint-disable-next-line no-unused-vars
@@ -36,6 +36,7 @@ const Login = () => {
       return;
     }
     try {
+      setIsLoading(true);
       const res = await logIn(email, password);
       if (res && uid) {
         // <RedirectingMiddleware />;
@@ -48,6 +49,7 @@ const Login = () => {
       if (res) {
         navigate("/home");
       }
+      setIsLoading(false);
     } catch (error) {
       setError(error.message);
       console.log(error.message);
@@ -58,16 +60,21 @@ const Login = () => {
       } else if (error.message === "Firebase: Error (auth/user-not-found).") {
         toast.error("User not found");
       }
+      setIsLoading(false);
     }
   };
   const oAuth = async (e) => {
     setError("");
     try {
+      setIsLoading(true);
       const res = await googleSignIn();
       if (res) {
         navigate("/home");
       }
-    } catch (error) {}
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
   const togglePassword = (e) => {
     e.preventDefault();
