@@ -228,7 +228,7 @@ const deleteTeam = async (req, res) => {
     }
     await team.destroy();
     //res.status(200).send(team);
-    res.status(200);
+    res.sendStatus(200);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
