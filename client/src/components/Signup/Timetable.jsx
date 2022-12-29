@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import timetableInfoImg from "../../assets/TimetableInfoImage.svg";
 import { Link } from "react-router-dom";
 import DragFile from "./DragFile";
-
+import axios from "../../axios";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Timetable() {
+const Timetable = () => {
   const [files, setFiles] = useState([]);
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
-  const [inputValue, setInputValue] = useState(null);
 
+  const [inputValue, setInputValue] = useState(null);
+  document.title = "Upload Timetable";
   return (
     <>
       <div className="px-4 lg:px-0 lg:grid grid-cols-12">
-        <div className="hidden lg:block col-span-6 bg-myBlue ">
+        <div className="hidden col-span-6 bg-[#84B7FF] lg:flex justify-center items-center ">
           <img src={timetableInfoImg} alt="" />
         </div>
         <div className="lg:grid grid-cols-6 col-span-6">
@@ -56,4 +57,6 @@ export default function Timetable() {
       </div>
     </>
   );
-}
+};
+
+export default Timetable;

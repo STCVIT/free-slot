@@ -7,9 +7,12 @@ import RedirectingMiddleware from "../components/Links/RedirectingMiddleware";
 import AddMeToTeam from "../components/Links/AddMeToTeam";
 import MobileNav from "../components/Menus/MobileNavbar";
 import PageHeading from "../components/Headings/PageHeading";
+import { useNavigate } from "react-router-dom";
+import axios from "../axios/index";
+
 const Home = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
+  const navigate = useNavigate();
   const [filter, setFilter] = useState({
     date: "all",
     time: "all",
@@ -22,6 +25,26 @@ const Home = () => {
   const [isLg, setIsLg] = useState(
     window.matchMedia("(min-width: 1024px)").matches
   );
+
+  useEffect(() => {
+    const checkTT = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const res = await axios.post("user/getUserByEmail", {
+          email: user.email,
+        });
+
+        if (!res.data.timetable) {
+          navigate("/timetable");
+        }
+      } catch (err) {
+        navigate("/timetable");
+        console.log(err);
+      }
+    };
+    checkTT();
+  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setIsLg(window.matchMedia("(min-width: 1024px)").matches);

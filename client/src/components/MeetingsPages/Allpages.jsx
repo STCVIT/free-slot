@@ -15,7 +15,7 @@ export const AllPages = ({ filter, tab }) => {
   const [CancelledData, setCancelledData] = useState([]);
 
   // const [refresh, setRefresh] = useState(false);
-  const { refresh, setRefresh, isLoading } = FindFreeSlot();
+  const { refresh, setRefresh, isLoading, refreshTeams } = FindFreeSlot();
 
   const { day, date, time, groups } = filter;
   const [dataSet, setDataSet] = useState({
@@ -114,7 +114,7 @@ export const AllPages = ({ filter, tab }) => {
         cancelled: CancelledData.filter((item) => item.team_name === groups),
       });
     }
-  }, [CancelledData, PastData, UpcomingData, filter, refresh]);
+  }, [CancelledData, PastData, UpcomingData, filter, refresh, refreshTeams]);
   const list = dataSet[tab];
 
   const NoMeetingsState = () => {

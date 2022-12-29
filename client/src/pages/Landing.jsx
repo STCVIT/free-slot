@@ -17,25 +17,25 @@ import { ReactComponent as IllLogo } from "../assets/landingCard.svg";
 
 const features = [
   {
-    title: "Uploading Timetable",
-    desc: `Our ML model will scan through you timetable to find the accurate slots of classes based on which your schedule willbe prepared`,
+    title: "Upload Timetable",
+    desc: `Our ML model will scan through you timetable to find the accurate slots of classes based on which your schedule will be prepared`,
   },
   {
-    title: "Find Freeslot",
+    title: "Find FreeSlot",
     desc: `You will enter the registration numbers of your friends and find out when you all are free during weekdays.`,
   },
   {
     title: "Make Event",
-    desc: `Our ML model will scan through you timetable to find the accurate slots of classes based on which your schedule willbe prepared`,
+    desc: `Use the formulated FreeSlots to quickly organise an event or a meet with your desired team.`,
   },
 ];
 
 const FeaturesCard = ({ title, desc }) => {
   return (
-    <div className="bg-white rounded-md p-10">
+    <div className="bg-white rounded-md p-10 w-1/3">
       <div className="flex  justify-center">
         <img
-          className="max-h-[400px]"
+          className="h-[300px] w-[300px]"
           src={`/assets/${title.replace(" ", "-").toLowerCase()}.png`}
           alt={title}
         />
@@ -195,7 +195,7 @@ const Landing = () => {
         </div>
         <div>
           <PageHeading title="Features" />
-          <div className="flex flex-col lg:flex-row gap-x- gap-y-6">
+          <div className="flex flex-col lg:flex-row gap-x-20 gap-y-6">
             {features.map((feature, idx) => (
               <FeaturesCard key={idx} {...feature} />
             ))}

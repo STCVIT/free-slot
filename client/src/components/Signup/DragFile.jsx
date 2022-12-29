@@ -69,7 +69,7 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         if (res.status === 200) {
           res.data ? navToHome() : setErrorType("text");
         }
-        console.log(res.status);
+        // console.log(res.status);
         return;
       } else {
         alert.error("Please provide timetable in either of the ways.");
