@@ -111,7 +111,7 @@ const updateUser = async (req, res) => {
 //delete user
 const deleteUser = async (req, res) => {
   try {
-    let email = req.body.email;
+    let email = req.params.email;
     if (!email || email == undefined) {
       return errorHandler(new InvalidEmail(), req, res);
     }

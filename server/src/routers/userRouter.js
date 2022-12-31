@@ -16,6 +16,6 @@ router.post("/getUser", getUser);
 router.post("/getUserByEmail", getUserByEmail);
 router.post("/checkUserByReg", checkUserByReg);
 router.patch("/updateUser", updateUser);
-router.delete("/deleteUser", deleteUser);
+router.delete("/deleteUser/:email", deleteUser);
 
 module.exports = router;
