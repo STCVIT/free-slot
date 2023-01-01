@@ -9,17 +9,19 @@ import Loader from "../components/Loader/Loader";
 import Dropzone from "react-dropzone";
 import DragFile from "../components/Signup/DragFile";
 import { toast } from "react-toastify";
-import { ref, listAll, getDownloadURL } from 'firebase/storage'
+import { ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage'
 import { storage } from '../firebase'
 
 const Profile = () => {
   const { user } = UserAuth();
+  const [files, setFiles] = useState([]);
   const localUser = JSON.parse(localStorage.getItem("user"));
   const imageListRef = ref(storage, `${localUser.email}`)
   const [userDetails, setUserDetails] = useState({});
   const [imageList, setImageList] = useState([])
   const [showUpload, setShowUpload] = useState(false);
   const { isLoading, setIsLoading } = FindFreeSlot();
+
   console.log("User: ", user);
 
   useEffect(() => {
@@ -44,12 +46,12 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [files]);
   // console.log("Name: ", name);
   console.log("User Details: ", userDetails);
   document.title = "Profile";
 
-  const [files, setFiles] = useState([]);
+  
   const { sendTimetable, deleteUser } = UserAuth();
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
@@ -111,13 +113,28 @@ const Profile = () => {
                 </div>
                 <div className="flex flex-col w-full gap-y-3 rounded-md p-4 bg-white">
                   <h1 className="text-2xl text-gray-600">Timetable</h1>
-                  <img
+                  {!showUpload && <img
                     className="h-full"
                     src={imageList}
                     alt="timeTable"
-                  />
+                  />}
                   <button
-                    onClick={() => setShowUpload(true)}
+                    onClick={() => {
+                      // setIsLoading(true)
+                      // console.log(imageList)
+                      // const imagePath = localStorage.getItem("image")
+                      // const desertRef = ref(storage, `${localUser.email}/${imagePath}`);
+                      // deleteObject(desertRef).then(() => {
+                      //   setIsLoading(false)
+                      //   // setImageList(null)
+                      //   toast.success("File deleted successfully")
+                      setShowUpload(true)
+                      
+                      //     }).catch((error) => {
+                      //       toast.error("An error occurred!")
+                      //       setIsLoading(false)
+                      //     });
+                      }}
                     className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-full lg:w-fit self-center lg:self-start"
                   >
                     Upload new timetable

@@ -28,6 +28,7 @@ export const OrComponent = ({ isCaps }) => {
 const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
   const [preview, setPreview] = useState(null);
   const localUser = JSON.parse(localStorage.getItem("user"))
+  const imageListRef = ref(storage, `${localUser.email}`)
   const images = files
     ? files.map((file) => (
         <div className="flex justify-center w-full" key={file.name}>
@@ -61,16 +62,16 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
     try {
       setIsLoading(true);
       if (files[0]) {
-        const imageRef = ref(storage, `${localUser.email}/${files[0].name + v4()}`)
+        const imageRef = ref(storage, `${localUser.email}/timetable`)
         uploadBytes(imageRef, files[0]).then(()=>{
           var file = files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = async () => {
-          file = reader.result;
-          await sendTimetable(file);
-        };
-        })
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = async () => {
+            file = reader.result;
+            await sendTimetable(file);
+          };
+          })
         setIsLoading(false);
         navToHome();
         return;
