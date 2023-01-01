@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ReactComponent as FileUpload } from "../../assets/file-upload.svg";
 import RedirectingMiddleware from "../Links/RedirectingMiddleware";
+import { storage } from '../../firebase'
+import { ref, uploadBytes } from 'firebase/storage'
+import { v4 } from 'uuid'
+
 export const OrComponent = ({ isCaps }) => {
   const mainClass = `w-1/2 h-[1px] bg-gray-400 rounded-md`;
   return (
@@ -23,7 +27,7 @@ export const OrComponent = ({ isCaps }) => {
 
 const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
   const [preview, setPreview] = useState(null);
-
+  const localUser = JSON.parse(localStorage.getItem("user"))
   const images = files
     ? files.map((file) => (
         <div className="flex justify-center w-full" key={file.name}>
@@ -57,18 +61,20 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
     try {
       setIsLoading(true);
       if (files[0]) {
-        var file = files[0];
+        const imageRef = ref(storage, `${localUser.email}/${files[0].name + v4()}`)
+        uploadBytes(imageRef, files[0]).then(()=>{
+          var file = files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = async () => {
           file = reader.result;
           await sendTimetable(file);
         };
+        })
         setIsLoading(false);
         navToHome();
         return;
       } else if (inputValue) {
-        console.log(window.location.pathname);
         const res = await axios.post("timetable/freeSlotCopyPaste", {
           timetable: inputValue,
           email: JSON.parse(localStorage.getItem("user")).email,

@@ -9,23 +9,33 @@ import Loader from "../components/Loader/Loader";
 import Dropzone from "react-dropzone";
 import DragFile from "../components/Signup/DragFile";
 import { toast } from "react-toastify";
+import { ref, listAll, getDownloadURL } from 'firebase/storage'
+import { storage } from '../firebase'
 
 const Profile = () => {
   const { user } = UserAuth();
   const localUser = JSON.parse(localStorage.getItem("user"));
+  const imageListRef = ref(storage, `${localUser.email}`)
   const [userDetails, setUserDetails] = useState({});
+  const [imageList, setImageList] = useState([])
   const [showUpload, setShowUpload] = useState(false);
   const { isLoading, setIsLoading } = FindFreeSlot();
   console.log("User: ", user);
 
   useEffect(() => {
     setIsLoading(true);
+    listAll(imageListRef).then((res)=>{
+      res.items.forEach((item)=>{
+        getDownloadURL(item).then((url)=>{
+          setImageList((prev)=>[...prev, url])
+        })
+      })
+    })
     axios
       .post("user/getUserByEmail", {
         email: localUser.email,
       })
       .then((res) => {
-        // console.log(res.data);
         setUserDetails(res.data);
       })
       .then(() => {
@@ -51,10 +61,7 @@ const Profile = () => {
     try {
       console.log(localUser.email);
       await axios.delete(
-        "user/deleteUser",
-        {
-          email: localUser.email,
-        },
+        `user/deleteUser/${localUser.email}`,
         {
           headers: {
             Authorization: `Bearer ${localUser.token}`,
@@ -104,11 +111,11 @@ const Profile = () => {
                 </div>
                 <div className="flex flex-col w-full gap-y-3 rounded-md p-4 bg-white">
                   <h1 className="text-2xl text-gray-600">Timetable</h1>
-                  {/* <img
+                  <img
                     className="h-full"
-                    src={require("../assets/ttSS.png")}
+                    src={imageList}
                     alt="timeTable"
-                  /> */}
+                  />
                   <button
                     onClick={() => setShowUpload(true)}
                     className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-full lg:w-fit self-center lg:self-start"
