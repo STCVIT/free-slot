@@ -26,24 +26,24 @@ const Home = () => {
     window.matchMedia("(min-width: 1024px)").matches
   );
 
-  useEffect(() => {
-    const checkTT = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const res = await axios.post("user/getUserByEmail", {
-          email: user.email,
-        });
+  // useEffect(() => {
+  //   const checkTT = async () => {
+  //     try {
+  //       const user = JSON.parse(localStorage.getItem("user"));
+  //       const res = await axios.post("user/getUserByEmail", {
+  //         email: user.email,
+  //       });
 
-        if (!res.data.timetable) {
-          navigate("/timetable");
-        }
-      } catch (err) {
-        navigate("/timetable");
-        console.log(err);
-      }
-    };
-    checkTT();
-  }, []);
+  //       if (!res.data.timetable) {
+  //         navigate("/timetable");
+  //       }
+  //     } catch (err) {
+  //       navigate("/timetable");
+  //       console.log(err);
+  //     }
+  //   };
+  //   checkTT();
+  // }, []);
 
   useEffect(() => {
     const handleResize = () => {

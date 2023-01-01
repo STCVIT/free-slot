@@ -11,8 +11,8 @@ import MainNavbar from "../components/Menus/MainNavbar";
 import PageHeading from "../components/Headings/PageHeading";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import { useEffect } from "react";
+import background from "./schedule.png";
 
-// import axios from "../axios";
 import axios from "../axios";
 const Schedule = () => {
   document.title = "Schedule";
@@ -173,15 +173,18 @@ const Schedule = () => {
   };
 
   return (
-    <div>
+    <div
+    // style={{
+    //   backgroundImage: `url(${background})`,
+    //   backgroundRepeat: "no-repeat",
+    //   backgroundSize: "100%",
+    // }}
+    >
       <MainNavbar active="schedule" />
       <div>
         <PageHeading title="Schedule" />
         <div className="flex justify-center ">
-          <div
-            className="rounded-lg  mx-4 flex flex-col gap-y-5 w-3/4"
-            style={{ backgroundImage: `url(schedule.png)` }}
-          >
+          <div className="rounded-lg  mx-4 flex flex-col gap-y-5 w-3/4">
             <button
               onClick={() => handleModifyClick()}
               className="hidden lg:block w-max text-xl self-end  font-extralight px-8 py-3 m-4 rounded-full bg-blue-500 text-white "
