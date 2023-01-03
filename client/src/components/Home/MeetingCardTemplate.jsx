@@ -66,7 +66,7 @@ const MeetingCardTemplate = (props) => {
         if (item.meet_id === dataItem.meet_id) {
           setDesc(item.description);
           setMembers(item.members);
-          setInfoOpen(true);
+          setInfoOpen(!infoOpen);
           setCurrentMeet(item.meet_id);
         }
       });
