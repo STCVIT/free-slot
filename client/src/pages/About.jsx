@@ -59,13 +59,13 @@ const About = () => {
           </div> */}
         </div>
         <div className="flex my-28 flex-col justify-center items-center">
-          <h3 className="text-8xl font-bold">The Community</h3>
+          <h3 className="lg:text-8xl font-bold">The Community</h3>
           <img
             className="w-1/6 my-6"
             src="/assets/the-community.png"
             alt="community"
           />
-          <p className="w-1/4 text-xl">
+          <p className="lg:w-1/4 text-xl">
             The idea of FreeSlot originated with the thought of reducing human
             effort of asking each person his schedule and manually finding a
             common slot. This project will give the user or the meeting lead an

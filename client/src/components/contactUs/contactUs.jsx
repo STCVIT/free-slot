@@ -65,7 +65,7 @@ const ContactUs = ({ isHomePage }) => {
         className={!isHomePage && `flex justify-center flex-col items-center`}
       >
         <div
-          className={`flex h-full flex-col lg:w-3/4 justify-between  items-center gap-y-4 `}
+          className={`flex h-full flex-col w-full lg:w-3/4 justify-between  items-center gap-y-4 `}
         >
           <div className="w-full h-full flex flex-col gap-y-3 px-4 lg:px-0">
             <label className="text-2xl">Name</label>
