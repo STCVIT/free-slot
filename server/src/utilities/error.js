@@ -17,9 +17,9 @@ class BadRequestError{
     }
 }
 class NotFoundError{
-    constructor(){
+    constructor(message){
         this.statusCode = 404
-        this.message = "Not Found"
+        this.message = message || "Requested Resource was Not Found"
     }
 }
 class UserNotFoundError{

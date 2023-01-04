@@ -1,14 +1,10 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const path = require('path')
-// require('dotenv').config({path: path.resolve(__dirname, '../../')})
 require('dotenv').config()
 const config = require("./config")[process.env.NODE_ENV || "development"];
-// const path = require('path')
-// require('dotenv').config({path: path.resolve(__dirname, '../../')})
 //for locally running
-//const sequelize = new Sequelize(config.postgres);
+const sequelize = new Sequelize(config.postgres);
 // for hosting
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+//const sequelize = new Sequelize(process.env.DATABASE_URL);
 sequelize
   .authenticate()
   .then(() => {

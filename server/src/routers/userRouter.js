@@ -2,7 +2,6 @@ const router = require("express").Router();
 const {
   addUserInDb,
   getUser,
-  getUsers,
   updateUser,
   deleteUser,
   getUserByEmail,
@@ -12,10 +11,10 @@ const {
 const { checkUser } = require("../middleware/auth");
 
 router.post("/create", addUserInDb);
-router.post("/getUser", getUser);
-router.post("/getUserByEmail", getUserByEmail);
-router.post("/checkUserByReg", checkUserByReg);
-router.patch("/updateUser", updateUser);
-router.delete("/deleteUser/:email", deleteUser);
+router.post("/getUser", checkUser, getUser);
+router.post("/getUserByEmail", checkUser, getUserByEmail);
+router.post("/checkUserByReg", checkUser, checkUserByReg);
+router.patch("/updateUser", checkUser, updateUser);
+router.delete("/deleteUser/:email", checkUser, deleteUser);
 
 module.exports = router;

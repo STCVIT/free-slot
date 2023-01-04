@@ -22,7 +22,6 @@ const SignUp = () => {
   const { googleSignUp, signUp } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
   const { setIsLoading } = FindFreeSlot();
-  console.log(window.location.pathname);
 
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g

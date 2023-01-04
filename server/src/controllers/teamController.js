@@ -40,7 +40,6 @@ const addTeamByLink = async (req, res, next) => {
     }
     const team = await Team.create(req.body);
     const member = await team.addUsers(req.body.regno);
-    //res.status(201).send(team);
     res.status(201);
     next();
   } catch (error) {
@@ -55,9 +54,9 @@ const getTeamById = async (req, res) => {
     const team = await Team.findOne({
       where: { id: req.params.team_id },
     });
-    // if (!team) {
-    //   return errorHandler(new NotFoundError(), req, res);
-    // }
+    if (!team) {
+      return errorHandler(new NotFoundError(), req, res);
+    }
     res.status(200).send(team);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
@@ -72,9 +71,9 @@ const getTeamByName = async (req, res) => {
     const team = await Team.findOne({
       where: { team_name: teamName },
     });
-    // if (!team) {
-    //   return errorHandler(new NotFoundError(), req, res);
-    // }
+    if (!team) {
+      return errorHandler(new NotFoundError(), req, res);
+    }
     res.status(200).send(team);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
@@ -116,13 +115,13 @@ const getUserTeams = async (req, res) => {
     const user = await User.findOne({
       where: { email: email },
     });
-    // if(!user){
-      //   return errorHandler(new UserNotFoundError(), req, res) 
-      // }
+    if(!user){
+        return errorHandler(new UserNotFoundError(), req, res) 
+      }
       const teams = await user.getTeams();
-    // if(!teams){
-    //   return errorHandler(new TeamNotFoundError(), req, res)
-    // }
+    if(!teams){
+      return errorHandler(new TeamNotFoundError(), req, res)
+    }
     const teamsArr = new Set();
     const finalObj = {};
     const individualTeam = [];
@@ -175,9 +174,9 @@ const getTeamMembers = async (req, res) => {
       return errorHandler(new TeamNotFoundError(), req, res)
     }
     const users = await team.getUsers();
-    // if(!users){
-    //   return errorHandler(new UserNotFoundError(), req, res) 
-    // }
+    if(!users){
+      return errorHandler(new UserNotFoundError(), req, res) 
+    }
     res.status(200).send(users);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
@@ -197,7 +196,7 @@ const updateTeam = async (req, res) => {
       return errorHandler(new MembersError(), req, res)
     }
     const team = await Team.findOne({
-      where: { id: id },
+      where: { team_id: id },
     });
     // if (!team) {
     //   return errorHandler(new TeamNotFoundError(), req, res);

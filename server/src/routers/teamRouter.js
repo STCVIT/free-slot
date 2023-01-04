@@ -6,17 +6,18 @@ const {
   getAllTeams,
   updateTeam,
   deleteTeam,
-  getTeamMembers,
   getUserTeams,
 } = require("../controllers/teamController");
-//const checkTeam = require('../middleware/checkTeam')
+const { checkUser } = require("../middleware/auth"); 
 
-router.post("/create", addTeam);
-router.get("/getTeam", getTeamById);
-router.post("/getTeam", getTeamByName);
-router.post("/getAllTeams", getAllTeams);
-router.post("/getTeamMembers", getTeamMembers); //to query in responses of link feature
-router.patch("/updateTeam/:team_id", updateTeam);
-router.delete("/deleteTeam/:team_id", deleteTeam);
-router.post("/getUserTeams", getUserTeams);
+router.post("/create", checkUser, addTeam);
+router.get("/getTeam", checkUser, getTeamById);
+router.post("/getTeam", checkUser, getTeamByName);
+router.post("/getAllTeams", checkUser, getAllTeams);
+router.patch("/updateTeam/:team_id", checkUser, updateTeam);
+router.delete("/deleteTeam/:team_id", checkUser, deleteTeam);
+router.post("/getUserTeams", checkUser, getUserTeams);
 module.exports = router;
+
+//unused 
+//router.post("/getTeamMembers", checkUser, getTeamMembers); //to query in responses of link feature

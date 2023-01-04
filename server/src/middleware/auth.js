@@ -13,54 +13,19 @@ admin.initializeApp({
         projectId: process.env.PROJECT_ID
     })
 })
-//hosting
-// require('dotenv').config({path: path.resolve(__dirname, '../../../')})
-// admin.initializeApp({
-//     credential: admin.credential.cert({
-//         privateKey: process.env.APPSETTING_PRIVATE_KEY.replace(/\\n/g, '\n'),
-//         clientEmail: process.env.APPSETTING_CLIENT_EMAIL,
-//         projectId: process.env.APPSETTING_PROJECT_ID
-//     })
-// })
-// const sessionLogin = async (req, res)=>{
-//     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
-//                  return errorHandler(new AuthError(), req, res)
-//              }
-//     const idToken = req.header("Authorization").split(" ")[1]
-//     const expiresIn = 432000000
-//     await admin
-//             .auth()
-//             .createSessionCookie(idToken, { expiresIn })
-//             .then(
-//                 (sessionCookie)=>{
-//                     const options = {maxAge: expiresIn, secure: true, httpOnly: false } //make this true in production
-//                     res.cookie("session", sessionCookie, options)
-//                     res.end(JSON.stringify({status: "success"}))
-//                 })
-//             .catch((error)=>{
-//                     res.status(401).send("Unauthorized request")
-//                     console.error(error)
-//                 }
-//             )
-// }
 
-// const sessionLogout = async (req, res)=>{
-//     await res.clearCookie("session")
-//     res.redirect('/login')
-// }
 
 const checkUser = (req, res, next)=>{
     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
         return errorHandler(new AuthError(), req, res)
     }
     const tokenString = req.header("Authorization").split(" ")[1];
-    //const sessionCookie = req.cookies.session
     admin
     .auth()
     .verifyIdToken(tokenString)
-    //.verifySessionCookie(sessionCookie, true)
     .then((user)=>{
-        //console.log("Check User Passed")
+        console.log(user.email)
+        req.body.email=user.email
         next()
     })
     .catch((err)=>{

@@ -37,42 +37,17 @@ const addMeet = async (req, res) => {
     console.error(error.message);
   }
 };
-//Get meet
-const getMeet = async (req, res) => {
+const getAllMeets = async (req, res) => {
   try {
-    const meet = await Meet.findOne({
-      where: { meet_id: req.params.meet_id },
-    });
-    if (!meet) {
-      return errorHandler(new NotFoundError(), req, res);
+    let results = [];
+    const teams = req.body.teams;
+    for (const team of teams) {
+      const meets = await team.getMeets();
+      for (const meet of meets) {
+        results.push(meet);
+      }
     }
-    res.status(200).send(meet);
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
-const getMeets = async (req, res) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
-    }
-    const regno = await User.findOne({
-      where: { email: email },
-      attributes: ["reg_no"],
-    });
-    if (!regno) {
-      return errorHandler(new UserNotFoundError(), req, res);
-    }
-    const teams = await regno.getTeams(); //doubt
-    // if(!teams){
-    //   return errorHandler(new TeamNotFoundError(), req, res)
-    // }
-    teams.forEach(async (team) => {
-      await team.getMeets();
-    });
-    res.status(200).send(teams);
+    return res.status(200).send(results);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
@@ -174,26 +149,8 @@ const deleteMeet = async (req, res) => {
     console.error(error.message);
   }
 };
-const getAllMeets = async (req, res) => {
-  try {
-    let results = [];
-    const teams = req.body.teams;
-    for (const team of teams) {
-      const meets = await team.getMeets();
-      for (const meet of meets) {
-        results.push(meet);
-      }
-    }
-    return res.status(200).send(results);
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
 module.exports = {
   addMeet,
-  getMeet,
-  getMeets,
   getAllMeets,
   getAllUpcomingMeets,
   getAllPastMeets,
@@ -201,3 +158,47 @@ module.exports = {
   updateMeetStatus,
   deleteMeet,
 };
+
+
+//unused code
+//Get meet
+// const getMeet = async (req, res) => {
+//   try {
+//     const meet = await Meet.findOne({
+//       where: { meet_id: req.params.meet_id },
+//     });
+//     if (!meet) {
+//       return errorHandler(new NotFoundError(), req, res);
+//     }
+//     res.status(200).send(meet);
+//   } catch (error) {
+//     errorHandler(new BadRequestError(), req, res);
+//     console.error(error.message);
+//   }
+// };
+// const getMeets = async (req, res) => {
+//   try {
+//     let email = req.body.email;
+//     if (!email || email == undefined) {
+//       return errorHandler(new InvalidEmail(), req, res);
+//     }
+//     const regno = await User.findOne({
+//       where: { email: email },
+//       attributes: ["reg_no"],
+//     });
+//     if (!regno) {
+//       return errorHandler(new UserNotFoundError(), req, res);
+//     }
+//     const teams = await regno.getTeams(); //doubt
+//     // if(!teams){
+//     //   return errorHandler(new TeamNotFoundError(), req, res)
+//     // }
+//     teams.forEach(async (team) => {
+//       await team.getMeets();
+//     });
+//     res.status(200).send(teams);
+//   } catch (error) {
+//     errorHandler(new BadRequestError(), req, res);
+//     console.error(error.message);
+//   }
+// };

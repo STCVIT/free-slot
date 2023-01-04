@@ -66,17 +66,60 @@ const getUserByEmail = async (req, res) => {
     console.error(error.message);
   }
 };
-
-// Get all users
-const getUsers = async (req, res) => {
+const getUserReg = async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      where: { meet_id: req.body.meet_id },
-    }).sort();
-    if (!users) {
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidEmail(), req, res);
+    }
+    const regno = await User.findOne({
+      where: { email: email },
+      attributes: ["reg_no"],
+    });
+    if(!regno){
       return errorHandler(new UserNotFoundError(), req, res);
     }
-    res.status(200).send(users);
+    req.body.regno = regno;
+    next();
+  } catch (error) {
+    errorHandler(new BadRequestError());
+    console.error(error.message);
+  }
+};
+const getUserName = async (req, res, next) => {
+  try {
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidEmail(), req, res);
+    }
+    const name = await User.findOne({
+      where: { email: req.body.email },
+      attributes: ["name"],
+    });
+    if(!name){
+      return errorHandler(new UserNotFoundError(), req, res);
+    }
+    req.body.admin = name.name;
+    next();
+  } catch (error) {
+    errorHandler(new BadRequestError());
+    console.error(error.message);
+  }
+};
+const checkUserByReg = async (req, res, next) => {
+  try {
+    const reg = req.body.reg_no;
+    if (!reg || reg == undefined) {
+      return errorHandler(new InvalidRegNo(), req, res);
+    }
+    const regno = await User.findOne({
+      where: { reg_no: reg },
+    });
+    if (!regno) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
   } catch (error) {
     errorHandler(new BadRequestError());
     console.error(error.message);
@@ -129,74 +172,33 @@ const deleteUser = async (req, res) => {
     console.error(error.message);
   }
 };
-const getUserReg = async (req, res, next) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
-    }
-    const regno = await User.findOne({
-      where: { email: email },
-      attributes: ["reg_no"],
-    });
-    if(!regno){
-      return errorHandler(new UserNotFoundError(), req, res);
-    }
-    req.body.regno = regno;
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
-const checkUserByReg = async (req, res, next) => {
-  try {
-    const reg = req.body.reg_no;
-    if (!reg || reg == undefined) {
-      return errorHandler(new InvalidRegNo(), req, res);
-    }
-    const regno = await User.findOne({
-      where: { reg_no: reg },
-    });
-    if (!regno) {
-      res.send(false);
-    } else {
-      console.log(regno)
-      res.send(true);
-    }
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
-const getUserName = async (req, res, next) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
-    }
-    const name = await User.findOne({
-      where: { email: req.body.email },
-      attributes: ["name"],
-    });
-    if(!name){
-      return errorHandler(new UserNotFoundError(), req, res);
-    }
-    req.body.admin = name.name;
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
+
 module.exports = {
   addUserInDb,
   getUser,
-  getUsers,
+  getUserName,
   updateUser,
   deleteUser,
   getUserReg,
-  getUserName,
   getUserByEmail,
   checkUserByReg,
 };
+
+
+//unused code
+// Get all users
+// const getUsers = async (req, res) => {
+//   try {
+//     const users = await User.findAll({
+//       where: { meet_id: req.body.meet_id },
+//     }).sort();
+//     if (!users) {
+//       return errorHandler(new UserNotFoundError(), req, res);
+//     }
+//     res.status(200).send(users);
+//   } catch (error) {
+//     errorHandler(new BadRequestError());
+//     console.error(error.message);
+//   }
+// };
+
