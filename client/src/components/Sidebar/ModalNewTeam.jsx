@@ -31,9 +31,7 @@ const FreeSlot = ({ onClose }) => {
 
   useEffect(() => {
     axios
-      .post("user/getUserByEmail", {
-        email: localUser.email,
-      })
+      .get("user/getUser")
       .then((res) => {
         setUserDetails(res.data);
       })
@@ -41,7 +39,7 @@ const FreeSlot = ({ onClose }) => {
         console.log(err);
       });
   }, []);
-  console.log("User Details: ", userDetails);
+  //console.log("User Details: ", userDetails);
   const ToastMessageContainer = (props) => {
     return (
       <div>
@@ -55,9 +53,7 @@ const FreeSlot = ({ onClose }) => {
   };
   async function userFound(reg_no, checkAll = false) {
     try {
-      const res = await axios.post("user/getUser", {
-        regno: reg_no,
-      });
+      const res = await axios.get("user/getUser");
       console.log(res);
 
       if (res.data) {

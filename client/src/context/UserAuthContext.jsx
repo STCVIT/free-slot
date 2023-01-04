@@ -147,7 +147,6 @@ export const UserAuthContextProvider = ({ children }) => {
         setUser(user);
         console.log(user);
         const localUser = {
-          email: user.email,
           token: user.stsTokenManager.accessToken,
         };
         localStorage.setItem("user", JSON.stringify(localUser));

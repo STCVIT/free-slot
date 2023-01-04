@@ -46,8 +46,8 @@ const Schedule = () => {
     try {
       const getUser = async () => {
         setIsLoading(true);
-        const userData = await axios.post(
-          "user/getUserByEmail",
+        const userData = await axios.get(
+          "user/getUser",
           {
             email: user.email,
           },

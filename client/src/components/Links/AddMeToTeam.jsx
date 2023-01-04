@@ -41,18 +41,16 @@ const Confirmation = ({ text }) => {
   );
 };
 const AddMeToTeam = () => {
-  const { setIsLoading, linkUid, setLinkUid } = FindFreeSlot();
+  const { setIsLoading, linkUid, setLinkUid, toAddTeam } = FindFreeSlot();
   const [linkMaker, setLinkMaker] = useState(null);
-  const linkTeam = localStorage.getItem("newTeamName").split("_").join(" ");
+  const linkTeam = localStorage.getItem("team_name");
   const [isConfirm, setIsConfirm] = useState(null);
   useEffect(() => {
     const setUser = async () => {
       try {
         setIsLoading(true);
         const user = JSON.parse(localStorage.getItem("user"));
-        const res = await axios.post("user/getUserByEmail", {
-          email: user.email,
-        });
+        const res = await axios.get("user/getUser");
         setLinkMaker(res.data.name);
         setIsLoading(false);
       } catch (err) {
@@ -63,13 +61,10 @@ const AddMeToTeam = () => {
   }, []);
 
   const navigate = useNavigate();
-  console.log(window.location.pathname);
+
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
   );
-
-  // const teamName = window.location.href.split("??")[1].replace("_", " ");
-  // localStorage.setItem("newTeamName", teamName);
 
   // const teamName = window.location.pathname.split("??")[1].replace("_", " ");
   // localStorage.setItem("team_name", teamName);
@@ -77,9 +72,7 @@ const AddMeToTeam = () => {
   const acceptHandler = async () => {
     setIsConfirm("accept");
     try {
-      const res = await axios.post("user/getUser", {
-        email: user.email,
-      });
+      const res = await axios.get("user/getUser");
       if (res) {
         console.log(res);
         const secondResponse = await axios.patch("team/updateTeam/" + uid, {
@@ -89,14 +82,13 @@ const AddMeToTeam = () => {
           //make a success pop up and redirect to home with timeout
         }
       }
-      // localStorage.removeItem("newTeamName");
     } catch (err) {
       console.log(err);
     }
     setTimeout(() => {
       setIsConfirm(null);
       setLinkUid(null);
-      // localStorage.removeItem("linkTeam");
+      localStorage.removeItem("linkTeam");
     }, 2000);
   };
   const rejectHandler = async () => {
@@ -105,9 +97,7 @@ const AddMeToTeam = () => {
     setTimeout(() => {
       setIsConfirm(null);
       setLinkUid(null);
-      localStorage.removeItem("newTeamName");
-
-      // localStorage.removeItem("linkTeam");
+      localStorage.removeItem("linkTeam");
     }, 2000);
   };
   return (
@@ -132,7 +122,8 @@ const AddMeToTeam = () => {
                   <span className="font-semibold">{linkMaker}</span> wants to
                   add you to team
                   <br />
-                  <span className="font-semibold">{linkTeam}</span>
+                  {localStorage.getItem("team_name") && localStorage.getItem("team_name")}
+                  <span className="font-semibold">{uid}</span>
                 </div>
                 <div className="flex w-full justify-evenly my-4 items-center">
                   <button

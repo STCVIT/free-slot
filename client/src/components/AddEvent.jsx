@@ -4,7 +4,7 @@ import PageHeading from "./Headings/PageHeading";
 import { toast } from "react-toastify";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
-
+import moment from 'moment'
 import { useNavigate } from "react-router-dom";
 //import userModel from "../../../server/src/models/user.model";
 import { ReactComponent as Gmeet } from "../assets/Gmeet.svg";
@@ -75,7 +75,7 @@ const AddEvent = () => {
           end_time: newEndTime,
           team_name: newTeamName,
           description: eventDescription,
-          date: chosenDate,
+          date: moment(chosenDate).format('YYYY-MM-DD'),
           location: eventLocation,
           link: eventLink,
         });

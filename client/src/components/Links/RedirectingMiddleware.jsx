@@ -4,23 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import AddMeToTeam from "./AddMeToTeam";
 const RedirectingMiddleware = () => {
-  // document.title = "Scheduler";
+  document.title = "Scheduler";
   const { setIsLoading, setLinkUid } = FindFreeSlot();
-  console.log(window.location.pathname);
   const navigate = useNavigate();
   const id = window.location.pathname;
   console.log(id);
   // setIsLoading(true);
   useEffect(() => {
     setIsLoading(true);
+    localStorage.getItem("linkTeam", id);
     if (localStorage.getItem("user")) {
+      // navigate("/addtoteam" + window.location.pathname, { replace: true });
+      // console.log(id);
       setLinkUid(id);
-      setTimeout(navigate("/home", { replace: true }), 200);
+      navigate("/home", { replace: true });
     } else {
-      setTimeout(
-        navigate("/login" + window.location.pathname, { replace: true }),
-        200
-      );
+      navigate("/login" + window.location.pathname, { replace: true });
     }
     setIsLoading(false);
   }, []);

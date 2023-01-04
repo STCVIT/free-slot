@@ -1,10 +1,9 @@
 const db = require("../db/db");
 const User = db.users;
-const { UserNotFoundError,
-        BadRequestError,
+const { BadRequestError,
         DuplicateUser,
-        InvalidEmail,
-        InvalidRegNo } = require("../utilities/error");
+        NotFoundError,
+        InvalidData } = require("../utilities/error");
 const errorHandler = require("../middleware/errorHandler");
 
 // Adding User in database
@@ -32,15 +31,15 @@ const addUserInDb = async (req, res, next) => {
 // Get one user
 const getUser = async (req, res) => {
   try {
-    let regno = req.body.regno;
-    if (!regno || regno == undefined) {
-      return errorHandler(new InvalidRegNo(), req, res);
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidData("Email Not Provided"), req, res);
     }
     const user = await User.findOne({
-      where: { reg_no: regno },
+      where: { email: email },
     });
     if (!user) {
-      return errorHandler(new UserNotFoundError(), req, res);
+      return errorHandler(new NotFoundError("User Not Found"), req, res);
     }
     res.status(200).send(user);
   } catch (error) {
@@ -48,69 +47,12 @@ const getUser = async (req, res) => {
     console.error(error.message);
   }
 };
-const getUserByEmail = async (req, res) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
-    }
-    const user = await User.findOne({
-      where: { email: email },
-    });
-    if (!user) {
-      return errorHandler(new UserNotFoundError(), req, res);
-    }
-    res.status(200).send(user);
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
-const getUserReg = async (req, res, next) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
-    }
-    const regno = await User.findOne({
-      where: { email: email },
-      attributes: ["reg_no"],
-    });
-    if(!regno){
-      return errorHandler(new UserNotFoundError(), req, res);
-    }
-    req.body.regno = regno;
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
-const getUserName = async (req, res, next) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
-    }
-    const name = await User.findOne({
-      where: { email: req.body.email },
-      attributes: ["name"],
-    });
-    if(!name){
-      return errorHandler(new UserNotFoundError(), req, res);
-    }
-    req.body.admin = name.name;
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
+//to check if user exists in db or not
 const checkUserByReg = async (req, res, next) => {
   try {
     const reg = req.body.reg_no;
     if (!reg || reg == undefined) {
-      return errorHandler(new InvalidRegNo(), req, res);
+      return errorHandler(new InvalidData("Reg. No. Not Provided"), req, res);
     }
     const regno = await User.findOne({
       where: { reg_no: reg },
@@ -125,22 +67,22 @@ const checkUserByReg = async (req, res, next) => {
     console.error(error.message);
   }
 };
-
 // update user
 const updateUser = async (req, res) => {
-  // const updates = Object.keys(req.body);
+  const updates = Object.keys(req.body);
+  console.log(updates)
   try {
     let email = req.body.email;
     if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
+      return errorHandler(new InvalidData("Email Not Provided"), req, res);
     }
     const user = await User.findOne({
       where: { email: email },
     });
     if (!user) {
-      return errorHandler(new UserNotFoundError(), req, res);
+      return errorHandler(new NotFoundError("User Not Found"), req, res);
     }
-    // updates.forEach((update) => (user[update] = req.body[update]));
+    //updates.forEach((update) => (user[update] = req.body[update]));
     user["timetable"] = req.body["timetable"];
     await user.save();
     //res.status(200).send(user)
@@ -154,15 +96,15 @@ const updateUser = async (req, res) => {
 //delete user
 const deleteUser = async (req, res) => {
   try {
-    let email = req.params.email;
+    let email = req.body.email;
     if (!email || email == undefined) {
-      return errorHandler(new InvalidEmail(), req, res);
+      return errorHandler(new InvalidData("Email Not Provided"), req, res);
     }
     const user = await User.findOne({
       where: { email: email }
     });
     if (!user) {
-      return errorHandler(new UserNotFoundError(), req, res);
+      return errorHandler(new NotFoundError("User Not Found"), req, res);
     }
     await user.destroy();
     //res.status(200).send(user)
@@ -173,6 +115,47 @@ const deleteUser = async (req, res) => {
   }
 };
 
+//middleware functions
+const getUserReg = async (req, res, next) => {
+  try {
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidData("Email Not Provided"), req, res);
+    }
+    const regno = await User.findOne({
+      where: { email: email },
+      attributes: ["reg_no"],
+    });
+    if(!regno){
+      return errorHandler(new NotFoundError("User Not Found"), req, res);
+    }
+    req.body.regno = regno;
+    next();
+  } catch (error) {
+    errorHandler(new BadRequestError());
+    console.error(error.message);
+  }
+};
+const getUserName = async (req, res, next) => {
+  try {
+    let email = req.body.email;
+    if (!email || email == undefined) {
+      return errorHandler(new InvalidData("Email Not Provided"), req, res);
+    }
+    const name = await User.findOne({
+      where: { email: req.body.email },
+      attributes: ["name"],
+    });
+    if(!name){
+      return errorHandler(new NotFoundError("User Not Found"), req, res);
+    }
+    req.body.admin = name.name;
+    next();
+  } catch (error) {
+    errorHandler(new BadRequestError());
+    console.error(error.message);
+  }
+};
 module.exports = {
   addUserInDb,
   getUser,
@@ -180,10 +163,8 @@ module.exports = {
   updateUser,
   deleteUser,
   getUserReg,
-  getUserByEmail,
   checkUserByReg,
 };
-
 
 //unused code
 // Get all users
@@ -196,6 +177,24 @@ module.exports = {
 //       return errorHandler(new UserNotFoundError(), req, res);
 //     }
 //     res.status(200).send(users);
+//   } catch (error) {
+//     errorHandler(new BadRequestError());
+//     console.error(error.message);
+//   }
+// };
+// const getUserByEmail = async (req, res) => {
+//   try {
+//     let email = req.body.email;
+//     if (!email || email == undefined) {
+//       return errorHandler(new InvalidEmail(), req, res);
+//     }
+//     const user = await User.findOne({
+//       where: { email: email },
+//     });
+//     if (!user) {
+//       return errorHandler(new UserNotFoundError(), req, res);
+//     }
+//     res.status(200).send(user);
 //   } catch (error) {
 //     errorHandler(new BadRequestError());
 //     console.error(error.message);

@@ -3,22 +3,17 @@ const Team = db.teams;
 const User = db.users;
 const { NotFoundError,
         BadRequestError,
-        TeamNameError,
-        MembersError, 
-        InvalidEmail,
-        InvalidTeamId,
-        UserNotFoundError, 
-        TeamNotFoundError} = require("../utilities/error");
+        InvalidData} = require("../utilities/error");
 const errorHandler = require("../middleware/errorHandler");
 
 //add team
 const addTeam = async (req, res) => {
   try {
     if(!req.body.team_name){
-      return errorHandler(new TeamNameError(), req, res)
+      return errorHandler(new InvalidData("Team Name Not Provided"), req, res)
     }
     if(!req.body.members){
-      return errorHandler(new MembersError(), req, res)
+      return errorHandler(new InvalidData("Members Not Provided"), req, res)
     }
     const team = await Team.create(req.body);
     const members = await team.addUsers(req.body.members);
@@ -29,33 +24,19 @@ const addTeam = async (req, res) => {
     console.error(error.message);
   }
 };
-//add team by link
-const addTeamByLink = async (req, res, next) => {
-  try {
-    if(!req.body.team_name){
-      return errorHandler(new TeamNameError(), req, res)
-    }
-    if(!req.body.regno){
-      return errorHandler(new MembersError(), req, res)
-    }
-    const team = await Team.create(req.body);
-    const member = await team.addUsers(req.body.regno);
-    res.status(201);
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
 
 //get team by id
 const getTeamById = async (req, res) => {
   try {
+    let teamId = req.params.team_id
+    if(!teamId || teamId==undefined){
+      errorHandler(new InvalidData("Team Id Not Provided"), req, res)
+    }
     const team = await Team.findOne({
-      where: { id: req.params.team_id },
+      where: { team_id: teamId },
     });
     if (!team) {
-      return errorHandler(new NotFoundError(), req, res);
+      return errorHandler(new NotFoundError("Team Not Found"), req, res);
     }
     res.status(200).send(team);
   } catch (error) {
@@ -81,46 +62,46 @@ const getTeamByName = async (req, res) => {
   }
 };
 
-// get all teams
-const getAllTeams = async (req, res, next) => {
+//get team members
+const getTeamMembers = async (req, res) => {
   try {
-    let email = req.body.email
-    if(!email || email == undefined){
-      return errorHandler(new InvalidEmail(), req, res)
+    let teamId = req.body.team_id
+    if(!teamId || teamId == undefined){
+      return errorHandler(new InvalidData("Team Id Not Provided"), req, res)
     }
-    const user = await User.findOne({
-      where: { email: email },
+    const team = await Team.findOne({
+      where: { team_id: teamId},
     });
-    if(!user){
-      return errorHandler(new UserNotFoundError(), req, res) 
+    if(!team){
+      return errorHandler(new NotFoundError("Team Not Found"), req, res)
     }
-    const teams = await user.getTeams();
-    // if(!teams){
-    //   return errorHandler(new TeamNotFoundError(), req, res)
-    // }
-    req.body.teams = teams;
-    next();
+    const users = await team.getUsers();
+    if(!users){
+      return errorHandler(new NotFoundError("User Not Found"), req, res) 
+    }
+    res.status(200).send(users);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
   }
 };
 
+//need to check this 
 const getUserTeams = async (req, res) => {
   try {
     let email = req.body.email
     if(!email || email == undefined){
-      return errorHandler(new InvalidEmail(), req, res)
+      return errorHandler(new InvalidData("Email Not Provided"), req, res)
     }
     const user = await User.findOne({
-      where: { email: email },
+      where: { email: email }
     });
     if(!user){
-        return errorHandler(new UserNotFoundError(), req, res) 
+        return errorHandler(new NotFoundError("User Not Found"), req, res) 
       }
       const teams = await user.getTeams();
     if(!teams){
-      return errorHandler(new TeamNotFoundError(), req, res)
+      return errorHandler(new NotFoundError("Team Not Found"), req, res)
     }
     const teamsArr = new Set();
     const finalObj = {};
@@ -160,49 +141,26 @@ const getUserTeams = async (req, res) => {
   }
 };
 
-//get team members
-const getTeamMembers = async (req, res) => {
-  try {
-    let teamId = req.body.team_id
-    if(!teamId || teamId == undefined){
-      return errorHandler(new InvalidTeamId(), req, res)
-    }
-    const team = await Team.findOne({
-      where: { team_id: teamId},
-    });
-    if(!team){
-      return errorHandler(new TeamNotFoundError(), req, res)
-    }
-    const users = await team.getUsers();
-    if(!users){
-      return errorHandler(new UserNotFoundError(), req, res) 
-    }
-    res.status(200).send(users);
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
 //update team
 const updateTeam = async (req, res) => {
-  //const updates = Object.keys(req.body);
+  const updates = Object.keys(req.body);
   try {
     let id = req.params.team_id;
     let membersArray = req.body.members;
     if (!id || id == undefined) {
-      return errorHandler(new InvalidTeamId(), req, res)
+      return errorHandler(new InvalidData("Team Id Not Provided"), req, res)
     }
     if(!membersArray || membersArray==undefined){
-      return errorHandler(new MembersError(), req, res)
+      return errorHandler(new InvalidData("Members Not Provided"), req, res)
     }
     const team = await Team.findOne({
       where: { team_id: id },
     });
-    // if (!team) {
-    //   return errorHandler(new TeamNotFoundError(), req, res);
-    // }
-    //updates.forEach((update) => (team[update] = req.body[update]));
-    //await team.save();
+    if (!team) {
+      return errorHandler(new NotFoundError("Team Not Found"), req, res);
+    }
+    updates.forEach((update) => (team[update] = req.body[update]));
+    await team.save();
     const members = await team.addUsers(req.body.members);
     //res.status(200).send(team);
     res.status(200);
@@ -217,13 +175,13 @@ const deleteTeam = async (req, res) => {
   try {
     let id = req.params.team_id;
     if (!id || id == undefined) {
-      return errorHandler(new InvalidTeamId(), req, res)
+      return errorHandler(new InvalidData("Team Id Not Provided"), req, res)
     }
     const team = await Team.findOne({
       where: { team_id: id },
     });
     if (!team) {
-      return errorHandler(new TeamNotFoundError(), req, res);
+      return errorHandler(new NotFoundError("Team Not Found"), req, res);
     }
     await team.destroy();
     //res.status(200).send(team);
@@ -234,12 +192,55 @@ const deleteTeam = async (req, res) => {
   }
 };
 
+//middleware functions
+//add team by link //check
+const addTeamByLink = async (req, res, next) => {
+  try {
+    if(!req.body.team_name){
+      return errorHandler(new InvalidData("Team Name Not Provided"), req, res)
+    }
+    if(!req.body.regno){
+      return errorHandler(new InvalidData("Members Not Provided"), req, res)
+    }
+    const team = await Team.create(req.body);
+    const member = await team.addUsers(req.body.regno);
+    res.status(201);
+    next();
+  } catch (error) {
+    errorHandler(new BadRequestError(), req, res);
+    console.error(error.message);
+  }
+};
+// get all teams
+const getAllTeams = async (req, res, next) => {
+  try {
+    let email = req.body.email
+    if(!email || email == undefined){
+      return errorHandler(new InvalidData("Email Not Provided"), req, res)
+    }
+    const user = await User.findOne({
+      where: { email: email },
+    });
+    if(!user){
+      return errorHandler(new NotFoundError("User Not Found"), req, res) 
+    }
+    const teams = await user.getTeams();
+    if(!teams){
+      return errorHandler(new NotFoundError("Team Not Found"), req, res)
+    }
+    req.body.teams = teams;
+    next();
+  } catch (error) {
+    errorHandler(new BadRequestError(), req, res);
+    console.error(error.message);
+  }
+};
 module.exports = {
   addTeam,
   addTeamByLink,
   getTeamById,
-  getTeamByName,
   getAllTeams,
+  getTeamByName,
   getTeamMembers,
   updateTeam,
   deleteTeam,

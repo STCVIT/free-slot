@@ -19,31 +19,37 @@ class BadRequestError{
 class NotFoundError{
     constructor(message){
         this.statusCode = 404
-        this.message = message || "Requested Resource was Not Found"
+        this.message = message || "Requested Resource Was Not Found"
     }
 }
-class UserNotFoundError{
-    constructor(){
-        this.statusCode = 400
-        this.message = "User Not Found"
-    }
-}
-class TeamNotFoundError{
-    constructor(){
-        this.statusCode = 400
-        this.message = "Team Not Found"
-    }
-}
-class MeetNotFoundError{
-    constructor(){
-        this.statusCode = 400
-        this.message = "Meet Not Found"
-    }
-}
+// class UserNotFoundError{
+//     constructor(){
+//         this.statusCode = 400
+//         this.message = "User Not Found"
+//     }
+// }
+// class TeamNotFoundError{
+//     constructor(){
+//         this.statusCode = 400
+//         this.message = "Team Not Found"
+//     }
+// }
+// class MeetNotFoundError{
+//     constructor(){
+//         this.statusCode = 400
+//         this.message = "Meet Not Found"
+//     }
+// }
 class DuplicateUser{
     constructor(){
         this.statusCode = 409
         this.message = "User Already Exists"
+    }
+}
+class InvalidData{
+    constructor(message){
+        this.statusCode = 403
+        this.message = message || "Required Data Not Provided"
     }
 }
 class InvalidRegNo{
@@ -93,9 +99,7 @@ module.exports = {
     EmailNotVerifiedError,
     BadRequestError,
     NotFoundError,
-    UserNotFoundError,
-    TeamNotFoundError,
-    MeetNotFoundError,
+    InvalidData,
     DuplicateUser,
     InvalidRegNo,
     InvalidEmail,

@@ -3,31 +3,23 @@ const Meet = db.meets;
 const {
   NotFoundError,
   BadRequestError,
-  TeamNotFoundError,
-  MeetNotFoundError,
-  InvalidTeamId,
-  InvalidEmail,
-  UserNotFoundError,
-  InvalidMeetId,
+  InvalidData
 } = require("../utilities/error");
 const errorHandler = require("../middleware/errorHandler");
 const Team = db.teams;
-const User = db.users;
 //Adding Meet
 const addMeet = async (req, res) => {
   try {
-    console.log(req.body);
     let teamId = req.body.team_id;
     if (!teamId || teamId == undefined) {
-      return errorHandler(new InvalidTeamId(), req, res);
+      return errorHandler(new InvalidData("Team Id Not Provided"), req, res);
     }
     const meet = await Meet.create(req.body);
     const team = await Team.findOne({
       where: { team_id: req.body.team_id },
-      // where: { team_id: "7a3a12c2-b21e-451c-9968-5322a6243bfa" },
     });
     if (!team) {
-      return errorHandler(new TeamNotFoundError(), req, res);
+      return errorHandler(new NotFoundError("Team Not Found"), req, res);
     }
     await team.addMeet(meet);
     //res.status(201).send(meet);
@@ -41,18 +33,19 @@ const getAllMeets = async (req, res) => {
   try {
     let results = [];
     const teams = req.body.teams;
-    for (const team of teams) {
-      const meets = await team.getMeets();
-      for (const meet of meets) {
-        results.push(meet);
-      }
-    }
-    return res.status(200).send(results);
+    await Promise.all(
+      teams.map((team)=>{
+      results.push(team.team_name)
+      const res = team.getMeets()
+      results.push(res)
+    }))
+    res.status(200).send(results);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
   }
 };
+
 const getAllUpcomingMeets = async (req, res) => {
   try {
     let results = [];
@@ -110,13 +103,13 @@ const updateMeetStatus = async (req, res) => {
   try {
     let id = req.body.meet_id;
     if (!id || id == undefined) {
-      return errorHandler(new InvalidMeetId(), req, res);
+      return errorHandler(new InvalidData("Meet Id Not Provided"), req, res);
     }
     const meet = await Meet.findOne({
       where: { meet_id: id },
     });
     if (!meet) {
-      return errorHandler(new MeetNotFoundError(), req, res);
+      return errorHandler(new NotFoundError("Meet Not Found Error"), req, res);
     }
     meet["status"] = req.body.status;
     await meet.save();
@@ -133,13 +126,13 @@ const deleteMeet = async (req, res) => {
   try {
     let id = req.params.meet_id;
     if (!id || id == undefined) {
-      return errorHandler(new InvalidMeetId(), req, res);
+      return errorHandler(new InvalidData("Meet Id Not Provided"), req, res);
     }
     const meet = await Meet.findOne({
       where: { meet_id: id },
     });
     if (!meet) {
-      return errorHandler(new MeetNotFoundError(), req, res);
+      return errorHandler(new NotFoundError("Meet Not Found Error"), req, res);
     }
     await meet.destroy();
     // res.status(200).send(meet);
@@ -191,7 +184,7 @@ module.exports = {
 //     }
 //     const teams = await regno.getTeams(); //doubt
 //     // if(!teams){
-//     //   return errorHandler(new TeamNotFoundError(), req, res)
+//     //   return errorHandler(new NotFoundError("Team Not Found"), req, res)
 //     // }
 //     teams.forEach(async (team) => {
 //       await team.getMeets();

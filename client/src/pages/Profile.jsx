@@ -34,9 +34,7 @@ const Profile = () => {
       })
     })
     axios
-      .post("user/getUserByEmail", {
-        email: localUser.email,
-      })
+      .get("user/getUser")
       .then((res) => {
         setUserDetails(res.data);
       })

@@ -2,7 +2,7 @@ const db = require('../db/db')
 const User = db.users
 const {getFreeSlotsUsers, busy_time} = require('./freeSlotScreenshot')
 const freeSlotCopyPaste = require('./freeSlotCopyPaste')
-const { BadRequestError, NotFoundError, InvalidEmail, CouldNotExtractData } = require('../utilities/error')
+const { BadRequestError, NotFoundError, InvalidEmail, CouldNotExtractData, InvalidData } = require('../utilities/error')
 const errorHandler = require('../middleware/errorHandler')
 const axios = require('axios')
 const moment = require('moment')
@@ -30,7 +30,7 @@ const freeSlotScreenshot = async(req, res, next)=>{
     try {
         let email = req.body.email
         if(!email || email == undefined){
-        return errorHandler(new InvalidEmail(), req, res)
+        return errorHandler(new InvalidData("Email Not Provided"), req, res)
         }
         const timetable = await User.update(
             {timetable: busy_time(req.body.timetable)}, {where: {email: email}}
@@ -46,7 +46,7 @@ const freeSlotCp = async(req, res, next)=>{
     try {
         let email = req.body.email
         if(!email || email == undefined){
-            return errorHandler(new InvalidEmail(), req, res)
+            return errorHandler(new InvalidData("Email Not Provided"), req, res)
         }
         const timetable = await User.update(
             {timetable: freeSlotCopyPaste(req.body.timetable)},

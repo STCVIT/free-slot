@@ -69,15 +69,14 @@ export function FreeSlotContextProvider({ children }) {
       const teamName = localStorage.getItem("team_name");
       await axios
         .post("link", {
-          team_name: teamName,
-          email: JSON.parse(localStorage.getItem("user")).email,
+          team_name: teamName
         })
         .then((res) => {
           setLink(
             `${res.data.replace(
               "https://",
               window.location.origin + "/login/"
-            )}??${teamName.split(" ").join("_")}`
+            )}?${teamName.split(" ").join("_")}`
           );
         });
     } catch (error) {

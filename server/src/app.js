@@ -9,14 +9,14 @@ const cors = require('cors');
 const app = express();
 const whitelist = ['http://127.0.0.1:3000','http://localhost:3000', 'https://develop.free-slot.pages.dev', 'http://localhost:4000']
 const corsOptions = {
-    //origin: '*',
-    origin: function(origin, callback){
-        if(whitelist.indexOf(origin)!==-1){
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS!'))
-        }
-    },
+    origin: '*',
+    // origin: function(origin, callback){
+    //     if(whitelist.indexOf(origin)!==-1){
+    //         callback(null, true)
+    //     } else {
+    //         callback(new Error('Not allowed by CORS!'))
+    //     }
+    // },
     methods: ["GET, POST, PUT, PATCH, DELETE"],
     allowHeaders: '*'
 }

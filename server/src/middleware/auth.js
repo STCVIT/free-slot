@@ -24,7 +24,6 @@ const checkUser = (req, res, next)=>{
     .auth()
     .verifyIdToken(tokenString)
     .then((user)=>{
-        console.log(user.email)
         req.body.email=user.email
         next()
     })
