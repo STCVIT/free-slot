@@ -122,7 +122,6 @@ export function FreeSlotContextProvider({ children }) {
         refreshTeams,
         setRefreshTeams,
         setToAddTeam,
-        setToAddTeam,
       }}
     >
       {children}
