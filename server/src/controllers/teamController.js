@@ -45,7 +45,6 @@ const getTeamByName = async (req, res) => {
   }
 };
 
-
 //get team members
 const getTeamMembers = async (req, res) => {
   try {

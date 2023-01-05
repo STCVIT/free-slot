@@ -2,9 +2,9 @@ const { Sequelize, DataTypes } = require("sequelize");
 require("dotenv").config();
 const config = require("./config")[process.env.NODE_ENV || "development"];
 //for locally running
-//const sequelize = new Sequelize(config.postgres);
+const sequelize = new Sequelize(config.postgres);
 // for hosting
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+//const sequelize = new Sequelize(process.env.DATABASE_URL);
 sequelize
   .authenticate()
   .then(() => {

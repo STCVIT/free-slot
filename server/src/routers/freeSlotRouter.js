@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const { checkUser } = require('../middleware/auth')
 const { checkFreeSlot, freeSlotScreenshot, freeSlotCp, freeslotML } = require('../controllers/freeSlotController')
 
-router.post('/freeslot', checkFreeSlot)
-router.post('/string', freeslotML, freeSlotScreenshot)
-router.post('/freeSlotCopyPaste', freeSlotCp)
+router.post('/freeslot', checkUser, checkFreeSlot)
+router.post('/string', checkUser, freeslotML, freeSlotScreenshot)
+router.post('/freeSlotCopyPaste', checkUser, freeSlotCp)
 module.exports = router
