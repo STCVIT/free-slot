@@ -19,7 +19,7 @@ const checkUser = (req, res, next)=>{
     if(req.header("Authorization")==undefined || !req.header("Authorization")) {
         return errorHandler(new AuthError(), req, res)
     }
-    const tokenString = req.header("Authorization").split(" ")[1];
+    const tokenString = req.headers.authorization.split(" ")[1];
     admin
     .auth()
     .verifyIdToken(tokenString)

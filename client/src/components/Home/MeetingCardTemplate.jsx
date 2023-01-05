@@ -26,17 +26,16 @@ const MeetingCardTemplate = (props) => {
   const [currentMeet, setCurrentMeet] = useState(null);
   const [desc, setDesc] = useState(null);
   const pastCards = [];
+  //check team_id
   const getTeamMembers = async () => {
-    // console.log(props.team_id);
-    const response = await axios.post("team/getTeamMembers", {
-      team_id: props.team_id,
-    });
-    // console.log(response.data);
+     console.log(props.team_id);
+    const response = await axios.get(`team/teamMembers/${props.team_id}`);
+     console.log(response.data);
     setTeamMembers(response.data);
   };
-  useEffect(() => {
-    getTeamMembers();
-  }, []);
+  // useEffect(() => {
+  //   getTeamMembers();
+  // }, []);
 
   const style = {
     position: "absolute",

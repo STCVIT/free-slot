@@ -26,14 +26,14 @@ const addTeam = async (req, res) => {
 };
 
 //get team by id
-const getTeamById = async (req, res) => {
+const getTeamByName = async (req, res) => {
   try {
-    let teamId = req.params.team_id
-    if(!teamId || teamId==undefined){
+    let teamName = req.params.team_name
+    if(!teamName || teamName==undefined){
       errorHandler(new InvalidData("Team Id Not Provided"), req, res)
     }
     const team = await Team.findOne({
-      where: { team_id: teamId },
+      where: { team_name: teamName },
     });
     if (!team) {
       return errorHandler(new NotFoundError("Team Not Found"), req, res);
@@ -45,27 +45,11 @@ const getTeamById = async (req, res) => {
   }
 };
 
-//get team by name
-const getTeamByName = async (req, res) => {
-  try {
-    let teamName = req.body.team_name
-    const team = await Team.findOne({
-      where: { team_name: teamName },
-    });
-    if (!team) {
-      return errorHandler(new NotFoundError(), req, res);
-    }
-    res.status(200).send(team);
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
 
 //get team members
 const getTeamMembers = async (req, res) => {
   try {
-    let teamId = req.body.team_id
+    let teamId = req.params.team_id
     if(!teamId || teamId == undefined){
       return errorHandler(new InvalidData("Team Id Not Provided"), req, res)
     }
@@ -86,6 +70,29 @@ const getTeamMembers = async (req, res) => {
   }
 };
 
+// const getUserTeams = async (req, res) => {
+//     try {
+//       let email = req.body.email
+//       if(!email || email == undefined){
+//         return errorHandler(new InvalidData("Email Not Provided"), req, res)
+//       }
+//       const user = await User.findOne({
+//         where: { email:email }
+//       });
+//       if(!user){
+//           return errorHandler(new NotFoundError("User Not Found"), req, res) 
+//         }
+//         const teams = await user.getTeams();
+//       if(!teams){
+//         return errorHandler(new NotFoundError("Team Not Found"), req, res)
+//       }
+//       res.status(200).send(teams)
+//     }
+//     catch(error) {
+//       errorHandler(new BadRequestError(), req, res);
+//       console.error(error.message);
+//     }
+// }
 //need to check this 
 const getUserTeams = async (req, res) => {
   try {
@@ -94,7 +101,7 @@ const getUserTeams = async (req, res) => {
       return errorHandler(new InvalidData("Email Not Provided"), req, res)
     }
     const user = await User.findOne({
-      where: { email: email }
+      where: { email:email }
     });
     if(!user){
         return errorHandler(new NotFoundError("User Not Found"), req, res) 
@@ -192,54 +199,9 @@ const deleteTeam = async (req, res) => {
   }
 };
 
-//middleware functions
-//add team by link //check
-const addTeamByLink = async (req, res, next) => {
-  try {
-    if(!req.body.team_name){
-      return errorHandler(new InvalidData("Team Name Not Provided"), req, res)
-    }
-    if(!req.body.regno){
-      return errorHandler(new InvalidData("Members Not Provided"), req, res)
-    }
-    const team = await Team.create(req.body);
-    const member = await team.addUsers(req.body.regno);
-    res.status(201);
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
-// get all teams
-const getAllTeams = async (req, res, next) => {
-  try {
-    let email = req.body.email
-    if(!email || email == undefined){
-      return errorHandler(new InvalidData("Email Not Provided"), req, res)
-    }
-    const user = await User.findOne({
-      where: { email: email },
-    });
-    if(!user){
-      return errorHandler(new NotFoundError("User Not Found"), req, res) 
-    }
-    const teams = await user.getTeams();
-    if(!teams){
-      return errorHandler(new NotFoundError("Team Not Found"), req, res)
-    }
-    req.body.teams = teams;
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
+
 module.exports = {
   addTeam,
-  addTeamByLink,
-  getTeamById,
-  getAllTeams,
   getTeamByName,
   getTeamMembers,
   updateTeam,

@@ -28,22 +28,22 @@ export const AllPages = ({ filter, tab }) => {
     async function getData() {
       try {
         setIsLoading(true);
-        const upcoming = await axios.post(
-          "meet/getUpcoming",
+        const upcoming = await axios.get(
+          "meet/getMeets/upcoming",
           {
             email: user.email,
           },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        const past = await axios.post(
-          "meet/getPast",
+        const past = await axios.get(
+          "meet/getMeets/past",
           {
             email: user.email,
           },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        const cancelled = await axios.post(
-          "meet/getCancelled",
+        const cancelled = await axios.get(
+          "meet/getMeets/cancelled",
           {
             email: user.email,
           },

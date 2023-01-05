@@ -50,14 +50,14 @@ const getUser = async (req, res) => {
 //to check if user exists in db or not
 const checkUserByReg = async (req, res, next) => {
   try {
-    const reg = req.body.reg_no;
-    if (!reg || reg == undefined) {
+    const {reg_no} = req.body;
+    if (!reg_no || reg_no == undefined) {
       return errorHandler(new InvalidData("Reg. No. Not Provided"), req, res);
     }
-    const regno = await User.findOne({
-      where: { reg_no: reg },
+    const user = await User.findOne({
+      where: { reg_no: reg_no },
     });
-    if (!regno) {
+    if (!user) {
       res.send(false);
     } else {
       res.send(true);
@@ -72,7 +72,7 @@ const updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
   console.log(updates)
   try {
-    let email = req.body.email;
+    let {email} = req.body;
     if (!email || email == undefined) {
       return errorHandler(new InvalidData("Email Not Provided"), req, res);
     }
@@ -114,55 +114,11 @@ const deleteUser = async (req, res) => {
     console.error(error.message);
   }
 };
-
-//middleware functions
-const getUserReg = async (req, res, next) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidData("Email Not Provided"), req, res);
-    }
-    const regno = await User.findOne({
-      where: { email: email },
-      attributes: ["reg_no"],
-    });
-    if(!regno){
-      return errorHandler(new NotFoundError("User Not Found"), req, res);
-    }
-    req.body.regno = regno;
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
-const getUserName = async (req, res, next) => {
-  try {
-    let email = req.body.email;
-    if (!email || email == undefined) {
-      return errorHandler(new InvalidData("Email Not Provided"), req, res);
-    }
-    const name = await User.findOne({
-      where: { email: req.body.email },
-      attributes: ["name"],
-    });
-    if(!name){
-      return errorHandler(new NotFoundError("User Not Found"), req, res);
-    }
-    req.body.admin = name.name;
-    next();
-  } catch (error) {
-    errorHandler(new BadRequestError());
-    console.error(error.message);
-  }
-};
 module.exports = {
   addUserInDb,
   getUser,
-  getUserName,
   updateUser,
   deleteUser,
-  getUserReg,
   checkUserByReg,
 };
 

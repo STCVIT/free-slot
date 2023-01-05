@@ -32,20 +32,6 @@ export const UserAuthContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const signUp = async (email, password) => {
     return await createUserWithEmailAndPassword(auth, email, password);
-    // .then((user) => {
-    //   user.user.getIdToken().then((token) => {
-    //     setToken(token);
-    //     axios.post(
-    //       "user/sessionlogin",
-    //       {},
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       }
-    //     );
-    //   });
-    // });
   };
   const logIn = async (email, password) => {
     return await signInWithEmailAndPassword(auth, email, password);

@@ -1,4 +1,5 @@
 const db = require("../db/db");
+const { QueryTypes } = require('sequelize');
 const Meet = db.meets;
 const {
   NotFoundError,
@@ -7,6 +8,7 @@ const {
 } = require("../utilities/error");
 const errorHandler = require("../middleware/errorHandler");
 const Team = db.teams;
+const sequelize = db.sequelize
 //Adding Meet
 const addMeet = async (req, res) => {
   try {
@@ -31,74 +33,25 @@ const addMeet = async (req, res) => {
 };
 const getAllMeets = async (req, res) => {
   try {
-    let results = [];
     const teams = req.body.teams;
-    await Promise.all(
-      teams.map((team)=>{
-      results.push(team.team_name)
-      const res = team.getMeets()
-      results.push(res)
-    }))
-    res.status(200).send(results);
+    let teamId =[]
+    teams.forEach(element => {
+      teamId.push(element.team_id)
+    });
+    const response = await sequelize.query('SELECT * FROM meets WHERE team_id = ?', {
+      replacements: teamId,
+      type: QueryTypes.SELECT
+    })
+    const finalArr = response.filter((meet)=>{
+      return meet.status===req.params.status
+    })
+    res.status(200).send(finalArr);
   } catch (error) {
     errorHandler(new BadRequestError(), req, res);
     console.error(error.message);
   }
 };
-
-const getAllUpcomingMeets = async (req, res) => {
-  try {
-    let results = [];
-    const teams = req.body.teams;
-    for (const team of teams) {
-      const teamName = team.team_name;
-      const meets = await team.getMeets();
-      for (const meet of meets) {
-        if (meet.status === "upcoming") {
-          meet["dataValues"]["team_name"] = teamName;
-          results.push(meet);
-        }
-      }
-    }
-    res.status(200).send(results);
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
-const getAllPastMeets = async (req, res) => {
-  try {
-    let results = [];
-    const teams = req.body.teams;
-    for (const team of teams) {
-      const meets = await team.getMeets();
-      for (const meet of meets) {
-        if (meet.status === "past") results.push(meet);
-      }
-    }
-    res.status(200).send(results);
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
-const getAllCancelledMeets = async (req, res) => {
-  try {
-    let results = [];
-    const teams = req.body.teams;
-    for (const team of teams) {
-      const meets = await team.getMeets();
-      for (const meet of meets) {
-        if (meet.status === "cancelled") results.push(meet);
-      }
-    }
-    res.status(200).send(results);
-  } catch (error) {
-    errorHandler(new BadRequestError(), req, res);
-    console.error(error.message);
-  }
-};
-//upadte meet
+//update meet
 const updateMeetStatus = async (req, res) => {
   try {
     let id = req.body.meet_id;
@@ -145,9 +98,6 @@ const deleteMeet = async (req, res) => {
 module.exports = {
   addMeet,
   getAllMeets,
-  getAllUpcomingMeets,
-  getAllPastMeets,
-  getAllCancelledMeets,
   updateMeetStatus,
   deleteMeet,
 };
@@ -190,6 +140,59 @@ module.exports = {
 //       await team.getMeets();
 //     });
 //     res.status(200).send(teams);
+//   } catch (error) {
+//     errorHandler(new BadRequestError(), req, res);
+//     console.error(error.message);
+//   }
+// };
+// const getAllUpcomingMeets = async (req, res) => {
+//   try {
+//     let results = [];
+//     const teams = req.body.teams;
+//     for (const team of teams) {
+//       const teamName = team.team_name;
+//       const meets = await team.getMeets();
+//       for (const meet of meets) {
+//         if (meet.status === "upcoming") {
+//           meet["dataValues"]["team_name"] = teamName;
+//           results.push(meet);
+//         }
+//       }
+//     }
+//     res.status(200).send(results);
+//   } catch (error) {
+//     errorHandler(new BadRequestError(), req, res);
+//     console.error(error.message);
+//   }
+// };
+
+// const getAllPastMeets = async (req, res) => {
+//   try {
+//     let results = [];
+//     const teams = req.body.teams;
+//     for (const team of teams) {
+//       const meets = await team.getMeets();
+//       for (const meet of meets) {
+//         if (meet.status === "past") results.push(meet);
+//       }
+//     }
+//     res.status(200).send(results);
+//   } catch (error) {
+//     errorHandler(new BadRequestError(), req, res);
+//     console.error(error.message);
+//   }
+// };
+// const getAllCancelledMeets = async (req, res) => {
+//   try {
+//     let results = [];
+//     const teams = req.body.teams;
+//     for (const team of teams) {
+//       const meets = await team.getMeets();
+//       for (const meet of meets) {
+//         if (meet.status === "cancelled") results.push(meet);
+//       }
+//     }
+//     res.status(200).send(results);
 //   } catch (error) {
 //     errorHandler(new BadRequestError(), req, res);
 //     console.error(error.message);

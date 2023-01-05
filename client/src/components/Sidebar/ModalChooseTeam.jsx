@@ -37,9 +37,8 @@ const ModalChooseTeam = ({ onClose, data }) => {
     console.log(finalArr);
 
     try {
-      const teamId = await axios.post("team/getTeam", {
-        team_name: team_name,
-      });
+      const teamId = await axios.get(`team/${team_name}`);
+      console.log(teamId)
       localStorage.setItem("team_id", teamId.data.team_id);
       await justFindFreeSlot(finalArr);
       navigate("/freeslot");
