@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes)=>{
             validate: {
                 is: /([0-9]{2})([A-Z]{3})([0-9]{4})/,
               },
-            unique: true
+            unique: true,
         },
         name: {
             type: DataTypes.STRING,
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes)=>{
     }, {
         createdAt: false,
         updatedAt: false
-    });
+    }
+    );
     return User
 }
