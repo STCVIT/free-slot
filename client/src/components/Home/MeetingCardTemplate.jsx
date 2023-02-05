@@ -8,8 +8,9 @@ import { GoKebabVertical } from "react-icons/go";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "../../axios";
-
+import { FindFreeSlot } from "../../context/FreeSlotContext";
 const MeetingCardTemplate = (props) => {
+  const { setIsLoading } = FindFreeSlot();
   const [isLg, setIsLg] = useState(
     window.matchMedia("(min-width: 1024px)").matches
   );
@@ -28,13 +29,28 @@ const MeetingCardTemplate = (props) => {
   const pastCards = [];
   //check team_id
   const getTeamMembers = async () => {
-     console.log(props.team_id);
+    console.log(props.team_id);
     const response = await axios.get(`team/teamMembers/${props.team_id}`);
-     console.log(response.data);
+    console.log(response.data);
     setTeamMembers(response.data);
   };
   // useEffect(() => {
   //   getTeamMembers();
+  // }, []);
+  // console.log(props.team_id);
+  //   const response = await axios.post("team/getTeamMembers", {
+  //     team_id: props.team_id,
+  //   });
+  //   // console.log(response.data);
+  //   response.data && setTeamMembers(response.data);
+  // };
+  // useEffect(() => {
+  //   try {
+  //     getTeamMembers();
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   }
   // }, []);
 
   const style = {
@@ -143,7 +159,7 @@ const MeetingCardTemplate = (props) => {
           {moment(dataItem.start_time, "HH:mm:ss").format("hh:mm a")} -{" "}
           {moment(dataItem.end_time, "HH:mm:ss").format("hh:mm a")}
         </p>
-        <div className="flex gap-x-4 my-4 font-semibold text-myBlue">
+        <div className="flex gap-x-4 my-4 font-semibold text-bg-primary">
           {["Gmeet", "Zoom", "Discord"].includes(dataItem.location) ? (
             <BsFillCameraVideoFill size={20} />
           ) : (
@@ -151,6 +167,11 @@ const MeetingCardTemplate = (props) => {
           )}
           {dataItem.location}
         </div>
+        {props.link && (
+          <a href={props.link} target="_blank" rel="noreferrer">
+            Link to event
+          </a>
+        )}
         <p className="font-normal flex flex-col gap-y-1 text-black ">
           <span className="font-semibold">Created by {dataItem.admin}</span>
           {/* <span>Past: {isafter ? "No" : "Yes"}</span> */}

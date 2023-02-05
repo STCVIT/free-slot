@@ -45,27 +45,29 @@ const MobileNav = ({ optionList, activeTab }) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {optionList.map((item, index) => (
-          <div>
-            <ListItem key={index} disablePadding>
-              <ListItemButton className="border-b-2 border-black">
-                <Link
-                  key={index}
-                  to={`/${item.toLowerCase()}`}
-                  style={{ color: "black" }}
-                  className={` ${mainClass} ${
-                    activeTab === item.toLocaleLowerCase()
-                      ? activeClass
-                      : inactiveClass
-                  }`}
-                >
-                  {item}
-                </Link>
-              </ListItemButton>
-            </ListItem>
-            <Divider />
-          </div>
-        ))}
+        {React.Children.toArray(
+          optionList.map((item) => (
+            <div>
+              <ListItem disablePadding>
+                <ListItemButton className="border-b-2 border-black">
+                  <Link
+                    to={`/${item.toLowerCase()}`}
+                    style={{ color: "black" }}
+                    className={` ${mainClass} ${
+                      activeTab === item.toLocaleLowerCase()
+                        ? activeClass
+                        : inactiveClass
+                    }`}
+                  >
+                    {item}
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </div>
+          ))
+        )}
+        {}
         <ListItem key={1} disablePadding>
           <ListItemButton className="border-b-2 border-black">
             <button className="text-left w-full" onClick={logOutHandler}>

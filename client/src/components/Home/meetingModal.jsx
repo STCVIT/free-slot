@@ -27,7 +27,7 @@ export default function NestedModal({ desc, data }) {
     setOpen(false);
   }
   const markAsDone =
-    "flex-1 items-center py-3 px-5 text-sm w-full font-medium text-center text-white bg-myBlue rounded-md hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-2 border-myBlue";
+    "flex-1 items-center py-3 px-5 text-sm w-full font-medium text-center text-white bg-primary rounded-md hover:bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 border-2 border-primary";
   const cancel =
     "flex-1 rounded  px-4 items-center py-2 text-black underline border-[1px] border-gray-400 rounded-md";
   const { idx, refresh, setRefresh } = data;

@@ -69,7 +69,7 @@ export function FreeSlotContextProvider({ children }) {
       const teamName = localStorage.getItem("team_name");
       await axios
         .post("link", {
-          team_name: teamName
+          team_name: teamName,
         })
         .then((res) => {
           setLink(

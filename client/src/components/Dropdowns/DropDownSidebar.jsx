@@ -110,7 +110,7 @@ export default function Example({ data }) {
         >
           <ClickAwayListener onClickAway={modalOff}>
             <Box sx={style}>
-              <div className="w-full py-2 px-2 bg-myBlue rounded-t-xl flex justify-end">
+              <div className="w-full py-2 px-2 bg-primary rounded-t-xl flex justify-end">
                 <button className="text-white  p-2 " onClick={modalOff}>
                   <AiOutlineClose size={22} color="white" />
                 </button>
@@ -141,7 +141,7 @@ export default function Example({ data }) {
         <div>
           <Menu.Button>
             {isLg && (
-              <p className="text-5xl lg:text-xl justify-center items-center rounded-full bg-blue-800 p-3 px-6 lg:p-5 lg:px-8 tracking-wider text-slate-100">
+              <p className="text-5xl lg:text-xl justify-center items-center rounded-full bg-primary p-3 px-6 lg:p-5 lg:px-8 tracking-wider text-slate-100">
                 + My Teams
               </p>
             )}

@@ -41,7 +41,7 @@ const Responses = ({ onClose }) => {
   return (
     <div className="relative rounded-md">
       <div>
-        <PageHeading title="Responses" />
+        <PageHeading title="Invite to team" />
       </div>
       <div className=" lg:mx-16">
         <div className="w-full lg:w-2/4">

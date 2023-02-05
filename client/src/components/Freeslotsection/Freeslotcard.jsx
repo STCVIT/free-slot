@@ -71,7 +71,7 @@ const Freeslotcard = (props) => {
                   minutes
                 </div>
                 {saveTeam && (
-                  <div className="bg-myBlue flex  justify-center rounded-lg text-center text-white ">
+                  <div className="bg-primary flex  justify-center rounded-lg text-center text-white ">
                     <button
                       className="px-6 py-2.5 w-full"
                       onClick={() => clickHandler(value, index)}

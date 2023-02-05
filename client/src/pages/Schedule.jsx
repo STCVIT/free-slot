@@ -37,7 +37,7 @@ const Schedule = () => {
   });
   const [fetchTimetable, setFetchTimetable] = useState(false);
   const mainClass =
-    "px-4 py-2 border-b-4 col-span-1 font-bold cursor-pointer transition-colors duration-300 text-sm lg:text-xl";
+    "px-4 py-2 border-b-4 col-span-1 font-bold cursor-pointer transition-colors duration-300 text-sm ";
   const activeClass = "border-black";
   const inactiveClass = "border-transparent hover:border-gray-200";
   const daysData = ["Mon", "Tue", "Wed", "Thur", "Fri"];
@@ -64,6 +64,7 @@ const Schedule = () => {
       getUser();
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   }, [fetchTimetable]);
 
@@ -173,27 +174,21 @@ const Schedule = () => {
   };
 
   return (
-    <div
-    // style={{
-    //   backgroundImage: `url(${background})`,
-    //   backgroundRepeat: "no-repeat",
-    //   backgroundSize: "100%",
-    // }}
-    >
+    <div>
       <MainNavbar active="schedule" />
       <div>
         <PageHeading title="Schedule" />
-        <div className="flex justify-center ">
-          <div className="rounded-lg  mx-4 flex flex-col gap-y-5 w-3/4">
+        <div className="flex justify-center lg:!text-lg !text-sm pb-pageEnd">
+          <div className="rounded-lg  px-10 flex flex-col gap-y-5 w-fit ">
             <button
               onClick={() => handleModifyClick()}
-              className="hidden lg:block w-max text-xl self-end  font-extralight px-8 py-3 m-4 rounded-full bg-blue-500 text-white "
+              className="hidden lg:block w-max  self-end  font-extralight px-8 py-3 m-4 rounded-full bg-primary text-white "
             >
               {showModify ? "Done" : "Modify"}
             </button>
             <button
               onClick={() => handleModifyClick()}
-              className="lg:hidden rounded-full p-2 drop-shadow-lg bg-myBlue fixed z-50 bottom-[10vh] right-[10vw]"
+              className="lg:hidden rounded-full p-2 drop-shadow-lg bg-primary fixed z-50 bottom-[10vh] right-[10vw]"
             >
               {showModify ? (
                 <BsCheck color="white" size={36} />
@@ -203,10 +198,10 @@ const Schedule = () => {
             </button>
             <div>
               <div className="flex gap-x-3 lg:w-full justify-between border-b-2 border-black ">
-                {daysData.map((day, idx) => (
+                {daysData?.map((day, idx) => (
                   <button
                     key={idx}
-                    className={`${mainClass} ${
+                    className={`${mainClass} lg:!text-lg !text-sm ${
                       activeTab === idx ? activeClass : inactiveClass
                     }`}
                     onClick={() => {
@@ -219,14 +214,14 @@ const Schedule = () => {
                 ))}
               </div>
             </div>
-            <div className="bg-transparent" id="myTabContent">
-              {timeTable[activeTab].map((x, idx) => (
+            <div className="bg-transparent " id="myTabContent">
+              {timeTable[activeTab]?.map((x, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-lg bg-white my-4 grid grid-cols-12 text-xl font-semibold "
+                  className={`py-4  px-8 rounded-lg bg-white my-4 flex justify-between  font-semibold `}
                 >
                   {currentlyEditing !== idx && (
-                    <div className="col-span-3">
+                    <div className="col-span-3 ">
                       {x.type &&
                         x.type !== "" &&
                         x.type[0].toUpperCase() + x.type.slice(1)}
@@ -234,7 +229,7 @@ const Schedule = () => {
                   )}
                   {currentlyEditing === idx && (
                     <input
-                      className="col-span-3"
+                      className="col-span-3 "
                       placeholder={
                         x.type !== "" &&
                         x.type[0].toUpperCase() + x.type.slice(1)
@@ -251,7 +246,11 @@ const Schedule = () => {
                     />
                   )}
 
-                  <div className={`col-span-6 grid grid-cols-3`}>
+                  <div
+                    className={`col-span-6 flex gap-x-2 items-center text-center 
+                    
+                    `}
+                  >
                     {/* {currentlyEditing !== idx && <div>{x.start_time}</div>} */}
                     {currentlyEditing !== idx && (
                       <div>
@@ -273,9 +272,7 @@ const Schedule = () => {
                         }}
                       />
                     )}
-                    <div className="col-span-1 grid place-content-center">
-                      -
-                    </div>
+                    <div>-</div>
                     {/* {currentlyEditing !== idx && <div>{x.end_time}</div>} */}
                     {currentlyEditing !== idx && (
                       <div>
@@ -326,9 +323,9 @@ const Schedule = () => {
                 </div>
               ))}
               {showModify && (
-                <div className="p-4 rounded-lg bg-white my-4 grid grid-cols-5  text-xl">
+                <div className="p-4 rounded-lg bg-white my-4  flex flex-col gap-y-2">
                   <input
-                    className="col-span-1"
+                    className="w-full p-4"
                     placeholder={"Subject"}
                     type="text"
                     value={newTask.type}
@@ -336,30 +333,32 @@ const Schedule = () => {
                       setNewTask({ ...newTask, type: e.target.value });
                     }}
                   />
-                  <input
-                    className="col-span-1"
-                    placeholder="From"
-                    type="time"
-                    value={newTask.start_time}
-                    onChange={(e) => {
-                      setNewTask({ ...newTask, start_time: e.target.value });
-                    }}
-                  />
-                  <div className="col-span-1 flex items-center justify-center">
-                    -
+                  <div>
+                    <input
+                      className="w-full p-4"
+                      placeholder="From"
+                      type="time"
+                      value={newTask.start_time}
+                      onChange={(e) => {
+                        setNewTask({ ...newTask, start_time: e.target.value });
+                      }}
+                    />
+                    <div className="w-full flex items-center justify-center">
+                      -
+                    </div>
+                    <input
+                      className="w-full p-4"
+                      placeholder="To"
+                      value={newTask.end_time}
+                      type="time"
+                      onChange={(e) => {
+                        setNewTask({ ...newTask, end_time: e.target.value });
+                      }}
+                    />
                   </div>
-                  <input
-                    className="col-span-1"
-                    placeholder="To"
-                    value={newTask.end_time}
-                    type="time"
-                    onChange={(e) => {
-                      setNewTask({ ...newTask, end_time: e.target.value });
-                    }}
-                  />
-                  <div className="col-span-1 h-max flex justify-center">
+                  <div className="w-full h-max flex justify-center">
                     <button
-                      className="  p-4 rounded-md text-white bg-myBlue"
+                      className=" w-full p-4 rounded-md text-white bg-primary"
                       onClick={addTask}
                     >
                       {/* <BsCheck size={30} />

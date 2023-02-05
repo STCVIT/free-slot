@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ReactComponent as FileUpload } from "../../assets/file-upload.svg";
 import RedirectingMiddleware from "../Links/RedirectingMiddleware";
-import { storage } from '../../firebase'
-import { ref, uploadBytes } from 'firebase/storage'
-import { v4 } from 'uuid'
+import { storage } from "../../firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 export const OrComponent = ({ isCaps }) => {
   const mainClass = `w-1/2 h-[1px] bg-gray-400 rounded-md`;
@@ -27,8 +27,8 @@ export const OrComponent = ({ isCaps }) => {
 
 const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
   const [preview, setPreview] = useState(null);
-  const localUser = JSON.parse(localStorage.getItem("user"))
-  const imageListRef = ref(storage, `${localUser.email}`)
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  const imageListRef = ref(storage, `${localUser.email}`);
   const images = files
     ? files.map((file) => (
         <div className="flex justify-center w-full" key={file.name}>
@@ -51,7 +51,7 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
       window.location.href.includes("/timetable") && navigate("/home");
     }
   }
-  const [errorType, setErrorType] = useState(null);
+
   const { sendTimetable } = UserAuth();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -59,23 +59,31 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
     if (!files[0] && !inputValue) {
       toast.error("Please fill atleast 1 input field.");
     }
-    try {
-      setIsLoading(true);
-      if (files[0]) {
-        const imageRef = ref(storage, `${localUser.email}/timetable`)
-        uploadBytes(imageRef, files[0]).then(()=>{
+
+    if (files[0]) {
+      try {
+        setIsLoading(true);
+        const imageRef = ref(storage, `${localUser.email}/timetable`);
+
+        uploadBytes(imageRef, files[0]).then(() => {
           var file = files[0];
+          console.log(file);
           const reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = async () => {
             file = reader.result;
             await sendTimetable(file);
           };
-          })
-        setIsLoading(false);
+        });
         navToHome();
+        setIsLoading(false);
         return;
-      } else if (inputValue) {
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+      }
+    } else if (inputValue) {
+      try {
         const res = await axios.post("timetable/freeSlotCopyPaste", {
           timetable: inputValue,
           email: JSON.parse(localStorage.getItem("user")).email,
@@ -86,22 +94,14 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
         );
         setInputValue("");
         navToHome();
-        if (res.status === 200) {
-          res.data ? navToHome() : setErrorType("text");
-        }
-        // console.log(res.status);
-        return;
-      } else {
-        alert.error("Please provide timetable in either of the ways.");
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+        toast.error(error.message);
       }
-    } catch (error) {
-      console.error(error);
-      errorType === "image" &&
-        toast.error(
-          "Could not read image, please re-upload or try another method."
-        );
-      errorType === "text" && toast.error("Please enter a valid timetable.");
-      setIsLoading(false);
+      return;
+    } else {
+      alert.error("Please provide timetable in either of the ways.");
     }
   };
   return (

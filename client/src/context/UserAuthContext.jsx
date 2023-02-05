@@ -30,17 +30,21 @@ export const UserAuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState("");
+  const [isSetOnce, setIsSetOnce] = useState(false);
   const signUp = async (email, password) => {
     return await createUserWithEmailAndPassword(auth, email, password);
   };
+
   const logIn = async (email, password) => {
     return await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logOut = async () => {
-    return await signOut(auth).then(() => {
-      localStorage.clear("user");
-    });
+  const logOut = () => {
+    return signOut(auth)
+      .then(() => {
+        localStorage.clear("user");
+      })
+      .catch((err) => console.log(err));
   };
   const googleSignUp = async () => {
     const googleAuthProvider = new GoogleAuthProvider();
@@ -131,7 +135,9 @@ export const UserAuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log(user);
+        setIsSetOnce(true);
+        // console.log(user);
+        // console.log(user.stsTokenManager);
         const localUser = {
           token: user.stsTokenManager.accessToken,
         };
@@ -140,12 +146,19 @@ export const UserAuthContextProvider = ({ children }) => {
       } else {
         setUser(null);
         localStorage.clear("user");
+        logOut();
       }
     });
     return () => {
       unsubscribe();
     };
   }, [user, token]);
+  useEffect(() => {
+    if (isSetOnce) {
+      localStorage.setItem("user", null);
+    }
+  }, [token]);
+
   return (
     <userAuthContext.Provider
       value={{

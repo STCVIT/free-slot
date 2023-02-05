@@ -14,7 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { GiHamburgerMenu } from "react-icons/gi";
 // import { ReactComponent as IllLogo } from "../assets/landingCard";
 import { ReactComponent as IllLogo } from "../assets/landingCard.svg";
-
+import MainNavbar from "../components/Menus/MainNavbar";
 const features = [
   {
     title: "Upload Timetable",
@@ -55,14 +55,14 @@ const Landing = () => {
     right: false,
   });
   const navigate = useNavigate();
-  const returnToHome = () => {
-    if (user) {
-      navigate("/home");
-    }
-  };
-  useEffect(() => {
-    returnToHome();
-  });
+  // const returnToHome = () => {
+  //   if (user) {
+  //     navigate("/home");
+  //   }
+  // };
+  // useEffect(() => {
+  //   returnToHome();
+  // });
 
   const navigateSignup = () => {
     navigate("/signup");
@@ -83,83 +83,90 @@ const Landing = () => {
   };
   return (
     <div className="pb-4">
-      <div className="sticky top-0 bg-white flex justify-between px-12 py-7 border-b-2">
-        <div>
-          <p className="text-5xl font-semibold">Freeslot</p>
-        </div>
-        <div className="p-4 lg:hidden">
-          {["right"].map((anchor) => (
-            <React.Fragment key={anchor}>
-              <Button onClick={toggleDrawer(anchor, true)}>
-                <GiHamburgerMenu size={25} color="black" />
-              </Button>
-              <SwipeableDrawer
-                anchor={anchor}
-                open={state[anchor]}
-                onClose={toggleDrawer(anchor, false)}
-                onOpen={toggleDrawer(anchor, true)}
-              >
-                <Box
-                  sx={{
-                    width:
-                      anchor === "top" || anchor === "bottom" ? "auto" : 250,
-                  }}
-                  role="presentation"
-                  onClick={toggleDrawer(anchor, false)}
-                  onKeyDown={toggleDrawer(anchor, false)}
+      {!user && (
+        <div className="sticky top-0 bg-white flex justify-between px-12 py-7 border-b-2">
+          <div>
+            <p className="text-5xl font-semibold">Freeslot</p>
+          </div>
+          <div className="p-4 lg:hidden">
+            {["right"].map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleDrawer(anchor, true)}>
+                  <GiHamburgerMenu size={25} color="black" />
+                </Button>
+                <SwipeableDrawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                  onOpen={toggleDrawer(anchor, true)}
                 >
-                  <List>
-                    <ListItem disablePadding>
-                      <ListItemButton className="border-b-2 border-black">
-                        <Link
-                          to={`/login`}
-                          style={{ color: "black" }}
-                          className="w-full"
-                        >
-                          Login
-                        </Link>
-                      </ListItemButton>
-                    </ListItem>
-                    <Divider />
-                    <ListItem disablePadding>
-                      <ListItemButton className="border-b-2 border-black ">
-                        <Link
-                          to={`/signup`}
-                          style={{ color: "black" }}
-                          className="w-full"
-                        >
-                          Signup
-                        </Link>
-                      </ListItemButton>
-                    </ListItem>
-                  </List>
-                </Box>
-              </SwipeableDrawer>
-            </React.Fragment>
-          ))}
+                  <Box
+                    sx={{
+                      width:
+                        anchor === "top" || anchor === "bottom" ? "auto" : 250,
+                    }}
+                    role="presentation"
+                    onClick={toggleDrawer(anchor, false)}
+                    onKeyDown={toggleDrawer(anchor, false)}
+                  >
+                    <List>
+                      <ListItem disablePadding>
+                        <ListItemButton className="border-b-2 border-black">
+                          <Link
+                            to={`/login`}
+                            style={{ color: "black" }}
+                            className="w-full"
+                          >
+                            Login
+                          </Link>
+                        </ListItemButton>
+                      </ListItem>
+                      <Divider />
+                      <ListItem disablePadding>
+                        <ListItemButton className="border-b-2 border-black ">
+                          <Link
+                            to={`/signup`}
+                            style={{ color: "black" }}
+                            className="w-full"
+                          >
+                            Signup
+                          </Link>
+                        </ListItemButton>
+                      </ListItem>
+                    </List>
+                  </Box>
+                </SwipeableDrawer>
+              </React.Fragment>
+            ))}
+          </div>
+          <div className="lg:flex gap-x-4 hidden">
+            <button
+              onClick={navigateLogin}
+              className=" text-bg-primary py-4 px-6 border border-primary rounded-md"
+            >
+              Login
+            </button>
+            <button
+              onClick={navigateSignup}
+              className=" bg-primary py-4 px-6 border-primary text-white rounded-md"
+            >
+              Signup
+            </button>
+          </div>
         </div>
-        <div className="lg:flex gap-x-4 hidden">
-          <button
-            onClick={navigateLogin}
-            className=" text-myBlue py-4 px-6 border border-myBlue rounded-md"
-          >
-            Login
-          </button>
-          <button
-            onClick={navigateSignup}
-            className=" bg-myBlue py-4 px-6 border-myBlue text-white rounded-md"
-          >
-            Signup
-          </button>
+      )}
+      {user && (
+        <div className="sticky top-0">
+          <MainNavbar active="landing" />
         </div>
-      </div>
+      )}
       <div className="flex flex-col px-4 lg:px-12 py-12 gap-y-32 ">
         <div className="flex flex-col gap-y-8 lg:grid grid-cols-2 ">
           <div className="flex items-center justify-center ">
             <p className="font-bold text-4xl lg:text-7xl">
               Scheduling
               <br />
-              meetings for <i className="text-myBlue">everyone</i>
+              meetings for <i className="text-bg-primary">everyone</i>
             </p>
           </div>
           <div className="flex justify-center w-full px-8">

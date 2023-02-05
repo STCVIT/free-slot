@@ -2,13 +2,10 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Menu1 from "../assets/menu.svg";
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Example() {
   return (
-    <Menu as="div" className="flex items-center lg:px-4 lg:px-3 px:3 -mb-1">
+    <Menu as="div" className="flex items-center lg:px-3 px:3 -mb-1">
       <div>
         <Menu.Button className="">
           <img src={Menu1} alt="" className="h-1/6" />
@@ -30,10 +27,10 @@ export default function Example() {
               {({ active }) => (
                 <a
                   href="/"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
+                  className={`${
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                  }
+                  block px-4 py-2 text-sm`}
                 >
                   Home
                 </a>
@@ -43,10 +40,10 @@ export default function Example() {
               {({ active }) => (
                 <a
                   href="/"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
+                  className={`${
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                  }
+                    block px-4 py-2 text-sm`}
                 >
                   My Schedule
                 </a>
@@ -56,10 +53,9 @@ export default function Example() {
               {({ active }) => (
                 <a
                   href="/"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
+                  className={`${
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                  } block px-4 py-2 text-sm`}
                 >
                   About Us
                 </a>

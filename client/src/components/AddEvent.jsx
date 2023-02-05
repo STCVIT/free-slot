@@ -4,7 +4,7 @@ import PageHeading from "./Headings/PageHeading";
 import { toast } from "react-toastify";
 import { FindFreeSlot } from "../context/FreeSlotContext";
 import "react-toastify/dist/ReactToastify.css";
-import moment from 'moment'
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 //import userModel from "../../../server/src/models/user.model";
 import { ReactComponent as Gmeet } from "../assets/Gmeet.svg";
@@ -19,7 +19,7 @@ const EntryField = ({ label, value, onChange, isDesc }) => {
         rows={isDesc ? "4" : "1"}
         type="text"
         id="description"
-        className="focus:border-myBlue focus:!outline-none mt-4 ring-0 border-2 resize-none  text-black-900 text-sm rounded-lg w-full p-4"
+        className="focus:border-primary focus:!outline-none mt-4 ring-0 border-2 resize-none  text-black-900 text-sm rounded-lg w-full p-4"
         required
         value={value}
         onChange={onChange}
@@ -49,8 +49,8 @@ const AddEvent = () => {
     newStartTime,
     newEndTime,
   } = formData;
-  var { start_time, end_time } = chosenSlotTime;
-  const [value, setValue] = React.useState([start_time, end_time]);
+  const { start_time, end_time } = chosenSlotTime;
+  const [value, setValue] = useState([start_time, end_time]);
   const navigate = useNavigate();
   const handleSubmit = () => {
     if (!eventName) {
@@ -75,11 +75,10 @@ const AddEvent = () => {
           end_time: newEndTime,
           team_name: newTeamName,
           description: eventDescription,
-          date: moment(chosenDate).format('YYYY-MM-DD'),
+          date: moment(chosenDate).format("YYYY-MM-DD"),
           location: eventLocation,
           link: eventLink,
         });
-
         navigate("/home");
         localStorage.removeItem("team_id");
       } catch (err) {
@@ -206,7 +205,7 @@ const AddEvent = () => {
                 {platforms.map((platform) => (
                   <div
                     className={`border hover:border-blue-300 cursor-pointer ${
-                      eventLocation === platform.name && "border-myBlue"
+                      eventLocation === platform.name && "border-primary"
                     } rounded-md`}
                     onClick={() =>
                       setFormData((prev) => {

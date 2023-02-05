@@ -102,7 +102,7 @@ const ContactUs = ({ isHomePage }) => {
           <div>
             <button
               type="submit"
-              className="flex-1 text-lg items-center h-fit w-full py-3 px-5  font-medium text-center text-white bg-myBlue rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              className="flex-1 text-lg items-center h-fit w-full py-3 px-5  font-medium text-center text-white bg-primary rounded-lg hover:bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300"
               onClick={handleSubmit}
             >
               Send Message

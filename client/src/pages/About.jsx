@@ -41,8 +41,8 @@ const About = () => {
       <MainNavbar active="about" />
       <div>
         <PageHeading title="About Us" />
-        <div className="flex flex-col gap-y-40 px-11">
-          <div className="flex flex-col gap-y-4 lg:grid grid-cols-2 gap-x-16 px-4 lg:px-16">
+        <div className="flex flex-col lg:gap-y-40 mx-8">
+          <div className="flex flex-col gap-y-4 lg:grid grid-cols-2 gap-x-16 lg:px-16">
             {data.map((item, idx) => (
               <AboutCard
                 key={idx}
@@ -58,7 +58,7 @@ const About = () => {
             <img src="/assets/the-purpose.png" alt="illustration" />
           </div> */}
         </div>
-        <div className="flex my-28 flex-col justify-center items-center">
+        <div className="flex lg:my-28 my:4 flex-col justify-center items-center mx-8">
           <h3 className="lg:text-8xl font-bold">The Community</h3>
           <img
             className="w-1/6 my-6"

@@ -9,16 +9,16 @@ import Loader from "../components/Loader/Loader";
 import Dropzone from "react-dropzone";
 import DragFile from "../components/Signup/DragFile";
 import { toast } from "react-toastify";
-import { ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage'
-import { storage } from '../firebase'
+import { ref, listAll, getDownloadURL, deleteObject } from "firebase/storage";
+import { storage } from "../firebase";
 
 const Profile = () => {
   const { user } = UserAuth();
   const [files, setFiles] = useState([]);
   const localUser = JSON.parse(localStorage.getItem("user"));
-  const imageListRef = ref(storage, `${localUser.email}`)
+  const imageListRef = ref(storage, `${localUser.email}`);
   const [userDetails, setUserDetails] = useState({});
-  const [imageList, setImageList] = useState([])
+  const [imageList, setImageList] = useState([]);
   const [showUpload, setShowUpload] = useState(false);
   const { isLoading, setIsLoading } = FindFreeSlot();
 
@@ -26,30 +26,28 @@ const Profile = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    listAll(imageListRef).then((res)=>{
-      res.items.forEach((item)=>{
-        getDownloadURL(item).then((url)=>{
-          setImageList((prev)=>[...prev, url])
-        })
-      })
-    })
+    listAll(imageListRef).then((res) => {
+      res.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList((prev) => [...prev, url]);
+        });
+      });
+    });
     axios
       .get("user/getUser")
       .then((res) => {
         setUserDetails(res.data);
       })
-      .then(() => {
-        setIsLoading(false);
-      })
+
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(setIsLoading(false));
   }, [files]);
   // console.log("Name: ", name);
   console.log("User Details: ", userDetails);
   document.title = "Profile";
 
-  
   const { sendTimetable, deleteUser } = UserAuth();
   const uid = window.location.pathname.match(
     /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
@@ -60,14 +58,11 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     try {
       console.log(localUser.email);
-      await axios.delete(
-        `user/deleteUser/${localUser.email}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localUser.token}`,
-          },
-        }
-      );
+      await axios.delete(`user/deleteUser/${localUser.email}`, {
+        headers: {
+          Authorization: `Bearer ${localUser.token}`,
+        },
+      });
       await deleteUser();
       localStorage.removeItem("user");
       navigate("/");
@@ -81,7 +76,7 @@ const Profile = () => {
       <MainNavbar active="account" />
       <div className="bg-gray-100">
         <PageHeading title="Profile" />
-        <div className="w-full ">
+        <div className="w-full pb-pageEnd">
           <div className="flex w-full h-full lg:justify-center px-4">
             <div className="col-span-5 gap-y-3 items-center lg:w-2/4 w-full">
               <div className="flex flex-col gap-y-6 items-start justify-start">
@@ -111,11 +106,9 @@ const Profile = () => {
                 </div>
                 <div className="flex flex-col w-full gap-y-3 rounded-md p-4 bg-white">
                   <h1 className="text-2xl text-gray-600">Timetable</h1>
-                  {!showUpload && <img
-                    className="h-full"
-                    src={imageList}
-                    alt="timeTable"
-                  />}
+                  {!showUpload && (
+                    <img className="h-full" src={imageList} alt="timeTable" />
+                  )}
                   <button
                     onClick={() => {
                       // setIsLoading(true)
@@ -126,13 +119,13 @@ const Profile = () => {
                       //   setIsLoading(false)
                       //   // setImageList(null)
                       //   toast.success("File deleted successfully")
-                      setShowUpload(true)
-                      
+                      setShowUpload(true);
+
                       //     }).catch((error) => {
                       //       toast.error("An error occurred!")
                       //       setIsLoading(false)
                       //     });
-                      }}
+                    }}
                     className=" outline rounded-md outline-blue-600 text-blue-600 p-2 w-full lg:w-fit self-center lg:self-start"
                   >
                     Upload new timetable

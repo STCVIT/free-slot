@@ -38,7 +38,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
 
     try {
       const teamId = await axios.get(`team/${team_name}`);
-      console.log(teamId)
+      console.log(teamId);
       localStorage.setItem("team_id", teamId.data.team_id);
       await justFindFreeSlot(finalArr);
       navigate("/freeslot");
@@ -103,7 +103,7 @@ const ModalChooseTeam = ({ onClose, data }) => {
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <div className="p-4">
-            <BsSearch className=" text-2xl text-myBlue" />
+            <BsSearch className=" text-2xl text-bg-primary" />
           </div>
         </div>
       </div>

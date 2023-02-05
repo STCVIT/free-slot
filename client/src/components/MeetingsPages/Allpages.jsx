@@ -49,7 +49,7 @@ export const AllPages = ({ filter, tab }) => {
           },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
+        console.log(upcoming.data);
         setUpcomingData(upcoming.data);
         setPastData(past.data);
         setCancelledData(cancelled.data);

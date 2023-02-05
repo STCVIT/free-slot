@@ -35,6 +35,7 @@
     "react-toastify": "^9.0.8",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
+    "slugify": "^1.6.5",
     "taggle": "^1.15.0",
     "typing-ahead": "^1.0.4",
     "web-vitals": "^2.1.4"

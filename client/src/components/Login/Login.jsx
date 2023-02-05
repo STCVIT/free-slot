@@ -159,13 +159,13 @@ const Login = () => {
             </form>
             <div className="pt-8 pb-1 text-center ">
               <button
-                className="bg-myBlue text-white w-full font-bold mx-auto py-3 rounded "
+                className="bg-primary text-white w-full font-bold mx-auto py-3 rounded "
                 onClick={handleSubmit}
               >
                 Login
               </button>
             </div>
-            <div className="w-fit text-myBlue my-2 p-2">
+            <div className="w-fit text-bg-primary my-2 p-2">
               <Link to="/forgot">Forgot Password?</Link>
             </div>
             <OrComponent isCaps={true} />
@@ -175,7 +175,7 @@ const Login = () => {
                 Don't have an account?
                 <Link
                   to={uid ? "/signup/" + uid : "/signup"}
-                  className="pl-2 text-myBlue"
+                  className="pl-2 text-bg-primary"
                 >
                   Sign-Up
                 </Link>

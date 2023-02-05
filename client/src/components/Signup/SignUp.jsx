@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import signupInfoImg from "../../assets/SignupInfoImage.svg";
 import { UserAuth } from "../../context/UserAuthContext";
 import { useNavigate, Link } from "react-router-dom";
-import googleLogo from "../../assets/Gooogle-logo.svg";
 import Visible from "../../assets/fi_eye.svg";
 import GoogleButton from "react-google-button";
 import NotVisible from "../../assets/fi_eye-off.svg";
@@ -11,13 +10,18 @@ import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { OrComponent } from "./DragFile";
 const SignUp = () => {
   document.title = "Sign Up";
-  const [name, setName] = useState(null);
-  const [regno, setRegno] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [error, setError] = useState(null);
-  const [emailAlert, setEmailAlert] = useState(false);
-  const [regAlert, setRegAlert] = useState(false);
+  const [userDetails, setUserDetails] = useState({
+    name: null,
+    regno: null,
+    email: null,
+    password: null,
+  });
+  const [errors, setError] = useState({
+    name: false,
+    regno: false,
+    email: false,
+    password: false,
+  });
   const navigate = useNavigate();
   const { googleSignUp, signUp } = UserAuth();
   const [passwordType, setPasswordType] = useState("password");
@@ -29,30 +33,32 @@ const SignUp = () => {
 
   const emailPattern = /([a-z|.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/;
   const regPattern = /([0-9]{2})([A-Z]{3})([0-9]{4})/g;
+  const { name, regno, email, password } = userDetails;
+  const { email: emailError, regno: regnoError, name: nameError } = errors;
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       if (!emailPattern.test(email) || !regPattern.test(regno) || !name) {
         if (!emailPattern.test(email)) {
-          setEmailAlert(true);
-          setError("VIT mail needed");
+          setError({ ...errors, email: true });
         }
         if (!regPattern.test(regno)) {
-          setRegAlert(true);
-          setError("Invalid Registration Number");
+          setError({ ...errors, regno: true });
         }
         if (!name) {
-          setError("Name is required");
+          setError({ ...errors, name: true });
         }
 
         return;
       }
-      setRegAlert(false);
-      setEmailAlert(false);
-      setError(null);
-      setName(null);
-      // setIsLoading(true);
+      setError({
+        name: false,
+        regno: false,
+        email: false,
+      });
+
       setIsLoading(true);
+
       const response = await axios.post("user/create", {
         name,
         regno,
@@ -65,6 +71,8 @@ const SignUp = () => {
         } else if (res) {
           navigate("/timetable");
         }
+      } else {
+        alert("Failed to create an account");
       }
       setIsLoading(false);
     } catch (error) {
@@ -110,7 +118,7 @@ const SignUp = () => {
         </div>
         <div className="visible col-span-1 sm:col-span-2 mt-7">
           <div className="flex h-full items-center  w-full">
-            <div className="px-3 sm:py-2 sm:px-16 lg:py-3.5 lg:px-24 lg:py-5 lg:px-48 w-full">
+            <div className="px-3 sm:py-2 sm:px-16 lg:py-3.5 lg:px-24  w-full">
               <h1 className="font-bold text-center text-3xl pb-5">Sign-Up</h1>
               <GoogleButton style={{ width: "100%" }} onClick={oAuth} />
               <div className="my-4">
@@ -124,10 +132,12 @@ const SignUp = () => {
                     id="name"
                     autoComplete="off"
                     type="text"
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) =>
+                      setUserDetails({ ...userDetails, name: e.target.value })
+                    }
                     required
                   />
-                  {regAlert && (
+                  {nameError && (
                     <p className="text-red-400 mt-2 text-sm">
                       *Please enter name
                     </p>
@@ -144,10 +154,15 @@ const SignUp = () => {
                     type="text"
                     // value={regno.toUpperCase()}
                     autoComplete="false"
-                    onChange={(e) => setRegno(e.target.value.toUpperCase())}
+                    onChange={(e) =>
+                      setUserDetails({
+                        ...userDetails,
+                        regno: e.target.value.toUpperCase(),
+                      })
+                    }
                     required
                   />
-                  {regAlert && (
+                  {regnoError && (
                     <p className="text-red-400 mt-2 text-sm">
                       *Invalid Register Number
                     </p>
@@ -160,11 +175,15 @@ const SignUp = () => {
                     className="focus:outline-none border-2 rounded py-3 px-4"
                     id="email"
                     type="email"
-                    // value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) =>
+                      setUserDetails({
+                        ...userDetails,
+                        email: e.target.value.toLocaleLowerCase(),
+                      })
+                    }
                     required
                   />
-                  {emailAlert && (
+                  {emailError && (
                     <p className="text-red-400 mt-2 text-sm">
                       *VIT Email ID needed
                     </p>
@@ -178,8 +197,12 @@ const SignUp = () => {
                       className=" focus:outline-none px-4 py-3 w-full"
                       type={passwordType}
                       id="password"
-                      // value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) =>
+                        setUserDetails({
+                          ...userDetails,
+                          password: e.target.value,
+                        })
+                      }
                       required
                     />
                     <div className="cursor-pointer" onClick={togglePassword}>
@@ -203,7 +226,7 @@ const SignUp = () => {
               <div className="pt-8 pb-1 text-center ">
                 <Link to="/timetable">
                   <button
-                    className="bg-myBlue text-white w-full font-bold mx-auto py-2 rounded"
+                    className="bg-primary text-white w-full font-bold mx-auto py-2 rounded"
                     // disabled={loading}
                     onClick={handleSubmit}
                   >
@@ -217,7 +240,7 @@ const SignUp = () => {
                   Already have an account?
                   <Link
                     to={uid ? "/login/" + uid : "/login"}
-                    className="pl-2 text-myBlue"
+                    className="pl-2 text-bg-primary"
                   >
                     Login
                   </Link>

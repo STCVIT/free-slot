@@ -1,107 +1,82 @@
 import { useState } from "react";
 import { Accordion } from "@mui/material";
+import { Children } from "react";
+
+import { IoChevronDownOutline } from "react-icons/io5";
+import slugify from "slugify";
 const data = [
   {
+    id: 1,
     title: "Create Account",
     desc: "Create an account or login into yours if already have one",
   },
   {
+    id: 2,
     title: "Add peers",
     desc: "Enter the registrations number of your meeting members and make a team",
   },
   {
+    id: 3,
     title: "Make Event",
     desc: "Choose the free slot timings of your convenience and schedule a meet for everyone.",
   },
 ];
 
 const ExpandingCard = () => {
-  const [isHovered, setIsHovered] = useState(true);
-  const [currentIdx, setcurrentIdx] = useState([0, 1, 2]);
-  const [mouseFinally, setMouseFinally] = useState(true);
+  const [active, setActive] = useState(0);
 
-  const handleMouseLeave = () => {
-    setcurrentIdx([0, 1, 2]);
-    setMouseFinally(true);
-  };
-
-  const handleMouseEnter = (idx) => {
-    setMouseFinally(false);
-    setIsHovered(true);
-    setcurrentIdx([idx]);
-  };
   return (
     <div>
-      <div
-        className="hidden lg:block my-10 px-16"
-        onMouseLeave={() => handleMouseLeave()}
-      >
-        <div className={`flex  w-full rounded-md outline`}>
-          {data.map((item, idx) => {
-            return (
-              <div
-                key={idx}
-                className={`flex  items-start border-l border-r border-black p-6 h-[600px] ${
-                  isHovered && currentIdx.includes(idx)
-                    ? "w-full text-full"
-                    : "w-0 text-[1px]"
-                } ${
-                  mouseFinally ? "!w-1/3" : ""
-                } transition-width duration-1000 ease-in-out`}
-                onMouseEnter={() => handleMouseEnter(idx)}
-              >
-                {!currentIdx.includes(idx) && (
-                  <div className="text-xl font-semibold">{idx + 1}</div>
-                )}
-                <div>
-                  {isHovered && currentIdx.includes(idx) && (
-                    <div>
-                      <div className="flex flex-row-reverse">
-                        <div className="rounded-md p-2 -mx-2">
-                          <img
-                            className="rounded-md "
-                            src={`/assets/image${idx + 1}.png`}
-                            alt={item.title}
-                          />
-                        </div>
-                        {currentIdx.length !== 3 && (
-                          <div
-                            className={`flex flex-col gap-y-2 py-2 leading-tight`}
-                          >
-                            <p
-                              className={`${
-                                currentIdx.includes(idx) && " text-5xl"
-                              } transition-all duration-75 delay-100`}
-                            >
-                              {idx + 1}
-                            </p>
-                            <p className="text-4xl p-0 m-0 font-bold">
-                              {item.title}
-                            </p>
-                            <p>{item.desc}</p>
-                          </div>
-                        )}
+      <div className=" lg:my-10 lg:px-16  my-4">
+        <div className="flex w-full gap-x-10">
+          <div className="w-full lg:w-1/2 min-h-full border">
+            {Children.toArray(
+              data.map((item, idx) => {
+                const isActive = data[active].title === item.title;
+                return (
+                  <div
+                    onClick={() => setActive(idx)}
+                    className={`transition-all duration-300 flex flex-col relative border-b gap-y-4 w-full h-1/6 cursor-pointer justify-center p-2 ${
+                      isActive && " !h-4/6 "
+                    }`}
+                  >
+                    <div className="flex justify-between items-start ">
+                      <h1
+                        className={` transition-all flex justify-between items-center w-full duration-300 ease-in-out p-0 m-0 font-bold text-2xl ${
+                          isActive && "!text-3xl lg:!text-5xl"
+                        }`}
+                      >
+                        {item.title}{" "}
+                      </h1>
+                      <div
+                        className={`h-fit transition-all duration-300 ease-in-out absolute top-1 right-1 ${
+                          isActive && "rotate-180"
+                        }`}
+                      >
+                        <IoChevronDownOutline size={25} />
                       </div>
-                      {currentIdx.length === 3 && (
-                        <div className="flex flex-col gap-y-2 py-2 leading-tight">
-                          <p className="text-5xl p-0 m-0 font-bold">
-                            {idx + 1}
-                          </p>
-                          <p className="text-4xl p-0 m-0 font-bold">
-                            {item.title}
-                          </p>
-                          <p className="text-base ">{item.desc}</p>
-                        </div>
-                      )}
                     </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+                    <p
+                      className={`transition-all w-3/4 duration-150 ease-in text-[0px] ${
+                        isActive && "!text-lg lg:!text-2xl"
+                      }`}
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
+                );
+              })
+            )}
+          </div>
+          <div className="w-1/2 hidden lg:block">
+            <img
+              className={`rounded-md h-full`}
+              src={`/assets/aboutImage${active + 1}.png`}
+              alt={data[active].title}
+            />
+          </div>
         </div>
       </div>
-      <div className="lg:hidden"></div>
     </div>
   );
 };

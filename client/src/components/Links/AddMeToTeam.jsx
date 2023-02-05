@@ -122,18 +122,19 @@ const AddMeToTeam = () => {
                   <span className="font-semibold">{linkMaker}</span> wants to
                   add you to team
                   <br />
-                  {localStorage.getItem("team_name") && localStorage.getItem("team_name")}
+                  {localStorage.getItem("team_name") &&
+                    localStorage.getItem("team_name")}
                   <span className="font-semibold">{uid}</span>
                 </div>
                 <div className="flex w-full justify-evenly my-4 items-center">
                   <button
-                    className="text-white bg-myBlue p-4 border border-myBlue rounded-md"
+                    className="text-white bg-primary p-4 border border-primary rounded-md"
                     onClick={acceptHandler}
                   >
                     Accept
                   </button>
                   <button
-                    className="border-myBlue border p-4 rounded-md"
+                    className="border-primary border p-4 rounded-md"
                     onClick={rejectHandler}
                   >
                     Reject

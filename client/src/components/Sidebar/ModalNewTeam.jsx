@@ -4,7 +4,7 @@ import { FindFreeSlot } from "../../context/FreeSlotContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import axios from "../../axios";
 const FreeSlot = ({ onClose }) => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const FreeSlot = ({ onClose }) => {
     setSaveTeam,
     saveTeam,
   } = FindFreeSlot();
-  var regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
+  const regex = /([0-9]{2})([A-Za-z]{3})([0-9]{4})/;
   const [tags, setTags] = useState([]);
   const [tagNote, setTagNote] = useState("Add a tag");
   const [saveNow, setSaveNow] = useState(true);
@@ -26,20 +26,19 @@ const FreeSlot = ({ onClose }) => {
   const [currentVaue, setCurrentValue] = useState("");
   const localUser = JSON.parse(localStorage.getItem("user"));
   const [userDetails, setUserDetails] = useState({});
-  if (!tags.includes(userDetails.reg_no) && userDetails.reg_no)
-    tags.push(userDetails.reg_no);
 
   useEffect(() => {
     axios
       .get("user/getUser")
       .then((res) => {
+        console.log(res.data);
         setUserDetails(res.data);
+        setTags((prevTags) => [...prevTags, res.data.reg_no]);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  //console.log("User Details: ", userDetails);
   const ToastMessageContainer = (props) => {
     return (
       <div>
@@ -56,15 +55,15 @@ const FreeSlot = ({ onClose }) => {
       const res = await axios.get("user/getUser");
       console.log(res);
 
-      if (res.data) {
-        if (res.data.timetable) {
-          checkAll && setTags([...tags, reg_no]);
-          return true;
-        } else {
-          !checkAll && toast.error("Timetable not found for " + reg_no + "");
-          checkAll && noTimetable.push(reg_no);
-          return false;
-        }
+      // if (res.data) {
+      if (res.data?.timetable) {
+        checkAll && setTags([...tags, reg_no]);
+        return true;
+      } else {
+        !checkAll && toast.error("Timetable not found for " + reg_no + "");
+        checkAll && noTimetable.push(reg_no);
+        return false;
+        // }
       }
     } catch (err) {
       // alert("Error: " + err);
@@ -190,7 +189,8 @@ const FreeSlot = ({ onClose }) => {
     if (tags.length === 0) setTagNote("Add a tag!");
   }
   const removeAll = () => {
-    setTags([]);
+    setTags([userDetails.reg_no]);
+
     setTagNote("Add a tag");
   };
 
@@ -227,7 +227,7 @@ const FreeSlot = ({ onClose }) => {
       onClose();
     };
     const markAsDone =
-      "flex-1 items-center w-fit h-fit py-2 px-5 text-sm font-medium text-center text-white bg-myBlue rounded-sm hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 border-myBlue";
+      "flex-1 items-center w-fit h-fit py-2 px-5 text-sm font-medium text-center text-white bg-primary rounded-sm hover:bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 border-primary";
     const cancel =
       "flex-1 rounded  px-4 items-center py-2 text-black underline border-[1px] border-gray-400 rounded-sm";
     return (
@@ -290,7 +290,7 @@ const FreeSlot = ({ onClose }) => {
                 {tags.map((tag, index) => (
                   <button
                     onClick={() => removeTag(index)}
-                    className="p-2 bg-myBlue text-white border border-myBlue rounded-md hover:bg-red-400 hover:line-through h hover:scale-110"
+                    className="p-2 bg-primary text-white border border-primary rounded-md hover:bg-red-400 hover:line-through h hover:scale-110"
                     key={index}
                   >
                     <span className="text">{tag}</span>
@@ -339,7 +339,7 @@ const FreeSlot = ({ onClose }) => {
             <button
               type="submit"
               onClick={submitFreeSlot}
-              className="text-white w-full bg-myBlue font-medium rounded-lg text-sm  py-2.5 text-center border-2 border-myBlue"
+              className="text-white w-full bg-primary font-medium rounded-lg text-sm  py-2.5 text-center border-2 border-primary"
             >
               Find Free Slot!
             </button>

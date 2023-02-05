@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const TabNavbar = ({ activeTab, setActiveTab }) => {
   const mainClass =
     "px-4 py-2 border-b-4  col-span-1 cursor-pointer transition-colors duration-300";
-  const activeClass = "border-myBlue font-semibold";
+  const activeClass = "border-b-primary font-semibold";
   const inactiveClass = "border-transparent hover:border-gray-200";
 
   var desc = document.querySelectorAll('[id^="meetingInfoCard"]');
@@ -17,11 +17,11 @@ const TabNavbar = ({ activeTab, setActiveTab }) => {
     });
   };
   return (
-    <ul className="lg:grid flex lg:w-1/2 justify-between lg:justify-start  lg:gap-x-0 grid-cols-3 w-full text-center">
+    <ul className="lg:grid flex lg:w-1/3 justify-between lg:justify-start  lg:gap-x-0 grid-cols-3 w-full text-center">
       {["upcoming", "cancelled", "past"].map((tab, idx) => (
         <li
           key={idx}
-          className={`${mainClass} ${
+          className={`${mainClass}  py-4 ${
             activeTab === tab ? activeClass : inactiveClass
           }`}
           onClick={() => handleTabChange(tab)}
@@ -51,7 +51,7 @@ const Tabs = ({ filter, setGroup }) => {
     <div>
       {isLg && <PageHeading title="Meetings" />}
       <div className="sticky top-0 z-20 drop-shadow">
-        <div className="border-b w-full bg-white pt-4 mt-10">
+        <div className="border-b w-full bg-white  ">
           <TabNavbar
             filter={filter}
             numberOfCards={numberOfCards}
