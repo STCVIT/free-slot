@@ -10,7 +10,7 @@ const {
 } = require("../controllers/teamController");
 const { checkUser } = require("../middleware/auth"); 
 
-router.post("/create", checkUser, addTeam);
+router.post("/create", addTeam);
 router.get("/:team_name", checkUser, getTeamByName);
 router.get("/teamMembers/:team_id", checkUser, getTeamMembers);
 router.post("/getUserTeams", checkUser, getUserTeams);
