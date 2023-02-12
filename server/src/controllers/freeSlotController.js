@@ -50,7 +50,7 @@ const freeSlotCp = async(req, res, next)=>{
         }
         let pastedTimetable = freeSlotCopyPaste(req.body.timetable)
         if(!pastedTimetable[0][0] || pastedTimetable[0][0] == undefined){
-            return errorHandler(new InvalidData("Invalid Tiemtable Provided"),req,res)
+            return errorHandler(new InvalidData("Invalid Timetable Provided"),req,res)
         }
         const timetable = await User.update(
             {timetable: pastedTimetable},
