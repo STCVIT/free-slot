@@ -49,7 +49,7 @@ const freeSlotCp = async(req, res, next)=>{
             return errorHandler(new InvalidData("Email Not Provided"), req, res)
         }
         let pastedTimetable = freeSlotCopyPaste(req.body.timetable)
-        if(!pastedTimetable || pastedTimetable == undefined){
+        if(!pastedTimetable[0][0] || pastedTimetable[0][0] == undefined){
             return errorHandler(new InvalidData("Invalid Tiemtable Provided"),req,res)
         }
         const timetable = await User.update(
