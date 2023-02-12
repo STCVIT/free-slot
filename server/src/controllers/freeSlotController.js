@@ -41,15 +41,19 @@ const freeSlotScreenshot = async(req, res, next)=>{
         console.error(error.message);
     }
 }
-//adding timetbale of user by copy-paste method
+//adding timetable of user by copy-paste method
 const freeSlotCp = async(req, res, next)=>{
     try {
         let email = req.body.email
         if(!email || email == undefined){
             return errorHandler(new InvalidData("Email Not Provided"), req, res)
         }
+        let pastedTimetable = freeSlotCopyPaste(req.body.timetable)
+        if(!pastedTimetable || pastedTimetable == undefined){
+            return errorHandler(new InvalidData("Invalid Tiemtable Provided"),req,res)
+        }
         const timetable = await User.update(
-            {timetable: freeSlotCopyPaste(req.body.timetable)},
+            {timetable: pastedTimetable},
             {where: {email: email}}
         )
         // res.status(200).send(timetable)
