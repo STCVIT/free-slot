@@ -39,7 +39,7 @@ function Sidebar({ filter, setFilter }) {
   }, [urlPath]);
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.token;
+    const token = user?.token;
     // console.log(user, token);
     async function getData() {
       // console.log("check");
@@ -47,7 +47,7 @@ function Sidebar({ filter, setFilter }) {
         .post(
           "team/getUserTeams",
           {
-            email: user.email,
+            email: user?.email,
           },
           { headers: { Authorization: `Bearer ${token}` } }
         )

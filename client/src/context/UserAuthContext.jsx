@@ -112,14 +112,13 @@ export const UserAuthContextProvider = ({ children }) => {
           "Timetable updated successfully. Please check schedule page to confirm"
         );
         setTtLoader(false);
-        if (window.location.pathname === "/timetable") {
-          window.location.href = "/home";
-        }
+        // if (window.location.pathname === "/timetable") {
+        //   window.location.href = "/home";
+        // }
         return;
       }
       setTtLoader(false);
     } catch (err) {
-      console.log(err);
       toast.error(
         "Could not read timetable, please re-upload or try the copy-paste option"
       );

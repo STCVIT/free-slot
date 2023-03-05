@@ -18,7 +18,7 @@ const Responses = ({ onClose }) => {
       setIsLoading(false);
       // localStorage.removeItem("team_name");
     } catch (err) {
-      console.log(err);
+      toast.error("Something went wrong!");
     }
   };
   const showCopiedToast = () => {

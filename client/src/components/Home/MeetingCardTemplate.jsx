@@ -29,9 +29,7 @@ const MeetingCardTemplate = (props) => {
   const pastCards = [];
   //check team_id
   const getTeamMembers = async () => {
-    console.log(props.team_id);
     const response = await axios.get(`team/teamMembers/${props.team_id}`);
-    console.log(response.data);
     setTeamMembers(response.data);
   };
   // useEffect(() => {
@@ -127,19 +125,19 @@ const MeetingCardTemplate = (props) => {
                     <div className="rounded-md bg-[#F4F4F4] w-full  p-4 max-h-[25vh] overflow-y-auto my-2">
                       <p>{desc}</p>
                     </div>
-                    <p className="text-[#7B8A99]">
+                    {/* <p className="text-[#7B8A99]">
                       Members
                       <br />
                       <span className="text-black overflow-hidden">
-                        {/* {props.members.map((member, idx) => {}
-                         */}
-                        {/* {props.members} */}
-                        {/* {props.members.join(", ")} */}
-                        {/* {props.members.length < 45
+                        {props.members.map((member, idx) => {}
+                        
+                        {props.members}
+                        {props.members.join(", ")}
+                        {props.members.length < 45
               ? props.members
-              : props.members.slice(0, 45) + "..."} */}
+              : props.members.slice(0, 45) + "..."}
                       </span>
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </Box>
@@ -161,9 +159,15 @@ const MeetingCardTemplate = (props) => {
         </p>
         <div className="flex gap-x-4 my-4 font-semibold text-bg-primary">
           {["Gmeet", "Zoom", "Discord"].includes(dataItem.location) ? (
-            <BsFillCameraVideoFill size={20} />
+            <BsFillCameraVideoFill
+              color={props.tab === "upcoming" ? "blue" : "gray"}
+              size={20}
+            />
           ) : (
-            <IoLocationSharp size={20} />
+            <IoLocationSharp
+              color={props.tab === "upcoming" ? "blue" : "gray"}
+              size={20}
+            />
           )}
           {dataItem.location}
         </div>

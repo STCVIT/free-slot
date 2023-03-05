@@ -54,7 +54,7 @@ export default function App() {
               <Route path="/addEvent" element={<AddEvent />} />
               <Route path="/freeslot" element={<FreeSlot />} />
               <Route path="/mobileNav" element={<MobileNav />} />
-              <Route path="/addtoteam/:id" element={<AddMeToTeam />} />
+              <Route path="/addtoteam" element={<AddMeToTeam />} />
               {/* <Route path='/:id' element={localStorage.getItem("user")? <AddMeToTeam /> : <Login/>}/> */}
               <Route path="/:id" element={<RedirectingMiddleware />} />
             </Routes>

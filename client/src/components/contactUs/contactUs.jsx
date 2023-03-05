@@ -46,9 +46,7 @@ const ContactUs = ({ isHomePage }) => {
       setName("");
       setMessage("");
       setMsgLength(0);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   const handleName = (e) => {
     setName(e.target.value);
@@ -58,60 +56,70 @@ const ContactUs = ({ isHomePage }) => {
     setMsgLength(e.target.value.length);
   };
   return (
-    <div className={`bg-[#f2f2f2] h-full `}>
+    <>
       {!isHomePage && <MainNavbar active="account" />}
       {!isHomePage && <PageHeading title="Contact Us" />}
       <div
-        className={!isHomePage && `flex justify-center flex-col items-center`}
+        className={`bg-[#f2f2f2] h-full w-full justify-center items-center ${
+          isHomePage ? "flex" : "flex flex-col"
+        }`}
       >
         <div
-          className={`flex h-full flex-col w-full lg:w-3/4 justify-between  items-center gap-y-4 `}
+          className={`w-full lg:w-3/4 ${
+            !isHomePage && "flex justify-center flex-col items-center "
+          }`}
         >
-          <div className="w-full h-full flex flex-col gap-y-3 px-4 lg:px-0">
-            <label className="text-2xl">Name</label>
-            <input
-              id="contactUsName"
-              className="p-2 py-4 rounded-md"
-              placeholder="Name"
-              value={name}
-              autoComplete="off"
-              onChange={handleName}
-            />
-            <div className="my-2">
-              <div className="flex justify-between ">
-                <p className="text-2xl">Type a message</p>
-                <p className="text-sm font-bold">{msgLength}/500</p>
-              </div>
-              <div className="relative w-full">
-                <textarea
-                  className="w-full p-2 py-4 rounded-md resize-none"
-                  rows={10}
-                  cols={6}
-                  maxLength={500}
-                  style={{ textDecoration: "hidden" }}
-                  placeholder="Enter your message here"
-                  value={message}
-                  onChange={handleMessage}
+          <div
+            className={`flex h-full flex-col  justify-between  items-center gap-y-4 w-full`}
+          >
+            <div className="w-full h-full flex flex-col gap-y-3 px-4 lg:px-0 ">
+              <div className="flex flex-col">
+                <label className="text-[10px] lg:text-2xl">Name</label>
+                <input
+                  id="contactUsName"
+                  className="p-2 py-4 rounded-md"
+                  placeholder="Name"
+                  value={name}
+                  autoComplete="off"
+                  onChange={handleName}
                 />
-                {msgLength === 500 && (
-                  <p className="text-red-600">Max Length Reached</p>
-                )}
+              </div>
+              <div className="my-2">
+                <div className="flex justify-between ">
+                  <p className="text-[10px] lg:text-2xl">Type a message</p>
+                  <p className="text-sm font-bold">{msgLength}/500</p>
+                </div>
+                <div className="relative w-full">
+                  <textarea
+                    className="w-full p-2 py-4 rounded-md resize-none"
+                    rows={10}
+                    cols={6}
+                    maxLength={500}
+                    style={{ textDecoration: "hidden" }}
+                    placeholder="Enter your message here"
+                    value={message}
+                    onChange={handleMessage}
+                  />
+                  {msgLength === 500 && (
+                    <p className="text-red-600">Max Length Reached</p>
+                  )}
+                </div>
               </div>
             </div>
+            <div>
+              <button
+                type="submit"
+                className="flex-1 text-lg items-center h-fit w-full py-3 px-5  font-medium text-center text-white bg-primary rounded-lg hover:bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300"
+                onClick={handleSubmit}
+              >
+                Send Message
+              </button>
+            </div>
           </div>
-          <div>
-            <button
-              type="submit"
-              className="flex-1 text-lg items-center h-fit w-full py-3 px-5  font-medium text-center text-white bg-primary rounded-lg hover:bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300"
-              onClick={handleSubmit}
-            >
-              Send Message
-            </button>
-          </div>
+          {!isHomePage && <Socials />}
         </div>
-        {!isHomePage && <Socials />}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -39,9 +39,7 @@ const Profile = () => {
         setUserDetails(res.data);
       })
 
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(setIsLoading(false));
   }, [files]);
   // console.log("Name: ", name);

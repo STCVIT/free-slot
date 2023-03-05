@@ -8,7 +8,7 @@ import { UserAuth } from "../../context/UserAuthContext";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 export const AllPages = ({ filter, tab }) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const token = user.token;
+  const token = user?.token;
   const group = new Set();
   const [UpcomingData, setUpcomingData] = useState([]);
   const [PastData, setPastData] = useState([]);

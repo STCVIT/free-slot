@@ -39,22 +39,11 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
       ))
     : [];
   const { setIsLoading, setLinkUid } = FindFreeSlot();
-  function navToHome() {
-    const uid = window.location.pathname.match(
-      /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
-    );
-    if (uid) {
-      <RedirectingMiddleware />;
-      setLinkUid(uid);
-      // window.location.href.includes("/timetable") && navigate("/home");
-    } else {
-      window.location.href.includes("/timetable") && navigate("/home");
-    }
-  }
 
   const { sendTimetable } = UserAuth();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     if (!files[0] && !inputValue) {
       toast.error("Please fill atleast 1 input field.");
@@ -62,7 +51,6 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
 
     if (files[0]) {
       try {
-        setIsLoading(true);
         const imageRef = ref(storage, `${localUser.email}/timetable`);
 
         uploadBytes(imageRef, files[0]).then(() => {
@@ -72,15 +60,15 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
           reader.readAsDataURL(file);
           reader.onload = async () => {
             file = reader.result;
-            await sendTimetable(file);
+            await sendTimetable(file).then((res) => {
+              navigate("/schedule");
+            });
           };
         });
-        navToHome();
-        setIsLoading(false);
-        return;
       } catch (error) {
-        setIsLoading(false);
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     } else if (inputValue) {
       try {
@@ -93,13 +81,13 @@ const DragFile = ({ files, setFiles, inputValue, setInputValue }) => {
           "Timetable updated successfully. Please check schedule page to confirm"
         );
         setInputValue("");
-        navToHome();
       } catch (error) {
         setIsLoading(false);
         console.log(error);
         toast.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
-      return;
     } else {
       alert.error("Please provide timetable in either of the ways.");
     }

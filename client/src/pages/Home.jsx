@@ -39,7 +39,7 @@ const Home = () => {
   //       }
   //     } catch (err) {
   //       navigate("/timetable");
-  //       console.log(err);
+  //
   //     }
   //   };
   //   checkTT();

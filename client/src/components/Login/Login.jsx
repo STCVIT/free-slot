@@ -13,8 +13,9 @@ import RedirectingMiddleware from "../Links/RedirectingMiddleware";
 import { OrComponent } from "../Signup/DragFile";
 import { FindFreeSlot } from "../../context/FreeSlotContext";
 import axios from "../../axios";
+import AddMeToTeam from "../Links/AddMeToTeam";
 const Login = () => {
-  const { setLinkUid, setIsLoading, setToAddTeam } = FindFreeSlot();
+  const { setLinkUid, setIsLoading, setToAddTeam, toAddTeam } = FindFreeSlot();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // eslint-disable-next-line no-unused-vars
@@ -24,39 +25,64 @@ const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   // eslint-disable-next-line no-unused-vars
   const emailPattern = /([a-z|.]+)([0-9]{4})([a-z]?)(@vitstudent.ac.in)/;
-  console.log(window.location.pathname);
-
-  const uid = window.location.pathname.match(
-    /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/g
-  );
 
   const user = localStorage.getItem("user");
-  if (uid) {
-    // localStorage.removeItem("newTeamName");
-    if (user) {
-      !localStorage.getItem("newTeamName") &&
-        localStorage.setItem(
-          "newTeamName",
-          window.location.href.split("??")[1]
-        );
-    } else {
-      setTimeout(() => {
-        !localStorage.getItem("newTeamName") &&
-          localStorage.setItem(
-            "newTeamName",
-            window.location.href.split("??")[1]
-          );
-      }, 100);
-    }
-  }
-  if (user && uid) {
-    <RedirectingMiddleware />;
-    setLinkUid(uid);
-    setTimeout(navigate("/home"), 1000);
+  const url = new URL(window.location.href);
 
-    // navigate("/addtoteam/" + uid);
-  }
+  const uid = url.searchParams?.get("uid")?.toString();
+
+  // if (uid) {
+  //   const teamName = url.searchParams?.get("teamName").toString();
+  //   const linkMaker = url.searchParams?.get("linkMaker").toString();
+  //   setToAddTeam({
+  //     teamName,
+  //     uid,
+  //     linkMaker,
+  //   });
+
+  //   if (user) {
+  //     navigate("/addtoteam", {
+  //       replace: "true",
+  //     });
+  //     // navigate("/home", { replace: "true" });
+  //     console.log("User is already logged in");
+  //     // <RedirectingMiddleware />;
+  //     // <AddMeToTeam modalOpen={true} />;
+  //   }
+  // }
+  const checkUid = () => {
+    if (uid) {
+      const teamName = url.searchParams?.get("teamName").toString();
+      const linkMaker = url.searchParams?.get("linkMaker").toString();
+      setToAddTeam({
+        teamName,
+        uid,
+        linkMaker,
+      });
+      if (user) {
+        navigate("/addtoteam", {
+          replace: "true",
+        });
+        // navigate("/home", { replace: "true" });
+        console.log("User is already logged in");
+        // <RedirectingMiddleware />;
+        // <AddMeToTeam modalOpen={true} />;
+      }
+    } else {
+      if (user) {
+        navigate("/home", { replace: "true" });
+        console.log("User is already logged in");
+        // <RedirectingMiddleware />;
+        // <AddMeToTeam modalOpen={true} />;
+      }
+    }
+  };
+  useEffect(() => {
+    checkUid();
+  }, []);
+
   const handleSubmit = async (e) => {
+    console.log(email, password);
     e.preventDefault();
     setError("");
     if (emailPattern.test(email) === false) {
@@ -69,9 +95,9 @@ const Login = () => {
       if (res && uid) {
         <RedirectingMiddleware />;
         setLinkUid(uid);
-        navigate("/home");
+        navigate("/addtoteam");
       }
-      if (res) {
+      if (res && !uid) {
         navigate("/home");
       }
       setIsLoading(false);
@@ -109,6 +135,7 @@ const Login = () => {
     }
     setPasswordType("password");
   };
+  console.log(toAddTeam);
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-4">
@@ -122,41 +149,39 @@ const Login = () => {
         <div className="visible col-span-1 sm:col-span-2 mt-7">
           <div className="px-3 sm:py-5 sm:px-16 lg:py-7.5 lg:py-10 lg:px-48">
             <h1 className="font-bold text-center text-3xl pb-10">Login</h1>
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col py-2 w-full">
-                <label className="font-semibold py-2">Email</label>
+            <div className="flex flex-col py-2 w-full">
+              <label className="font-semibold py-2">Email</label>
+              <input
+                autoComplete="on"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                className="focus:outline-none border-2 rounded py-3 px-4"
+              />
+            </div>
+            <div className="flex flex-col py-2">
+              <label className=" font-semibold py-2">Password</label>
+              <div className="flex flex-row border-2 rounded">
                 <input
-                  autoComplete="on"
-                  required
-                  // value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  className="focus:outline-none border-2 rounded py-3 px-4"
+                  className=" focus:outline-none px-4 py-3 w-full"
+                  type={passwordType}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-              </div>
-              <div className="flex flex-col py-2">
-                <label className=" font-semibold py-2">Password</label>
-                <div className="flex flex-row border-2 rounded">
-                  <input
-                    className=" focus:outline-none px-4 py-3 w-full"
-                    type={passwordType}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <div onClick={togglePassword} className="cursor-pointer">
-                    {passwordType === "password" ? (
-                      <img className="py-4 px-2" src={Visible} alt="Eye Icon" />
-                    ) : (
-                      <img
-                        className="py-4 px-2"
-                        src={NotVisible}
-                        alt="Open Eye Icon"
-                      />
-                    )}
-                  </div>
+                <div onClick={togglePassword} className="cursor-pointer">
+                  {passwordType === "password" ? (
+                    <img className="py-4 px-2" src={Visible} alt="Eye Icon" />
+                  ) : (
+                    <img
+                      className="py-4 px-2"
+                      src={NotVisible}
+                      alt="Open Eye Icon"
+                    />
+                  )}
                 </div>
               </div>
-            </form>
+            </div>
             <div className="pt-8 pb-1 text-center ">
               <button
                 className="bg-primary text-white w-full font-bold mx-auto py-3 rounded "

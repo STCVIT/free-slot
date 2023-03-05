@@ -81,9 +81,7 @@ const AddEvent = () => {
         });
         navigate("/home");
         localStorage.removeItem("team_id");
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     }
   };
   const handleCancel = () => {

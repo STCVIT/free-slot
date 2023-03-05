@@ -9,7 +9,7 @@ export function FreeSlotContextProvider({ children }) {
   const [link, setLink] = useState(null);
   const [chosenSlotTime, setChosenSlotTime] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState([]);
-  const [linkMaker, setLinkMaker] = useState(null);
+  // const [linkMaker, setLinkMaker] = useState(null);
   const [linkTeam, setLinkTeam] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [chosenDate, setChosenDate] = useState(null);
@@ -20,7 +20,7 @@ export function FreeSlotContextProvider({ children }) {
   const [refresh, setRefresh] = useState(false);
   const [saveTeam, setSaveTeam] = useState(true);
   const [refreshTeams, setRefreshTeams] = useState(false);
-  const [toAddTeam, setToAddTeam] = useState(null);
+  const [toAddTeam, setToAddTeam] = useState({});
   const justFindFreeSlot = async (tags) => {
     try {
       setIsLoading(true);
@@ -28,6 +28,7 @@ export function FreeSlotContextProvider({ children }) {
       await axios
         .post("timetable/freeslot", {
           members: tags,
+          
         })
         .then((res) => {
           setData(res.data);
@@ -66,18 +67,20 @@ export function FreeSlotContextProvider({ children }) {
   };
   const getLink = async () => {
     try {
+      console.log(window.location);
       const teamName = localStorage.getItem("team_name");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const res = await axios.get("user/getUser");
+
       await axios
         .post("link", {
           team_name: teamName,
+          domain: window.location.origin,
+          linkMaker: res.data.name,
         })
         .then((res) => {
-          setLink(
-            `${res.data.replace(
-              "https://",
-              window.location.origin + "/login/"
-            )}?${teamName.split(" ").join("_")}`
-          );
+          console.log(res.data);
+          setLink(res.data);
         });
     } catch (error) {
       console.error("getLink " + error);
@@ -102,8 +105,8 @@ export function FreeSlotContextProvider({ children }) {
         setSelectedTeam,
         linkTeam,
         setLinkTeam,
-        linkMaker,
-        setLinkMaker,
+        // linkMaker,
+        // setLinkMaker,
         isLoading,
         setIsLoading,
         currentTeamId,
@@ -121,6 +124,7 @@ export function FreeSlotContextProvider({ children }) {
         refreshTeams,
         setRefreshTeams,
         setToAddTeam,
+        toAddTeam,
       }}
     >
       {children}

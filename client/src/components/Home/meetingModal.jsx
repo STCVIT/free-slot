@@ -50,9 +50,7 @@ export default function NestedModal({ desc, data }) {
             }
           });
         setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     const handleCancelMeet = async () => {
       try {
@@ -64,9 +62,7 @@ export default function NestedModal({ desc, data }) {
         setRefresh(!refresh);
         setOpen(false);
         setIsLoading(true);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     return (
       <div className="flex justify-evenly mt-4 gap-x-4">

@@ -28,16 +28,17 @@ const FreeSlot = ({ onClose }) => {
   const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
-    axios
-      .get("user/getUser")
-      .then((res) => {
-        console.log(res.data);
-        setUserDetails(res.data);
-        setTags((prevTags) => [...prevTags, res.data.reg_no]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const getUserReg = async () => {
+      axios
+        .get("user/getUser")
+        .then((res) => {
+          console.log(res.data);
+          setUserDetails(res.data);
+          setTags((prevTags) => [...prevTags, res.data.reg_no]);
+        })
+        .catch((err) => {});
+    };
+    getUserReg();
   }, []);
   const ToastMessageContainer = (props) => {
     return (
@@ -69,7 +70,6 @@ const FreeSlot = ({ onClose }) => {
       // alert("Error: " + err);
       !checkAll && toast.error("User not found for " + reg_no + "");
       checkAll && noUser.push(reg_no);
-      console.log(err);
     }
   }
 

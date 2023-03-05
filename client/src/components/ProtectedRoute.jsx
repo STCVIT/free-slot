@@ -3,11 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../axios";
 import { UserAuth } from "../context/UserAuthContext";
+// import { getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+// import firebase from "firebase/app";
+
 const ProtectedRoute = ({ children }) => {
   // const { user } = UserAuth();
   const [timeTable, setTimeTable] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
+
   // async function getUser() {
   //   const userData = await axios.post(
   //     "user/getUserByEmail",
@@ -30,11 +35,12 @@ const ProtectedRoute = ({ children }) => {
   //   console.log(timeTable);
   //   getUser();
   // }, []);
-
-  if (!user) {
-    console.log("There's no user");
-    return navigate("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      // console.log("There's no user");
+      return navigate("/login", { replace: true });
+    }
+  }, [user]);
 
   return children;
 };
